@@ -1,0 +1,25 @@
+<component name="libraryTable">
+  <library name="natives">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/libs/ibxm.jar!/" />
+      <root url="jar://$PROJECT_DIR$/libs/jinput.jar!/" />
+      <root url="jar://$PROJECT_DIR$/libs/jnlp.jar!/" />
+      <root url="jar://$PROJECT_DIR$/libs/jogg-0.0.7.jar!/" />
+      <root url="jar://$PROJECT_DIR$/libs/jorbis-0.0.15.jar!/" />
+      <root url="jar://$PROJECT_DIR$/libs/lwjgl.jar!/" />
+      <root url="jar://$PROJECT_DIR$/libs/lwjgl_util.jar!/" />
+      <root url="jar://$PROJECT_DIR$/libs/lwjgl_util_applet.jar!/" />
+      <root url="jar://$PROJECT_DIR$/libs/natives-linux.jar!/" />
+      <root url="jar://$PROJECT_DIR$/libs/natives-mac.jar!/" />
+      <root url="jar://$PROJECT_DIR$/libs/natives-windows.jar!/" />
+      <root url="jar://$PROJECT_DIR$/libs/slick-examples.jar!/" />
+      <root url="jar://$PROJECT_DIR$/libs/slick.jar!/" />
+      <root url="jar://$PROJECT_DIR$/libs/tinylinepp.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <NATIVE>
+      <root url="file://$PROJECT_DIR$/libs/natives" />
+    </NATIVE>
+    <SOURCES />
+  </library>
+</component>
