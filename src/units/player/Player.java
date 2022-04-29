@@ -3,7 +3,7 @@ package units.player;
 import core.Constants;
 import org.jetbrains.annotations.Contract;
 
-public sealed class Player permits Sigur {
+public sealed class Player permits Sigur, Phaedra {
 
     private double x, y, xSpeed, ySpeed;
     private int level, exp, maxExp;
