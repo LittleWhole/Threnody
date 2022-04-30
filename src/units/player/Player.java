@@ -8,6 +8,7 @@ public sealed class Player permits Sigur, Phaedra {
     private double x, y, xSpeed, ySpeed;
     private int level, exp, maxExp;
     private int health, attack, defense, critRate, critDamage, eAttack, eDefense, affinity;
+
     // Abbreviations: LVL, EXP, HP, ATK, DEF, CR, CD, EATK, EDEF, AFF
 
     public Player() {
