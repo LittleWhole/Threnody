@@ -1,7 +1,7 @@
 package managers;
 
-import entities.units.Player;
-import gamestates.Game;
+import units.player.Player;
+import core.Game;
 import org.newdawn.slick.Input;
 
 import java.util.List;

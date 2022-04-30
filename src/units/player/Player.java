@@ -3,7 +3,7 @@ package units.player;
 import core.Constants;
 import org.jetbrains.annotations.Contract;
 
-public sealed class Player permits Sigur, Phaedra {
+public sealed class Player permits Sigur, Phaedra   {
 
     private double x, y, xSpeed, ySpeed;
     private int level, exp, maxExp;
@@ -17,4 +17,16 @@ public sealed class Player permits Sigur, Phaedra {
         this.maxExp = Constants.LevelingConstants.MAX_EXP(1);
     }
 
+    public void accelerateX(float amt)   {
+
+    }
+    public void accelerateY(float amt)   {
+
+    }
+
+
+
+    public Player getPlayer() {
+        return this;
+    }
 }
