@@ -1,7 +1,9 @@
 package core;
 
+import managers.KeyManager;
 import org.newdawn.slick.AppGameContainer;
 import org.newdawn.slick.GameContainer;
+import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
@@ -9,12 +11,12 @@ import org.newdawn.slick.state.StateBasedGame;
 public class Main extends StateBasedGame {
     public final static int FRAMES_PER_SECOND = 60;
     private static AppGameContainer appgc;
-
     public static final int GAME_ID = 0;
+    public static KeyManager keyManager;
 
     private final BasicGameState game;
 
-    public Main(String name) {
+    public Main(String name) throws SlickException {
         super(name);
 
         game = new Game(GAME_ID);
@@ -35,7 +37,7 @@ public class Main extends StateBasedGame {
 
     public static void main(String[] args) {
         try {
-            appgc = new AppGameContainer(new Main("Example Slick Game"));
+            appgc = new AppGameContainer(new Main("Threnody"));
             System.setProperty("org.lwjgl.opengl.Window.undecorated", "true");
 
             appgc.setDisplayMode(appgc.getScreenWidth(), appgc.getScreenHeight(), false);

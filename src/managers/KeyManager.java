@@ -1,5 +1,6 @@
 package managers;
 
+import org.newdawn.slick.GameContainer;
 import units.player.Player;
 import core.Game;
 import org.newdawn.slick.Input;
@@ -8,7 +9,7 @@ import java.util.List;
 import java.util.function.Predicate;
 
 public class KeyManager implements Predicate<Integer> {
-	private static final float Player_Acceleration = 2f;
+	private static final float Player_Acceleration = 1f;
 	public static final List<Integer> Key_Down_List = List.of(Input.KEY_W, Input.KEY_S, Input.KEY_A, Input.KEY_D);
 
 	private KeyManager() { throw new IllegalStateException("Utility class"); }
@@ -26,12 +27,16 @@ public class KeyManager implements Predicate<Integer> {
 		return input.isKeyDown(i);
 	}
 	
-	public void keyDown(int key) {
-		switch (key) {
+	public void keyDown(/*int key*/ GameContainer gc) {
+		/*switch (key) {
 			case Input.KEY_W -> player.accelerateY(Player_Acceleration);
 			case Input.KEY_A -> player.accelerateX(-Player_Acceleration);
 			case Input.KEY_S -> player.accelerateY(-Player_Acceleration);
 			case Input.KEY_D -> player.accelerateX(Player_Acceleration);
-		}
+		}*/
+		if(gc.getInput().isKeyDown(Input.KEY_W)) player.accelerateY(Player_Acceleration);
+		if(gc.getInput().isKeyDown(Input.KEY_A)) player.accelerateX(-Player_Acceleration);
+		if(gc.getInput().isKeyDown(Input.KEY_S)) player.accelerateY(-Player_Acceleration);
+		if(gc.getInput().isKeyDown(Input.KEY_D)) player.accelerateX(Player_Acceleration);
 	}
 }
