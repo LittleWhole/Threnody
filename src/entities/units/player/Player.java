@@ -26,7 +26,7 @@ public final class Player extends Unit {
         this.position = new Coordinate(0, 0);
         this.xSpeed = 10;
         this.ySpeed = 5;
-        this.sheet = new SpriteSheet("res/tilemap/experimentalsheet.png", 256, 512);
+        this.sheet = new SpriteSheet("res/tilemap/experimentalCharacter.png", 256, 512);
         this.sprite = sheet.getSprite(0,0);
         this.level = 1;
         this.hitBox = new Rectangle(getX(), getY(), 256, 128);//set size to tiles
@@ -41,7 +41,7 @@ public final class Player extends Unit {
 
     public void update(TiledMap map)    {
         this.position.updatePosition(dx, dy);
-        this.dy =0;
+        this.dy = 0;
         this.dx = 0;
     }
 
