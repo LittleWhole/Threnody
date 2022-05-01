@@ -1,15 +1,15 @@
 package managers;
 
-import units.player.Player;
-import core.Game;
+import entities.units.player.Player;
+import gamestates.Game;
 import org.newdawn.slick.Input;
 
 import java.util.List;
 import java.util.function.Predicate;
 
 public class KeyManager implements Predicate<Integer> {
-	private static final float Player_Acceleration = 2f;
-	public static final List<Integer> Key_Down_List = List.of(Input.KEY_W, Input.KEY_S, Input.KEY_A, Input.KEY_D);
+	private static final float PLAYER_ACCELERATION = 2f;
+	public static final List<Integer> KEY_DOWN_LIST = List.of(Input.KEY_W, Input.KEY_S, Input.KEY_A, Input.KEY_D);
 
 	private KeyManager() { throw new IllegalStateException("Utility class"); }
 
@@ -28,10 +28,10 @@ public class KeyManager implements Predicate<Integer> {
 	
 	public void keyDown(int key) {
 		switch (key) {
-			case Input.KEY_W -> player.accelerateY(Player_Acceleration);
-			case Input.KEY_A -> player.accelerateX(-Player_Acceleration);
-			case Input.KEY_S -> player.accelerateY(-Player_Acceleration);
-			case Input.KEY_D -> player.accelerateX(Player_Acceleration);
+			case Input.KEY_W -> player.accelerateY(PLAYER_ACCELERATION);
+			case Input.KEY_A -> player.accelerateX(-PLAYER_ACCELERATION);
+			case Input.KEY_S -> player.accelerateY(-PLAYER_ACCELERATION);
+			case Input.KEY_D -> player.accelerateX(PLAYER_ACCELERATION);
 		}
 	}
 }
