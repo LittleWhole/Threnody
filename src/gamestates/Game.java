@@ -18,6 +18,9 @@ import java.util.ArrayList;
 import java.util.EnumMap;
 import java.util.Map;
 
+import static core.Constants.ImageConstants.CENTER_X;
+import static core.Constants.ImageConstants.CENTER_Y;
+
 public class Game extends BasicGameState {
     private final int id;
 
@@ -59,7 +62,9 @@ public class Game extends BasicGameState {
     public void render(GameContainer gc, StateBasedGame sbg, Graphics g) throws SlickException {
         // Sets background to the specified RGB color
         g.setBackground(new Color(100, 100, 100));
-        overworld.render(3, 3);
+        g.drawString("Coords: " + plr.getPosition().toString(), 100, 100);
+        overworld.render((int) plr.getX(), (int) plr.getY());
+        //overworld.render(0, 0, (int) plr.getX() / 100 - 20, (int) plr.getY() / 100 + 20, (int) plr.getX() / 100, (int) plr.getY() / 100);
         plr.render(g);
 
     }

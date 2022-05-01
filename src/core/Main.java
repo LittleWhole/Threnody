@@ -11,7 +11,7 @@ import java.util.ArrayList;
 public class Main extends StateBasedGame {
     public static final int RESOLUTION_X = 1920;
     public static final int RESOLUTION_Y = 1080;
-    public static final int FRAMES_PER_SECOND = 144;
+    public static final int FRAMES_PER_SECOND = 60;
 
     private static AppGameContainer appgc;
     public static final int GAME_ID = 0;
