@@ -4,7 +4,7 @@ import core.Constants;
 import core.Main;
 import entities.core.Coordinate;
 import entities.core.Entity;
-import entities.units.player.Player;
+import entities.units.player.PlayerOld;
 import gamestates.Game;
 import graphics.Background;
 import org.newdawn.slick.Color;
@@ -24,7 +24,7 @@ public class DisplayManager {
 		this.game = g;
 		// this.center = center;
 
-		this.center = new Coordinate(Player.PLAYER_X_SPAWN, Player.PLAYER_Y_SPAWN);
+		this.center = new Coordinate(PlayerOld.PLAYER_X_SPAWN, PlayerOld.PLAYER_Y_SPAWN);
 		//		game.getPlayer().getPosition();
 
 		this.graphics = graphics;

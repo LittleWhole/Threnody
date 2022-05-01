@@ -1,6 +1,7 @@
 package managers;
 
 import entities.units.player.Player;
+import entities.units.player.PlayerOld;
 import gamestates.Game;
 import org.newdawn.slick.Input;
 
@@ -18,7 +19,6 @@ public class KeyManager implements Predicate<Integer> {
 	
 	public KeyManager(Input input, Game game) {
 		this.input = input;
-
 		this.player = game.getPlayer();
 	}
 	

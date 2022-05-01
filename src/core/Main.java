@@ -1,16 +1,12 @@
 package core;
 
-import entities.units.player.Player;
 import gamestates.Game;
 import org.newdawn.slick.AppGameContainer;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.SlickException;
-import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
-import playerdata.Sigur;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class Main extends StateBasedGame {
     public static final int RESOLUTION_X = 1920;
@@ -18,13 +14,12 @@ public class Main extends StateBasedGame {
     public static final int FRAMES_PER_SECOND = 144;
 
     private static AppGameContainer appgc;
-
     public static final int GAME_ID = 0;
     public static Game game;
 
     public static ArrayList<Character> characters;
 
-    public Main(String name) {
+    public Main(String name) throws SlickException {
         super(name);
 
         game = new Game(GAME_ID);
@@ -45,7 +40,7 @@ public class Main extends StateBasedGame {
 
     public static void main(String[] args) {
         try {
-            appgc = new AppGameContainer(new Main("Example Slick Game"));
+            appgc = new AppGameContainer(new Main("Threnody"));
             System.setProperty("org.lwjgl.opengl.Window.undecorated", "true");
 
             appgc.setDisplayMode(appgc.getScreenWidth(), appgc.getScreenHeight(), false);

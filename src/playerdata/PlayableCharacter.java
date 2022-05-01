@@ -2,7 +2,7 @@ package playerdata;
 
 import combat.artes.Arte;
 import core.Constants;
-import entities.units.player.Player;
+import entities.units.player.PlayerOld;
 import org.newdawn.slick.Image;
 
 import java.util.ArrayList;
@@ -23,7 +23,7 @@ public sealed class PlayableCharacter permits Sigur, Phaedra {
 
     protected Image sprite;
     protected ArrayList<Arte> artes;
-    protected Player entity;
+    protected PlayerOld entity;
 
     public PlayableCharacter() {
         // Default character constructor
@@ -40,11 +40,11 @@ public sealed class PlayableCharacter permits Sigur, Phaedra {
         this.maxExp = Constants.LevelingConstants.MAX_EXP(level);
     }
 
-    public Player getEntity() {
+    public PlayerOld getEntity() {
         return entity;
     }
 
-    public void setEntity(Player entity) {
+    public void setEntity(PlayerOld entity) {
         this.entity = entity;
     }
 }
