@@ -23,13 +23,15 @@ public final class Player extends Unit {
     // Abbreviations: LVL, EXP, HP, ATK, DEF, CR, CD, EATK, EDEF, AFF
 
     public Player() throws SlickException {
+        this.width = 256;
+        this.height = 128;
         this.position = new Coordinate(0, 0);
         this.xSpeed = 10;
         this.ySpeed = 5;
         this.sheet = new SpriteSheet("res/tilemap/experimentalCharacter.png", 256, 512);
         this.sprite = sheet.getSprite(0,0);
         this.level = 1;
-        this.hitBox = new Rectangle(getX(), getY(), 256, 128);//set size to tiles
+        this.hitBox = new Rectangle(getX(), getY(), this.width, this.height);//set size to tiles
     }
 
     public void accelerateX(float amt)   {
@@ -46,7 +48,7 @@ public final class Player extends Unit {
     }
 
     public void render (Graphics g) {
-        g.drawImage(this.sprite, getX(), getY());
+        g.drawImage(this.sprite, (Main.getScreenWidth()/2) - 128, (Main.getScreenHeight()/2) - 256);
     }
 
 

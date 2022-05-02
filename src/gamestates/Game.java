@@ -35,10 +35,6 @@ public class Game extends BasicGameState {
     private KeyManager keyDown; // Key Manager
     public DisplayManager displayManager; // Display Manager 
 
-    private int xPos = 0;
-    private int xSpeed = 3;
-    private int mCounter = 0;
-    private boolean displayCircle = false;
     private Player plr;
     public TiledMap overworld;
 
@@ -62,11 +58,11 @@ public class Game extends BasicGameState {
     public void render(GameContainer gc, StateBasedGame sbg, Graphics g) throws SlickException {
         // Sets background to the specified RGB color
         g.setBackground(new Color(100, 100, 100));
-        g.drawString("Coords: " + plr.getPosition().toString(), 100, 100);
-        overworld.render((int) plr.getX(), (int) plr.getY());
+        overworld.render((int)(plr.getX()*-1),(int)(plr.getY()*-1));
+        //overworld.render((int) plr.getX()/2+20, (int) plr.getY()/2-20);
         //overworld.render(0, 0, (int) plr.getX() / 100 - 20, (int) plr.getY() / 100 + 20, (int) plr.getX() / 100, (int) plr.getY() / 100);
         plr.render(g);
-
+        g.drawString("Coords: " + plr.getPosition().toString(), 100, 100);
     }
 
     public void update(GameContainer gc, StateBasedGame sbg, int delta) throws SlickException {
