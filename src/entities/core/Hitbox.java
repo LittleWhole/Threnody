@@ -6,13 +6,13 @@ import org.newdawn.slick.Color;
 import org.newdawn.slick.Graphics;
 
 // The hitbox of the entity, basically
-public class Rectangle {
+public class Hitbox {
 	private Entity entity;
 
 	private float width;
 	private float height;
 
-	public Rectangle(Entity entity) {
+	public Hitbox(Entity entity) {
 		this.entity = entity;
 
 		this.width = entity.width;
@@ -76,7 +76,7 @@ public class Rectangle {
 	}
 	
 	// Main method that determines if this rectangle intersects with another one
-	public boolean intersects(Rectangle rect2) {
+	public boolean intersects(Hitbox rect2) {
 		Vector[] axes1 = getAxes(); // Axes of this rectangle
 		Vector[] axes2 = rect2.getAxes(); // Axes of the other rectangle
 		

@@ -8,6 +8,7 @@ import managers.ImageManager;
 import org.lwjgl.Sys;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
+import org.newdawn.slick.SpriteSheet;
 
 import java.util.ArrayList;
 
@@ -19,6 +20,7 @@ public abstract class Entity {
 	// Rendering Variables
 	protected boolean remove; // When remove == true, the entity will be unloaded
 	protected Image sprite; // The entity's sprite
+	protected SpriteSheet sheet; // The entity's spritesheet
 	
 	// Descriptive Variables
 	protected float mass; // Mass of the object (if we want to factor in collisions; in kg)
@@ -26,22 +28,23 @@ public abstract class Entity {
 	protected float height;
 	
 	// Linear Movement
-	protected Coordinate position;
+	protected Coordinate position; // Coordinate of the Entity
 	protected float xSpeed, ySpeed; // Speeds of the object (m/s)
+	protected float dx, dy; // Rate of change (derivative) of position
 	
 	// Angular Movement
 	protected float angle; // Rotation of the entity (counterclockwise, in radians)
 	
 	// Hit box of the entity
-	protected Rectangle hitBox;
+	protected Hitbox hitBox; // Hit box of the Entity
 
 	// Entity Type
-	public enum EntityType { UNIT, PROJECTILE, INTERACTABLE, NONE }
-	protected EntityType type;
+	public enum EntityType { UNIT, PROJECTILE, INTERACTABLE, NONE } // Types of Entity
+	protected EntityType type; // Type of the Entity
 
 	// Teams
-	public enum Team { ALLY, ENEMY, NEUTRAL }
-	protected Team team;
+	public enum Team { ALLY, ENEMY, NEUTRAL } // Teams of Entity
+	protected Team team; // Team of the Entity
 
 	public Entity() {}
 
@@ -63,7 +66,7 @@ public abstract class Entity {
 		this.angle = 0f; // Default rotation for now
 
 		// Initializing hitbox
-		this.hitBox = new Rectangle(this);
+		this.hitBox = new Hitbox(this);
 
 		// Entity Type and Teams
 		this.type = EntityType.NONE;
@@ -71,7 +74,7 @@ public abstract class Entity {
 	}
 	
 	// Accessor Methods
-	public Rectangle getHitBox() { return hitBox; }
+	public Hitbox getHitBox() { return hitBox; }
 	public Image getSprite() { return sprite; }
 	public Coordinate getPosition() { return position; }
 	public EntityType getType() { return type; }
