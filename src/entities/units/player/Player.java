@@ -23,32 +23,12 @@ public final class Player extends Unit {
         this.height = 128;
         this.position = new Coordinate(0, 0);
         this.xSpeed = 10;
-        this.ySpeed = 5;
+        this.ySpeed = 10;
         this.sheet = new SpriteSheet("res/tilemap/experimentalCharacter.png", 256, 512);
         this.sprite = sheet.getSprite(0,0);
         this.level = 1;
         this.hitBox = new Hitbox(this);//set size to tiles
     }
-
-    public void accelerateX(float amt)   {
-        this.dx += xSpeed*amt;
-    }
-    public void accelerateY(float amt)   {
-        this.dy -= ySpeed*amt;
-    }
-
-    public void update(TiledMap map)    {
-        this.position.updatePosition(dx, dy);
-        this.dy = 0;
-        this.dx = 0;
-    }
-
-    public void render (Graphics g) {
-        g.drawImage(this.sprite, (Main.getScreenWidth()/2) - 128, (Main.getScreenHeight()/2) - 256);
-    }
-
-
-
 
     public Player getPlayer() {
         return this;

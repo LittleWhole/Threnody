@@ -7,13 +7,13 @@ import playerdata.Sigur;
 
 public abstract class Arte {
 
-    protected PlayableCharacter owner;
+    protected PlayableCharacter owner; // The owner of the Arte
 
-    protected String name;
-    protected int useTimestamp;
-    protected boolean using;
-    protected int castTimestamp;
-    protected int castDuration;
+    protected String name; // The name displayed by the Arte
+    protected int useTimestamp; // The exact timestamp when the Arte started use
+    protected boolean using; // If the arte is activated or not
+    protected int castTimestamp; // The exact timestamp when the Arte started casting
+    protected int castDuration; // The amount of time casting takes
 
     protected ArteType arteType;
     protected ElementType damageType;

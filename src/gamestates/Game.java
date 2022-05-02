@@ -1,7 +1,7 @@
 package gamestates;
 
-import core.Main;
 import entities.core.Entity;
+import entities.core.EntityType;
 import entities.units.player.Player;
 import managers.DisplayManager;
 import managers.KeyManager;
@@ -9,15 +9,11 @@ import org.newdawn.slick.*;
 import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
 import org.newdawn.slick.tiled.TiledMap;
-import entities.units.player.PlayerOld;
 
 import java.util.ArrayList;
 import java.util.EnumMap;
 import java.util.Map;
 import java.util.function.Predicate;
-
-import static core.Constants.ImageConstants.CENTER_X;
-import static core.Constants.ImageConstants.CENTER_Y;
 
 public class Game extends BasicGameState {
 
@@ -26,9 +22,9 @@ public class Game extends BasicGameState {
 
     private static int time;
 
-    EnumMap<Entity.EntityType, ArrayList<Entity>> entities; // All Entities in the Game
+    EnumMap<EntityType, ArrayList<Entity>> entities; // All Entities in the Game
 
-    EnumMap<Entity.EntityType, ArrayList<Entity>> newEntities; // Add new entities to the game
+    EnumMap<EntityType, ArrayList<Entity>> newEntities; // Add new entities to the game
 
     // Managers
     private KeyManager keyDown; // Key Manager
@@ -37,8 +33,8 @@ public class Game extends BasicGameState {
     private Player plr;
     public TiledMap overworld;
 
-    public Map<Entity.EntityType, ArrayList<Entity>> getEntities() { return entities; }
-    public ArrayList<Entity> getEntitiesOf(Entity.EntityType type) { return entities.get(type); }
+    public Map<EntityType, ArrayList<Entity>> getEntities() { return entities; }
+    public ArrayList<Entity> getEntitiesOf(EntityType type) { return entities.get(type); }
 
     public void keyInput() { KeyManager.KEY_DOWN_LIST.stream().filter(keyDown).forEach(keyDown::keyDown); }
 
@@ -84,7 +80,7 @@ public class Game extends BasicGameState {
         cursorInput(); // Manage the cursor
 
         // Update Player
-        plr.update(overworld);
+        plr.update();
 
         // Update all entities, and remove those marked for removal
         Predicate<Entity> filter = Entity::isMarked;
@@ -94,7 +90,7 @@ public class Game extends BasicGameState {
         }
 
         // Add new entities
-        for (Entity.EntityType type : newEntities.keySet()) {
+        for (EntityType type : newEntities.keySet()) {
             for (Entity e : newEntities.get(type)) {
                 entities.get(type).add(e);
             }
@@ -112,14 +108,14 @@ public class Game extends BasicGameState {
 
         // Initialize Both Entity Maps
         entities = new EnumMap<>(Map.of(
-                Entity.EntityType.UNIT, new ArrayList<>(),
-                Entity.EntityType.PROJECTILE, new ArrayList<>(),
-                Entity.EntityType.INTERACTABLE, new ArrayList<>()
+                EntityType.UNIT, new ArrayList<>(),
+                EntityType.PROJECTILE, new ArrayList<>(),
+                EntityType.INTERACTABLE, new ArrayList<>()
         ));
         newEntities = new EnumMap<>(Map.of(
-                Entity.EntityType.UNIT, new ArrayList<>(),
-                Entity.EntityType.PROJECTILE, new ArrayList<>(),
-                Entity.EntityType.INTERACTABLE, new ArrayList<>()
+                EntityType.UNIT, new ArrayList<>(),
+                EntityType.PROJECTILE, new ArrayList<>(),
+                EntityType.INTERACTABLE, new ArrayList<>()
         ));
 
         // Initialize the Player

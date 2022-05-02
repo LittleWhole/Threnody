@@ -5,10 +5,10 @@ import core.Main;
 import entities.units.Unit;
 import gamestates.Game;
 import managers.ImageManager;
-import org.lwjgl.Sys;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.SpriteSheet;
+import org.newdawn.slick.tiled.TiledMap;
 
 import java.util.ArrayList;
 
@@ -38,12 +38,8 @@ public abstract class Entity {
 	// Hit box of the entity
 	protected Hitbox hitBox; // Hit box of the Entity
 
-	// Entity Type
-	public enum EntityType { UNIT, PROJECTILE, INTERACTABLE, NONE } // Types of Entity
 	protected EntityType type; // Type of the Entity
 
-	// Teams
-	public enum Team { ALLY, ENEMY, NEUTRAL } // Teams of Entity
 	protected Team team; // Team of the Entity
 
 	public Entity() {}
@@ -96,34 +92,23 @@ public abstract class Entity {
 	public void render(Graphics g) { // Main render method that is called
 		//hitBox.drawHitBox(g); // Draw hitbox first
 		renderOther(g); // Draw unique entity graphics
-		drawSprite(); // Draw entity sprite
+		drawSprite(g); // Draw entity sprite
 	}
 
-	protected void renderOther(Graphics g) {} // Rendering method unique to the entity
-	protected void drawSprite() { // Draw the entity sprite
-		// Scale the sprite appropriately
-		Image im = sprite.getScaledCopy((int) (width * Constants.ImageConstants.PIXELS_PER_UNIT), (int) (height * Constants.ImageConstants.PIXELS_PER_UNIT));
-
-		// Rotate the sprite
-		im.setCenterOfRotation(im.getWidth() / 2, im.getHeight() / 2);
-		im.rotate((float) -(angle * 180 / Math.PI)); // Convert to clockwise degrees
-
-		// Draw the sprite
-		im.drawCentered(
-				game.displayManager.screenX(position.x),
-				game.displayManager.screenY(position.y));
+	protected abstract void renderOther(Graphics g); // Rendering method unique to the entity
+	protected void drawSprite(Graphics g) { // Draw the entity sprite
+		g.drawImage(this.sprite, (Main.getScreenWidth()/2) - 128, (Main.getScreenHeight()/2) - 256);
 	}
 
 	
 	// Mutator Methods
 	public void rotateCounter(float theta) { this.angle += theta; } // Rotations
 	public void setRotation(float theta) { this.angle = theta; } // Rotations
-	
-	public void accelerateX(float acceleration) { xSpeed += acceleration; }
-	public void accelerateY(float acceleration) { ySpeed += acceleration; }
+
+	public void accelerateX(float amt) { this.dx += xSpeed*amt; }
+	public void accelerateY(float amt) { this.dy -= ySpeed*amt; }
 
 	// Helper Methods
-	protected static float GetTime() { return (float) Sys.getTime() / 1000; }
 	public void faceEntity(Entity e) {
 		// Find angle (from the horizontal) to the other entity
 		double theta = Math.atan2(
@@ -136,15 +121,13 @@ public abstract class Entity {
 
 	// Update Method: Update Physics Variables
 	public void update() {
-		// Update all velocities of the entity - drag will always act on the entity
-		xSpeed -= xSpeed * Constants.MovementConstants.DRAG; // Finding the x resistive acceleration
-		ySpeed -= ySpeed * Constants.MovementConstants.DRAG; // Finding the y resistive acceleration
-		
 		// Collision checking
 		checkCollisions();
 
-		// Finally, update the position of the entity.
-		this.position.updatePosition(xSpeed, ySpeed);
+		// Update the position of the entity
+		this.position.updatePosition(dx, dy);
+		this.dy = 0;
+		this.dx = 0;
 	};
 
 	protected void checkCollisions() {
@@ -167,8 +150,8 @@ public abstract class Entity {
 	}
 
 	// By default, entities will bounce off the screen borders
-	protected void screenCollisionX() { this.xSpeed = -xSpeed; }
-	protected void screenCollisionY() { this.ySpeed = -ySpeed; }
+	protected void screenCollisionX() { }
+	protected void screenCollisionY() { }
 
 	protected void screenCollision() {}
 

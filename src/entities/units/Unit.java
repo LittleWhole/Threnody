@@ -1,6 +1,8 @@
 package entities.units;
 
 import entities.core.Entity;
+import entities.core.EntityType;
+import org.newdawn.slick.Graphics;
 
 public class Unit extends Entity {
 
@@ -27,6 +29,11 @@ public class Unit extends Entity {
         this.eAttack = 1;
         this.eDefense = 1;
         this.affinity = 1;
+    }
+
+    @Override
+    protected void renderOther(Graphics g) {
+
     }
 
     public Unit(int level, int health, int attack, int defense, int critRate, int critDamage, int eAttack, int eDefense, int affinity) {
