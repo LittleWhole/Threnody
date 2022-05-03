@@ -1,5 +1,6 @@
-package core;
+package gamestates;
 
+import entities.core.Coordinate;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
@@ -12,7 +13,7 @@ import entities.units.player.Player;
 public class BattleState extends BasicGameState {
     private final int id;
 
-    private Player plr = new Player();
+    private Player plr;
     private TiledMap battlefield;
 
     public BattleState(int id) throws SlickException {
@@ -22,7 +23,7 @@ public class BattleState extends BasicGameState {
 
     public void init(GameContainer gc, StateBasedGame sbg) throws SlickException {
         // This code happens when you enter a game state for the *first time.*
-
+        battlefield = new TiledMap("res/tilemap/battleworld.tmx", true);
         gc.setShowFPS(true);
     }
 
@@ -41,6 +42,7 @@ public class BattleState extends BasicGameState {
 
     public void enter(GameContainer gc, StateBasedGame sbg) throws SlickException {
         // This code happens when you enter a gameState.
+        plr = new Player(new Coordinate(0,0));
     }
 
     public void leave(GameContainer gc, StateBasedGame sbg) {

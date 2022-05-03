@@ -1,5 +1,7 @@
 package gamestates;
 
+import core.Main;
+import entities.core.Coordinate;
 import entities.core.Entity;
 import entities.core.EntityType;
 import entities.units.player.Player;
@@ -20,7 +22,7 @@ public class Game extends BasicGameState {
     private GameContainer gc;
     private final int id;
 
-    private static int time;
+    public static int time;
 
     EnumMap<EntityType, ArrayList<Entity>> entities; // All Entities in the Game
 
@@ -29,7 +31,7 @@ public class Game extends BasicGameState {
     // Managers
     private KeyManager keyDown; // Key Manager
     public DisplayManager displayManager; // Display Manager 
-
+    private Coordinate plrPosition;
     private Player plr;
     public TiledMap overworld;
 
@@ -57,6 +59,7 @@ public class Game extends BasicGameState {
         overworld = new TiledMap("res/tilemap/overworld.tmx", true);
         gc.setShowFPS(true);
         this.gc = gc;
+        plrPosition = new Coordinate(0,0);
     }
 
     public void render(GameContainer gc, StateBasedGame sbg, Graphics g) throws SlickException {
@@ -119,7 +122,7 @@ public class Game extends BasicGameState {
         ));
 
         // Initialize the Player
-        plr = new Player();
+        plr = new Player(plrPosition);
         System.out.println("[VERBOSE] Player initialized");
 
         // Initialize Managers
@@ -132,11 +135,12 @@ public class Game extends BasicGameState {
 
     public void leave(GameContainer gc, StateBasedGame sbg) {
         // This code happens when you leave a gameState.
+        plrPosition = plr.getPlayer().getPosition();
     }
 
 
     public void keyPressed(int key, char c) {
-
+        if(key == Input.KEY_F3) Main.debug = !Main.debug;
     }
 
 

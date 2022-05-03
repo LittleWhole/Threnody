@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.5" tiledversion="1.7.2" orientation="isometric" renderorder="right-down" width="20" height="20" tilewidth="256" tileheight="128" infinite="0" nextlayerid="5" nextobjectid="1">
+ <tileset firstgid="1" source="experiment.tsx"/>
+ <layer id="1" name="Tile Layer 1" width="20" height="20">
+  <data encoding="base64" compression="gzip">
+   H4sIAAAAAAAACuNkYGDgHMWjeBSP4lE8iknEABOrrJlABgAA
+  </data>
+ </layer>
+ <layer id="2" name="Tile Layer 2" width="20" height="20">
+  <data encoding="base64" compression="gzip">
+   H4sIAAAAAAAACmNgGAWDHRylo3mcJJrFSYQeYtQgq20kQg2xZhGjllQ/j4JRMAogAABIjVrcQAYAAA==
+  </data>
+ </layer>
+</map>

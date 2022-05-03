@@ -1,5 +1,6 @@
 package core;
 
+import gamestates.BattleState;
 import gamestates.Game;
 import org.newdawn.slick.AppGameContainer;
 import org.newdawn.slick.GameContainer;
@@ -15,13 +16,16 @@ public class Main extends StateBasedGame {
 
     private static AppGameContainer appgc;
     public static final int GAME_ID = 0;
+    public static final int BATTLE_ID = 1;
     public static Game game;
+    public static BattleState battle;
+    public static boolean debug;
 
     public static ArrayList<Character> characters;
 
     public Main(String name) throws SlickException {
         super(name);
-
+        battle = new BattleState(BATTLE_ID);
         game = new Game(GAME_ID);
     }
 
@@ -36,10 +40,12 @@ public class Main extends StateBasedGame {
 
     public void initStatesList(GameContainer gc) throws SlickException {
         addState(game);
+        addState(battle);
     }
 
     public static void main(String[] args) {
         try {
+            debug = false;
             appgc = new AppGameContainer(new Main("Threnody"));
             System.setProperty("org.lwjgl.opengl.Window.undecorated", "true");
 
