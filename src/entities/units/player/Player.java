@@ -24,7 +24,7 @@ public final class Player extends Unit {
         this.position = new Coordinate(0, 0);
         this.xSpeed = 10;
         this.ySpeed = 5;//y speed needs to be half of x speed so the movement has that isometric feel
-        this.sheet = new SpriteSheet("res/tilemap/experimentalCharacter.png", 256, 512);
+        this.sheet = new SpriteSheet("res/experimentalCharacter.png", 256, 512);
         this.sprite = sheet.getSprite(0,0);
         this.level = 1;
         this.hitBox = new Hitbox(this);//set size to tiles

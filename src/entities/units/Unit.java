@@ -21,7 +21,7 @@ public class Unit extends Entity {
         super();
         this.type = EntityType.UNIT;
         this.level = 1;
-        this.health = 1;
+        this.health = 100;
         this.attack = 1;
         this.defense = 1;
         this.critRate = 1;
