@@ -1,6 +1,8 @@
 package playerdata;
 
-public final class Sigur extends PlayableCharacter {
+import java.io.Serializable;
+
+public final class Sigur extends PlayableCharacter implements Serializable {
 
     public Sigur() {
         super();

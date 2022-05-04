@@ -4,7 +4,7 @@ import org.newdawn.slick.Image;
 
 import java.util.HashMap;
 
-public class ImageManager {
+public final class ImageManager {
     public static final HashMap<String, Image> Images = new HashMap<>();
 
     private ImageManager() { throw new IllegalStateException("Utility class"); }

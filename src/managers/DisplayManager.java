@@ -12,7 +12,7 @@ import org.newdawn.slick.Graphics;
 
 import java.util.ArrayList;
 
-public class DisplayManager {
+public final class DisplayManager {
 	private Graphics graphics;
 
 	private Background background;

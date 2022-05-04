@@ -7,6 +7,7 @@ import org.newdawn.slick.SlickException;
 import org.newdawn.slick.state.StateBasedGame;
 
 import java.util.ArrayList;
+import java.util.Random;
 
 public class Main extends StateBasedGame {
     public static final int RESOLUTION_X = 1920;

@@ -8,7 +8,7 @@ import org.newdawn.slick.Input;
 import java.util.List;
 import java.util.function.Predicate;
 
-public class KeyManager implements Predicate<Integer> {
+public final class KeyManager implements Predicate<Integer> {
 	private static final float PLAYER_ACCELERATION = 2f;
 	public static final List<Integer> KEY_DOWN_LIST = List.of(Input.KEY_W, Input.KEY_S, Input.KEY_A, Input.KEY_D);
 

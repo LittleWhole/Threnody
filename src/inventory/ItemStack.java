@@ -1,6 +1,9 @@
 package inventory;
 
-public class ItemStack {
+import java.io.Serializable;
+import java.util.Objects;
+
+public class ItemStack implements Cloneable, Serializable {
     private Material type;
     private int amount;
     private byte data;
@@ -37,5 +40,18 @@ public class ItemStack {
 
     public Material getType() {
         return type;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof ItemStack)) return false;
+        ItemStack itemStack = (ItemStack) o;
+        return amount == itemStack.amount && data == itemStack.data && type == itemStack.type;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(type, amount, data);
     }
 }

@@ -7,4 +7,5 @@ public abstract class MysticArte extends Arte {
     public MysticArte(PlayableCharacter owner) {
         super(owner);
     }
+
 }

@@ -5,9 +5,10 @@ import core.Constants;
 import entities.units.player.PlayerOld;
 import org.newdawn.slick.Image;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public sealed class PlayableCharacter permits Sigur, Phaedra {
+public strictfp sealed class PlayableCharacter extends PlayerData implements Serializable permits Sigur, Phaedra {
 
     // PlayableCharacter is a data class. It will only be used to store characters' playerdata and will only be instantiated once per character.
     protected int level, exp, maxExp;
@@ -47,4 +48,5 @@ public sealed class PlayableCharacter permits Sigur, Phaedra {
     public void setEntity(PlayerOld entity) {
         this.entity = entity;
     }
+
 }

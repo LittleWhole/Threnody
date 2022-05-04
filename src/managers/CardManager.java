@@ -1,4 +1,4 @@
 package managers;
 
-public class CardManager {
+public final class CardManager {
 }

@@ -2,10 +2,11 @@ package entities.units;
 
 import entities.core.Coordinate;
 import entities.core.Hitbox;
+import entities.core.Team;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.SpriteSheet;
 
-public class Enemy extends Unit{
+public class Enemy extends Unit {
     public Enemy(float x, float y) throws SlickException {//later change parameters to also change size, level, speed, and sprite
         this.width = 256;
         this.height = 128;
@@ -16,6 +17,7 @@ public class Enemy extends Unit{
         this.sprite = sheet.getSprite(0, 0);
         this.level = 1;
         this.hitBox = new Hitbox(this);//set size to tiles
+        this.team = Team.ENEMY;
     }
 
     public void update()    {
