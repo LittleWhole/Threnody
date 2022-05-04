@@ -90,14 +90,14 @@ public abstract class Entity {
 	
 	// Rendering Methods
 	public void render(Graphics g) { // Main render method that is called
-		//hitBox.drawHitBox(g); // Draw hitbox first
+		if(Main.debug)	hitBox.drawHitBox(g); // Draw hitbox first
 		renderOther(g); // Draw unique entity graphics
 		drawSprite(g); // Draw entity sprite
 	}
 
 	protected abstract void renderOther(Graphics g); // Rendering method unique to the entity
 	protected void drawSprite(Graphics g) { // Draw the entity sprite
-		g.drawImage(this.sprite, (Main.getScreenWidth()/2) - 128, (Main.getScreenHeight()/2) - 256);
+		g.drawImage(this.sprite, (Main.getScreenWidth()/2) - 128, (Main.getScreenHeight()/2) - 256);//need to change so
 	}
 
 	
