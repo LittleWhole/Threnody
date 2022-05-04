@@ -1,25 +1,27 @@
 package combat.artes;
 
+import entities.units.player.Player;
 import gamestates.Game;
 import org.newdawn.slick.Graphics;
 import playerdata.PlayableCharacter;
 import playerdata.Sigur;
 
-public abstract class Arte {
+public abstract class Arte<C extends PlayableCharacter> {
 
-    protected PlayableCharacter owner; // The owner of the Arte
-
-    protected String name; // The name displayed by the Arte
+    protected Class<? extends PlayableCharacter> character; // The character that can use the Arte
+    protected C owner; // The owner of the arte
+    protected static String name; // The name displayed by the Arte
     protected int useTimestamp; // The exact timestamp when the Arte started use
     protected boolean using; // If the arte is activated or not
     protected int castTimestamp; // The exact timestamp when the Arte started casting
     protected int castDuration; // The amount of time casting takes
 
-    protected ArteType arteType;
-    protected ElementType damageType;
+    protected ArteType type;
+    protected ElementType element;
 
-    public Arte(PlayableCharacter owner) {
-        this.owner = owner;
+    protected Arte(C owner) {
+        assert character != null;
+        if (character.isInstance(owner)) this.owner = owner;
         this.castTimestamp = -1;
         this.useTimestamp = -1;
     }
@@ -56,7 +58,8 @@ public abstract class Arte {
         }
     }
 
-    abstract public void animation();
-    abstract public void activation();
+    public abstract void animation();
+
+    public abstract void activation();
 
 }

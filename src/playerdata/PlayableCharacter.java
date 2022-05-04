@@ -8,7 +8,7 @@ import org.newdawn.slick.Image;
 import java.io.Serializable;
 import java.util.ArrayList;
 
-public strictfp sealed class PlayableCharacter extends PlayerData implements Serializable permits Sigur, Phaedra {
+public abstract strictfp sealed class PlayableCharacter extends PlayerData implements Serializable permits Sigur, Phaedra {
 
     // PlayableCharacter is a data class. It will only be used to store characters' playerdata and will only be instantiated once per character.
     protected int level, exp, maxExp;
@@ -26,14 +26,14 @@ public strictfp sealed class PlayableCharacter extends PlayerData implements Ser
     protected ArrayList<Arte> artes;
     protected PlayerOld entity;
 
-    public PlayableCharacter() {
+    protected PlayableCharacter() {
         // Default character constructor
         this.level = 1;
         this.exp = 0;
         this.maxExp = Constants.LevelingConstants.MAX_EXP(1);
     }
 
-    public PlayableCharacter(int level, int exp) {
+    protected PlayableCharacter(int level, int exp) {
         this();
         // Default character constructor
         this.level = level;
