@@ -5,7 +5,9 @@ import entities.core.Coordinate;
 import entities.core.Entity;
 import entities.core.EntityType;
 import entities.units.player.Player;
+import graphics.Background;
 import managers.DisplayManager;
+import managers.ImageManager;
 import managers.KeyManager;
 import org.newdawn.slick.*;
 import org.newdawn.slick.state.BasicGameState;
@@ -34,6 +36,7 @@ public class Game extends BasicGameState {
     private Coordinate plrPosition;
     private Player plr;
     public TiledMap overworld;
+    public Background background;
 
     public Map<EntityType, ArrayList<Entity>> getEntities() { return entities; }
     public ArrayList<Entity> getEntitiesOf(EntityType type) { return entities.get(type); }
@@ -57,6 +60,7 @@ public class Game extends BasicGameState {
     public void init(GameContainer gc, StateBasedGame sbg) throws SlickException {
         // This code happens when you enter a game state for the *first time.*
         overworld = new TiledMap("res/tilemap/overworld.tmx", true);
+        background = new Background();
         gc.setShowFPS(true);
         this.gc = gc;
         plrPosition = new Coordinate(0,0);
@@ -64,7 +68,8 @@ public class Game extends BasicGameState {
 
     public void render(GameContainer gc, StateBasedGame sbg, Graphics g) throws SlickException {
         // Sets background to the specified RGB color
-        g.setBackground(new Color(100, 100, 100));
+        g.setBackground(new Color(167, 231, 255));
+        background.render(g);
         for (int i = 0; i < overworld.getLayerCount(); i++) overworld.render((int)((plr.getX()*-1)+(Main.getScreenWidth()/2)-(plr.getWidth()/2)),
                                                                              (int)((plr.getY()*-0.5)-(Main.getScreenHeight()*2)-(plr.getHeight()*(3/2))), i);
         //overworld.render((int) plr.getX()/2+20, (int) plr.getY()/2-20);
@@ -82,6 +87,9 @@ public class Game extends BasicGameState {
         // Manage Key and Cursor Input
         keyInput(); // Manage keys that are down
         cursorInput(); // Manage the cursor
+
+        // Update Background
+        background.update();
 
         // Update Player
         plr.update();

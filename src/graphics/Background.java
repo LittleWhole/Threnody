@@ -3,18 +3,19 @@ package graphics;
 import org.newdawn.slick.Graphics;
 
 public class Background {
-    private Star[] stars;
+    private Cloud[] clouds;
 
     public Background() {
-        stars = new Star[25];
+        clouds = new Cloud[7];
 
-        for(int i = 0; i < stars.length; i++) {
-            stars[i] = new Star();
+        for(int i = 0; i < clouds.length; i++) {
+            clouds[i] = new Cloud();
         }
     }
 
+    public void update() { for (Cloud c : clouds) c.update(); }
     public void render(Graphics g) {
-        for(Star s: stars) s.render(g);
+        for (Cloud c : clouds) c.render(g);
     }
 
 }

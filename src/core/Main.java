@@ -2,30 +2,36 @@ package core;
 
 import gamestates.BattleState;
 import gamestates.Game;
+import gamestates.LoadingScreen;
 import org.newdawn.slick.AppGameContainer;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.state.StateBasedGame;
+import playerdata.PlayableCharacter;
 
 import java.util.ArrayList;
 import java.util.Random;
 
 public class Main extends StateBasedGame {
-    public static final int RESOLUTION_X = 1920;
-    public static final int RESOLUTION_Y = 1080;
+    public static final int RESOLUTION_X = 2400;
+    public static final int RESOLUTION_Y = 1600;
     public static final int FRAMES_PER_SECOND = 60;
 
     private static AppGameContainer appgc;
-    public static final int GAME_ID = 0;
-    public static final int BATTLE_ID = 1;
+    public static final int LOADING_ID = 0;
+    public static final int GAME_ID = 1;
+    public static final int BATTLE_ID = 2;
+    public static LoadingScreen loading;
     public static Game game;
     public static BattleState battle;
     public static boolean debug;
 
-    public static ArrayList<Character> characters;
+    public static ArrayList<PlayableCharacter> characters;
 
     public Main(String name) throws SlickException {
         super(name);
+
+        loading = new LoadingScreen(LOADING_ID);
         battle = new BattleState(BATTLE_ID);
         game = new Game(GAME_ID);
     }
@@ -40,6 +46,7 @@ public class Main extends StateBasedGame {
 
 
     public void initStatesList(GameContainer gc) throws SlickException {
+        addState(loading);
         addState(game);
         addState(battle);
     }
