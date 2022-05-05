@@ -19,8 +19,12 @@ public class Enemy extends Unit {
         this.team = Team.ENEMY;
     }
 
-    public void update()    {
-        //have two update modes. 1 is overworld which is just moving. 2 is battlestate which includes attacking
+    public void overworldUpdate()    {
+
+    }
+
+    public void battleMove()    {
+
     }
 
     public Enemy getEnemy() {

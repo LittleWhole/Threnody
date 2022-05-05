@@ -31,6 +31,10 @@ public final class Player extends Unit {
         this.hitBox = new Rectangle(getX(), getY(), this.width, this.height); // set size to tiles
     }
 
+    public void move()  {
+
+    }
+
     public Player getPlayer() {
         return this;
     }
