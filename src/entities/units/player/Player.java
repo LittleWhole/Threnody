@@ -23,7 +23,7 @@ public final class Player extends Unit {
         this.height = 128;
         this.position = pos;
         this.xSpeed = 10;
-        this.ySpeed = 5;//y speed needs to be half of x speed so the movement looks isometric
+        this.ySpeed = 10;
         this.sheet = new SpriteSheet("res/experimentalCharacter.png", 256, 512);
         this.sprite = sheet.getSprite(0,0);
         this.level = 1;

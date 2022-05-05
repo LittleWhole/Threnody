@@ -12,7 +12,6 @@ import entities.units.player.Player;
 
 public class BattleState extends BasicGameState {
     private final int id;
-
     private Player plr;
     private TiledMap battlefield;
 

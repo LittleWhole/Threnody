@@ -97,7 +97,7 @@ public abstract class Entity {
 
 	protected abstract void renderOther(Graphics g); // Rendering method unique to the entity
 	protected void drawSprite(Graphics g) { // Draw the entity sprite
-		g.drawImage(this.sprite, (Main.getScreenWidth()/2) - 128, (Main.getScreenHeight()/2) - 256);//need to change so
+		g.drawImage(this.sprite, (Main.getScreenWidth()/2) - 128, (Main.getScreenHeight()/2) - 256);//need to change
 	}
 
 	
