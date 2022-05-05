@@ -16,7 +16,6 @@ public class Enemy extends Unit {
         this.sheet = new SpriteSheet("res/experimentalEnemy.png", 256, 512);
         this.sprite = sheet.getSprite(0, 0);
         this.level = 1;
-        this.hitBox = new Hitbox(this);//set size to tiles
         this.team = Team.ENEMY;
     }
 

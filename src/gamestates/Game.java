@@ -4,18 +4,22 @@ import core.Main;
 import entities.core.Coordinate;
 import entities.core.Entity;
 import entities.core.EntityType;
+import entities.core.Hitbox;
 import entities.units.player.Player;
 import graphics.Background;
 import managers.DisplayManager;
 import managers.ImageManager;
 import managers.KeyManager;
+import map.GameMap;
 import org.newdawn.slick.*;
+import org.newdawn.slick.geom.Rectangle;
 import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
 import org.newdawn.slick.tiled.TiledMap;
 
 import java.util.ArrayList;
 import java.util.EnumMap;
+import java.util.List;
 import java.util.Map;
 import java.util.function.Predicate;
 
@@ -35,7 +39,7 @@ public class Game extends BasicGameState {
     public DisplayManager displayManager; // Display Manager 
     private Coordinate plrPosition;
     private Player plr;
-    public TiledMap overworld;
+    public GameMap overworld;
     public Background background;
 
     public Map<EntityType, ArrayList<Entity>> getEntities() { return entities; }
@@ -59,7 +63,7 @@ public class Game extends BasicGameState {
 
     public void init(GameContainer gc, StateBasedGame sbg) throws SlickException {
         // This code happens when you enter a game state for the *first time.*
-        overworld = new TiledMap("res/tilemap/overworld.tmx", true);
+        overworld = new GameMap("res/tilemap/overworld.tmx");
         background = new Background();
         gc.setShowFPS(true);
         this.gc = gc;
@@ -173,5 +177,9 @@ public class Game extends BasicGameState {
 
     public static int getTime() {
         return time;
+    }
+
+    public GameMap getOverworld() {
+        return overworld;
     }
 }

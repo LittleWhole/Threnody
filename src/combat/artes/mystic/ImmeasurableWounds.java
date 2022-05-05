@@ -1,11 +1,11 @@
-package combat.artes.normal;
+package combat.artes.mystic;
 
-import combat.artes.Arte;
+import combat.artes.MysticArte;
 import playerdata.PlayableCharacter;
 
-public class SigurNormal extends Arte {
+public class ImmeasurableWounds extends MysticArte {
 
-    public SigurNormal(PlayableCharacter owner) {
+    public ImmeasurableWounds(PlayableCharacter owner) {
         super(owner);
     }
 
@@ -18,4 +18,5 @@ public class SigurNormal extends Arte {
     public void activation() {
 
     }
+
 }
