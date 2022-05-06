@@ -1,9 +1,12 @@
 package managers;
 
+import core.Main;
 import entities.units.player.Player;
 import entities.units.player.PlayerOld;
 import gamestates.Game;
+import map.GameMap;
 import org.newdawn.slick.Input;
+import org.newdawn.slick.geom.Shape;
 
 import java.util.List;
 import java.util.function.Predicate;
@@ -16,10 +19,12 @@ public final class KeyManager implements Predicate<Integer> {
 
 	private Player player;
 	private Input input;
+	private GameMap map;
 	
 	public KeyManager(Input input, Game game) {
 		this.input = input;
 		this.player = game.getPlayer();
+		this.map = game.getOverworld();
 	}
 	
 	public boolean test(Integer i) {
@@ -28,10 +33,18 @@ public final class KeyManager implements Predicate<Integer> {
 	
 	public void keyDown(int key) {
 		switch (key) {
-			case Input.KEY_W -> player.accelerateY(PLAYER_ACCELERATION);
-			case Input.KEY_A -> player.accelerateX(-PLAYER_ACCELERATION);
-			case Input.KEY_S -> player.accelerateY(-PLAYER_ACCELERATION);
-			case Input.KEY_D -> player.accelerateX(PLAYER_ACCELERATION);
+			case Input.KEY_W -> {
+				for (Shape[] sa : map.getHitboxes()) for (Shape s : sa) if (!player.getHitBox().intersects(s)) player.accelerateY(PLAYER_ACCELERATION);
+			}
+			case Input.KEY_A -> {
+				for (Shape[] sa : map.getHitboxes()) for (Shape s : sa) if (!player.getHitBox().intersects(s)) player.accelerateX(-PLAYER_ACCELERATION);
+			}
+			case Input.KEY_S -> {
+				for (Shape[] sa : map.getHitboxes()) for (Shape s : sa) if (!player.getHitBox().intersects(s)) player.accelerateY(-PLAYER_ACCELERATION);
+			}
+			case Input.KEY_D -> {
+				for (Shape[] sa : map.getHitboxes()) for (Shape s : sa) if (!player.getHitBox().intersects(s)) player.accelerateX(PLAYER_ACCELERATION);
+			}
 		}
 	}
 }

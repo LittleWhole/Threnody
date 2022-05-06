@@ -15,20 +15,18 @@ public class Unit extends Entity {
     protected int critDamage;
     protected int eAttack;
     protected int eDefense;
-    protected int affinity;
 
     public Unit() {
         super();
         this.type = EntityType.UNIT;
         this.level = 1;
-        this.health = 100;
+        this.health = 1;
         this.attack = 1;
         this.defense = 1;
         this.critRate = 1;
         this.critDamage = 1;
         this.eAttack = 1;
         this.eDefense = 1;
-        this.affinity = 1;
     }
 
     @Override
@@ -36,7 +34,7 @@ public class Unit extends Entity {
 
     }
 
-    public Unit(int level, int health, int attack, int defense, int critRate, int critDamage, int eAttack, int eDefense, int affinity) {
+    public Unit(int level, int health, int attack, int defense, int critRate, int critDamage, int eAttack, int eDefense) {
         super();
         this.level = level;
         this.health = health;
@@ -46,7 +44,6 @@ public class Unit extends Entity {
         this.critDamage = critDamage;
         this.eAttack = eAttack;
         this.eDefense = eDefense;
-        this.affinity = affinity;
     }
 
     public Unit getUnit() {

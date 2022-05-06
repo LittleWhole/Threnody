@@ -6,6 +6,7 @@ import entities.core.Coordinate;
 import entities.core.Hitbox;
 import entities.units.Unit;
 import org.newdawn.slick.*;
+import org.newdawn.slick.geom.Rectangle;
 import org.newdawn.slick.tiled.TiledMap;
 
 public final class Player extends Unit {
@@ -27,7 +28,11 @@ public final class Player extends Unit {
         this.sheet = new SpriteSheet("res/experimentalCharacter.png", 256, 512);
         this.sprite = sheet.getSprite(0,0);
         this.level = 1;
-        this.hitBox = new Hitbox(this);//set size to tiles
+        this.hitBox = new Rectangle(getX(), getY(), this.width, this.height); // set size to tiles
+    }
+
+    public void move()  {
+
     }
 
     public Player getPlayer() {

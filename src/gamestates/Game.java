@@ -4,16 +4,22 @@ import core.Main;
 import entities.core.Coordinate;
 import entities.core.Entity;
 import entities.core.EntityType;
+import entities.core.Hitbox;
 import entities.units.player.Player;
+import graphics.Background;
 import managers.DisplayManager;
+import managers.ImageManager;
 import managers.KeyManager;
+import map.GameMap;
 import org.newdawn.slick.*;
+import org.newdawn.slick.geom.Rectangle;
 import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
 import org.newdawn.slick.tiled.TiledMap;
 
 import java.util.ArrayList;
 import java.util.EnumMap;
+import java.util.List;
 import java.util.Map;
 import java.util.function.Predicate;
 
@@ -33,7 +39,8 @@ public class Game extends BasicGameState {
     public DisplayManager displayManager; // Display Manager 
     private Coordinate plrPosition;
     private Player plr;
-    public TiledMap overworld;
+    public GameMap overworld;
+    public Background background;
 
     public Map<EntityType, ArrayList<Entity>> getEntities() { return entities; }
     public ArrayList<Entity> getEntitiesOf(EntityType type) { return entities.get(type); }
@@ -56,7 +63,8 @@ public class Game extends BasicGameState {
 
     public void init(GameContainer gc, StateBasedGame sbg) throws SlickException {
         // This code happens when you enter a game state for the *first time.*
-        overworld = new TiledMap("res/tilemap/overworld.tmx", true);
+        overworld = new GameMap("res/tilemap/overworld.tmx");
+        background = new Background();
         gc.setShowFPS(true);
         this.gc = gc;
         plrPosition = new Coordinate(0,0);
@@ -64,7 +72,8 @@ public class Game extends BasicGameState {
 
     public void render(GameContainer gc, StateBasedGame sbg, Graphics g) throws SlickException {
         // Sets background to the specified RGB color
-        g.setBackground(new Color(100, 100, 100));
+        g.setBackground(new Color(167, 231, 255));
+        background.render(g);
         for (int i = 0; i < overworld.getLayerCount(); i++) overworld.render((int)((plr.getX()*-1)+(Main.getScreenWidth()/2)-(plr.getWidth()/2)),
                                                                              (int)((plr.getY()*-0.5)-(Main.getScreenHeight()*2)-(plr.getHeight()*(3/2))), i);
         //overworld.render((int) plr.getX()/2+20, (int) plr.getY()/2-20);
@@ -82,6 +91,9 @@ public class Game extends BasicGameState {
         // Manage Key and Cursor Input
         keyInput(); // Manage keys that are down
         cursorInput(); // Manage the cursor
+
+        // Update Background
+        background.update();
 
         // Update Player
         plr.update();
@@ -165,5 +177,9 @@ public class Game extends BasicGameState {
 
     public static int getTime() {
         return time;
+    }
+
+    public GameMap getOverworld() {
+        return overworld;
     }
 }

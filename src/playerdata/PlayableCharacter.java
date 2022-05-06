@@ -20,7 +20,7 @@ public abstract strictfp sealed class PlayableCharacter extends PlayerData imple
     protected int critDamage;
     protected int eAttack;
     protected int eDefense;
-    protected int affinity;
+    protected final ArrayList<Arte> dRINGU = new ArrayList<Arte>();
 
     protected Image sprite;
     protected ArrayList<Arte> artes;
@@ -38,7 +38,7 @@ public abstract strictfp sealed class PlayableCharacter extends PlayerData imple
         // Default character constructor
         this.level = level;
         this.exp = exp;
-        this.maxExp = Constants.LevelingConstants.MAX_EXP(level);
+         this.maxExp = Constants.LevelingConstants.MAX_EXP(level);
     }
 
     public PlayerOld getEntity() {
