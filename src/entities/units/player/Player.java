@@ -23,8 +23,8 @@ public final class Player extends Unit {
         this.width = 64;
         this.height = 135;
         this.position = pos;
-        this.xSpeed = 10;
-        this.ySpeed = 10;
+        this.xSpeed = 20;
+        this.ySpeed = 20;
         this.sheet = new SpriteSheet("res/experimentalCharacter.png", 256, 512);
         this.sprite = sheet.getSprite(0,0);
         this.level = 1;

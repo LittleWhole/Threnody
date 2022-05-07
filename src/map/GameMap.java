@@ -1,5 +1,6 @@
 package map;
 
+import core.Main;
 import entities.units.player.Player;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.Graphics;
@@ -7,6 +8,7 @@ import org.newdawn.slick.SlickException;
 import org.newdawn.slick.geom.Polygon;
 import org.newdawn.slick.geom.Rectangle;
 import org.newdawn.slick.geom.Shape;
+import org.newdawn.slick.geom.Transform;
 import org.newdawn.slick.tiled.TiledMap;
 
 public class GameMap extends TiledMap {
@@ -29,7 +31,6 @@ public class GameMap extends TiledMap {
     public void generateHitboxes()   {
         for(int i = 0; i < hitboxes.length; i++)    {
             for(int j = 0; j < hitboxes[i].length; j++)    {
-
                 if(getTileId(i,j,1) != 0)   {
                     if(getTileProperty(getTileId(i,j,1), "walkable", "false").equals("false"))  {
                         hitboxes[i][j] = new Polygon();
@@ -38,8 +39,9 @@ public class GameMap extends TiledMap {
                         hitboxes[i][j].addPoint(128,((float)Math.cos(Math.PI/3)*128f));
                         hitboxes[i][j].addPoint(0 ,((float)Math.sin(Math.PI/6)*256));
                         hitboxes[i][j].setClosed(true);
-                        hitboxes[i][j].setX(hitboxes[i][j].getX()+(i*256));
-                        hitboxes[i][j].setY(hitboxes[i][j].getY()+(j*256));
+
+                        hitboxes[i][j].setCenterX((Main.getScreenWidth()*0.55f)-((j-i)*128));
+                        hitboxes[i][j].setCenterY((((Main.getScreenHeight()*0.899f))-(this.width*64))+((i+j)*64));
                     }
                 }
             }
