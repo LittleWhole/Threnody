@@ -34,14 +34,14 @@ public class GameMap extends TiledMap {
                 if(getTileId(i,j,1) != 0)   {
                     if(getTileProperty(getTileId(i,j,1), "walkable", "false").equals("false"))  {
                         hitboxes[i][j] = new Polygon();
-                        hitboxes[i][j].addPoint(128,128*1.5f);
-                        hitboxes[i][j].addPoint(256,((float)Math.sin(Math.PI/6)*256));
-                        hitboxes[i][j].addPoint(128,((float)Math.cos(Math.PI/3)*128f));
-                        hitboxes[i][j].addPoint(0 ,((float)Math.sin(Math.PI/6)*256));
+                        hitboxes[i][j].addPoint(tileWidth/2f,tileHeight*1.5f);
+                        hitboxes[i][j].addPoint(tileWidth,((float)Math.sin(Math.PI/6)*tileWidth));
+                        hitboxes[i][j].addPoint(tileWidth/2f,((float)Math.cos(Math.PI/3)*tileHeight));
+                        hitboxes[i][j].addPoint(0 ,((float)Math.sin(Math.PI/6)*tileWidth));
                         hitboxes[i][j].setClosed(true);
 
-                        hitboxes[i][j].setCenterX((Main.getScreenWidth()*0.55f)-((j-i)*128));
-                        hitboxes[i][j].setCenterY((((Main.getScreenHeight()*0.899f))-(this.width*64))+((i+j)*64));
+                        hitboxes[i][j].setCenterX((Main.getScreenWidth()*0.55f)-((j-i)*tileWidth/2f));
+                        hitboxes[i][j].setCenterY((((Main.getScreenHeight()*0.899f))-(this.width*tileHeight/2f))+((i+j)*tileHeight/2f));
                     }
                 }
             }
