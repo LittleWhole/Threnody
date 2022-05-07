@@ -1,8 +1,10 @@
 package map;
 
 import entities.units.player.Player;
+import org.newdawn.slick.Color;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.SlickException;
+import org.newdawn.slick.geom.Polygon;
 import org.newdawn.slick.geom.Rectangle;
 import org.newdawn.slick.geom.Shape;
 import org.newdawn.slick.tiled.TiledMap;
@@ -12,15 +14,48 @@ public class GameMap extends TiledMap {
     private int tileId;
     private int layerIndex;
     private boolean solids[][];
-    private Shape hitboxes[][];
+    private Polygon hitboxes[][];
 
     public GameMap(String ref) throws SlickException {
         super(ref, true);
         solids = new boolean[super.getWidth()][super.getHeight()];
-        hitboxes = new Shape[super.getWidth()][super.getHeight()];
+        hitboxes = new Polygon[super.getWidth()][super.getHeight()];
+        generateHitboxes();
         tileId = 0;
         layerIndex = 0;
-        super.g
+        //super.g
+    }
+
+    public void generateHitboxes()   {
+        for(int i = 0; i < hitboxes.length; i++)    {
+            for(int j = 0; j < hitboxes[i].length; j++)    {
+
+                if(getTileId(i,j,1) != 0)   {
+                    if(getTileProperty(getTileId(i,j,1), "walkable", "false").equals("false"))  {
+                        hitboxes[i][j] = new Polygon();
+                        hitboxes[i][j].addPoint(128,128*1.5f);
+                        hitboxes[i][j].addPoint(256,((float)Math.sin(Math.PI/6)*256));
+                        hitboxes[i][j].addPoint(128,((float)Math.cos(Math.PI/3)*128f));
+                        hitboxes[i][j].addPoint(0 ,((float)Math.sin(Math.PI/6)*256));
+                        hitboxes[i][j].setClosed(true);
+                        hitboxes[i][j].setX(hitboxes[i][j].getX()+(i*256));
+                        hitboxes[i][j].setY(hitboxes[i][j].getY()+(j*256));
+                    }
+                }
+            }
+        }
+    }
+
+    public void updateHitboxes(float dx, float yx)    {
+        for(int i = 0; i < hitboxes.length; i++)    {
+            for(int j = 0; j < hitboxes[i].length; j++)    {
+
+                if(hitboxes[i][j] != null)   {
+                    hitboxes[i][j].setX(hitboxes[i][j].getX()+dx);
+                    hitboxes[i][j].setY(hitboxes[i][j].getY()+yx);
+                }
+            }
+        }
     }
 
     public void render(Player plr) {
@@ -58,7 +93,7 @@ public class GameMap extends TiledMap {
         this.solids[j][i] = solid;
     }
 
-    public void setRect(int i, int j, Shape hitbox) {
+    public void setHitbox(int i, int j, Polygon hitbox) {
         this.hitboxes[j][i] = hitbox;
     }
 
@@ -74,19 +109,25 @@ public class GameMap extends TiledMap {
     }
 
     public void drawDebugRects(Graphics g){
+        g.setColor(Color.red);
         layerIndex = this.getLayerIndex();
         tileId = 0;
         for(int i=0;i<this.getWidth();i++){
             for(int j=0;j<this.getHeight();j++){
                 tileId = this.getTileId(j, i, layerIndex);
-                g.draw(hitboxes[j][i]);
+                if(hitboxes[j][i] != null) {
+                    g.fill(hitboxes[j][i]);
+                }
             }
         }
     }
     public boolean collidesWith(Shape s){
         for(int i=0;i<this.getWidth();i++){
             for(int j=0;j<this.getHeight(); j++){
-                if(s.intersects(hitboxes[j][i]) && solids[j][i]){
+                if(hitboxes[j][i] != null) {
+                    if (s.intersects(hitboxes[j][i]) && solids[j][i]) {
+                        return true;
+                    }
                 }
             }
         }

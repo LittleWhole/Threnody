@@ -72,6 +72,7 @@ public class Game extends BasicGameState {
 
     public void render(GameContainer gc, StateBasedGame sbg, Graphics g) throws SlickException {
         // Sets background to the specified RGB color
+        g.setColor(Color.white);
         g.setBackground(new Color(167, 231, 255));
         background.render(g);
         for (int i = 0; i < overworld.getLayerCount(); i++) overworld.render((int)((plr.getX()*-1)+(Main.getScreenWidth()/2)-(plr.getWidth()/2)),
@@ -80,6 +81,10 @@ public class Game extends BasicGameState {
         //overworld.render(0, 0, (int) plr.getX() / 100 - 20, (int) plr.getY() / 100 + 20, (int) plr.getX() / 100, (int) plr.getY() / 100);
         plr.render(g);
         g.drawString("Coords: " + plr.getPosition().toString(), 100, 100);
+        overworld.drawDebugRects(g);
+        if(Main.debug)  {
+
+        }
     }
 
     public void update(GameContainer gc, StateBasedGame sbg, int delta) throws SlickException {

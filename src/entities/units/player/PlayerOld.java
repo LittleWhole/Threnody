@@ -13,8 +13,8 @@ public class PlayerOld extends Unit {
         super();
     }
 
-    public PlayerOld(int level, int health, int attack, int defense, int critRate, int critDamage, int eAttack, int eDefense, int affinity) {
-        super(level, health, attack, defense, critRate, critDamage, eAttack, eDefense, affinity);
+    public PlayerOld(int level, int health, int attack, int defense, int critRate, int critDamage, int eAttack, int eDefense) {
+        super(level, health, attack, defense, critRate, critDamage, eAttack, eDefense);
         this.level = level;
     }
 

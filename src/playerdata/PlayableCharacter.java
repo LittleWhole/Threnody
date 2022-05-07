@@ -3,6 +3,7 @@ package playerdata;
 import combat.artes.Arte;
 import core.Constants;
 import entities.units.player.PlayerOld;
+import inventory.Inventory;
 import org.newdawn.slick.Image;
 
 import java.io.Serializable;
@@ -20,10 +21,10 @@ public abstract strictfp sealed class PlayableCharacter extends PlayerData imple
     protected int critDamage;
     protected int eAttack;
     protected int eDefense;
-    protected final ArrayList<Arte> dRINGU = new ArrayList<Arte>();
+    // final ArrayList<Arte> dRINGU = new ArrayList<Arte>();
 
     protected Image sprite;
-    protected ArrayList<Arte> artes;
+    protected ArrayList<Arte> arteDeck;
     protected PlayerOld entity;
 
     protected PlayableCharacter() {
