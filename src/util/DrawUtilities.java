@@ -4,7 +4,6 @@ import org.newdawn.slick.Graphics;
 import org.newdawn.slick.TrueTypeFont;
 import org.newdawn.slick.geom.Rectangle;
 
-import java.awt.*;
 
 public final class DrawUtilities {
 
@@ -25,7 +24,7 @@ public final class DrawUtilities {
     /*===================================*/
 
     public static void drawStringCentered(Graphics g, String string, float x, float y) {
-        TrueTypeFont font = new TrueTypeFont(new Font("Bahnschrift", Font.PLAIN, 20), true);
+        org.newdawn.slick.Font font = new TrueTypeFont(new java.awt.Font("Bahnschrift", java.awt.Font.PLAIN, 20), true);
         int width = font.getWidth(string);
         int height = font.getHeight(string);
         Rectangle r = createRectangleCentered(x, y, width, height);
@@ -34,8 +33,8 @@ public final class DrawUtilities {
                 (r.getY() + r.getHeight() / 2) - (height / 2));
     }
 
-    public static void drawStringCentered(Graphics g, String string, TrueTypeFont font, float x, float y) {
-        TrueTypeFont prevFont = (TrueTypeFont) g.getFont();
+    public static void drawStringCentered(Graphics g, String string, org.newdawn.slick.Font font, float x, float y) {
+        org.newdawn.slick.Font prevFont = g.getFont();
         int width = font.getWidth(string);
         int height = font.getHeight(string);
         Rectangle r = createRectangleCentered(x, y, width, height);
@@ -47,7 +46,7 @@ public final class DrawUtilities {
     }
 
     public static void drawStringCentered(Graphics g, String string, Rectangle r) {
-        TrueTypeFont font = new TrueTypeFont(new Font("Bahnschrift", Font.PLAIN, 20), true);
+        org.newdawn.slick.Font font = new TrueTypeFont(new java.awt.Font("Bahnschrift", java.awt.Font.PLAIN, 20), true);
         int width = font.getWidth(string);
         int height = font.getHeight(string);
 
@@ -55,7 +54,7 @@ public final class DrawUtilities {
                 (r.getY() + r.getHeight() / 2) - (height / 2));
     }
 
-    public static void drawStringCentered(Graphics g, String string, TrueTypeFont font, Rectangle r) {
+    public static void drawStringCentered(Graphics g, String string, org.newdawn.slick.Font font, Rectangle r) {
         int width = font.getWidth(string);
         int height = font.getHeight(string);
 

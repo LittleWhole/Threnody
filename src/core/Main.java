@@ -12,6 +12,7 @@ import playerdata.PlayableCharacter;
 
 import java.awt.*;
 import java.util.ArrayList;
+import static org.lwjgl.opengl.GL11.*;
 
 public class Main extends StateBasedGame {
     public static final int RESOLUTION_X = 1920;

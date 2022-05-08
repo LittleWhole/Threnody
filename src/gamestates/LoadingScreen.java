@@ -103,7 +103,7 @@ public class LoadingScreen extends BasicGameState {
 
         final float PERCENT_LOADED = (float) tasksDone / (float) totalTasks;
 
-        DrawUtilities.drawStringCentered(g, "Threnody", new TrueTypeFont(new java.awt.Font("Bahnschrift", java.awt.Font.BOLD, 55), true), Main.RESOLUTION_X / 2, Main.RESOLUTION_Y / 3);
+        DrawUtilities.drawStringCentered(g, "Threnody", new TrueTypeFont(new java.awt.Font("Bahnschrift", java.awt.Font.BOLD, 50), true), Main.RESOLUTION_X / 2, Main.RESOLUTION_Y / 3);
         g.setBackground(new Color((int) (167 * PERCENT_LOADED), (int) (231 * PERCENT_LOADED), (int) (255 * PERCENT_LOADED)));
 
         // max loading bar
