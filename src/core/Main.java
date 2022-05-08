@@ -14,8 +14,8 @@ import java.awt.*;
 import java.util.ArrayList;
 
 public class Main extends StateBasedGame {
-    public static final int RESOLUTION_X = 2400;
-    public static final int RESOLUTION_Y = 1600;
+    public static final int RESOLUTION_X = 1920;
+    public static final int RESOLUTION_Y = 1080;
     public static final int FRAMES_PER_SECOND = 60;
 
     private static AppGameContainer appgc;
@@ -62,8 +62,8 @@ public class Main extends StateBasedGame {
             appgc.setTargetFrameRate(FRAMES_PER_SECOND);
             appgc.start();
             appgc.setVSync(true);
-            appgc.setDefaultFont(new TrueTypeFont(new Font("Bahnschrift", Font.PLAIN, 32), true));
-            appgc.getGraphics().setFont(new TrueTypeFont(new Font("Bahnschrift", Font.PLAIN, 32), true));
+            appgc.setDefaultFont(new TrueTypeFont(new Font("Bahnschrift", Font.PLAIN, 20), true));
+            appgc.getGraphics().setFont(new TrueTypeFont(new Font("Bahnschrift", Font.PLAIN, 20), true));
 
         } catch (SlickException e) {
             e.printStackTrace();

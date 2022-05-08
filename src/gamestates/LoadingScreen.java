@@ -4,10 +4,12 @@ package gamestates;
 
 import core.Main;
 import org.newdawn.slick.*;
+import org.newdawn.slick.geom.RoundedRectangle;
 import org.newdawn.slick.loading.DeferredResource;
 import org.newdawn.slick.loading.LoadingList;
 import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
+import util.DrawUtilities;
 import util.Resource;
 
 import java.io.File;
@@ -101,21 +103,21 @@ public class LoadingScreen extends BasicGameState {
 
         final float PERCENT_LOADED = (float) tasksDone / (float) totalTasks;
 
-        g.drawString("SEAHAZE STUDIOS", Main.RESOLUTION_X / 2, Main.RESOLUTION_Y / 3);
+        DrawUtilities.drawStringCentered(g, "Threnody", new TrueTypeFont(new java.awt.Font("Bahnschrift", java.awt.Font.BOLD, 55), true), Main.RESOLUTION_X / 2, Main.RESOLUTION_Y / 3);
         g.setBackground(new Color((int) (167 * PERCENT_LOADED), (int) (231 * PERCENT_LOADED), (int) (255 * PERCENT_LOADED)));
 
         // max loading bar
-        g.setColor(new Color(0, 100, 0, 150));
-        g.fillRect(BAR_X, BAR_Y, BAR_WIDTH, BAR_HEIGHT);
+        g.setColor(new Color(20, 100, 40, 150));
+        g.fill(new RoundedRectangle(BAR_X, BAR_Y, BAR_WIDTH, BAR_HEIGHT, RoundedRectangle.ALL));
 
         // current loaded
-        g.setColor(new Color(0, 255, 0, 150));
-        g.fillRect(BAR_X, BAR_Y, BAR_WIDTH * PERCENT_LOADED, BAR_HEIGHT);
+        g.setColor(new Color(20, 255, 40, 150));
+        g.fill(new RoundedRectangle(BAR_X, BAR_Y, BAR_WIDTH * PERCENT_LOADED, BAR_HEIGHT, RoundedRectangle.ALL));
 
         // white outline
         g.setColor(new Color(255, 255, 255));
-        g.drawRect(BAR_X, BAR_Y, BAR_WIDTH, BAR_HEIGHT);
+        g.draw(new RoundedRectangle(BAR_X, BAR_Y, BAR_WIDTH, BAR_HEIGHT, RoundedRectangle.ALL));
 
-        g.drawString("Loaded " + lastResource, BAR_X + BAR_WIDTH / 2 - 35f, BAR_Y + BAR_HEIGHT + 25f);
+        DrawUtilities.drawStringCentered(g, "Loaded " + lastResource, Main.RESOLUTION_X / 2, BAR_Y + BAR_HEIGHT + 25f);
     }
 }
