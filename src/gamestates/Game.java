@@ -4,22 +4,17 @@ import core.Main;
 import entities.core.Coordinate;
 import entities.core.Entity;
 import entities.core.EntityType;
-import entities.core.Hitbox;
 import entities.units.player.Player;
 import graphics.Background;
 import managers.DisplayManager;
-import managers.ImageManager;
 import managers.KeyManager;
 import map.GameMap;
 import org.newdawn.slick.*;
-import org.newdawn.slick.geom.Rectangle;
 import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
-import org.newdawn.slick.tiled.TiledMap;
 
 import java.util.ArrayList;
 import java.util.EnumMap;
-import java.util.List;
 import java.util.Map;
 import java.util.function.Predicate;
 
@@ -71,7 +66,7 @@ public class Game extends BasicGameState {
     }
 
     public void render(GameContainer gc, StateBasedGame sbg, Graphics g) throws SlickException {
-        // Sets background to the specified RGB color
+        g.setFont(new TrueTypeFont(new java.awt.Font("Bahnschrift", java.awt.Font.PLAIN, 20), true));
         g.setColor(Color.white);
         g.setBackground(new Color(167, 231, 255));
         background.render(g);

@@ -6,11 +6,12 @@ import gamestates.LoadingScreen;
 import org.newdawn.slick.AppGameContainer;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.SlickException;
+import org.newdawn.slick.TrueTypeFont;
 import org.newdawn.slick.state.StateBasedGame;
 import playerdata.PlayableCharacter;
 
+import java.awt.*;
 import java.util.ArrayList;
-import java.util.Random;
 
 public class Main extends StateBasedGame {
     public static final int RESOLUTION_X = 2400;
@@ -61,6 +62,8 @@ public class Main extends StateBasedGame {
             appgc.setTargetFrameRate(FRAMES_PER_SECOND);
             appgc.start();
             appgc.setVSync(true);
+            appgc.setDefaultFont(new TrueTypeFont(new Font("Bahnschrift", Font.PLAIN, 32), true));
+            appgc.getGraphics().setFont(new TrueTypeFont(new Font("Bahnschrift", Font.PLAIN, 32), true));
 
         } catch (SlickException e) {
             e.printStackTrace();

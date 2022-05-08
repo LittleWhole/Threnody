@@ -15,8 +15,6 @@ U
 %src/entities/units/player/Player.java,f\3\f3a4d16d3bbae99a65e6551a7926c5af14a891b7
 L
 src/entities/units/Unit.java,a\f\af99dbb5f9e61863a4bac612a52dad0f19238aa7
-B
-src/core/Main.java,1\9\19ad5635e8c6f1b9ec51442bfacd9647136a1a4a
 :
 
 .gitignore,a\5\a5cc2925ca8258af241be7e5b0381edf30266302
@@ -44,12 +42,6 @@ L
 src/managers/KeyManager.java,7\b\7be1832629727b45dd90ca3778084d22ace427bb
 Q
 !src/combat/artes/ElementType.java,9\d\9d57b81178ca0b049349201b11712d1234c2c541
-H
-src/gamestates/Game.java,c\2\c2bc8889dbe42767a32050ab5b08c0287ff39286
-Q
-!src/gamestates/LoadingScreen.java,5\e\5e528567604746e2baf46e03012c6e659ee06c5e
-O
-src/gamestates/BattleState.java,1\e\1ef545c854bb6a40c2fafa77b7b8624000480fee
 J
 src/combat/artes/Arte.java,8\a\8a0655efb9aed43d4cc26c17c89a3ab0a1af58d3
 J

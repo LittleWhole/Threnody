@@ -3,10 +3,7 @@
 package gamestates;
 
 import core.Main;
-import org.newdawn.slick.Color;
-import org.newdawn.slick.GameContainer;
-import org.newdawn.slick.Graphics;
-import org.newdawn.slick.SlickException;
+import org.newdawn.slick.*;
 import org.newdawn.slick.loading.DeferredResource;
 import org.newdawn.slick.loading.LoadingList;
 import org.newdawn.slick.state.BasicGameState;
@@ -91,6 +88,7 @@ public class LoadingScreen extends BasicGameState {
     @Override // Render, all visuals
     public void render(GameContainer gc, StateBasedGame sbg, Graphics g) throws SlickException
     {
+        g.setFont(new TrueTypeFont(new java.awt.Font("Bahnschrift", java.awt.Font.PLAIN, 20), true));
         // Calculate the number of tasks done
         this.tasksDone = loadingList.getTotalResources() - loadingList.getRemainingResources();
 
