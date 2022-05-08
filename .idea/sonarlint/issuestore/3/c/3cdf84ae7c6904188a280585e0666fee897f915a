@@ -1,0 +1,25 @@
+
+v	java:S135£"YReduce the total number of break and continue statements in this loop to use at most one.(ƒîá¬8ÕÕœ¦‰0
+f
+java:S2184e"DCast one of the operands of this subtraction operation to a "float".(×ëç™ıÿÿÿÿ8ÙÕœ¦‰0
+f
+java:S2184e"DCast one of the operands of this subtraction operation to a "float".(×ëç™ıÿÿÿÿ8ÙÕœ¦‰0
+A
+java:S1659!"$Declare "ySpeed" on a separate line.(Ùı…Æ8Öœ¦‰0
+=
+java:S1659"" Declare "dy" on a separate line.(ù‡¡Ê8Öœ¦‰0
+V
+java:S5993."9Change the visibility of this constructor to "protected".(Ëù¬8Öœ¦‰0
+V
+java:S59930"9Change the visibility of this constructor to "protected".(¤«ê8Öœ¦‰0
+X	java:S125^"<This block of commented-out lines of code should be removed.(ú‡·¹8¤Öœ¦‰0
+?
+java:S1116„"Remove this empty statement.(ôŸìúÿÿÿÿ8ªÖœ¦‰0
+?
+java:S1116‰"Remove this empty statement.(ôŸìúÿÿÿÿ8«Öœ¦‰0
+>
+java:S3626¤"Remove this redundant jump.(Âÿÿëıÿÿÿÿ8­Öœ¦‰0
+d
+java:S1126®"AReplace this if-then-else statement by a single return statement.(¢ı¾Éùÿÿÿÿ8°Öœ¦‰0
+Z
+java:S1128"=Remove this unused import 'org.newdawn.slick.tiled.TiledMap'.(óÀó§8²Öœ¦‰0

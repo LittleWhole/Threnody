@@ -1,0 +1,15 @@
+
+J
+java:S3740"/Provide the parametrized type for this generic.(–¸ÑÑøÿÿÿÿ
+o	java:S115
+"ZRename this constant name to match the regular expression '^[A-Z][A-Z0-9]*(_[A-Z0-9]+)*$'.(ëë™†
+C
+java:S2387"("type" is the name of a field in "Arte".(Ë÷Ÿ›üÿÿÿÿ
+<
+java:S1170"!Make this final field static too.(¾ªžøÿÿÿÿ
+—
+java:S1186"€Add a nested comment explaining why this method is empty, throw an UnsupportedOperationException or complete the implementation.(äìÎŸ
+œ
+java:S1186"€Add a nested comment explaining why this method is empty, throw an UnsupportedOperationException or complete the implementation.(•ðÔ‘úÿÿÿÿ
+K
+java:S1068"0Remove this unused "healingValue" private field.(¾ªžøÿÿÿÿ

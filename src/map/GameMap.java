@@ -25,7 +25,6 @@ public class GameMap extends TiledMap {
         generateHitboxes();
         tileId = 0;
         layerIndex = 0;
-        //super.g
     }
 
     public void generateHitboxes()   {
