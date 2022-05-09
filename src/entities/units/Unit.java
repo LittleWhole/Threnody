@@ -50,4 +50,7 @@ public class Unit extends Entity {
         return this;
     }
 
+    public int getHealth() {
+        return health;
+    }
 }

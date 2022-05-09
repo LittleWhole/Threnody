@@ -66,7 +66,7 @@ public class Game extends BasicGameState {
     }
 
     public void render(GameContainer gc, StateBasedGame sbg, Graphics g) throws SlickException {
-        g.setFont(new TrueTypeFont(new java.awt.Font("Bahnschrift", java.awt.Font.PLAIN, 20), true));
+        g.setFont(Main.font);
         g.setColor(Color.white);
         g.setBackground(new Color(167, 231, 255));
         background.render(g);

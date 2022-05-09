@@ -11,10 +11,6 @@ K
 src/inventory/Material.java,e\c\ec9aef8dc35beae595a88e8a523fef1acb66abb8
 Q
 !src/entities/core/Coordinate.java,2\9\29234301379b87072a71077e9a33930c1a942dd4
-U
-%src/entities/units/player/Player.java,f\3\f3a4d16d3bbae99a65e6551a7926c5af14a891b7
-L
-src/entities/units/Unit.java,a\f\af99dbb5f9e61863a4bac612a52dad0f19238aa7
 :
 
 .gitignore,a\5\a5cc2925ca8258af241be7e5b0381edf30266302

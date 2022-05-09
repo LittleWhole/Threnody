@@ -8,10 +8,10 @@ import java.util.ArrayList;
 
 public class CombatManager {
 
-    private ArrayList<Player> players;
-    private ArrayList<Enemy> enemies;
+    private ArrayList<Unit> players;
+    private ArrayList<Unit> enemies;
 
-    public CombatManager(ArrayList<Player> plrs, ArrayList<Enemy> enemies)  {
+    public CombatManager(ArrayList<Unit> plrs, ArrayList<Unit> enemies)  {
         this.players = plrs;
         this.enemies = enemies;
     }
@@ -22,15 +22,15 @@ public class CombatManager {
         boolean enemiesAlive = true;
         while(plrsAlive && enemiesAlive)    {
             for(int i = 0; i < players.size(); i++) {
-                players.get(i).move();
+                ((Player) players.get(i)).move();
             }
             for(int i = 0; i < enemies.size(); i++) {
-                enemies.get(i).battleMove();
+                ((Enemy) enemies.get(i)).battleMove();
             }
-            if(!checkEnemiesAlive(enemies))   {
+            if(!checkUnitsAlive(enemies))   {
                 return 'w';
             }
-            if(!checkPlayersAlive(players)) {
+            if(!checkUnitsAlive(players)) {
                 return 'l';
             }
             round++;
@@ -38,26 +38,13 @@ public class CombatManager {
         return 'd';
     }
 
-    private boolean checkEnemiesAlive(ArrayList<Enemy> enemies)    {
-        for(Enemy u: enemies)  {
+    private boolean checkUnitsAlive(ArrayList<Unit> units)    {
+        for(Unit u: units)  {
             if(u.getHealth() <= 0)  {
                 return false;
             }
         }
         return true;
     }
-    private boolean checkPlayersAlive(ArrayList<Player> plrs)   {
-        for(Player u: plrs)  {
-            if(u.getHealth() <= 0)  {
-                return false;
-            }
-        }
-        return true;
-        /*if andrew = shorthair
-                then andrew= rat
-                        dsplay andrewnationality;
-        else{
-            return false;
-        }*/
-    }
+
 }

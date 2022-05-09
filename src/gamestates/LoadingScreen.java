@@ -16,7 +16,7 @@ import java.io.File;
 import java.io.IOException;
 
 public class LoadingScreen extends BasicGameState {
-    final public static String RES = System.getProperty("user.dir") + "/res";
+    public static final String RES = System.getProperty("user.dir") + "/res";
 
     private LoadingList loadingList;
     private String lastResource;
@@ -52,6 +52,7 @@ public class LoadingScreen extends BasicGameState {
         gc.setShowFPS(false);
 
         this.loadingList = LoadingList.get();
+        Main.font = new TrueTypeFont(new java.awt.Font("Bahnschrift", java.awt.Font.PLAIN, 20), true);
     }
 
     @Override // Begin file loading upon entering the gamestate
@@ -90,7 +91,7 @@ public class LoadingScreen extends BasicGameState {
     @Override // Render, all visuals
     public void render(GameContainer gc, StateBasedGame sbg, Graphics g) throws SlickException
     {
-        g.setFont(new TrueTypeFont(new java.awt.Font("Bahnschrift", java.awt.Font.PLAIN, 20), true));
+        g.setFont(Main.font);
         // Calculate the number of tasks done
         this.tasksDone = loadingList.getTotalResources() - loadingList.getRemainingResources();
 
@@ -103,7 +104,7 @@ public class LoadingScreen extends BasicGameState {
 
         final float PERCENT_LOADED = (float) tasksDone / (float) totalTasks;
 
-        DrawUtilities.drawImageCentered(g, new Image("/res/logo.png"), Main.RESOLUTION_X / 2, Main.RESOLUTION_Y / 3);
+        DrawUtilities.drawImageCentered(g, new Image("/res/logo-ja.png"), Main.RESOLUTION_X / 2, Main.RESOLUTION_Y / 3);
         g.setBackground(new Color((int) (167 * PERCENT_LOADED), (int) (231 * PERCENT_LOADED), (int) (255 * PERCENT_LOADED)));
 
         // max loading bar
