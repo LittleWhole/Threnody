@@ -2,6 +2,7 @@ package playerdata;
 
 import combat.artes.Arte;
 import core.Constants;
+import entities.units.Unit;
 import entities.units.player.PlayerOld;
 import inventory.Inventory;
 import org.newdawn.slick.Image;
@@ -25,6 +26,7 @@ public abstract strictfp sealed class PlayableCharacter extends PlayerData imple
 
     protected Image sprite;
     protected ArrayList<Arte> arteDeck;
+    protected Arte move;
     protected PlayerOld entity;
 
     protected PlayableCharacter() {
@@ -40,6 +42,15 @@ public abstract strictfp sealed class PlayableCharacter extends PlayerData imple
         this.level = level;
         this.exp = exp;
          this.maxExp = Constants.LevelingConstants.MAX_EXP(level);
+    }
+
+    public void move(Unit target)  {
+        move = cardSelect();
+        move.use(target);
+    }
+
+    public Arte cardSelect()    {
+
     }
 
     public PlayerOld getEntity() {

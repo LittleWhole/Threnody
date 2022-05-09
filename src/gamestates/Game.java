@@ -153,7 +153,7 @@ public class Game extends BasicGameState {
 
 
     public void keyPressed(int key, char c) {
-        if(key == Input.KEY_F3) Main.debug = !Main.debug;
+        if(key == Input.KEY_F) Main.debug = !Main.debug;
     }
 
 

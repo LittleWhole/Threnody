@@ -1,5 +1,6 @@
 package combat.artes;
 
+import entities.units.Unit;
 import entities.units.player.Player;
 import gamestates.Game;
 import org.newdawn.slick.Graphics;
@@ -26,8 +27,7 @@ public abstract class Arte<C extends PlayableCharacter> {
         this.useTimestamp = -1;
     }
 
-    public void use() {
-        if (!using) {
+    /*   if (!using) {
             if (this.castDuration == 0) {
                 using = true;
                 useTimestamp = Game.getTime();
@@ -46,7 +46,8 @@ public abstract class Arte<C extends PlayableCharacter> {
         if (using) {
             activation();
         }
-    }
+    }*/
+    public abstract void use(Unit target);
 
     public void render(Graphics g) {
         if (using) {
@@ -60,6 +61,6 @@ public abstract class Arte<C extends PlayableCharacter> {
 
     public abstract void animation();
 
-    public abstract void activation();
+    public abstract void activation(Unit u);
 
 }

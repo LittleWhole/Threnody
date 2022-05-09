@@ -38,13 +38,17 @@ public class CombatManager {
         return 'd';
     }
 
-    private boolean checkUnitsAlive(ArrayList<Unit> units)    {
-        for(Unit u: units)  {
-            if(u.getHealth() <= 0)  {
+    private boolean checkUnitsAlive(ArrayList<Unit> units) {
+        for (Unit u : units) {
+            if (u.getHealth() <= 0) {
                 return false;
             }
         }
-        return true;
+    }
+    private void updateEnemies(ArrayList<Enemy> enemies)    {
+        for(int i = 0; i < enemies.size();i++)  {
+            if(enemies.get(i).)
+        }
     }
 
 }
