@@ -38,13 +38,10 @@ public class CombatManager {
         return 'd';
     }
 
-    private boolean checkEnemiesAlive(ArrayList<Enemy> enemies)    {
-        for(Enemy u: enemies)  {
-            if(u.getHealth() <= 0)  {
-                return false;
-            }
+    private void updateEnemies(ArrayList<Enemy> enemies)    {
+        for(int i = 0; i < enemies.size();i++)  {
+            if(enemies.get(i).)
         }
-        return true;
     }
     private boolean checkPlayersAlive(ArrayList<Player> plrs)   {
         for(Player u: plrs)  {

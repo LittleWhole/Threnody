@@ -2,6 +2,8 @@ package combat.artes.martial;
 
 import combat.artes.Arte;
 import combat.artes.ArteType;
+import entities.units.Enemy;
+import entities.units.Unit;
 import playerdata.PlayableCharacter;
 import playerdata.Sigur;
 
@@ -19,8 +21,7 @@ public class DragonFang extends Arte {
 
     }
 
-    @Override
-    public void activation() {
+    public void activation(Unit target) {
 
     }
 }
