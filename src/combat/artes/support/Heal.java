@@ -3,6 +3,7 @@ package combat.artes.support;
 import combat.artes.Arte;
 import combat.artes.ArteType;
 import combat.artes.ElementType;
+import entities.units.Unit;
 import playerdata.Phaedra;
 import playerdata.PlayableCharacter;
 import playerdata.Sigur;
@@ -19,12 +20,18 @@ public class Heal extends Arte {
     }
 
     @Override
+    public void use(Unit target) {
+        activation(target);
+        animation();
+    }
+
+    @Override
     public void animation() {
 
     }
 
     @Override
-    public void activation() {
-
+    public void activation(Unit target) {
+        target.regenerate(owner.getAttack());
     }
 }

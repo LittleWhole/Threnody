@@ -4,6 +4,7 @@ import entities.units.Unit;
 import entities.units.player.Player;
 import gamestates.Game;
 import org.newdawn.slick.Graphics;
+import org.newdawn.slick.Image;
 import playerdata.PlayableCharacter;
 import playerdata.Sigur;
 
@@ -16,6 +17,12 @@ public abstract class Arte<C extends PlayableCharacter> {
     protected boolean using; // If the arte is activated or not
     protected int castTimestamp; // The exact timestamp when the Arte started casting
     protected int castDuration; // The amount of time casting takes
+
+    public Image getSprite() {
+        return sprite;
+    }
+
+    protected Image sprite;
 
     protected ArteType type;
     protected ElementType element;

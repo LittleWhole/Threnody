@@ -1,5 +1,6 @@
 package entities.units;
 
+import entities.core.Coordinate;
 import entities.core.Entity;
 import entities.core.EntityType;
 import org.newdawn.slick.Graphics;
@@ -44,6 +45,22 @@ public class Unit extends Entity {
         this.critDamage = critDamage;
         this.eAttack = eAttack;
         this.eDefense = eDefense;
+    }
+
+    public void setPosition(int x, int y)   {
+        this.position = new Coordinate(x,y);
+    }
+
+    public void takeDamage(int amount)  {
+        this.health-=amount;
+    }
+
+    public void regenerate(int amount)    {
+        this.health += amount;
+    }
+
+    public int getAttack() {
+        return attack;
     }
 
     public Unit getUnit() {

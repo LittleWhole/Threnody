@@ -9,6 +9,8 @@ import org.newdawn.slick.*;
 import org.newdawn.slick.geom.Rectangle;
 import org.newdawn.slick.tiled.TiledMap;
 
+import javax.swing.text.Position;
+
 public final class Player extends Unit {
 
     //private final float XSPEED_MAX = 5;
@@ -29,6 +31,10 @@ public final class Player extends Unit {
         this.sprite = sheet.getSprite(0,0);
         this.level = 1;
         this.hitBox = new Rectangle((Main.getScreenWidth()/2) - this.getWidth()/2, (Main.getScreenHeight()/2) + 170, this.width, this.height-100); // set size to tiles
+    }
+
+    public void move(Unit target)  {
+
     }
 
 

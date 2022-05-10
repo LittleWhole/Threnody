@@ -110,7 +110,7 @@ public class GameMap extends TiledMap {
     }
 
     public void drawDebugRects(Graphics g){
-        g.setColor(Color.red);
+        g.setColor(new Color(255,0,0,0.5f));
         layerIndex = this.getLayerIndex();
         tileId = 0;
         for(int i=0;i<this.getWidth();i++){
