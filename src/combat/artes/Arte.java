@@ -31,7 +31,7 @@ public abstract class Arte<C extends PlayableCharacter> {
 
     protected Arte(C owner) {
         assert character != null;
-        if (character.isInstance(owner)) this.owner = owner;
+        /*if (character.isInstance(owner))*/ this.owner = owner;
         this.castTimestamp = -1;
         this.useTimestamp = -1;
     }

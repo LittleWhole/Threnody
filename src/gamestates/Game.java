@@ -4,6 +4,7 @@ import core.Main;
 import entities.core.Coordinate;
 import entities.core.Entity;
 import entities.core.EntityType;
+import entities.units.Unit;
 import entities.units.enemy.Enemy;
 import entities.units.player.Player;
 import graphics.Background;
@@ -29,6 +30,9 @@ public class Game extends BasicGameState {
     EnumMap<EntityType, ArrayList<Entity>> entities; // All Entities in the Game
 
     EnumMap<EntityType, ArrayList<Entity>> newEntities; // Add new entities to the game
+
+    public ArrayList<Unit> plrTeam;
+    public ArrayList<Unit> enemyTeam;
 
     // Managers
     private KeyManager keyDown; // Key Manager
@@ -65,6 +69,9 @@ public class Game extends BasicGameState {
         gc.setShowFPS(true);
         this.gc = gc;
         plrPosition = new Coordinate(0,0);
+        enemyTeam = new ArrayList<>();
+        enemy = new Enemy(10, 0);
+        enemyTeam.add(enemy);
     }
 
     public void render(GameContainer gc, StateBasedGame sbg, Graphics g) throws SlickException {
@@ -73,13 +80,15 @@ public class Game extends BasicGameState {
         g.setBackground(new Color(167, 231, 255));
         background.render(g);
 
-        overworld.render((int)((plr.getX()*-1)+(Main.getScreenWidth()/2)-(plr.getWidth()/2)),(int)((plr.getY()*-0.5)-(Main.getScreenHeight()*2)-(plr.getHeight()*(3/2))));
+        //overworld.render(plr);
 
+        overworld.render((int)((plr.getX()*-1)+(Main.getScreenWidth()/2)-(plr.getWidth()/2)),(int)((plr.getY()*-0.5)-(Main.getScreenHeight()*2)-(plr.getHeight()*(3/2))));
+        //overworld.render((int)plr.getX(), (int)plr.getY());
         overworld.drawDebugRects(g);
         //overworld.render((int) plr.getX()/2+20, (int) plr.getY()/2-20);
         //overworld.render(0, 0, (int) plr.getX() / 100 - 20, (int) plr.getY() / 100 + 20, (int) plr.getX() / 100, (int) plr.getY() / 100);
         plr.render(g);
-        //enemy.render(g, plr.getX(), plr.getY());
+        enemy.render(g, plr.getX(), plr.getY());
         g.drawString("Coords: " + plr.getPosition().toString(), 100, 100);
 
         if(Main.debug)  {
@@ -95,16 +104,16 @@ public class Game extends BasicGameState {
 
         // Manage Key and Cursor Input
         keyInput(); // Manage keys that are down
+
         cursorInput(); // Manage the cursor
 
         // Update Background
         background.update();
 
-
         // Update Player
-        plr.update(sbg, enemy);
+        plr.update(sbg, enemy, this);
         enemy.overworldUpdate();
-
+        System.out.println(plr.getX()+ " " + plr.getY());
 
         // Update all entities, and remove those marked for removal
         Predicate<Entity> filter = Entity::isMarked;
@@ -141,7 +150,7 @@ public class Game extends BasicGameState {
                 EntityType.PROJECTILE, new ArrayList<>(),
                 EntityType.INTERACTABLE, new ArrayList<>()
         ));
-        enemy = new Enemy(10, 0);
+
         // Initialize the Player
         plr = new Player(plrPosition);
         System.out.println("[VERBOSE] Player initialized");

@@ -59,6 +59,7 @@ public class GameMap extends TiledMap {
         }
     }
 
+
     public void render(Player plr) {
         for (int i = 0; i < super.getLayerCount(); i++) super.render((int) (-plr.getX()),(int)(-plr.getY()), i);
     }

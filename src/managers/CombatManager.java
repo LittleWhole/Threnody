@@ -23,15 +23,29 @@ public class CombatManager {
         round = 1;
     }
 
+    public void roundStart() {
+        for(int i = 0; i < players.size(); i++) {
+            ((Player)players.get(i)).setState(playerState.SELECTING);
+        }
+        for(int i = 0; i < enemies.size(); i++) {
+            ((Enemy)enemies.get(i)).setCombatState(EnemyStates.MOVING);
+        }
+    }
+
     public char combat(Graphics g, GameContainer gc) throws InterruptedException {
         boolean plrsAlive = true;
         boolean enemiesAlive = true;
         boolean plrsDone = false;
         boolean enemiesDone = false;
+        if(turn < players.size()) {
 
-        if(turn < players.size() && !plrsDone) {
-            ((Player) players.get(turn)).setState(playerState.SELECTING);
-            ((Player) players.get(turn)).move(enemies.get(0), gc, g);
+            if(((Player) players.get(turn)).getState() == playerState.SELECTING) {
+                ((Player) players.get(turn)).move(enemies.get(0), gc, g);
+            }
+            if(((Player)players.get(turn)).getState() == playerState.CASTING)   {
+                ((Player) players.get(turn)).attack(enemies.get(0), gc);
+                g.drawString("CASTING", 100, 0);
+            }
             if(((Player) players.get(turn)).getState() == playerState.DONE) {
                 updateTeams(enemies);
                 if (enemies.size() == 0) {
@@ -40,10 +54,7 @@ public class CombatManager {
                 turn++;
             }
         }
-        if(turn == players.size())   {
-            plrsDone = true;
-        }
-        if(plrsDone) {
+        else if(turn >= players.size() && turn <= enemies.size()+players.size())   {
             ((Enemy) enemies.get(turn-(players.size()-1))).setCombatState(EnemyStates.MOVING);
             ((Enemy) enemies.get(turn-(players.size()-1))).battleMove(players.get(0), gc);
             if(((Enemy) enemies.get(turn-(players.size()-1))).getCombatState()== EnemyStates.DONE) {
@@ -54,11 +65,13 @@ public class CombatManager {
                 turn++;
             }
         }
-        if(enemiesDone) {
+        else    {
             turn = 0;
             round++;
+            roundStart();
             return 'a';
         }
+
         return 'h';
     }
 

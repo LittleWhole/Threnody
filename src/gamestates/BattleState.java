@@ -2,6 +2,7 @@ package gamestates;
 
 import core.Main;
 import entities.units.Unit;
+import entities.units.player.Player;
 import managers.CombatManager;
 import map.GameMap;
 import org.newdawn.slick.*;
@@ -15,7 +16,7 @@ public class BattleState extends BasicGameState {
     private final int id;
     public static ArrayList<Unit> plrs;
     public static ArrayList<Unit> enemies;
-    private TiledMap battlefield;
+    private GameMap battlefield;
     private CombatManager combat;
     private char result;
 
@@ -59,13 +60,16 @@ public class BattleState extends BasicGameState {
 
     public void enter(GameContainer gc, StateBasedGame sbg) throws SlickException {
         // This code happens when you enter a gameState.
-        for(int i = 0; i < 4; i++)   {
+        for(int i = 0; i < plrs.size(); i++)   {
             plrs.get(i).setPosition(-4 + i, -4 + i);
+            ((Player)(plrs.get(i))).startBattle();
         }
         for(int i = 0; i < enemies.size(); i++)   {
             enemies.get(i).setPosition(-enemies.size() + i, -enemies.size() + i);
         }
+
         combat = new CombatManager(plrs, enemies);
+        combat.roundStart();
     }
 
     public void leave(GameContainer gc, StateBasedGame sbg) {

@@ -5,6 +5,7 @@ import entities.core.Coordinate;
 import entities.core.Hitbox;
 import entities.core.Team;
 import entities.units.Unit;
+import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.SlickException;
@@ -43,13 +44,15 @@ public class Enemy extends Unit {
     }
 
     public void render(Graphics g, float plrX, float plrY)  {
-        g.drawImage(sprite, -plrX - position.getX(), -plrY - position.getY());
-        g.draw(hitBox);
+        g.drawImage(sprite, -plrX - position.getX(), -plrY/2 - position.getY());
+        g.setColor(new Color(255, 0,0,0.5f));
+        hitBox.setX(-plrX - position.getX());
+        hitBox.setY((-plrY/2 - position.getY())+this.height-100);
+        g.fill(hitBox);
     }
 
     public void overworldUpdate()    {
-        hitBox.setX(this.position.getX());
-        hitBox.setY(this.position.getY()+this.height-100);
+
     }
 
     public void battleMove(Unit target, GameContainer gc)    {
