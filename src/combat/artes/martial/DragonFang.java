@@ -2,10 +2,9 @@ package combat.artes.martial;
 
 import combat.artes.Arte;
 import combat.artes.ArteType;
-import entities.units.Enemy;
 import entities.units.Unit;
+import org.newdawn.slick.GameContainer;
 import playerdata.PlayableCharacter;
-import playerdata.Sigur;
 
 public class DragonFang extends Arte {
 
@@ -17,10 +16,18 @@ public class DragonFang extends Arte {
     }
 
     @Override
+    public void use(Unit target, GameContainer gc) {
+        castTimestamp = gc.getTime();
+        animation();
+        activation(target);
+    }
+
+    @Override
     public void animation() {
 
     }
 
+    @Override
     public void activation(Unit target) {
 
     }

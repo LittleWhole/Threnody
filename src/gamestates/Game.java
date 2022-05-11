@@ -4,6 +4,7 @@ import core.Main;
 import entities.core.Coordinate;
 import entities.core.Entity;
 import entities.core.EntityType;
+import entities.units.enemy.Enemy;
 import entities.units.player.Player;
 import graphics.Background;
 import managers.DisplayManager;
@@ -34,6 +35,7 @@ public class Game extends BasicGameState {
     public DisplayManager displayManager; // Display Manager 
     private Coordinate plrPosition;
     private Player plr;
+    private Enemy enemy;
     public GameMap overworld;
     public Background background;
 
@@ -70,13 +72,16 @@ public class Game extends BasicGameState {
         g.setColor(Color.white);
         g.setBackground(new Color(167, 231, 255));
         background.render(g);
-        for (int i = 0; i < overworld.getLayerCount(); i++) overworld.render((int)((plr.getX()*-1)+(Main.getScreenWidth()/2)-(plr.getWidth()/2)),
-                                                                             (int)((plr.getY()*-0.5)-(Main.getScreenHeight()*2)-(plr.getHeight()*(3/2))), i);
+
+        overworld.render((int)((plr.getX()*-1)+(Main.getScreenWidth()/2)-(plr.getWidth()/2)),(int)((plr.getY()*-0.5)-(Main.getScreenHeight()*2)-(plr.getHeight()*(3/2))));
+
+        overworld.drawDebugRects(g);
         //overworld.render((int) plr.getX()/2+20, (int) plr.getY()/2-20);
         //overworld.render(0, 0, (int) plr.getX() / 100 - 20, (int) plr.getY() / 100 + 20, (int) plr.getX() / 100, (int) plr.getY() / 100);
         plr.render(g);
+        //enemy.render(g, plr.getX(), plr.getY());
         g.drawString("Coords: " + plr.getPosition().toString(), 100, 100);
-        overworld.drawDebugRects(g);
+
         if(Main.debug)  {
 
         }
@@ -95,8 +100,11 @@ public class Game extends BasicGameState {
         // Update Background
         background.update();
 
+
         // Update Player
-        plr.update();
+        plr.update(sbg, enemy);
+        enemy.overworldUpdate();
+
 
         // Update all entities, and remove those marked for removal
         Predicate<Entity> filter = Entity::isMarked;
@@ -133,7 +141,7 @@ public class Game extends BasicGameState {
                 EntityType.PROJECTILE, new ArrayList<>(),
                 EntityType.INTERACTABLE, new ArrayList<>()
         ));
-
+        enemy = new Enemy(10, 0);
         // Initialize the Player
         plr = new Player(plrPosition);
         System.out.println("[VERBOSE] Player initialized");

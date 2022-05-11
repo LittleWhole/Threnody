@@ -17,9 +17,20 @@ public class Unit extends Entity {
     protected int eAttack;
     protected int eDefense;
 
+    public int getMana() {
+        return mana;
+    }
+
+    public void generateMana(int amt) {
+        this.mana += amt;
+    }
+
+    protected int mana;
+
     public Unit() {
         super();
         this.type = EntityType.UNIT;
+        this.mana = 1;
         this.level = 1;
         this.health = 1;
         this.attack = 1;

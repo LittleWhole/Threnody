@@ -2,6 +2,8 @@ package combat.artes.mystic;
 
 import combat.artes.ArteType;
 import combat.artes.MysticArte;
+import entities.units.Unit;
+import org.newdawn.slick.GameContainer;
 import playerdata.PlayableCharacter;
 
 public class Expiation extends MysticArte {
@@ -14,12 +16,19 @@ public class Expiation extends MysticArte {
     }
 
     @Override
+    public void use(Unit target, GameContainer gc) {
+        castTimestamp = gc.getTime();
+        animation();
+        activation(target);
+    }
+
+    @Override
     public void animation() {
 
     }
 
     @Override
-    public void activation() {
+    public void activation(Unit target) {
 
     }
 }

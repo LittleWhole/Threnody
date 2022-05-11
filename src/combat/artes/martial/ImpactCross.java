@@ -2,6 +2,8 @@ package combat.artes.martial;
 
 import combat.artes.Arte;
 import combat.artes.ArteType;
+import entities.units.Unit;
+import org.newdawn.slick.GameContainer;
 import playerdata.PlayableCharacter;
 
 public class ImpactCross extends Arte {
@@ -14,12 +16,19 @@ public class ImpactCross extends Arte {
     }
 
     @Override
+    public void use(Unit target, GameContainer gc) {
+        castTimestamp = gc.getTime();
+        animation();
+        activation(target);
+    }
+
+    @Override
     public void animation() {
 
     }
 
     @Override
-    public void activation() {
+    public void activation(Unit target) {
 
     }
 }

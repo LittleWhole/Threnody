@@ -1,8 +1,13 @@
 package managers;
 
-import entities.units.Enemy;
+import entities.units.enemy.Enemy;
 import entities.units.Unit;
+import entities.units.enemy.EnemyStates;
 import entities.units.player.Player;
+import org.newdawn.slick.GameContainer;
+import org.newdawn.slick.Graphics;
+import playerdata.playerState;
+
 import java.util.ArrayList;
 
 public class CombatManager {
@@ -10,7 +15,7 @@ public class CombatManager {
     private ArrayList<Unit> players;
     private ArrayList<Unit> enemies;
     private int round;
-
+    int turn = 0;
     public CombatManager(ArrayList<Unit> plrs, ArrayList<Unit> enemies)  {
 
         this.players = plrs;
@@ -18,25 +23,47 @@ public class CombatManager {
         round = 1;
     }
 
-    public char combat()    {
+    public char combat(Graphics g, GameContainer gc) throws InterruptedException {
         boolean plrsAlive = true;
         boolean enemiesAlive = true;
-        for(int i = 0; i < players.size(); i++) {
-            ((Player) players.get(i)).move(enemies.get(0));
-            updateTeams(enemies);
-            if(enemies.size() == 0)   {
-                return 'w';
+        boolean plrsDone = false;
+        boolean enemiesDone = false;
+
+        if(turn < players.size() && !plrsDone) {
+            ((Player) players.get(turn)).setState(playerState.SELECTING);
+            ((Player) players.get(turn)).move(enemies.get(0), gc, g);
+            if(((Player) players.get(turn)).getState() == playerState.DONE) {
+                updateTeams(enemies);
+                if (enemies.size() == 0) {
+                    return 'w';
+                }
+                turn++;
             }
         }
-        for(int i = 0; i < enemies.size(); i++) {
-            ((Enemy) enemies.get(i)).battleMove(players.get(0));
-            updateTeams(players);
-            if(players.size() == 0) {
-                return 'l';
+        if(turn == players.size())   {
+            plrsDone = true;
+        }
+        if(plrsDone) {
+            ((Enemy) enemies.get(turn-(players.size()-1))).setCombatState(EnemyStates.MOVING);
+            ((Enemy) enemies.get(turn-(players.size()-1))).battleMove(players.get(0), gc);
+            if(((Enemy) enemies.get(turn-(players.size()-1))).getCombatState()== EnemyStates.DONE) {
+                updateTeams(players);
+                if (players.size() == 0) {
+                    return 'l';
+                }
+                turn++;
             }
         }
-        round++;
-        return 'd';
+        if(enemiesDone) {
+            turn = 0;
+            round++;
+            return 'a';
+        }
+        return 'h';
+    }
+
+    public int getRound()  {
+        return round;
     }
 
     private void updateTeams (ArrayList<Unit> units)    {

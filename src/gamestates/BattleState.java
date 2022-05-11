@@ -1,7 +1,6 @@
 package gamestates;
 
-import entities.core.Coordinate;
-import entities.units.Enemy;
+import core.Main;
 import entities.units.Unit;
 import managers.CombatManager;
 import map.GameMap;
@@ -9,7 +8,6 @@ import org.newdawn.slick.*;
 import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
 import org.newdawn.slick.tiled.TiledMap;
-import entities.units.player.Player;
 
 import java.util.ArrayList;
 
@@ -19,6 +17,7 @@ public class BattleState extends BasicGameState {
     public static ArrayList<Unit> enemies;
     private TiledMap battlefield;
     private CombatManager combat;
+    private char result;
 
     public BattleState(int id) throws SlickException {
         this.id = id;
@@ -35,8 +34,20 @@ public class BattleState extends BasicGameState {
         g.setFont(new TrueTypeFont(new java.awt.Font("Bahnschrift", java.awt.Font.PLAIN, 20), true));
         g.setBackground(new Color(100, 100, 100));
         battlefield.render(battlefield.getWidth()/2, battlefield.getHeight()/2);
-
-
+        try {
+            result = combat.combat(g, gc);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        g.drawString(""+combat.getRound(), 0, 0);
+        switch(result)  {
+            case 'w':
+                sbg.enterState(Main.GAME_ID);
+                break;
+            case 'l':
+                sbg.enterState(Main.LOADING_ID);
+                break;
+        }
 
 
     }

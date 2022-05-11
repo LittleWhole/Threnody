@@ -3,6 +3,7 @@ package combat.artes;
 import entities.units.Unit;
 import entities.units.player.Player;
 import gamestates.Game;
+import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
 import playerdata.PlayableCharacter;
@@ -15,8 +16,9 @@ public abstract class Arte<C extends PlayableCharacter> {
     protected static String name; // The name displayed by the Arte
     protected int useTimestamp; // The exact timestamp when the Arte started use
     protected boolean using; // If the arte is activated or not
-    protected int castTimestamp; // The exact timestamp when the Arte started casting
+    protected long castTimestamp; // The exact timestamp when the Arte started casting
     protected int castDuration; // The amount of time casting takes
+    protected int cost;
 
     public Image getSprite() {
         return sprite;
@@ -54,7 +56,7 @@ public abstract class Arte<C extends PlayableCharacter> {
             activation();
         }
     }*/
-    public abstract void use(Unit target);
+    public abstract void use(Unit target, GameContainer gc);
 
     public void render(Graphics g) {
         if (using) {
@@ -65,7 +67,9 @@ public abstract class Arte<C extends PlayableCharacter> {
             g.drawArc(owner.getEntity().getX(), owner.getEntity().getY(), 50f, 50f, 0f, (float) Math.toRadians((float) castTimestamp / castDuration * 360));
         }
     }
-
+    public boolean finished(GameContainer gc)   {
+        return (gc.getTime()-castTimestamp >= castDuration);
+    }
     public abstract void animation();
 
     public abstract void activation(Unit u);

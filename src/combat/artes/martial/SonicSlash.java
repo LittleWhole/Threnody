@@ -2,6 +2,8 @@ package combat.artes.martial;
 
 import combat.artes.Arte;
 import combat.artes.ArteType;
+import entities.units.Unit;
+import org.newdawn.slick.GameContainer;
 import playerdata.PlayableCharacter;
 import playerdata.Sigur;
 
@@ -13,6 +15,15 @@ public class SonicSlash extends Arte {
 
     public SonicSlash(PlayableCharacter owner) {
         super(owner);
+        cost = 1;
+        castDuration = 100;
+    }
+
+    @Override
+    public void use(Unit target, GameContainer gc) {
+        castTimestamp = gc.getTime();
+        animation();
+        activation(target);
     }
 
     @Override
@@ -21,7 +32,7 @@ public class SonicSlash extends Arte {
     }
 
     @Override
-    public void activation() {
-
+    public void activation(Unit target) {
+        target.takeDamage(owner.getAttack());
     }
 }
