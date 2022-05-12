@@ -19,6 +19,7 @@ public class Main extends StateBasedGame {
     public static final int RESOLUTION_Y = 1080;
     public static final int FRAMES_PER_SECOND = 60;
     public static TrueTypeFont font;
+    public static final Object LOCK = new Object();
 
     private static AppGameContainer appgc;
     public static final int LOADING_ID = 0;

@@ -3,6 +3,7 @@
 package gamestates;
 
 import core.Main;
+import managers.SoundManager;
 import org.newdawn.slick.*;
 import org.newdawn.slick.geom.RoundedRectangle;
 import org.newdawn.slick.loading.DeferredResource;
@@ -65,6 +66,14 @@ public class LoadingScreen extends BasicGameState {
 
         this.totalTasks = loadingList.getTotalResources();
         this.tasksDone = 0;
+        synchronized (gc) {
+            try {
+                gc.wait(2000);
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
+            }
+        }
+        //new Sound("res/audio/music/01.稲妻.ogg");
     }
 
     @Override // Update, runs consistently
@@ -97,7 +106,7 @@ public class LoadingScreen extends BasicGameState {
 
         // Draw a Loading Bar
         final float BAR_WIDTH = gc.getWidth() - 0.25f * gc.getWidth();
-        final float BAR_HEIGHT = 0.0926f * gc.getHeight();
+        final float BAR_HEIGHT = 0.0726f * gc.getHeight();
 
         final float BAR_X = gc.getWidth() / 2 - BAR_WIDTH / 2;
         final float BAR_Y = gc.getHeight() / 2 - BAR_HEIGHT / 2;
@@ -108,17 +117,17 @@ public class LoadingScreen extends BasicGameState {
         g.setBackground(new Color((int) (167 * PERCENT_LOADED), (int) (231 * PERCENT_LOADED), (int) (255 * PERCENT_LOADED)));
 
         // max loading bar
-        g.setColor(new Color(20, 100, 40, 150));
+        g.setColor(new Color(100, 75, 2));
         g.fill(new RoundedRectangle(BAR_X, BAR_Y, BAR_WIDTH, BAR_HEIGHT, RoundedRectangle.ALL));
 
         // current loaded
-        g.setColor(new Color(20, 255, 40, 150));
+        g.setColor(new Color(255, 230, 2));
         g.fill(new RoundedRectangle(BAR_X, BAR_Y, BAR_WIDTH * PERCENT_LOADED, BAR_HEIGHT, RoundedRectangle.ALL));
 
         // white outline
         g.setColor(new Color(255, 255, 255));
         g.draw(new RoundedRectangle(BAR_X, BAR_Y, BAR_WIDTH, BAR_HEIGHT, RoundedRectangle.ALL));
 
-        DrawUtilities.drawStringCentered(g, "Loaded " + lastResource, Main.RESOLUTION_X / 2, BAR_Y + BAR_HEIGHT + 25f);
+        DrawUtilities.drawStringCentered(g, "Loading resource: " + lastResource + "...", Main.RESOLUTION_X / 2, BAR_Y + BAR_HEIGHT + 25f);
     }
 }

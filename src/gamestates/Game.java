@@ -10,6 +10,7 @@ import entities.units.player.Player;
 import graphics.Background;
 import managers.DisplayManager;
 import managers.KeyManager;
+import managers.SoundManager;
 import map.GameMap;
 import org.newdawn.slick.*;
 import org.newdawn.slick.state.BasicGameState;
@@ -160,6 +161,9 @@ public class Game extends BasicGameState {
         System.out.println("[VERBOSE] KeyManager initialized");
         displayManager = new DisplayManager(this, plr.getPosition(), gc.getGraphics());
         System.out.println("[VERBOSE] DisplayManager initialized");
+
+        // Play BGM
+        SoundManager.playSoundEffect("01");
 
     }
 
