@@ -37,7 +37,7 @@ public class BattleState extends BasicGameState {
         battlefield.render(battlefield.getWidth()/2, battlefield.getHeight()/2);
         try {
             result = combat.combat(g, gc);
-        } catch (InterruptedException | IndexOutOfBoundsException e) {
+        } catch (InterruptedException e) {
             e.printStackTrace();
         }
         g.drawString(""+combat.getRound(), 0, 0);

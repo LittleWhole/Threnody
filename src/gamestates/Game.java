@@ -86,15 +86,15 @@ public class Game extends BasicGameState {
 
         overworld.render((int)((plr.getX()*-1)+(Main.getScreenWidth()/2)-(plr.getWidth()/2)),(int)((plr.getY()*-0.5)-(Main.getScreenHeight()*2)-(plr.getHeight()*(3/2))));
         //overworld.render((int)plr.getX(), (int)plr.getY());
+        overworld.drawDebugRects(g);
         //overworld.render((int) plr.getX()/2+20, (int) plr.getY()/2-20);
         //overworld.render(0, 0, (int) plr.getX() / 100 - 20, (int) plr.getY() / 100 + 20, (int) plr.getX() / 100, (int) plr.getY() / 100);
         plr.render(g);
         enemy.render(g, plr.getX(), plr.getY());
-        g.drawString("Coords: " + plr.getPosition().toString(), 100, 75);
-        g.drawString("Press [F3] to toggle debug", 100, 100);
+        g.drawString("Coords: " + plr.getPosition().toString(), 100, 100);
 
         if(Main.debug)  {
-            overworld.drawDebugRects(g);
+
         }
     }
 
