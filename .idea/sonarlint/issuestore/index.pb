@@ -20,10 +20,6 @@ F
 src/graphics/Star.java,3\b\3bd3e473867fb5c4610bbeb87ef01d34277ff727
 F
 src/util/Resource.java,5\8\585823e955d790a97450d1750a6785de9f0d0ef1
-G
-src/graphics/Cloud.java,d\6\d60eb9ef197349106f93d550bfa7f9d3e888e31f
-L
-src/graphics/Background.java,9\c\9cb452fd095f69f4a72bfa4cdd3c39199e02c276
 M
 src/entities/core/Entity.java,3\c\3cdf84ae7c6904188a280585e0666fee897f915a
 J

@@ -4,6 +4,7 @@ package gamestates;
 
 import core.Constants;
 import core.Main;
+import graphics.Background;
 import managers.SoundManager;
 import org.newdawn.slick.*;
 import org.newdawn.slick.geom.RoundedRectangle;
@@ -27,6 +28,8 @@ public class LoadingScreen extends BasicGameState {
 
     private int totalTasks;
     private int tasksDone;
+
+    public Background background;
 
     public LoadingScreen(int id)
     {
@@ -55,6 +58,7 @@ public class LoadingScreen extends BasicGameState {
 
         this.loadingList = LoadingList.get();
         Main.font = new TrueTypeFont(new java.awt.Font("Bahnschrift", java.awt.Font.PLAIN, 20), true);
+        background = new Background();
     }
 
     @Override // Begin file loading upon entering the gamestate
@@ -67,11 +71,14 @@ public class LoadingScreen extends BasicGameState {
 
         this.totalTasks = loadingList.getTotalResources();
         this.tasksDone = 0;
+
+        gc.getGraphics().setBackground(Color.black);
     }
 
     @Override // Update, runs consistently
     public void update(GameContainer gc, StateBasedGame sbg, int delta) throws SlickException
     {
+        background.update();
         // Load a new resource
         if(loadingList.getRemainingResources() > 0) {
             try {
@@ -105,6 +112,8 @@ public class LoadingScreen extends BasicGameState {
         final float BAR_Y = gc.getHeight() / 2 - BAR_HEIGHT / 2;
 
         final float PERCENT_LOADED = (float) tasksDone / (float) totalTasks;
+
+        background.renderPre(g, PERCENT_LOADED);
 
         DrawUtilities.drawImageCentered(g, new Image("/res/logo-ja.png"), Main.RESOLUTION_X / 2, Main.RESOLUTION_Y / 3);
         DrawUtilities.drawStringCentered(g, "Version " + Constants.VERSION, Main.RESOLUTION_X / 2, Main.RESOLUTION_Y / 3 - 200);

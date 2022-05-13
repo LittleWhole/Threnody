@@ -73,6 +73,7 @@ public class Game extends BasicGameState {
         enemyTeam = new ArrayList<>();
         enemy = new Enemy(10, 0);
         enemyTeam.add(enemy);
+        gc.setSoundOn(false);
     }
 
     public void render(GameContainer gc, StateBasedGame sbg, Graphics g) throws SlickException {
@@ -163,8 +164,10 @@ public class Game extends BasicGameState {
         System.out.println("[VERBOSE] DisplayManager initialized");
 
         // Play BGM
-        SoundManager.playSoundEffect("01");
-
+        if (!gc.isSoundOn()) {
+            SoundManager.playSoundEffect("01");
+            gc.setSoundOn(true);
+        }
     }
 
     public void leave(GameContainer gc, StateBasedGame sbg) {
@@ -174,7 +177,7 @@ public class Game extends BasicGameState {
 
 
     public void keyPressed(int key, char c) {
-        if(key == Input.KEY_F) Main.debug = !Main.debug;
+        if(key == Input.KEY_F3) Main.debug ^= true;
     }
 
 

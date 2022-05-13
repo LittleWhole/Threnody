@@ -1,6 +1,8 @@
 package graphics;
 
+import org.newdawn.slick.Color;
 import org.newdawn.slick.Graphics;
+import org.newdawn.slick.SlickException;
 
 public class Background {
     private Cloud[] clouds;
@@ -14,8 +16,13 @@ public class Background {
     }
 
     public void update() { for (Cloud c : clouds) c.update(); }
+
     public void render(Graphics g) {
         for (Cloud c : clouds) c.render(g);
+    }
+
+    public void renderPre(Graphics g, float alpha) throws SlickException {
+        for (Cloud c : clouds) c.renderPre(g, alpha);
     }
 
 }

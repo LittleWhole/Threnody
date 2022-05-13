@@ -2,6 +2,7 @@ package core;
 
 import gamestates.BattleState;
 import gamestates.Game;
+import gamestates.IntroCredit;
 import gamestates.LoadingScreen;
 import org.newdawn.slick.AppGameContainer;
 import org.newdawn.slick.GameContainer;
@@ -22,10 +23,12 @@ public class Main extends StateBasedGame {
     public static final Object LOCK = new Object();
 
     private static AppGameContainer appgc;
-    public static final int LOADING_ID = 0;
-    public static final int GAME_ID = 1;
-    public static final int BATTLE_ID = 2;
+    public static final int INTRO_ID = 0;
+    public static final int LOADING_ID = 1;
+    public static final int GAME_ID = 2;
+    public static final int BATTLE_ID = 3;
     public static LoadingScreen loading;
+    public static IntroCredit intro;
     public static Game game;
     public static BattleState battle;
     public static boolean debug;
@@ -35,6 +38,7 @@ public class Main extends StateBasedGame {
     public Main(String name) throws SlickException {
         super(name);
 
+        intro = new IntroCredit(INTRO_ID);
         loading = new LoadingScreen(LOADING_ID);
         battle = new BattleState(BATTLE_ID);
         game = new Game(GAME_ID);
@@ -50,6 +54,7 @@ public class Main extends StateBasedGame {
 
 
     public void initStatesList(GameContainer gc) throws SlickException {
+        addState(intro);
         addState(loading);
         addState(game);
         addState(battle);
@@ -67,6 +72,7 @@ public class Main extends StateBasedGame {
             appgc.setVSync(true);
             appgc.setDefaultFont(new TrueTypeFont(new Font("Bahnschrift", Font.PLAIN, 20), true));
             appgc.getGraphics().setFont(new TrueTypeFont(new Font("Bahnschrift", Font.PLAIN, 20), true));
+            appgc.setSoundOn(false);
             font = new TrueTypeFont(new java.awt.Font("Bahnschrift", java.awt.Font.PLAIN, 20), true);
 
         } catch (SlickException e) {
