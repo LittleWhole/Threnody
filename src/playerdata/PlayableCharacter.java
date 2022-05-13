@@ -1,19 +1,10 @@
 package playerdata;
 
-import combat.artes.Arte;
 import core.Constants;
-import core.Main;
-import entities.units.Unit;
 import entities.units.player.Player;
-import entities.units.player.PlayerOld;
-import org.newdawn.slick.GameContainer;
-import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
-import org.newdawn.slick.Input;
-import util.DrawUtilities;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 
 public abstract strictfp sealed class PlayableCharacter extends PlayerData implements Serializable permits Sigur, Phaedra {
 
@@ -32,7 +23,7 @@ public abstract strictfp sealed class PlayableCharacter extends PlayerData imple
     protected Image sprite;
 
     protected Player entity;
-    private playerState state;
+    private PlayerState state;
 
     protected PlayableCharacter() {
         // Default character constructor

@@ -6,7 +6,7 @@ import entities.units.enemy.EnemyStates;
 import entities.units.player.Player;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
-import playerdata.playerState;
+import playerdata.PlayerState;
 
 import java.util.ArrayList;
 
@@ -25,7 +25,7 @@ public class CombatManager {
 
     public void roundStart() {
         for(int i = 0; i < players.size(); i++) {
-            ((Player)players.get(i)).setState(playerState.SELECTING);
+            ((Player)players.get(i)).setState(PlayerState.SELECTING);
         }
         for(int i = 0; i < enemies.size(); i++) {
             ((Enemy)enemies.get(i)).setCombatState(EnemyStates.MOVING);
@@ -39,14 +39,14 @@ public class CombatManager {
         boolean enemiesDone = false;
         if(turn < players.size()) {
 
-            if(((Player) players.get(turn)).getState() == playerState.SELECTING) {
+            if(((Player) players.get(turn)).getState() == PlayerState.SELECTING) {
                 ((Player) players.get(turn)).move(enemies.get(0), gc, g);
             }
-            if(((Player)players.get(turn)).getState() == playerState.CASTING)   {
+            if(((Player)players.get(turn)).getState() == PlayerState.CASTING)   {
                 ((Player) players.get(turn)).attack(enemies.get(0), gc);
                 g.drawString("CASTING", 100, 0);
             }
-            if(((Player) players.get(turn)).getState() == playerState.DONE) {
+            if(((Player) players.get(turn)).getState() == PlayerState.DONE) {
                 updateTeams(enemies);
                 if (enemies.size() == 0) {
                     return 'w';

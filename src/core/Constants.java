@@ -2,6 +2,8 @@ package core;
 
 public final class Constants {
 
+    public static final String VERSION = "Alpha v0.1.0 Release Candidate 1";
+
     public static final class LevelingConstants {
         public static final int MAX_LEVEL = 100;
         public static final int MAX_EXP(int level) { return (int) (555 * Math.log(level + 2)); }

@@ -1,5 +1,5 @@
 package playerdata;
 
-public enum playerState {
+public enum PlayerState {
     SELECTING, CASTING, DONE;
 }

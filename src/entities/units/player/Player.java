@@ -5,31 +5,28 @@ import combat.artes.martial.SonicSlash;
 import core.Constants;
 import core.Main;
 import entities.core.Coordinate;
-import entities.core.Hitbox;
 import entities.units.Unit;
 import gamestates.BattleState;
 import gamestates.Game;
 import org.newdawn.slick.*;
 import org.newdawn.slick.geom.Rectangle;
 import org.newdawn.slick.state.StateBasedGame;
-import org.newdawn.slick.tiled.TiledMap;
 import playerdata.PlayableCharacter;
 import playerdata.Sigur;
-import playerdata.playerState;
+import playerdata.PlayerState;
 import util.DrawUtilities;
 
-import javax.swing.text.Position;
 import java.util.ArrayList;
 
 public final class Player extends Unit {
 
-    public playerState getState() {
+    public PlayerState getState() {
         return state;
     }
 
     //private final float XSPEED_MAX = 5;
     //private final float YSPEED_MAX = 5;
-    private playerState state;
+    private PlayerState state;
     final public static float PLAYER_X_SPAWN = (float) Main.RESOLUTION_X / 2 / Constants.ImageConstants.PIXELS_PER_UNIT;
     final public static float PLAYER_Y_SPAWN = (float) Main.RESOLUTION_Y / 2 / Constants.ImageConstants.PIXELS_PER_UNIT;
 
@@ -75,7 +72,7 @@ public final class Player extends Unit {
 
     public void attack(Unit target, GameContainer gc)   {
         if(move != null) {
-            if(move.finished(gc))this.setState(playerState.DONE);
+            if(move.finished(gc))this.setState(PlayerState.DONE);
         }
     }
 
@@ -103,7 +100,7 @@ public final class Player extends Unit {
             arteHand.remove(0);
             queue++;
             arteHand.add(arteDeck.get(queue));
-            this.state = playerState.CASTING;
+            this.state = PlayerState.CASTING;
             return selected;
         }
         if(input.isKeyDown(Input.KEY_2))    {
@@ -111,7 +108,7 @@ public final class Player extends Unit {
             arteHand.remove(1);
             queue++;
             arteHand.add(arteDeck.get(queue));
-            this.state = playerState.CASTING;
+            this.state = PlayerState.CASTING;
             return selected;
         }
         if(input.isKeyDown(Input.KEY_3))    {
@@ -119,7 +116,7 @@ public final class Player extends Unit {
             arteHand.remove(2);
             queue++;
             arteHand.add(arteDeck.get(queue));
-            this.state = playerState.CASTING;
+            this.state = PlayerState.CASTING;
             return selected;
         }
         if(input.isKeyDown(Input.KEY_4))    {
@@ -127,7 +124,7 @@ public final class Player extends Unit {
             arteHand.remove(3);
             queue++;
             arteHand.add(arteDeck.get(queue));
-            this.state = playerState.CASTING;
+            this.state = PlayerState.CASTING;
             return selected;
         }
         if(input.isKeyDown(Input.KEY_5)) {
@@ -135,19 +132,19 @@ public final class Player extends Unit {
             arteHand.remove(4);
             queue++;
             arteHand.add(arteDeck.get(queue));
-            this.state = playerState.CASTING;
+            this.state = PlayerState.CASTING;
             return selected;
         }
         if(input.isKeyDown(Input.KEY_6))    {
             selected = arteHand.get(5);
             arteHand.remove(5);
             queue++;
-            this.state = playerState.CASTING;
+            this.state = PlayerState.CASTING;
             return selected;
         }
         return selected;
     }
-    public void setState(playerState s) {
+    public void setState(PlayerState s) {
         this.state = s;
     }
 

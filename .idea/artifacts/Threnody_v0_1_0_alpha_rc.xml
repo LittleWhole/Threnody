@@ -1,10 +1,11 @@
 <component name="ArtifactManager">
-  <artifact type="jar" name="Threnody">
-    <output-path>$PROJECT_DIR$/out/artifacts/Threnody</output-path>
-    <root id="archive" name="Threnody.jar">
+  <artifact type="jar" name="Threnody-v0.1.0-alpha-rc">
+    <output-path>$PROJECT_DIR$/out/artifacts/Threnody_v0_1_0_alpha_rc</output-path>
+    <root id="archive" name="Threnody-v0.1.0-alpha-rc.jar">
       <element id="library" level="project" name="natives" />
       <element id="module-output" name="Threnody" />
       <element id="library" level="project" name="realityforge.jetbrains.annotations" />
+      <element id="dir-copy" path="$PROJECT_DIR$/res" />
     </root>
   </artifact>
 </component>

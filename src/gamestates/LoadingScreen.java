@@ -2,6 +2,7 @@
 
 package gamestates;
 
+import core.Constants;
 import core.Main;
 import managers.SoundManager;
 import org.newdawn.slick.*;
@@ -66,14 +67,6 @@ public class LoadingScreen extends BasicGameState {
 
         this.totalTasks = loadingList.getTotalResources();
         this.tasksDone = 0;
-        synchronized (gc) {
-            try {
-                gc.wait(2000);
-            } catch (InterruptedException e) {
-                throw new RuntimeException(e);
-            }
-        }
-        //new Sound("res/audio/music/01.稲妻.ogg");
     }
 
     @Override // Update, runs consistently
@@ -114,6 +107,7 @@ public class LoadingScreen extends BasicGameState {
         final float PERCENT_LOADED = (float) tasksDone / (float) totalTasks;
 
         DrawUtilities.drawImageCentered(g, new Image("/res/logo-ja.png"), Main.RESOLUTION_X / 2, Main.RESOLUTION_Y / 3);
+        DrawUtilities.drawStringCentered(g, "Version " + Constants.VERSION, Main.RESOLUTION_X / 2, Main.RESOLUTION_Y / 3 - 200);
         g.setBackground(new Color((int) (167 * PERCENT_LOADED), (int) (231 * PERCENT_LOADED), (int) (255 * PERCENT_LOADED)));
 
         // max loading bar
