@@ -26,8 +26,6 @@ L
 src/graphics/Background.java,9\c\9cb452fd095f69f4a72bfa4cdd3c39199e02c276
 M
 src/entities/core/Entity.java,3\c\3cdf84ae7c6904188a280585e0666fee897f915a
-L
-src/managers/KeyManager.java,7\b\7be1832629727b45dd90ca3778084d22ace427bb
 J
 src/combat/artes/Card.java,7\3\73120656285e9fe008d814b3565624a459799e06
 R

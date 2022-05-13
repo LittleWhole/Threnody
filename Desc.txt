@@ -1,5 +1,5 @@
 Threnody
-You live in an rpg world but your moves are cards.
+You live in an RPG world but your moves are cards.
 Fight bosses and interact with villagers in this epic game.
 WASD to move
 When in combat, use 123456 to select a card.

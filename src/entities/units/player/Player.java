@@ -61,7 +61,7 @@ public final class Player extends Unit {
 
     public void move(Unit target, GameContainer gc, Graphics g) throws InterruptedException {
         for(int i = 0; i < arteHand.size(); i++)    {
-            DrawUtilities.drawImageCentered(g, arteHand.get(i).getSprite(), (Main.getScreenWidth()/5)*(i+1), Main.getScreenHeight()-300);
+            DrawUtilities.drawImageCentered(g, arteHand.get(i).getSprite(), (Main.getScreenWidth()/7)*(i+1), Main.getScreenHeight()-300);
 
         }
         move = cardSelect(gc.getInput());
