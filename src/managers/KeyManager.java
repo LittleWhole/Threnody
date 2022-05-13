@@ -34,7 +34,6 @@ public final class KeyManager implements Predicate<Integer> {
 	public void keyDown(int key) {
 		boolean temp = false;
 		switch (key) {
-			case Input.KEY_F3 -> Main.debug ^= true;
 			case Input.KEY_W -> {
 				for (Shape[] sa : map.getHitboxes()) for (Shape s : sa) if(s != null) {
 					player.accelerateY(PLAYER_ACCELERATION);
