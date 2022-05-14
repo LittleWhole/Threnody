@@ -65,8 +65,4 @@ public class IntroCredit extends BasicGameState {
         if (counter > 300) sbg.enterState(Main.LOADING_ID);
         logo.drawCentered(Main.RESOLUTION_X / 2, Main.RESOLUTION_Y / 2);
     }
-
-    public void mousePressed(int button, int x, int y) {
-        sbg.enterState(Main.LOADING_ID, new FadeOutTransition(), new FadeInTransition());
-    }
 }

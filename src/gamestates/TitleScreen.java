@@ -73,6 +73,9 @@ public class TitleScreen extends BasicGameState {
     }
 
     public void mousePressed(int button, int x, int y) {
-        if (bNEW_GAME.onButton(x, y)) sbg.enterState(Main.GAME_ID, new FadeOutTransition(), new FadeInTransition());
+        if (bNEW_GAME.onButton(x, y)) {
+            SoundManager.stopBackgroundMusic();
+            sbg.enterState(Main.GAME_ID, new FadeOutTransition(), new FadeInTransition());
+        }
     }
 }

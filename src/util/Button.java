@@ -32,8 +32,7 @@ public class Button {
 
     public void update(float mouseX, float mouseY) {
         if(onButton(mouseX, mouseY)) {
-            Color lightBlue = new Color(173, 216, 230);
-            color = lightBlue;
+            color = new Color(247, 168, 74);
         } else {
             color = Color.white;
         }

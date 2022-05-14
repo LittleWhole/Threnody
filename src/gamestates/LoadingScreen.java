@@ -23,6 +23,8 @@ public class LoadingScreen extends BasicGameState {
 
     private LoadingList loadingList;
     private String lastResource;
+    private Sound music;
+    private Image logo;
 
     private int id;
 
@@ -60,11 +62,14 @@ public class LoadingScreen extends BasicGameState {
         this.loadingList = LoadingList.get();
         Main.font = new TrueTypeFont(new java.awt.Font("Bahnschrift", java.awt.Font.PLAIN, 20), true);
         background = new Background();
+        music = new Sound("res/audio/music/01.ogg");
+        logo = new Image("/res/logo-ja.png");
     }
 
     @Override // Begin file loading upon entering the gamestate
     public void enter(GameContainer gc, StateBasedGame sbg) throws SlickException {
-        new Sound("res/audio/music/01.ogg").play();
+        SoundManager.overrideBackgroundMusic(music);
+
         // Set Loading List to Deferred
         LoadingList.setDeferredLoading(true);
 
@@ -117,7 +122,7 @@ public class LoadingScreen extends BasicGameState {
 
         background.renderPre(g, PERCENT_LOADED);
 
-        DrawUtilities.drawImageCentered(g, new Image("/res/logo-ja.png"), Main.RESOLUTION_X / 2, Main.RESOLUTION_Y / 3);
+        DrawUtilities.drawImageCentered(g, logo, Main.RESOLUTION_X / 2, Main.RESOLUTION_Y / 3);
         DrawUtilities.drawStringCentered(g, "Version " + Constants.VERSION, Main.RESOLUTION_X / 2, Main.RESOLUTION_Y / 3 - 200);
         g.setBackground(new Color((int) (167 * PERCENT_LOADED), (int) (231 * PERCENT_LOADED), (int) (255 * PERCENT_LOADED)));
 

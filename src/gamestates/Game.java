@@ -147,8 +147,6 @@ public class Game extends BasicGameState {
     public void enter(GameContainer gc, StateBasedGame sbg) throws SlickException {
         System.out.println("Entering game");
 
-
-
         // Reset time
         time = 0;
         System.out.println("[VERBOSE] Time reset");
@@ -178,10 +176,7 @@ public class Game extends BasicGameState {
         System.out.println("[VERBOSE] DisplayManager initialized");
 
         // Play BGM
-        if (!gc.isSoundOn()) {
-            SoundManager.playSoundEffect("01");
-            gc.setSoundOn(true);
-        }
+        SoundManager.playBackgroundMusic("02");
     }
 
     public void leave(GameContainer gc, StateBasedGame sbg) {
