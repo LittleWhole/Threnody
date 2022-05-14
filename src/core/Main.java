@@ -20,6 +20,7 @@ public class Main extends StateBasedGame {
     public static final Object LOCK = new Object();
 
     private static AppGameContainer appgc;
+    public static final int FILLER_ID = -1;
     public static final int INTRO_ID = 0;
     public static final int LOADING_ID = 1;
     public static final int GAME_ID = 2;
@@ -30,6 +31,7 @@ public class Main extends StateBasedGame {
     public static Game game;
     public static BattleState battle;
     public static TitleScreen title;
+    public static Filler filler;
     public static boolean debug;
 
     public static ArrayList<PlayableCharacter> characters;
@@ -42,6 +44,7 @@ public class Main extends StateBasedGame {
         battle = new BattleState(BATTLE_ID);
         game = new Game(GAME_ID);
         title = new TitleScreen(TITLE_ID);
+        filler = new Filler(FILLER_ID);
     }
 
     public static int getScreenWidth() {
@@ -59,6 +62,7 @@ public class Main extends StateBasedGame {
         addState(game);
         addState(battle);
         addState(title);
+        addState(filler);
     }
 
     public static void main(String[] args) {
