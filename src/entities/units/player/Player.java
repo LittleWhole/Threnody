@@ -5,7 +5,10 @@ import combat.artes.martial.SonicSlash;
 import core.Constants;
 import core.Main;
 import entities.core.Coordinate;
+import entities.units.Npc.NPC;
 import entities.units.Unit;
+import entities.units.enemy.Enemy;
+import entities.units.enemy.EnemyStates;
 import gamestates.BattleState;
 import gamestates.Game;
 import org.newdawn.slick.*;
@@ -61,7 +64,7 @@ public final class Player extends Unit {
 
     public void move(Unit target, GameContainer gc, Graphics g) throws InterruptedException {
         for(int i = 0; i < arteHand.size(); i++)    {
-            DrawUtilities.drawImageCentered(g, arteHand.get(i).getSprite(), (Main.getScreenWidth()/5)*(i+1), Main.getScreenHeight()-300);
+            DrawUtilities.drawImageCentered(g, arteHand.get(i).getSprite(), (Main.getScreenWidth()/7)*(i+1), Main.getScreenHeight()-300);
 
         }
         move = cardSelect(gc.getInput());
@@ -76,16 +79,18 @@ public final class Player extends Unit {
         }
     }
 
-    public void update(StateBasedGame sbg, Unit u, Game g)  {
+    public void update(StateBasedGame sbg, Unit u, Game g) throws SlickException {
         this.position.updatePosition(dx,dy);
         this.dx = 0;
         this.dy = 0;
-        if(getHitBox().intersects(u.getHitBox())) {
-            g.plrTeam = new ArrayList<>();
-            g.plrTeam.add(this);
-            BattleState.plrs = g.plrTeam;
-            BattleState.enemies = g.enemyTeam;
+        if(getHitBox().intersects(u.getHitBox()) && Game.time >= Game.battleCooldown) {
             sbg.enterState(Main.BATTLE_ID);
+        }
+    }
+
+    public void interact(NPC u, GameContainer gc)    {
+        if(getHitBox().intersects(u.getHitBox()))   {
+            u.interact(gc);
         }
     }
 
@@ -152,8 +157,19 @@ public final class Player extends Unit {
         return this;
     }
 
+    public void drawHitBox(Graphics g)    {
+        g.draw(this.hitBox);
+    }
+
     protected void drawSprite(Graphics g) { // Draw the entity sprite
         g.drawImage(this.sprite, (Main.getScreenWidth()/2) - 128, (Main.getScreenHeight()/2) - 256);
-        g.draw(this.hitBox);
+
+    }
+    public void battleRender(Graphics g, float plrX, float plrY)  {
+        g.drawImage(sprite, -plrX - position.getX(), -plrY/2 - position.getY());
+        g.setColor(new Color(255, 0,0,0.5f));
+        hitBox.setX(-plrX - position.getX() + width);
+        hitBox.setY((-plrY/2) + this.getHeight()*1.6f);
+
     }
 }

@@ -11,6 +11,7 @@ import org.newdawn.slick.Graphics;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.SpriteSheet;
 import org.newdawn.slick.geom.Rectangle;
+import util.DrawUtilities;
 
 import java.awt.*;
 
@@ -30,10 +31,10 @@ public class Enemy extends Unit {
     protected EnemyStates combatState;
     public Enemy(float x, float y) throws SlickException {//later change parameters to also change size, level, speed, and sprite
         moveDuration = 200;
-        this.width = 100;
+        this.width = 80;
         this.height = 256;
         this.position = new Coordinate(x, y);
-        this.hitBox = new Rectangle(this.position.getX() + (this.width/2), this.position.getY()+(this.height), this.width, this.height-100);
+        this.hitBox = new Rectangle(x,y, this.width, this.height-200);
         this.xSpeed = 10;
         this.ySpeed = 10;
         this.sheet = new SpriteSheet("res/experimentalEnemy.png", 256, 512);
@@ -46,9 +47,11 @@ public class Enemy extends Unit {
     public void render(Graphics g, float plrX, float plrY)  {
         g.drawImage(sprite, -plrX - position.getX(), -plrY/2 - position.getY());
         g.setColor(new Color(255, 0,0,0.5f));
-        hitBox.setX(-plrX - position.getX());
-        hitBox.setY((-plrY/2 - position.getY())+this.height-100);
-        g.fill(hitBox);
+        hitBox.setX(-plrX - position.getX() + width);
+        hitBox.setY((-plrY/2) + this.getHeight()*1.6f);
+        if(this.getCombatState() == EnemyStates.MOVING) {
+            DrawUtilities.drawStringCentered(g, "MOVING", 1000, 100);
+        }
     }
 
     public void overworldUpdate()    {
@@ -97,6 +100,10 @@ public class Enemy extends Unit {
                 return EnemyStates.CHARGE;
             default: return EnemyStates.ATTACK;
         }
+    }
+
+    public void drawHitBox(Graphics g)  {
+        g.fill(hitBox);
     }
 
     public Enemy getEnemy() {

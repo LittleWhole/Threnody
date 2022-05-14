@@ -2,6 +2,7 @@ package gamestates;
 
 import core.Main;
 import entities.units.Unit;
+import entities.units.enemy.Enemy;
 import entities.units.player.Player;
 import managers.CombatManager;
 import map.GameMap;
@@ -32,24 +33,31 @@ public class BattleState extends BasicGameState {
     }
 
     public void render(GameContainer gc, StateBasedGame sbg, Graphics g) throws SlickException {
-        g.setFont(new TrueTypeFont(new java.awt.Font("Bahnschrift", java.awt.Font.PLAIN, 20), true));
-        g.setBackground(new Color(100, 100, 100));
-        battlefield.render(battlefield.getWidth()/2, battlefield.getHeight()/2);
-        try {
-            result = combat.combat(g, gc);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
+        if(sbg.getCurrentStateID() == Main.BATTLE_ID){
+            g.setFont(new TrueTypeFont(new java.awt.Font("Bahnschrift", java.awt.Font.PLAIN, 20), true));
+            g.setBackground(new Color(100, 100, 100));
+            battlefield.render(1000, -200);
+            for(Unit p : plrs) {
+                ((Player) p).battleRender(g, 0,0);
+            }
+            for(Unit e:enemies) {
+                ((Enemy) e).render(g, 0,0);
+            }
+            try {
+                result = combat.combat(g, gc);
+            } catch (InterruptedException | IndexOutOfBoundsException e) {
+                e.printStackTrace();
+            }
+            g.drawString("" + combat.getRound(), 0, 0);
+            switch (result) {
+                case 'w':
+                    sbg.enterState(Main.GAME_ID);
+                    break;
+                case 'l':
+                    sbg.enterState(Main.LOADING_ID);
+                    break;
+            }
         }
-        g.drawString(""+combat.getRound(), 0, 0);
-        switch(result)  {
-            case 'w':
-                sbg.enterState(Main.GAME_ID);
-                break;
-            case 'l':
-                sbg.enterState(Main.LOADING_ID);
-                break;
-        }
-
 
     }
 
@@ -61,11 +69,13 @@ public class BattleState extends BasicGameState {
     public void enter(GameContainer gc, StateBasedGame sbg) throws SlickException {
         // This code happens when you enter a gameState.
         for(int i = 0; i < plrs.size(); i++)   {
-            plrs.get(i).setPosition(-4 + i, -4 + i);
+            //plrs.get(i).setPosition( -200 + i*200, i*1000);
+            plrs.get(i).setPosition( 0, 0);
             ((Player)(plrs.get(i))).startBattle();
         }
         for(int i = 0; i < enemies.size(); i++)   {
-            enemies.get(i).setPosition(-enemies.size() + i, -enemies.size() + i);
+            //enemies.get(i).setPosition( i * 200,  i * 200);
+            enemies.get(i).setPosition( -100,  0);
         }
 
         combat = new CombatManager(plrs, enemies);

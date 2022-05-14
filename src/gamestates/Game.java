@@ -4,6 +4,7 @@ import core.Main;
 import entities.core.Coordinate;
 import entities.core.Entity;
 import entities.core.EntityType;
+import entities.units.Npc.NPC;
 import entities.units.Unit;
 import entities.units.enemy.Enemy;
 import entities.units.player.Player;
@@ -27,7 +28,8 @@ public class Game extends BasicGameState {
     private final int id;
 
     public static int time;
-
+    public static long battleTimeStamp;
+    public static int battleCooldown;
     EnumMap<EntityType, ArrayList<Entity>> entities; // All Entities in the Game
 
     EnumMap<EntityType, ArrayList<Entity>> newEntities; // Add new entities to the game
@@ -41,6 +43,7 @@ public class Game extends BasicGameState {
     private Coordinate plrPosition;
     private Player plr;
     private Enemy enemy;
+    private NPC npc;
     public GameMap overworld;
     public Background background;
 
@@ -71,9 +74,11 @@ public class Game extends BasicGameState {
         this.gc = gc;
         plrPosition = new Coordinate(0,0);
         enemyTeam = new ArrayList<>();
+        plrTeam = new ArrayList<>();
         enemy = new Enemy(10, 0);
-        enemyTeam.add(enemy);
         gc.setSoundOn(false);
+        npc = new NPC(200,0);
+        battleCooldown = 200;
     }
 
     public void render(GameContainer gc, StateBasedGame sbg, Graphics g) throws SlickException {
@@ -86,15 +91,20 @@ public class Game extends BasicGameState {
 
         overworld.render((int)((plr.getX()*-1)+(Main.getScreenWidth()/2)-(plr.getWidth()/2)),(int)((plr.getY()*-0.5)-(Main.getScreenHeight()*2)-(plr.getHeight()*(3/2))));
         //overworld.render((int)plr.getX(), (int)plr.getY());
-        overworld.drawDebugRects(g);
+
         //overworld.render((int) plr.getX()/2+20, (int) plr.getY()/2-20);
         //overworld.render(0, 0, (int) plr.getX() / 100 - 20, (int) plr.getY() / 100 + 20, (int) plr.getX() / 100, (int) plr.getY() / 100);
-        plr.render(g);
+
         enemy.render(g, plr.getX(), plr.getY());
+        npc.render(gc, plrPosition.getX(), plrPosition.getY());
+        plr.render(g);
         g.drawString("Coords: " + plr.getPosition().toString(), 100, 100);
 
         if(Main.debug)  {
-
+            plr.drawHitBox(g);
+            enemy.drawHitBox(g);
+            npc.drawHitBox(g);
+            overworld.drawDebugRects(g);
         }
     }
 
@@ -137,6 +147,8 @@ public class Game extends BasicGameState {
     public void enter(GameContainer gc, StateBasedGame sbg) throws SlickException {
         System.out.println("Entering game");
 
+
+
         // Reset time
         time = 0;
         System.out.println("[VERBOSE] Time reset");
@@ -155,8 +167,10 @@ public class Game extends BasicGameState {
 
         // Initialize the Player
         plr = new Player(plrPosition);
+        plrTeam.add(plr);
         System.out.println("[VERBOSE] Player initialized");
-
+        enemy = new Enemy(10, 0);
+        enemyTeam.add(enemy);
         // Initialize Managers
         keyDown = new KeyManager(gc.getInput(), this);
         System.out.println("[VERBOSE] KeyManager initialized");
@@ -172,12 +186,15 @@ public class Game extends BasicGameState {
 
     public void leave(GameContainer gc, StateBasedGame sbg) {
         // This code happens when you leave a gameState.
-        plrPosition = plr.getPlayer().getPosition();
+        BattleState.plrs = plrTeam;
+        BattleState.enemies = enemyTeam;
+
     }
 
 
     public void keyPressed(int key, char c) {
-        if(key == Input.KEY_F3) Main.debug ^= true;
+        if(key == Input.KEY_F3) Main.debug = !Main.debug;
+        if(key == Input.KEY_E) plr.interact(npc, this.gc);
     }
 
 
