@@ -44,6 +44,8 @@ public class Game extends BasicGameState {
     public GameMap overworld;
     public Background background;
 
+    private boolean playing = false;
+
     public Map<EntityType, ArrayList<Entity>> getEntities() { return entities; }
     public ArrayList<Entity> getEntitiesOf(EntityType type) { return entities.get(type); }
 
@@ -73,7 +75,6 @@ public class Game extends BasicGameState {
         enemyTeam = new ArrayList<>();
         enemy = new Enemy(10, 0);
         enemyTeam.add(enemy);
-        gc.setSoundOn(false);
     }
 
     public void render(GameContainer gc, StateBasedGame sbg, Graphics g) throws SlickException {
@@ -164,10 +165,10 @@ public class Game extends BasicGameState {
         System.out.println("[VERBOSE] DisplayManager initialized");
 
         // Play BGM
-        if (!gc.isSoundOn()) {
-            SoundManager.playSoundEffect("01");
-            gc.setSoundOn(true);
-        }
+        if (!playing) {
+            SoundManager.playBackgroundMusic("02");
+            playing = true;
+        } else playing = false;
     }
 
     public void leave(GameContainer gc, StateBasedGame sbg) {

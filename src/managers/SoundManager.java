@@ -28,11 +28,23 @@ public class SoundManager {
 				backgroundMusic.loop();
 			}
 		}
-		
 	}
 	public static void stopBackgroundMusic() {
 		try{
 			backgroundMusic.stop();
 		} catch(Exception ignored) {}
+	}
+
+	public static void overrideBackgroundMusic(Sound sound) {
+		try {
+			// Later, have it so the existing background music fades out
+			backgroundMusic.stop();
+		} catch (Exception ignored) {}
+		finally {
+			backgroundMusic = sound;
+			if (backgroundMusic != null) {
+				backgroundMusic.loop();
+			}
+		}
 	}
 }
