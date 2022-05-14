@@ -10,6 +10,8 @@ import org.newdawn.slick.loading.DeferredResource;
 import org.newdawn.slick.loading.LoadingList;
 import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
+import org.newdawn.slick.state.transition.FadeInTransition;
+import org.newdawn.slick.state.transition.FadeOutTransition;
 import util.DrawUtilities;
 import util.Resource;
 
@@ -61,10 +63,10 @@ public class IntroCredit extends BasicGameState {
         logo.setImageColor(1, 1, 1, 1 * ((float) counter / 100));
         if (counter > 200) logo.setImageColor(1, 1, 1, 1 * ((float) --counter2 / 100));
         if (counter > 300) sbg.enterState(Main.LOADING_ID);
-        DrawUtilities.drawImageCentered(g, logo, Main.RESOLUTION_X / 2, Main.RESOLUTION_Y / 2);
+        logo.drawCentered(Main.RESOLUTION_X / 2, Main.RESOLUTION_Y / 2);
     }
 
     public void mousePressed(int button, int x, int y) {
-        sbg.enterState(Main.LOADING_ID);
+        sbg.enterState(Main.LOADING_ID, new FadeOutTransition(), new FadeInTransition());
     }
 }

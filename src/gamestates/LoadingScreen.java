@@ -55,6 +55,7 @@ public class LoadingScreen extends BasicGameState {
     public void init(GameContainer gc, StateBasedGame sbg) throws SlickException
     {
         gc.setShowFPS(false);
+        gc.setDefaultFont(new TrueTypeFont(new java.awt.Font("Bahnschrift", java.awt.Font.PLAIN, 20), true));
 
         this.loadingList = LoadingList.get();
         Main.font = new TrueTypeFont(new java.awt.Font("Bahnschrift", java.awt.Font.PLAIN, 20), true);
@@ -93,7 +94,7 @@ public class LoadingScreen extends BasicGameState {
         // When loading is completed, automatically move to start menu
         else {
             // TextManager.initialize();
-            sbg.enterState(Main.GAME_ID);
+            sbg.enterState(Main.TITLE_ID);
             System.out.println("Leaving Loading");
         }
     }

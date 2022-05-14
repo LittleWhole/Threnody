@@ -1,9 +1,6 @@
 package core;
 
-import gamestates.BattleState;
-import gamestates.Game;
-import gamestates.IntroCredit;
-import gamestates.LoadingScreen;
+import gamestates.*;
 import org.newdawn.slick.AppGameContainer;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.SlickException;
@@ -27,10 +24,12 @@ public class Main extends StateBasedGame {
     public static final int LOADING_ID = 1;
     public static final int GAME_ID = 2;
     public static final int BATTLE_ID = 3;
+    public static final int TITLE_ID = 999;
     public static LoadingScreen loading;
     public static IntroCredit intro;
     public static Game game;
     public static BattleState battle;
+    public static TitleScreen title;
     public static boolean debug;
 
     public static ArrayList<PlayableCharacter> characters;
@@ -42,6 +41,7 @@ public class Main extends StateBasedGame {
         loading = new LoadingScreen(LOADING_ID);
         battle = new BattleState(BATTLE_ID);
         game = new Game(GAME_ID);
+        title = new TitleScreen(TITLE_ID);
     }
 
     public static int getScreenWidth() {
@@ -58,6 +58,7 @@ public class Main extends StateBasedGame {
         addState(loading);
         addState(game);
         addState(battle);
+        addState(title);
     }
 
     public static void main(String[] args) {
