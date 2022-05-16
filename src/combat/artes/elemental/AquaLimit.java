@@ -5,7 +5,7 @@ import combat.artes.ArteType;
 import combat.artes.ElementType;
 import entities.units.Unit;
 import org.newdawn.slick.GameContainer;
-import playerdata.PlayableCharacter;
+import playerdata.characters.PlayableCharacter;
 
 public class AquaLimit extends Arte {
 

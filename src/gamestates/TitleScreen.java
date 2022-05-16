@@ -54,7 +54,6 @@ public class TitleScreen extends BasicGameState {
     public void update(GameContainer gc, StateBasedGame sbg, int delta) throws SlickException
     {
         background.update();
-        bNEW_GAME.update((float) (gc.getInput().getMouseX()), (float) (gc.getInput().getMouseY()));
     }
 
     @Override
@@ -68,7 +67,7 @@ public class TitleScreen extends BasicGameState {
         g.setBackground(new Color((int) (167 * 1f), (int) (231 * 1f), (int) (255 * 1f)));
 
         g.setColor(Color.black);
-        bNEW_GAME.render(g);
+        bNEW_GAME.render(g, (float) (gc.getInput().getMouseX()), (float) (gc.getInput().getMouseY()));
         //g.fill(new RoundedRectangle(Main.RESOLUTION_X / 2 - 100, Main.RESOLUTION_Y / 2 + 50, 200, 100, RoundedRectangle.ALL));
     }
 

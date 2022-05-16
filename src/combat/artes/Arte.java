@@ -1,19 +1,18 @@
 package combat.artes;
 
 import entities.units.Unit;
-import entities.units.player.Player;
 import gamestates.Game;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
-import playerdata.PlayableCharacter;
-import playerdata.Sigur;
+import playerdata.characters.PlayableCharacter;
 
 public abstract class Arte<C extends PlayableCharacter> {
 
     protected Class<? extends PlayableCharacter> character; // The character that can use the Arte
     protected C owner; // The owner of the arte
-    protected static String name; // The name displayed by the Arte
+    public static String name; // The name displayed by the Arte
+    public static ArteType arteType;
     protected int useTimestamp; // The exact timestamp when the Arte started use
     protected boolean using; // If the arte is activated or not
     protected long castTimestamp; // The exact timestamp when the Arte started casting

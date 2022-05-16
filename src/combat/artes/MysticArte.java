@@ -1,6 +1,6 @@
 package combat.artes;
 
-import playerdata.PlayableCharacter;
+import playerdata.characters.PlayableCharacter;
 
 public abstract class MysticArte extends Arte {
 

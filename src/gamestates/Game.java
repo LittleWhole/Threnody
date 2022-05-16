@@ -76,7 +76,6 @@ public class Game extends BasicGameState {
         enemyTeam = new ArrayList<>();
         plrTeam = new ArrayList<>();
         enemy = new Enemy(10, 0);
-        gc.setSoundOn(false);
         npc = new NPC(200,0);
         battleCooldown = 200;
     }

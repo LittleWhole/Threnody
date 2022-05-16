@@ -6,14 +6,14 @@ import entities.units.enemy.EnemyStates;
 import entities.units.player.Player;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
-import playerdata.PlayerState;
+import entities.units.player.PlayerState;
 
 import java.util.ArrayList;
 
 public class CombatManager {
 
-    private ArrayList<Unit> players;
-    private ArrayList<Unit> enemies;
+    private volatile ArrayList<Unit> players;
+    private volatile ArrayList<Unit> enemies;
     private int round;
     int turn = 0;
     public CombatManager(ArrayList<Unit> plrs, ArrayList<Unit> enemies)  {

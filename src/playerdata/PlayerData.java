@@ -2,5 +2,6 @@ package playerdata;
 
 import java.io.Serializable;
 
-public class PlayerData implements Serializable {
+public abstract class PlayerData implements Serializable {
+
 }

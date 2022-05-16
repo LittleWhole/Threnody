@@ -6,11 +6,11 @@ import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.TrueTypeFont;
 import org.newdawn.slick.state.StateBasedGame;
-import playerdata.PlayableCharacter;
+import playerdata.PlayerStats;
+import playerdata.characters.PlayableCharacter;
 
 import java.awt.*;
 import java.util.ArrayList;
-import static org.lwjgl.opengl.GL11.*;
 
 public class Main extends StateBasedGame {
     public static final int RESOLUTION_X = 1920;
@@ -34,6 +34,7 @@ public class Main extends StateBasedGame {
     public static Filler filler;
     public static boolean debug;
 
+    public static PlayerStats stats = new PlayerStats();
     public static ArrayList<PlayableCharacter> characters;
 
     public Main(String name) throws SlickException {

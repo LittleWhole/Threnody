@@ -1,22 +1,23 @@
 package entities.units.player;
 
 import combat.artes.Arte;
+import combat.artes.martial.DragonFang;
+import combat.artes.martial.ImpactCross;
 import combat.artes.martial.SonicSlash;
+import combat.artes.mystic.Expiation;
+import combat.artes.mystic.InnumerableWounds;
+import combat.artes.mystic.TrillionDrive;
 import core.Constants;
 import core.Main;
 import entities.core.Coordinate;
 import entities.units.Npc.NPC;
 import entities.units.Unit;
-import entities.units.enemy.Enemy;
-import entities.units.enemy.EnemyStates;
-import gamestates.BattleState;
 import gamestates.Game;
 import org.newdawn.slick.*;
 import org.newdawn.slick.geom.Rectangle;
 import org.newdawn.slick.state.StateBasedGame;
-import playerdata.PlayableCharacter;
-import playerdata.Sigur;
-import playerdata.PlayerState;
+import playerdata.characters.PlayableCharacter;
+import playerdata.characters.Sigur;
 import util.DrawUtilities;
 
 import java.util.ArrayList;
@@ -51,8 +52,13 @@ public final class Player extends Unit {
         this.level = 1;
         this.character = new Sigur();
         this.arteDeck = new ArrayList<>();
-        for(int i = 0; i < 100; i++) {
+        for(int i = 0; i < 20; i++) {
             arteDeck.add(new SonicSlash(character));
+            arteDeck.add(new DragonFang(character));
+            arteDeck.add(new ImpactCross(character));
+            arteDeck.add(new Expiation(character));
+            arteDeck.add(new InnumerableWounds(character));
+            arteDeck.add(new TrillionDrive(character));
         }
         this.hitBox = new Rectangle((Main.getScreenWidth()/2) - this.getWidth()/2, (Main.getScreenHeight()/2) + 170, this.width, this.height-100); // set size to tiles
     }
@@ -64,8 +70,10 @@ public final class Player extends Unit {
 
     public void move(Unit target, GameContainer gc, Graphics g) throws InterruptedException {
         for(int i = 0; i < arteHand.size(); i++)    {
-            DrawUtilities.drawImageCentered(g, arteHand.get(i).getSprite(), (Main.getScreenWidth()/7)*(i+1), Main.getScreenHeight()-300);
-
+            arteHand.get(i).getSprite().drawCentered((Main.getScreenWidth()/7)*(i+1), Main.getScreenHeight()-300);
+            g.setColor(Color.white);
+            DrawUtilities.drawStringCentered(g, arteHand.get(i).name, (Main.getScreenWidth()/7)*(i+1), Main.getScreenHeight()-300);
+            DrawUtilities.drawStringCentered(g, String.valueOf(arteHand.get(i).arteType) + "ARTE", (Main.getScreenWidth()/7)*(i+1), Main.getScreenHeight()-400);
         }
         move = cardSelect(gc.getInput());
         if(move != null) {

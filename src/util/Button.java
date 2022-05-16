@@ -7,36 +7,18 @@ import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.TrueTypeFont;
 
-public class Button {
-    private float x,y;
-    private float width, height;
-    private String text;
-    private Color color;
-
-    public Button(float x, float y, float width, float height, String text) {
-        this.x = x;
-        this.y = y;
-
-        this.width = width;
-        this.height = height;
-        this.text = text;
-    }
-
+public record Button(float x, float y, float width, float height, String text) {
     // Draw the image centered
-    public void render(Graphics g) {
+    public void render(Graphics g, float mouseX, float mouseY) {
+        Color color;
+        if (onButton(mouseX, mouseY)) color = new Color(247, 168, 74);
+        else color = Color.white;
         g.setFont(TitleScreen.font);
         g.setColor(color);
         DrawUtilities.drawStringCentered(g, text, TitleScreen.font, x, y);
         g.setColor(Color.white);
     }
 
-    public void update(float mouseX, float mouseY) {
-        if(onButton(mouseX, mouseY)) {
-            color = new Color(247, 168, 74);
-        } else {
-            color = Color.white;
-        }
-    }
     public boolean onButton(float mouseX, float mouseY) {
         if(x - width / 2 < mouseX && mouseX < x + width / 2) {
             if(y - height / 2 < mouseY && mouseY < y + height / 2) {
@@ -45,7 +27,6 @@ public class Button {
         }
         return false;
     }
-
 }
 
 

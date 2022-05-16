@@ -4,7 +4,7 @@ import combat.artes.Arte;
 import combat.artes.ArteType;
 import entities.units.Unit;
 import org.newdawn.slick.GameContainer;
-import playerdata.PlayableCharacter;
+import playerdata.characters.PlayableCharacter;
 
 public class Mana extends Arte {
 

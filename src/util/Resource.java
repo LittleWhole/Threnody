@@ -9,11 +9,7 @@ import org.newdawn.slick.loading.LoadingList;
 
 import java.io.File;
 
-public class Resource implements DeferredResource {
-    private File file;
-
-    public Resource(File file) { this.file = file; }
-
+public record Resource(File file) implements DeferredResource {
     public String getDescription() { return file.getName(); }
     public void load() {
         String path = file.getPath();

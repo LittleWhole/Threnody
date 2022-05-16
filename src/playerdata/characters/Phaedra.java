@@ -1,4 +1,6 @@
-package playerdata;
+package playerdata.characters;
+
+import playerdata.characters.PlayableCharacter;
 
 import java.io.Serializable;
 

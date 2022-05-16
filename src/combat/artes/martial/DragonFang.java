@@ -4,15 +4,17 @@ import combat.artes.Arte;
 import combat.artes.ArteType;
 import entities.units.Unit;
 import org.newdawn.slick.GameContainer;
-import playerdata.PlayableCharacter;
+import org.newdawn.slick.Image;
+import org.newdawn.slick.SlickException;
+import playerdata.characters.PlayableCharacter;
 
 public class DragonFang extends Arte {
 
-    public static final String name = "Dragon Fang";
-    public static final ArteType arteType = ArteType.MARTIAL;
-
-    public DragonFang(PlayableCharacter owner) {
+    public DragonFang(PlayableCharacter owner) throws SlickException {
         super(owner);
+        String name = "Dragon Fang";
+        ArteType arteType = ArteType.MARTIAL;
+        this.sprite = new Image("res/martialCard.png");
     }
 
     @Override

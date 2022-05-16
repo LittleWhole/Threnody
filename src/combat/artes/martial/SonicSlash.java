@@ -6,17 +6,17 @@ import entities.units.Unit;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
-import playerdata.PlayableCharacter;
-import playerdata.Sigur;
+import playerdata.characters.PlayableCharacter;
+import playerdata.characters.Sigur;
 
 public class SonicSlash extends Arte {
 
-    public static final String name = "Sonic Slash";
     public static final Class<? extends PlayableCharacter> character = Sigur.class;
-    public static final ArteType arteType = ArteType.MARTIAL;
 
     public SonicSlash(PlayableCharacter owner) throws SlickException {
         super(owner);
+        name = "Sonic Slash";
+        arteType = ArteType.MARTIAL;
         cost = 1;
         castDuration = 100;
         this.sprite = new Image("res/martialCard.png");

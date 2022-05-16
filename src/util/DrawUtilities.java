@@ -7,7 +7,6 @@ import org.newdawn.slick.geom.Rectangle;
 
 
 public final class DrawUtilities {
-
     private DrawUtilities() {
         throw new UnsupportedOperationException("You cannot instantiate this utility class!");
     }
@@ -71,5 +70,4 @@ public final class DrawUtilities {
         g.drawString(string, (r.getX() + r.getWidth() / 2) - (width / 2),
                 (r.getY() + r.getHeight() / 2) - (height / 2));
     }
-
 }
