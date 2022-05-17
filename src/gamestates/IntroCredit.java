@@ -2,21 +2,10 @@
 
 package gamestates;
 
-import core.Constants;
 import core.Main;
 import org.newdawn.slick.*;
-import org.newdawn.slick.geom.RoundedRectangle;
-import org.newdawn.slick.loading.DeferredResource;
-import org.newdawn.slick.loading.LoadingList;
 import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
-import org.newdawn.slick.state.transition.FadeInTransition;
-import org.newdawn.slick.state.transition.FadeOutTransition;
-import util.DrawUtilities;
-import util.Resource;
-
-import java.io.File;
-import java.io.IOException;
 
 public class IntroCredit extends BasicGameState {
 

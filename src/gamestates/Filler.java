@@ -2,17 +2,12 @@
 
 package gamestates;
 
-import core.Constants;
 import core.Main;
-import graphics.Background;
-import managers.SoundManager;
 import org.newdawn.slick.*;
 import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
 import org.newdawn.slick.state.transition.FadeInTransition;
 import org.newdawn.slick.state.transition.FadeOutTransition;
-import util.Button;
-import util.DrawUtilities;
 
 public class Filler extends BasicGameState {
     private int id;

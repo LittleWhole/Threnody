@@ -72,7 +72,7 @@ public class Main extends StateBasedGame {
             appgc = new AppGameContainer(new Main("Threnody"));
             System.setProperty("org.lwjgl.opengl.Window.undecorated", "true");
 
-            appgc.setDisplayMode(appgc.getScreenWidth(), appgc.getScreenHeight(), false);
+            appgc.setDisplayMode(RESOLUTION_X, RESOLUTION_Y, false);
             appgc.setTargetFrameRate(FRAMES_PER_SECOND);
             appgc.start();
             appgc.setVSync(true);

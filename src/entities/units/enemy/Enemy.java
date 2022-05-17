@@ -1,8 +1,6 @@
 package entities.units.enemy;
 
-import core.Main;
 import entities.core.Coordinate;
-import entities.core.Hitbox;
 import entities.core.Team;
 import entities.units.Unit;
 import org.newdawn.slick.Color;
@@ -12,8 +10,6 @@ import org.newdawn.slick.SlickException;
 import org.newdawn.slick.SpriteSheet;
 import org.newdawn.slick.geom.Rectangle;
 import util.DrawUtilities;
-
-import java.awt.*;
 
 public class Enemy extends Unit {
     protected EnemyStates turn;

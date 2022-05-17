@@ -7,19 +7,12 @@ import core.Main;
 import graphics.Background;
 import managers.SoundManager;
 import org.newdawn.slick.*;
-import org.newdawn.slick.geom.RoundedRectangle;
-import org.newdawn.slick.loading.DeferredResource;
-import org.newdawn.slick.loading.LoadingList;
 import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
 import org.newdawn.slick.state.transition.FadeInTransition;
 import org.newdawn.slick.state.transition.FadeOutTransition;
-import util.Button;
+import graphics.ui.Button;
 import util.DrawUtilities;
-import util.Resource;
-
-import java.io.File;
-import java.io.IOException;
 
 public class TitleScreen extends BasicGameState {
     private int id;
@@ -67,8 +60,7 @@ public class TitleScreen extends BasicGameState {
         g.setBackground(new Color((int) (167 * 1f), (int) (231 * 1f), (int) (255 * 1f)));
 
         g.setColor(Color.black);
-        bNEW_GAME.render(g, (float) (gc.getInput().getMouseX()), (float) (gc.getInput().getMouseY()));
-        //g.fill(new RoundedRectangle(Main.RESOLUTION_X / 2 - 100, Main.RESOLUTION_Y / 2 + 50, 200, 100, RoundedRectangle.ALL));
+        bNEW_GAME.render(g, gc.getInput().getMouseX(), gc.getInput().getMouseY());
     }
 
     public void mousePressed(int button, int x, int y) {

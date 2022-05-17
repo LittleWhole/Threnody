@@ -1,7 +1,5 @@
 package entities.core;
 
-import core.Main;
-
 import java.util.Objects;
 
 public class Coordinate {

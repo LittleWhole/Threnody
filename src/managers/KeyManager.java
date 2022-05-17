@@ -1,8 +1,6 @@
 package managers;
 
-import core.Main;
 import entities.units.player.Player;
-import entities.units.player.PlayerOld;
 import gamestates.Game;
 import map.GameMap;
 import org.newdawn.slick.Input;

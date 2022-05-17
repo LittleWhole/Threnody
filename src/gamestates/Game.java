@@ -9,6 +9,8 @@ import entities.units.Unit;
 import entities.units.enemy.Enemy;
 import entities.units.player.Player;
 import graphics.Background;
+import graphics.ui.Button;
+import graphics.ui.menu.DialogBox;
 import managers.DisplayManager;
 import managers.KeyManager;
 import managers.SoundManager;
@@ -24,7 +26,7 @@ import java.util.function.Predicate;
 
 public class Game extends BasicGameState {
 
-    private GameContainer gc;
+    private static GameContainer gc;
     private final int id;
 
     public static int time;
@@ -46,9 +48,11 @@ public class Game extends BasicGameState {
     private NPC npc;
     public GameMap overworld;
     public Background background;
+    public DialogBox dialog;
 
     public Map<EntityType, ArrayList<Entity>> getEntities() { return entities; }
     public ArrayList<Entity> getEntitiesOf(EntityType type) { return entities.get(type); }
+    public static GameContainer getGc() { return gc; }
 
     public void keyInput() { KeyManager.KEY_DOWN_LIST.stream().filter(keyDown).forEach(keyDown::keyDown); }
 
@@ -78,6 +82,7 @@ public class Game extends BasicGameState {
         enemy = new Enemy(10, 0);
         npc = new NPC(200,0);
         battleCooldown = 200;
+        dialog = new DialogBox(700, 400, "Notice", "Testestestet!!!!@ EUFHEUIFH", new Button("Got it", () -> sbg.enterState(Main.INTRO_ID)));
     }
 
     public void render(GameContainer gc, StateBasedGame sbg, Graphics g) throws SlickException {
@@ -105,6 +110,8 @@ public class Game extends BasicGameState {
             npc.drawHitBox(g);
             overworld.drawDebugRects(g);
         }
+
+        dialog.render(g, gc.getInput().getMouseX(), gc.getInput().getMouseY());
     }
 
     public void update(GameContainer gc, StateBasedGame sbg, int delta) throws SlickException {
@@ -140,6 +147,8 @@ public class Game extends BasicGameState {
             }
             newEntities.get(type).clear();
         }
+
+        dialog.update(gc);
 
     }
 
