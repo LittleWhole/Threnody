@@ -40,7 +40,7 @@ public class TitleScreen extends BasicGameState {
     public void enter(GameContainer gc, StateBasedGame sbg) throws SlickException {
         font = new TrueTypeFont(new java.awt.Font("Bahnschrift", java.awt.Font.PLAIN, 50), true);
         gc.getGraphics().setFont(font);
-        bNEW_GAME = new Button(Main.RESOLUTION_X / 2, Main.RESOLUTION_Y / 2 + 100, gc.getGraphics().getFont().getWidth("< New Game >"), gc.getGraphics().getFont().getHeight("< New Game >"), "< New Game >");
+        bNEW_GAME = new Button(Main.RESOLUTION_X / 2, Main.RESOLUTION_Y / 2 + 100, gc.getGraphics().getFont().getWidth("< New Game >"), gc.getGraphics().getFont().getHeight("New Game"), "New Game");
     }
 
     @Override

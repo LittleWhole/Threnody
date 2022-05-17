@@ -4,6 +4,7 @@ import gamestates.Game;
 import gamestates.TitleScreen;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.Graphics;
+import org.newdawn.slick.TrueTypeFont;
 import util.Commandable;
 import util.DrawUtilities;
 
@@ -25,8 +26,8 @@ public class Button implements UserInterfaceable {
     public Button(String text, Commandable command) {
         this.x = 0;
         this.y = 0;
-        this.width = Game.getGc().getGraphics().getFont().getWidth(text);
-        this.height = Game.getGc().getGraphics().getFont().getHeight(text);
+        this.width = new TrueTypeFont(new java.awt.Font("Bahnschrift", java.awt.Font.PLAIN, 50), true).getWidth(text);
+        this.height = new TrueTypeFont(new java.awt.Font("Bahnschrift", java.awt.Font.PLAIN, 50), true).getHeight(text);
         this.text = text;
         this.command = command;
     }
@@ -49,11 +50,9 @@ public class Button implements UserInterfaceable {
 
     // Draw the image centered
     public void render(Graphics g, int mouseX, int mouseY) {
-        Color color;
-        g.setFont(TitleScreen.font);
         if (onButton(mouseX, mouseY)) {
             g.setColor(new Color(247, 168, 74));
-            DrawUtilities.drawStringCentered(g, "> " + text + " <", TitleScreen.font, x, y);
+            DrawUtilities.drawStringCentered(g, "> " + text + " <", new TrueTypeFont(new java.awt.Font("Bahnschrift", java.awt.Font.PLAIN, 53), true), x, y);
         }
         else {
             g.setColor(Color.white);
