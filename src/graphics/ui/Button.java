@@ -14,6 +14,7 @@ public class Button implements UserInterfaceable {
     private float x, y, width, height;
     private String text;
     private Commandable command;
+    private UserInterfaceable parent;
 
     public Button(String text) {
         this.x = 0;
@@ -94,6 +95,10 @@ public class Button implements UserInterfaceable {
         return command;
     }
 
+    public UserInterfaceable getParent() {
+        return parent;
+    }
+
     public Button setX(float x) {
         this.x = x;
         return this;
@@ -121,6 +126,11 @@ public class Button implements UserInterfaceable {
 
     public Button setCommand(Commandable command) {
         this.command = command;
+        return this;
+    }
+
+    public Button setParent(UserInterfaceable parent) {
+        this.parent = parent;
         return this;
     }
 }

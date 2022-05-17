@@ -17,11 +17,18 @@ public class DialogBox extends Menu implements UserInterfaceable {
     String body;
     List<Button> buttons;
 
+    public DialogBox(int width, int height, String title, String body) {
+        super(width, height);
+        this.title = title;
+        this.body = body;
+    }
+
     public DialogBox(int width, int height, String title, String body, Button... buttons) {
         super(width, height);
         this.title = title;
         this.body = body;
         this.buttons = Arrays.asList(buttons);
+        this.initializeButtons(buttons);
     }
 
     public DialogBox(int x, int y, int width, int height, String title, String body, Button... buttons) {
@@ -29,6 +36,16 @@ public class DialogBox extends Menu implements UserInterfaceable {
         this.title = title;
         this.body = body;
         this.buttons = Arrays.asList(buttons);
+        this.initializeButtons(buttons);
+    }
+
+    public void initializeButtons(Button... buttons) {
+        for (Button b : buttons) b.setParent(this);
+        this.buttons = List.of(buttons);
+    }
+
+    public void intializeButtons() {
+        for (Button b : this.buttons) b.setParent(this);
     }
 
     @Override
@@ -45,6 +62,7 @@ public class DialogBox extends Menu implements UserInterfaceable {
 
     @Override
     public void update(GameContainer gc) {
+        super.update(gc);
         if (gc.getInput().isMouseButtonDown(0)) {
             buttons.forEach(b -> {
                 if (b.onButton(gc.getInput().getMouseX(), gc.getInput().getMouseY())) b.getCommand().command();

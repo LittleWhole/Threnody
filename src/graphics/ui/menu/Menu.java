@@ -13,6 +13,7 @@ public abstract class Menu implements UserInterfaceable {
     protected final int height;
     protected final int x;
     protected final int y;
+    protected boolean show = true;
 
     protected Menu(int width, int height) {
         this.width = width;
@@ -30,13 +31,18 @@ public abstract class Menu implements UserInterfaceable {
 
     @Override
     public void render(Graphics g, int mouseX, int mouseY) {
+        if (!show) return;
         g.setColor(new Color(0, 0, 0, 120));
         DrawUtilities.fillShapeCentered(g, new RoundedRectangle(0, 0, width, height, RoundedRectangle.ALL), x, y);
         this.subrender(g);
     };
 
     @Override
-    public void update(GameContainer gc) {};
+    public void update(GameContainer gc) { }
+
+    public void close() { this.show = false; }
+    public void toggle() { this.show ^= true; }
+    public void open() { this.show = true; }
 
     protected abstract void subrender(Graphics g);
 }

@@ -82,7 +82,7 @@ public class Game extends BasicGameState {
         enemy = new Enemy(10, 0);
         npc = new NPC(200,0);
         battleCooldown = 200;
-        dialog = new DialogBox(700, 400, "Notice", "Testestestet!!!!@ EUFHEUIFH", new Button("Got it", () -> sbg.enterState(Main.INTRO_ID)));
+        dialog = new DialogBox(700, 400, "Notice", "Testestestet!!!!@ EUFHEUIFH", new Button("Got it", () -> dialog.close()));
     }
 
     public void render(GameContainer gc, StateBasedGame sbg, Graphics g) throws SlickException {
