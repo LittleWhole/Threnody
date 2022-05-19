@@ -5,8 +5,11 @@ import graphics.ui.UserInterfaceable;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
+import org.newdawn.slick.TrueTypeFont;
 import org.newdawn.slick.geom.RoundedRectangle;
 import util.DrawUtilities;
+
+import java.util.Map;
 
 public abstract class Menu implements UserInterfaceable {
     protected final int width;
@@ -14,12 +17,14 @@ public abstract class Menu implements UserInterfaceable {
     protected final int x;
     protected final int y;
     protected boolean show = true;
+    protected Map<String, TrueTypeFont> fonts;
 
     protected Menu(int width, int height) {
         this.width = width;
         this.height = height;
         this.x = Main.RESOLUTION_X / 2;
         this.y = Main.RESOLUTION_Y / 2;
+        this.initializeFonts();
     };
 
     protected Menu(int x, int y, int width, int height) {
@@ -27,6 +32,7 @@ public abstract class Menu implements UserInterfaceable {
         this.height = height;
         this.x = x;
         this.y = y;
+        this.initializeFonts();
     };
 
     @Override
@@ -45,4 +51,5 @@ public abstract class Menu implements UserInterfaceable {
     public void open() { this.show = true; }
 
     protected abstract void subrender(Graphics g);
+    protected abstract void initializeFonts();
 }

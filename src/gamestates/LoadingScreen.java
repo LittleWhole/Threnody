@@ -122,8 +122,8 @@ public class LoadingScreen extends BasicGameState {
 
         background.renderPre(g, PERCENT_LOADED);
 
-        DrawUtilities.drawImageCentered(g, logo, Main.RESOLUTION_X / 2, Main.RESOLUTION_Y / 3);
-        DrawUtilities.drawStringCentered(g, "Version " + Constants.VERSION, Main.RESOLUTION_X / 2, Main.RESOLUTION_Y / 3 - 200);
+        DrawUtilities.drawImageCentered(g, logo, Main.getScreenWidth() / 2, Main.getScreenHeight() / 3);
+        DrawUtilities.drawStringCentered(g, "Version " + Constants.VERSION, Main.getScreenWidth() / 2, Main.getScreenHeight() / 3 - 200);
         g.setBackground(new Color((int) (167 * PERCENT_LOADED), (int) (231 * PERCENT_LOADED), (int) (255 * PERCENT_LOADED)));
 
         // max loading bar
@@ -138,6 +138,6 @@ public class LoadingScreen extends BasicGameState {
         g.setColor(new Color(255, 255, 255));
         g.draw(new RoundedRectangle(BAR_X, BAR_Y, BAR_WIDTH, BAR_HEIGHT, RoundedRectangle.ALL));
 
-        DrawUtilities.drawStringCentered(g, "Loading resource: " + lastResource + "...", Main.RESOLUTION_X / 2, BAR_Y + BAR_HEIGHT + 25f);
+        DrawUtilities.drawStringCentered(g, "Loading resource: " + lastResource + "...", Main.getScreenWidth() / 2, BAR_Y + BAR_HEIGHT + 25f);
     }
 }

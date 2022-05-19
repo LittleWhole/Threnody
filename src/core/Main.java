@@ -13,8 +13,8 @@ import java.awt.*;
 import java.util.ArrayList;
 
 public class Main extends StateBasedGame {
-    public static final int RESOLUTION_X = 1920;
-    public static final int RESOLUTION_Y = 1080;
+    public static int RESOLUTION_X;
+    public static int RESOLUTION_Y;
     public static final int FRAMES_PER_SECOND = 60;
     public static TrueTypeFont font;
     public static final Object LOCK = new Object();
@@ -72,7 +72,10 @@ public class Main extends StateBasedGame {
             appgc = new AppGameContainer(new Main("Threnody"));
             System.setProperty("org.lwjgl.opengl.Window.undecorated", "true");
 
-            appgc.setDisplayMode(RESOLUTION_X, RESOLUTION_Y, false);
+            RESOLUTION_X = getScreenWidth();
+            RESOLUTION_Y = getScreenHeight();
+
+            appgc.setDisplayMode(getScreenWidth(), getScreenHeight(), false);
             appgc.setTargetFrameRate(FRAMES_PER_SECOND);
             appgc.start();
             appgc.setVSync(true);

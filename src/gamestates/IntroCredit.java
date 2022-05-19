@@ -52,6 +52,6 @@ public class IntroCredit extends BasicGameState {
         logo.setImageColor(1, 1, 1, 1 * ((float) counter / 100));
         if (counter > 200) logo.setImageColor(1, 1, 1, 1 * ((float) --counter2 / 100));
         if (counter > 300) sbg.enterState(Main.LOADING_ID);
-        logo.drawCentered(Main.RESOLUTION_X / 2, Main.RESOLUTION_Y / 2);
+        logo.drawCentered(Main.getScreenWidth() / 2, Main.getScreenHeight() / 2);
     }
 }

@@ -1,9 +1,15 @@
 package entities.units;
 
+import combat.artes.ElementType;
 import entities.core.Coordinate;
 import entities.core.Entity;
 import entities.core.EntityType;
 import org.newdawn.slick.Graphics;
+
+import java.util.EnumMap;
+import java.util.Map;
+
+import static combat.artes.ElementType.*;
 
 public class Unit extends Entity {
 
@@ -16,6 +22,7 @@ public class Unit extends Entity {
     protected int critDamage;
     protected int eAttack;
     protected int eDefense;
+    protected Map<ElementType, Integer> eAffinity = Map.of(FIRE, 0, WATER, 0, EARTH, 0, ICE, 0, WIND, 0, ELECTRIC, 0, LIGHT, 0, DARK, 0, POISON, 0);
 
     public int getMana() {
         return mana;
@@ -80,5 +87,9 @@ public class Unit extends Entity {
 
     public int getHealth() {
         return health;
+    }
+
+    public void setHealth(int health) {
+        this.health = health;
     }
 }

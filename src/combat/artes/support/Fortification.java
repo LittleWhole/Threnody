@@ -30,6 +30,6 @@ public class Fortification extends Arte {
 
     @Override
     public void activation(Unit target) {
-
+        target.setHealth(target.getHealth() + this.healingValue);
     }
 }

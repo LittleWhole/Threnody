@@ -1,0 +1,36 @@
+<component name="libraryTable">
+  <library name="javadoc">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/libs/Pack200Task.jar!/" />
+      <root url="file://$PROJECT_DIR$/libs/lib" />
+    </CLASSES>
+    <JAVADOC>
+      <root url="file://$PROJECT_DIR$/libs/javadoc" />
+    </JAVADOC>
+    <NATIVE>
+      <root url="file://$PROJECT_DIR$/libs/natives" />
+      <root url="file://$PROJECT_DIR$/libs" />
+      <root url="file://$PROJECT_DIR$/libs" />
+      <root url="file://$PROJECT_DIR$/libs" />
+      <root url="file://$PROJECT_DIR$/libs" />
+      <root url="file://$PROJECT_DIR$/libs" />
+      <root url="file://$PROJECT_DIR$/libs" />
+      <root url="file://$PROJECT_DIR$/libs" />
+      <root url="file://$PROJECT_DIR$/libs" />
+      <root url="file://$PROJECT_DIR$/libs" />
+      <root url="file://$PROJECT_DIR$/libs" />
+      <root url="file://$PROJECT_DIR$/libs" />
+      <root url="file://$PROJECT_DIR$/libs" />
+      <root url="file://$PROJECT_DIR$/libs" />
+      <root url="file://$PROJECT_DIR$/libs" />
+      <root url="file://$PROJECT_DIR$/libs" />
+      <root url="file://$PROJECT_DIR$/libs" />
+      <root url="file://$PROJECT_DIR$/libs" />
+    </NATIVE>
+    <SOURCES>
+      <root url="file://$PROJECT_DIR$/libs/src" />
+      <root url="file://$PROJECT_DIR$/libs/tools" />
+    </SOURCES>
+    <jarDirectory url="file://$PROJECT_DIR$/libs/lib" recursive="false" />
+  </library>
+</component>

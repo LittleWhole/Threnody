@@ -23,6 +23,7 @@ import util.DrawUtilities;
 import java.util.ArrayList;
 
 public final class Player extends Unit {
+    protected int mana;
 
     public PlayerState getState() {
         return state;
@@ -179,5 +180,14 @@ public final class Player extends Unit {
         hitBox.setX(-plrX - position.getX() + width);
         hitBox.setY((-plrY/2) + this.getHeight()*1.6f);
 
+    }
+
+    @Override
+    public int getMana() {
+        return mana;
+    }
+
+    public void setMana(int mana) {
+        this.mana = mana;
     }
 }
