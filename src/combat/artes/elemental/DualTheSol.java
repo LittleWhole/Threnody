@@ -4,6 +4,7 @@ import combat.artes.Arte;
 import combat.artes.ArteType;
 import combat.artes.ElementType;
 import entities.units.Unit;
+import gamestates.BattleState;
 import org.newdawn.slick.GameContainer;
 import playerdata.characters.PlayableCharacter;
 
@@ -19,7 +20,7 @@ public class DualTheSol extends Arte {
 
     @Override
     public void use(Unit target, GameContainer gc) {
-        castTimestamp = gc.getTime();
+        castTimestamp = BattleState.time;
         animation();
         activation(target);
     }

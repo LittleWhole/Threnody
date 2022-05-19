@@ -10,7 +10,7 @@ import combat.artes.mystic.TrillionDrive;
 import core.Constants;
 import core.Main;
 import entities.core.Coordinate;
-import entities.units.Npc.NPC;
+import entities.units.npc.NPC;
 import entities.units.Unit;
 import gamestates.Game;
 import org.newdawn.slick.*;
@@ -97,9 +97,9 @@ public final class Player extends Unit {
         }
     }
 
-    public void interact(NPC u, GameContainer gc)    {
+    public void interact(NPC u)    {
         if(getHitBox().intersects(u.getHitBox()))   {
-            u.interact(gc);
+            u.interact();
         }
     }
 

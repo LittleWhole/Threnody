@@ -29,7 +29,7 @@ public class GameMap extends TiledMap {
         for(int i = 0; i < hitboxes.length; i++)    {
             for(int j = 0; j < hitboxes[i].length; j++)    {
                 if(getTileId(i,j,1) != 0)   {
-                    if(getTileProperty(getTileId(i,j,1), "walkable", "false").equals("false"))  {
+                    if(getTileProperty(getTileId(i,j,1), "solid", "false").equals("true"))  {
                         hitboxes[i][j] = new Polygon();
                         hitboxes[i][j].addPoint(tileWidth/2f,tileHeight*1.5f);
                         hitboxes[i][j].addPoint(tileWidth,((float)Math.sin(Math.PI/6)*tileWidth));

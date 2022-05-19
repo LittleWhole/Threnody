@@ -19,6 +19,7 @@ public class BattleState extends BasicGameState {
     private GameMap battlefield;
     private CombatManager combat;
     private char result;
+    public static long time;
 
     public BattleState(int id) throws SlickException {
         this.id = id;
@@ -32,9 +33,9 @@ public class BattleState extends BasicGameState {
     }
 
     public void render(GameContainer gc, StateBasedGame sbg, Graphics g) throws SlickException {
+        time++;
         if(sbg.getCurrentStateID() == Main.BATTLE_ID){
-            g.setFont(new TrueTypeFont(new java.awt.Font("Bahnschrift", java.awt.Font.PLAIN, 20), true));
-            g.setBackground(new Color(100, 100, 100));
+
             battlefield.render(1000, -200);
             for(Unit p : plrs) {
                 ((Player) p).battleRender(g, 0,0);
@@ -66,6 +67,7 @@ public class BattleState extends BasicGameState {
     }
 
     public void enter(GameContainer gc, StateBasedGame sbg) throws SlickException {
+        time = 0;
         // This code happens when you enter a gameState.
         for(int i = 0; i < plrs.size(); i++)   {
             //plrs.get(i).setPosition( -200 + i*200, i*1000);
@@ -79,6 +81,8 @@ public class BattleState extends BasicGameState {
 
         combat = new CombatManager(plrs, enemies);
         combat.roundStart();
+        gc.getGraphics().setFont(new TrueTypeFont(new java.awt.Font("Bahnschrift", java.awt.Font.PLAIN, 20), true));
+        gc.getGraphics().setBackground(new Color(100, 100, 100));
     }
 
     public void leave(GameContainer gc, StateBasedGame sbg) {
