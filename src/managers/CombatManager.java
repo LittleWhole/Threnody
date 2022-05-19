@@ -36,8 +36,6 @@ public class CombatManager {
     public char combat(Graphics g, GameContainer gc) throws InterruptedException {
         boolean plrsAlive = true;
         boolean enemiesAlive = true;
-        boolean plrsDone = false;
-        boolean enemiesDone = false;
         if(turn < players.size()) {
             if (enemies.size() == 0) {
                 return 'w';

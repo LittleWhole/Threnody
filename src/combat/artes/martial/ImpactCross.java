@@ -3,6 +3,7 @@ package combat.artes.martial;
 import combat.artes.Arte;
 import combat.artes.ArteType;
 import entities.units.Unit;
+import gamestates.BattleState;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
@@ -19,7 +20,7 @@ public class ImpactCross extends Arte {
 
     @Override
     public void use(Unit target, GameContainer gc) {
-        castTimestamp = gc.getTime();
+        castTimestamp = BattleState.time;
         animation();
         activation(target);
     }

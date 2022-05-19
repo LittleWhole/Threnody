@@ -4,7 +4,7 @@ import core.Main;
 import entities.core.Coordinate;
 import entities.core.Entity;
 import entities.core.EntityType;
-import entities.units.Npc.NPC;
+import entities.units.npc.NPC;
 import entities.units.Unit;
 import entities.units.enemy.Enemy;
 import entities.units.player.Player;
@@ -111,7 +111,7 @@ public class Game extends BasicGameState {
             overworld.drawDebugRects(g);
         }
 
-        dialog.render(g, gc.getInput().getMouseX(), gc.getInput().getMouseY());
+        //dialog.render(g, gc.getInput().getMouseX(), gc.getInput().getMouseY());
     }
 
     public void update(GameContainer gc, StateBasedGame sbg, int delta) throws SlickException {
@@ -148,7 +148,7 @@ public class Game extends BasicGameState {
             newEntities.get(type).clear();
         }
 
-        dialog.update(gc);
+        //dialog.update(gc);
 
     }
 
@@ -197,7 +197,7 @@ public class Game extends BasicGameState {
 
     public void keyPressed(int key, char c) {
         if(key == Input.KEY_F3) Main.debug = !Main.debug;
-        if(key == Input.KEY_E) plr.interact(npc, this.gc);
+        if(key == Input.KEY_E) plr.interact(npc);
     }
 
 

@@ -3,6 +3,7 @@ package combat.artes.mystic;
 import combat.artes.ArteType;
 import combat.artes.MysticArte;
 import entities.units.Unit;
+import gamestates.BattleState;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
@@ -19,7 +20,7 @@ public class TrillionDrive extends MysticArte {
 
     @Override
     public void use(Unit target, GameContainer gc) {
-        castTimestamp = gc.getTime();
+        castTimestamp = BattleState.time;
         animation();
         activation(target);
     }

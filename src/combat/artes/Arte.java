@@ -1,6 +1,7 @@
 package combat.artes;
 
 import entities.units.Unit;
+import gamestates.BattleState;
 import gamestates.Game;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
@@ -62,12 +63,12 @@ public abstract class Arte<C extends PlayableCharacter> {
             animation();
         }
 
-        if (Game.getTime() - castTimestamp < castDuration) {
+        if (BattleState.time - castTimestamp < castDuration) {
             g.drawArc(owner.getEntity().getX(), owner.getEntity().getY(), 50f, 50f, 0f, (float) Math.toRadians((float) castTimestamp / castDuration * 360));
         }
     }
     public boolean finished(GameContainer gc)   {
-        return (gc.getTime()-castTimestamp >= castDuration);
+        return (BattleState.time -castTimestamp >= castDuration);
     }
     public abstract void animation();
 

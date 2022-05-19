@@ -3,6 +3,7 @@ package entities.units.enemy;
 import entities.core.Coordinate;
 import entities.core.Team;
 import entities.units.Unit;
+import gamestates.BattleState;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
@@ -55,14 +56,14 @@ public class Enemy extends Unit {
     }
 
     public void battleMove(Unit target, GameContainer gc)    {
-        this.moveTimeStamp = gc.getTime();
+        this.moveTimeStamp = BattleState.time;
         if(turn != EnemyStates.CHARGE)  {
             this.turn = decideState();
         }
         this.combatState = EnemyStates.MOVING;
         animation();
 
-        if(gc.getTime()-moveTimeStamp>=moveDuration) {
+        if(BattleState.time -moveTimeStamp>=moveDuration) {
             this.combatState = EnemyStates.DONE;
             action(target);
         }
