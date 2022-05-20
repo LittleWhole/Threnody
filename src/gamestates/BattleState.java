@@ -4,6 +4,7 @@ import core.Main;
 import entities.units.Unit;
 import entities.units.enemy.Enemy;
 import entities.units.player.Player;
+import graphics.ui.combat.DamageNumber;
 import managers.CombatManager;
 import map.GameMap;
 import org.newdawn.slick.*;
@@ -11,6 +12,8 @@ import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
 
 import java.util.ArrayList;
+import java.util.Random;
+import java.util.stream.Collectors;
 
 public class BattleState extends BasicGameState {
     private final int id;
@@ -21,6 +24,9 @@ public class BattleState extends BasicGameState {
     private char result;
     public static long time;
 
+    private ArrayList<DamageNumber> damageNumbers;
+    private ArrayList<DamageNumber> toRemove = new ArrayList<>();
+
     public BattleState(int id) throws SlickException {
         this.id = id;
     }
@@ -30,6 +36,7 @@ public class BattleState extends BasicGameState {
         // This code happens when you enter a game state for the *first time.*
         battlefield = new GameMap("res/tilemap/battleworld.tmx");
         gc.setShowFPS(true);
+        damageNumbers = new ArrayList<>();
     }
 
     public void render(GameContainer gc, StateBasedGame sbg, Graphics g) throws SlickException {
@@ -59,11 +66,16 @@ public class BattleState extends BasicGameState {
             }
         }
 
+        damageNumbers.forEach(n -> {
+            n.update(gc);
+            n.render(g, 0, 0);
+            if (n.isExpired()) toRemove.add(n);
+        });
+        damageNumbers.removeAll(toRemove);
     }
 
     public void update(GameContainer gc, StateBasedGame sbg, int delta) throws SlickException {
         // This is where you put your game's logic that executes each frame that isn't about drawing
-
     }
 
     public void enter(GameContainer gc, StateBasedGame sbg) throws SlickException {
@@ -83,6 +95,12 @@ public class BattleState extends BasicGameState {
         combat.roundStart();
         gc.getGraphics().setFont(new TrueTypeFont(new java.awt.Font("Bahnschrift", java.awt.Font.PLAIN, 20), true));
         gc.getGraphics().setBackground(new Color(100, 100, 100));
+
+        Random temp = new Random();
+
+        for (var i = 0; i < 100; i++) {
+            damageNumbers.add(new DamageNumber(temp.nextInt(0, 3000), temp.nextInt(0, 1920), temp.nextInt(0, 1080)));
+        }
     }
 
     public void leave(GameContainer gc, StateBasedGame sbg) {

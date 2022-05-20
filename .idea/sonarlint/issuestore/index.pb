@@ -9,10 +9,6 @@ F
 src/graphics/Star.java,3\b\3bd3e473867fb5c4610bbeb87ef01d34277ff727
 M
 src/entities/core/Entity.java,3\c\3cdf84ae7c6904188a280585e0666fee897f915a
-O
-src/playerdata/PlayerStats.java,9\3\9316523b1bfa3ee54fc482ea876039f1fd6f21be
-N
-src/playerdata/PlayerData.java,6\6\66e5149d3b7b1b7d181cf6c82d39843350f70044
 N
 src/managers/ImageManager.java,7\4\742369e289e0ceff08948582a0f9614cce67c16f
 P
