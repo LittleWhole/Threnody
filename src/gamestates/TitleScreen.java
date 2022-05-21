@@ -55,7 +55,7 @@ public class TitleScreen extends BasicGameState {
         g.setFont(Main.font);
         background.renderPre(g, 1f);
 
-        DrawUtilities.drawImageCentered(g, new Image("/res/logo-ja.png"), Main.getScreenWidth() / 2, Main.getScreenHeight() / 3);
+        DrawUtilities.drawImageCentered(g, new Image("/res/logo.png"), Main.getScreenWidth() / 2, Main.getScreenHeight() / 3);
         DrawUtilities.drawStringCentered(g, "Version " + Constants.VERSION, Main.getScreenWidth() / 2, Main.getScreenHeight() / 3 - 200);
         g.setBackground(new Color((int) (167 * 1f), (int) (231 * 1f), (int) (255 * 1f)));
 
