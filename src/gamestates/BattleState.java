@@ -24,6 +24,9 @@ public class BattleState extends BasicGameState {
     private char result;
     public static long time;
 
+    public static int expGain;
+    public static int currencyGain;
+
     private ArrayList<DamageNumber> damageNumbers;
     private ArrayList<DamageNumber> toRemove = new ArrayList<>();
 
@@ -37,6 +40,8 @@ public class BattleState extends BasicGameState {
         battlefield = new GameMap("res/tilemap/battleworld.tmx");
         gc.setShowFPS(true);
         damageNumbers = new ArrayList<>();
+        expGain = 0;
+        currencyGain = 0;
     }
 
     public void render(GameContainer gc, StateBasedGame sbg, Graphics g) throws SlickException {
@@ -58,6 +63,8 @@ public class BattleState extends BasicGameState {
             g.drawString("" + combat.getRound(), 0, 0);
             switch (result) {
                 case 'w':
+                    expGain = 10;
+                    currencyGain = 10;
                     sbg.enterState(Main.GAME_ID);
                     break;
                 case 'l':
@@ -96,11 +103,11 @@ public class BattleState extends BasicGameState {
         gc.getGraphics().setFont(new TrueTypeFont(new java.awt.Font("Bahnschrift", java.awt.Font.PLAIN, 20), true));
         gc.getGraphics().setBackground(new Color(100, 100, 100));
 
-        Random temp = new Random();
+        //Random temp = new Random();
 
-        for (var i = 0; i < 100; i++) {
+        /*for (var i = 0; i < 100; i++) {
             damageNumbers.add(new DamageNumber(temp.nextInt(0, 3000), temp.nextInt(0, 1920), temp.nextInt(0, 1080)));
-        }
+        }*/
     }
 
     public void leave(GameContainer gc, StateBasedGame sbg) {

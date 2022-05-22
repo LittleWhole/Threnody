@@ -18,6 +18,7 @@ import map.GameMap;
 import org.newdawn.slick.*;
 import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
+import util.DrawUtilities;
 
 import java.util.ArrayList;
 import java.util.EnumMap;
@@ -83,6 +84,32 @@ public class Game extends BasicGameState {
         npc = new NPC(200,0);
         battleCooldown = 200;
         dialog = new DialogBox(700, 400, "Notice", "This is a test dialog box!!!!! FE FEH FEUIFH UHUEUIEGHUIESFIEFOEIJGOIESJFEIOSGIOEHSFJEIOSGIOESJFIOSHGS EFIESJIOGSIOEJFO HSEGJOIEFJIO EF", new Button("Got it", () -> dialog.close()));
+        // Initialize Both Entity Maps
+        entities = new EnumMap<>(Map.of(
+                EntityType.UNIT, new ArrayList<>(),
+                EntityType.PROJECTILE, new ArrayList<>(),
+                EntityType.INTERACTABLE, new ArrayList<>()
+        ));
+        newEntities = new EnumMap<>(Map.of(
+                EntityType.UNIT, new ArrayList<>(),
+                EntityType.PROJECTILE, new ArrayList<>(),
+                EntityType.INTERACTABLE, new ArrayList<>()
+        ));
+
+        // Initialize the Player
+        plr = new Player(plrPosition);
+        plrTeam.add(plr);
+        System.out.println("[VERBOSE] Player initialized");
+        enemy = new Enemy(10, 0);
+        enemyTeam.add(enemy);
+        // Initialize Managers
+        keyDown = new KeyManager(gc.getInput(), this);
+        System.out.println("[VERBOSE] KeyManager initialized");
+        displayManager = new DisplayManager(this, plr.getPosition(), gc.getGraphics());
+        System.out.println("[VERBOSE] DisplayManager initialized");
+
+        // Play BGM
+        SoundManager.playBackgroundMusic("02");
     }
 
     public void render(GameContainer gc, StateBasedGame sbg, Graphics g) throws SlickException {
@@ -102,8 +129,10 @@ public class Game extends BasicGameState {
         enemy.render(g, plr.getX(), plr.getY());
         npc.render(gc, plrPosition.getX(), plrPosition.getY());
         plr.render(g);
-        g.drawString("Coords: " + plr.getPosition().toString(), 100, 100);
-
+        g.drawString("Coords: " + plr.getPosition().toString(), 100, 200);
+        DrawUtilities.drawStringCentered(g,"Level: " + plr.getLevel(), 100, 50);
+        DrawUtilities.drawStringCentered(g, "Exp: " + plr.getExp(), 100, 100);
+        DrawUtilities.drawStringCentered(g, "Money: " + plr.getMoney(), 100, 150);
         if(Main.debug)  {
             plr.drawHitBox(g);
             enemy.drawHitBox(g);
@@ -158,8 +187,9 @@ public class Game extends BasicGameState {
         // Reset time
         time = 0;
         System.out.println("[VERBOSE] Time reset");
-
-        // Initialize Both Entity Maps
+        plr.gainExp(BattleState.expGain);
+        plr.gainMoney(BattleState.currencyGain);
+        /*// Initialize Both Entity Maps
         entities = new EnumMap<>(Map.of(
                 EntityType.UNIT, new ArrayList<>(),
                 EntityType.PROJECTILE, new ArrayList<>(),
@@ -184,7 +214,7 @@ public class Game extends BasicGameState {
         System.out.println("[VERBOSE] DisplayManager initialized");
 
         // Play BGM
-        SoundManager.playBackgroundMusic("02");
+        SoundManager.playBackgroundMusic("02");*/
     }
 
     public void leave(GameContainer gc, StateBasedGame sbg) {
@@ -212,8 +242,6 @@ public class Game extends BasicGameState {
     public int getID() {
         return id;
     }
-
-
 
     public Player getPlayer() {
         return plr.getPlayer();

@@ -50,7 +50,6 @@ public final class Player extends Unit {
         this.ySpeed = 10;
         this.sheet = new SpriteSheet("res/experimentalCharacter.png", 256, 512);
         this.sprite = sheet.getSprite(0,0);
-        this.level = 1;
         this.character = new Sigur();
         this.arteDeck = new ArrayList<>();
         for(int i = 0; i < 20; i++) {
@@ -180,6 +179,24 @@ public final class Player extends Unit {
         hitBox.setX(-plrX - position.getX() + width);
         hitBox.setY((-plrY/2) + this.getHeight()*1.6f);
 
+    }
+
+    public void gainExp(int amount) {
+        this.character.gainExp(amount);
+    }
+    public void gainMoney(int amount)   {
+        this.character.gainMoney(amount);
+    }
+
+    public int getExp() {
+        return this.character.getExp();
+    }
+    public int getMoney()   {
+        return this.character.getMoney();
+    }
+
+    public int getLevel()   {
+        return this.character.getLevel();
     }
 
     @Override

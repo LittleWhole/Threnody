@@ -11,7 +11,7 @@ import java.io.Serializable;
 public abstract strictfp sealed class PlayableCharacter extends PlayerData implements Serializable permits Sigur, Phaedra {
 
     // PlayableCharacter is a data class. It will only be used to store characters' playerdata and will only be instantiated once per character.
-    protected int level, exp, maxExp;
+    protected int level, exp, money, maxExp;
 
     protected int health;
     protected int attack;
@@ -27,12 +27,25 @@ public abstract strictfp sealed class PlayableCharacter extends PlayerData imple
     protected Player entity;
     private PlayerState state;
 
+    public int getLevel() {
+        return level;
+    }
+
+    public int getExp() {
+        return exp;
+    }
+
+    public int getMoney() {
+        return money;
+    }
+
     protected PlayableCharacter() {
         // Default character constructor
         health = 1;
         attack = 1;
         this.level = 1;
         this.exp = 0;
+        this.money = 0;
         this.maxExp = Constants.LevelingConstants.MAX_EXP(1);
     }
 
@@ -42,6 +55,14 @@ public abstract strictfp sealed class PlayableCharacter extends PlayerData imple
         this.level = level;
         this.exp = exp;
          this.maxExp = Constants.LevelingConstants.MAX_EXP(level);
+    }
+
+    public void gainExp(int amount)   {
+        this.exp+= amount;
+
+    }
+    public void gainMoney(int amount)   {
+        this.money+= amount;
     }
 
 

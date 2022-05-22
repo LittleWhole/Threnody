@@ -1,5 +1,6 @@
 package util;
 
+import org.newdawn.slick.Font;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.TrueTypeFont;
@@ -22,7 +23,7 @@ public final class DrawUtilities {
     /*================================================================*/
     /*                      CENTERING UTILITIES                       */
     /*================================================================*/
-
+    public static Font defaultFont = new TrueTypeFont(new java.awt.Font("Bahnschrift", java.awt.Font.PLAIN, 20), true);
     public static Rectangle createRectangleCentered(float x, float y, float width, float height) {
         return new Rectangle(x - width / 2, y - height / 2, width, height);
     }
@@ -64,7 +65,7 @@ public final class DrawUtilities {
     /*===================================*/
 
     public static void drawStringCentered(Graphics g, String string, float x, float y) {
-        org.newdawn.slick.Font font = new TrueTypeFont(new java.awt.Font("Bahnschrift", java.awt.Font.PLAIN, 20), true);
+        org.newdawn.slick.Font font = defaultFont;
         int width = font.getWidth(string);
         int height = font.getHeight(string);
         Rectangle r = createRectangleCentered(x, y, width, height);
@@ -86,7 +87,7 @@ public final class DrawUtilities {
     }
 
     public static void drawStringCentered(Graphics g, String string, Rectangle r) {
-        org.newdawn.slick.Font font = new TrueTypeFont(new java.awt.Font("Bahnschrift", java.awt.Font.PLAIN, 20), true);
+        org.newdawn.slick.Font font = defaultFont;
         int width = font.getWidth(string);
         int height = font.getHeight(string);
 
