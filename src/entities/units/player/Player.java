@@ -16,6 +16,7 @@ import gamestates.Game;
 import org.newdawn.slick.*;
 import org.newdawn.slick.geom.Rectangle;
 import org.newdawn.slick.state.StateBasedGame;
+import playerdata.PlayerStats;
 import playerdata.characters.PlayableCharacter;
 import playerdata.characters.Sigur;
 import util.DrawUtilities;
@@ -40,6 +41,7 @@ public final class Player extends Unit {
     protected Arte move;
     protected int queue;
     protected PlayableCharacter character;
+    protected PlayerStats stats;
     // Abbreviations: LVL, EXP, HP, ATK, DEF, CR, CD, EATK, EDEF, AFF
 
     public Player(Coordinate pos) throws SlickException {
@@ -51,6 +53,7 @@ public final class Player extends Unit {
         this.sheet = new SpriteSheet("res/experimentalCharacter.png", 256, 512);
         this.sprite = sheet.getSprite(0,0);
         this.character = new Sigur();
+        this.stats = new PlayerStats();
         this.arteDeck = new ArrayList<>();
         for(int i = 0; i < 20; i++) {
             arteDeck.add(new SonicSlash(character));
@@ -95,6 +98,7 @@ public final class Player extends Unit {
         this.position.updatePosition(dx,dy);
         this.dx = 0;
         this.dy = 0;
+        this.stats.level=this.character.getLevel();
         if(getHitBox().intersects(u.getHitBox()) && Game.time >= Game.battleCooldown) {
             sbg.enterState(Main.BATTLE_ID);
         }
@@ -187,20 +191,21 @@ public final class Player extends Unit {
 
     public void gainExp(int amount) {
         this.character.gainExp(amount);
+        this.stats.exp+=amount;
     }
     public void gainMoney(int amount)   {
-        this.character.gainMoney(amount);
+        this.stats.gold+=amount;
     }
 
     public int getExp() {
-        return this.character.getExp();
+        return this.stats.exp;
     }
     public int getMoney()   {
-        return this.character.getMoney();
+        return this.stats.gold;
     }
 
     public int getLevel()   {
-        return this.character.getLevel();
+        return this.stats.level;
     }
 
     @Override
