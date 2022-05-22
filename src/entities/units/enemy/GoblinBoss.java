@@ -1,4 +1,9 @@
 package entities.units.enemy;
 
-public class GoblinBoss {
+import org.newdawn.slick.SlickException;
+
+public class GoblinBoss extends Enemy{
+    public GoblinBoss(float x, float y) throws SlickException {
+        super(x, y);
+    }
 }
