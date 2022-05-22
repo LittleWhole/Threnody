@@ -68,6 +68,7 @@ public class Unit extends Entity {
     public void setPosition(int x, int y)   {
         this.position = new Coordinate(x,y);
     }
+    public void setPosition(Coordinate c) {this.position = c;}
 
     public void takeDamage(int amount)  {
         this.health-=amount;

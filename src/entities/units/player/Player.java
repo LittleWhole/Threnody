@@ -63,6 +63,10 @@ public final class Player extends Unit {
         this.hitBox = new Rectangle((Main.getScreenWidth()/2) - this.getWidth()/2, (Main.getScreenHeight()/2) + 170, this.width, this.height-100); // set size to tiles
     }
 
+    public void resetHitbox()   {
+        this.hitBox = new Rectangle((Main.getScreenWidth()/2) - this.getWidth()/2, (Main.getScreenHeight()/2) + 170, this.width, this.height-100);
+    }
+
     public void startBattle()   {
         queue = 5;
         this.arteHand = new ArrayList<Arte>(arteDeck.subList(0,6));

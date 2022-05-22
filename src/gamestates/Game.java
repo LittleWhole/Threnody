@@ -29,7 +29,6 @@ public class Game extends BasicGameState {
 
     private static GameContainer gc;
     private final int id;
-
     public static int time;
     public static long battleTimeStamp;
     public static int battleCooldown;
@@ -183,13 +182,15 @@ public class Game extends BasicGameState {
 
     public void enter(GameContainer gc, StateBasedGame sbg) throws SlickException {
         System.out.println("Entering game");
-
+        plr.gainExp(BattleState.expGain);
+        plr.gainMoney(BattleState.currencyGain);
         // Reset time
         time = 0;
         System.out.println("[VERBOSE] Time reset");
-        plr.gainExp(BattleState.expGain);
-        plr.gainMoney(BattleState.currencyGain);
-        /*// Initialize Both Entity Maps
+        //enemy = new Enemy(10,0);
+        //plr.setPosition(0,0);
+        //plrTeam.add(plr);
+        // Initialize Both Entity Maps
         entities = new EnumMap<>(Map.of(
                 EntityType.UNIT, new ArrayList<>(),
                 EntityType.PROJECTILE, new ArrayList<>(),
@@ -202,8 +203,10 @@ public class Game extends BasicGameState {
         ));
 
         // Initialize the Player
-        plr = new Player(plrPosition);
-        plrTeam.add(plr);
+        plr.setPosition(plrPosition);
+        plr.resetHitbox();
+        //plr = new Player(plrPosition);
+        //plrTeam.add(plr);
         System.out.println("[VERBOSE] Player initialized");
         enemy = new Enemy(10, 0);
         enemyTeam.add(enemy);
@@ -214,14 +217,13 @@ public class Game extends BasicGameState {
         System.out.println("[VERBOSE] DisplayManager initialized");
 
         // Play BGM
-        SoundManager.playBackgroundMusic("02");*/
+        SoundManager.playBackgroundMusic("02");
     }
 
     public void leave(GameContainer gc, StateBasedGame sbg) {
         // This code happens when you leave a gameState.
         BattleState.plrs = plrTeam;
         BattleState.enemies = enemyTeam;
-
     }
 
 
