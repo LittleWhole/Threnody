@@ -82,7 +82,7 @@ public class Game extends ThrenodyGameState {
         enemy = new Enemy(10, 0);
         npc = new NPC(200,0);
         battleCooldown = 200;
-        dialog = new DialogBox(700, 400, "Notice", "This is a test dialog box!!!!! FE FEH FEUIFH UHUEUIEGHUIESFIEFOEIJGOIESJFEIOSGIOEHSFJEIOSGIOESJFIOSHGS EFIESJIOGSIOEJFO HSEGJOIEFJIO EF", new Button("Got it", () -> dialog.close()));
+        dialog = new DialogBox(700, 400, "Notice", "This is a test dialog box!!!!!", new Button("Got it", () -> dialog.close()));
         // Initialize Both Entity Maps
         entities = new EnumMap<>(Map.of(
                 EntityType.UNIT, new ArrayList<>(),
@@ -139,7 +139,8 @@ public class Game extends ThrenodyGameState {
             overworld.drawDebugRects(g);
         }
 
-        //dialog.render(g, gc.getInput().getMouseX(), gc.getInput().getMouseY());
+        dialog.render(g, gc.getInput().getMouseX(), gc.getInput().getMouseY());
+        super.render(gc, sbg, g);
     }
 
     public void update(GameContainer gc, StateBasedGame sbg, int delta) throws SlickException {
@@ -176,7 +177,7 @@ public class Game extends ThrenodyGameState {
             newEntities.get(type).clear();
         }
 
-        //dialog.update(gc);
+        dialog.update(gc);
 
     }
 

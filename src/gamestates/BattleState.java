@@ -80,6 +80,7 @@ public class BattleState extends ThrenodyGameState {
             if (n.isExpired()) toRemove.add(n);
         });
         damageNumbers.removeAll(toRemove);
+        super.render(gc, sbg, g);
     }
 
     public void update(GameContainer gc, StateBasedGame sbg, int delta) throws SlickException {

@@ -139,5 +139,6 @@ public class LoadingScreen extends ThrenodyGameState {
         g.draw(new RoundedRectangle(BAR_X, BAR_Y, BAR_WIDTH, BAR_HEIGHT, RoundedRectangle.ALL));
 
         DrawUtilities.drawStringCentered(g, "Loading resource: " + lastResource + "...", Main.getScreenWidth() / 2, BAR_Y + BAR_HEIGHT + 25f);
+        super.render(gc, sbg, g);
     }
 }
