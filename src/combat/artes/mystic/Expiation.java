@@ -13,8 +13,8 @@ public class Expiation extends MysticArte {
 
     public Expiation(PlayableCharacter owner) throws SlickException {
         super(owner);
-        String name = "Expiation";
-        ArteType arteType = ArteType.MYSTIC;
+        name = "Expiation";
+        arteType = ArteType.MYSTIC;
         this.sprite = new Image("res/mysticCard.png");
     }
 

@@ -52,7 +52,6 @@ public final class Player extends Unit {
         this.sheet = new SpriteSheet("res/experimentalCharacter.png", 256, 512);
         this.sprite = sheet.getSprite(0,0);
         this.character = new Sigur();
-        this.stats = new PlayerStats();
         this.arteDeck = new ArrayList<>();
         for(int i = 0; i < 20; i++) {
             arteDeck.add(new SonicSlash(character));
@@ -97,7 +96,6 @@ public final class Player extends Unit {
         this.position.updatePosition(dx,dy);
         this.dx = 0;
         this.dy = 0;
-        this.stats.level=this.character.getLevel();
         if(getHitBox().intersects(u.getHitBox()) && Game.time >= Game.battleCooldown) {
             sbg.enterState(Main.BATTLE_ID);
         }

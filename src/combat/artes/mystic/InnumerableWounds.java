@@ -13,8 +13,8 @@ public class InnumerableWounds extends MysticArte {
 
     public InnumerableWounds(PlayableCharacter owner) throws SlickException {
         super(owner);
-        String name = "Innumerable Wounds";
-        ArteType arteType = ArteType.MYSTIC;
+        name = "Innumerable Wounds";
+        arteType = ArteType.MYSTIC;
         this.sprite = new Image("res/mysticCard.png");
     }
 

@@ -13,8 +13,8 @@ public class ImpactCross extends Arte {
 
     public ImpactCross(PlayableCharacter owner) throws SlickException {
         super(owner);
-        String name = "Impact Cross";
-        ArteType arteType = ArteType.MARTIAL;
+        name = "Impact Cross";
+        arteType = ArteType.MARTIAL;
         this.sprite = new Image("res/martialCard.png");
     }
 

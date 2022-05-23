@@ -10,12 +10,11 @@ import playerdata.characters.PlayableCharacter;
 
 public class AquaLimit extends Arte {
 
-    public static final String name = "Aqua Limit";
-    public static final ArteType arteType = ArteType.ELEMENTAL;
-    public static final ElementType element = ElementType.WATER;
-
     public AquaLimit(PlayableCharacter owner) {
         super(owner);
+        name = "Aqua Limit";
+        arteType = ArteType.ELEMENTAL;
+        element = ElementType.WATER;
     }
 
     @Override

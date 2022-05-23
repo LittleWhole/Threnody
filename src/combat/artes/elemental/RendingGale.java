@@ -10,12 +10,12 @@ import playerdata.characters.PlayableCharacter;
 
 public class RendingGale extends Arte {
 
-    public static final String name = "Rending Gale";
-    public static final ArteType arteType = ArteType.ELEMENTAL;
-    public static final ElementType element = ElementType.WIND;
 
     public RendingGale(PlayableCharacter owner) {
         super(owner);
+        name = "Rending Gale";
+        arteType = ArteType.ELEMENTAL;
+        element = ElementType.WIND;
     }
 
     @Override

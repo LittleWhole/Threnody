@@ -13,8 +13,8 @@ public class TrillionDrive extends MysticArte {
 
     public TrillionDrive(PlayableCharacter owner) throws SlickException {
         super(owner);
-        String name = "Trillion Drive";
-        ArteType arteType = ArteType.MYSTIC;
+        name = "Trillion Drive";
+        arteType = ArteType.MYSTIC;
         this.sprite = new Image("res/mysticCard.png");
     }
 

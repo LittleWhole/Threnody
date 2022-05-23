@@ -103,7 +103,7 @@ public class BattleState extends BasicGameState {
         gc.getGraphics().setFont(new TrueTypeFont(new java.awt.Font("Bahnschrift", java.awt.Font.PLAIN, 20), true));
         gc.getGraphics().setBackground(new Color(100, 100, 100));
 
-        //Random temp = new Random();
+        //var temp = new Random();
 
         /*for (var i = 0; i < 100; i++) {
             damageNumbers.add(new DamageNumber(temp.nextInt(0, 3000), temp.nextInt(0, 1920), temp.nextInt(0, 1080)));

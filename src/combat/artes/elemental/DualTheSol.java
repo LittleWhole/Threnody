@@ -10,12 +10,11 @@ import playerdata.characters.PlayableCharacter;
 
 public class DualTheSol extends Arte {
 
-    public static final String name = "Dual the Sol";
-    public static final ArteType arteType = ArteType.ELEMENTAL;
-    public static final ElementType element = ElementType.LIGHT;
-
     public DualTheSol(PlayableCharacter owner) {
         super(owner);
+        name = "Dual the Sol";
+        arteType = ArteType.ELEMENTAL;
+        element = ElementType.LIGHT;
     }
 
     @Override

@@ -13,8 +13,8 @@ public class DragonFang extends Arte {
 
     public DragonFang(PlayableCharacter owner) throws SlickException {
         super(owner);
-        String name = "Dragon Fang";
-        ArteType arteType = ArteType.MARTIAL;
+        name = "Dragon Fang";
+        arteType = ArteType.MARTIAL;
         this.sprite = new Image("res/martialCard.png");
     }
 
