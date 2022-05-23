@@ -7,6 +7,7 @@ import entities.units.player.Player;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import entities.units.player.PlayerState;
+import util.DrawUtilities;
 
 import java.util.ArrayList;
 
@@ -59,13 +60,14 @@ public class CombatManager {
             if (players.size() == 0) {
                 return 'l';
             }
-            if(((Enemy) enemies.get(turn-(players.size()-1))).getCombatState()== EnemyStates.CHOOSING)  {
+            if(((Enemy) enemies.get(turn-(players.size()-1))).getCombatState() == EnemyStates.CHOOSING)  {
                 ((Enemy) enemies.get(turn-(players.size()-1))).battleSelect();
             }
-            if(((Enemy) enemies.get(turn-(players.size()-1))).getCombatState()== EnemyStates.MOVING)  {
+            if(((Enemy) enemies.get(turn-(players.size()-1))).getCombatState() == EnemyStates.MOVING)  {
                 ((Enemy) enemies.get(turn-(players.size()-1))).battleMove(players.get(0), gc);
+                DrawUtilities.drawStringCentered(g, "MOVING", 800, 100);
             }
-            if(((Enemy) enemies.get(turn-(players.size()-1))).getCombatState()== EnemyStates.DONE) {
+            if(((Enemy) enemies.get(turn-(players.size()-1))).getCombatState() == EnemyStates.DONE) {
                 updateTeams(players);
                 if (players.size() == 0) {
                     return 'l';
