@@ -75,7 +75,7 @@ public final class Player extends Unit {
 
     public void move(Unit target, GameContainer gc, Graphics g) throws InterruptedException {
         for(int i = 0; i < arteHand.size(); i++)    {
-            arteHand.get(i).getSprite().drawCentered((Main.getScreenWidth()/7)*(i+1), Main.getScreenHeight()-300);
+            arteHand.get(i).getCard().drawCentered((Main.getScreenWidth()/7)*(i+1), Main.getScreenHeight()-300);
             g.setColor(Color.white);
             DrawUtilities.drawStringCentered(g, arteHand.get(i).name, (Main.getScreenWidth()/7)*(i+1), Main.getScreenHeight()-300);
             DrawUtilities.drawStringCentered(g, String.valueOf(arteHand.get(i).arteType) + "ARTE", (Main.getScreenWidth()/7)*(i+1), Main.getScreenHeight()-400);
@@ -88,7 +88,8 @@ public final class Player extends Unit {
 
     public void attack(Unit target, GameContainer gc)   {
         if(move != null) {
-            if(move.finished(gc))this.setState(PlayerState.DONE);
+            move.render(target, gc.getGraphics());
+            if(move.finished())this.setState(PlayerState.DONE);
         }
     }
 

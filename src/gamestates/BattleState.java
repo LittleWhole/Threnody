@@ -23,11 +23,10 @@ public class BattleState extends BasicGameState {
     private CombatManager combat;
     private char result;
     public static long time;
-
     public static int expGain;
     public static int currencyGain;
 
-    private ArrayList<DamageNumber> damageNumbers;
+    public static ArrayList<DamageNumber> damageNumbers;
     private ArrayList<DamageNumber> toRemove = new ArrayList<>();
 
     public BattleState(int id) throws SlickException {

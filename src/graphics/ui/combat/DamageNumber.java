@@ -22,7 +22,7 @@ public class DamageNumber implements Updatable {
         this.y = y;
         this.font = new TrueTypeFont(new java.awt.Font("Bahnschrift", java.awt.Font.PLAIN, 40), true);
         this.color = new Color(Color.white);
-        this.lifetime = 60;
+        this.lifetime = 120;
     }
 
     @Override

@@ -4,11 +4,11 @@ import combat.artes.Arte;
 import combat.artes.ArteType;
 import entities.units.Unit;
 import gamestates.BattleState;
-import org.newdawn.slick.GameContainer;
-import org.newdawn.slick.Image;
-import org.newdawn.slick.SlickException;
+import graphics.ui.combat.DamageNumber;
+import org.newdawn.slick.*;
 import playerdata.characters.PlayableCharacter;
 import playerdata.characters.Sigur;
+import util.DrawUtilities;
 
 public class SonicSlash extends Arte {
 
@@ -19,19 +19,23 @@ public class SonicSlash extends Arte {
         name = "Sonic Slash";
         arteType = ArteType.MARTIAL;
         cost = 1;
-        castDuration = 100;
-        this.sprite = new Image("res/martialCard.png");
+        castDuration = 74;
+        this.card = new Image("res/martialCard.png");
+        this.aniSheet = new SpriteSheet("res/animations/combat/sonic_slash.png",200,200);
     }
 
     @Override
     public void use(Unit target, GameContainer gc) {
-        castTimestamp = BattleState.time;
-        animation();
+        timer = 0;
         activation(target);
     }
 
     @Override
-    public void animation() {
+    public void animation(Unit target, Graphics g) {
+        if(!finished()) {
+            this.aniFrame = aniSheet.getSprite(timer, 0);
+            g.drawImage(aniFrame,-target.getPosition().getX(), target.getPosition().getY()+target.getHeight());
+        }
 
     }
 
