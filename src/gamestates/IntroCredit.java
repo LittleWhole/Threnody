@@ -53,5 +53,6 @@ public class IntroCredit extends ThrenodyGameState {
         if (counter > 200) logo.setImageColor(1, 1, 1, 1 * ((float) --counter2 / 100));
         if (counter > 300) sbg.enterState(Main.LOADING_ID);
         logo.drawCentered(Main.getScreenWidth() / 2, Main.getScreenHeight() / 2);
+        super.render(gc, sbg, g);
     }
 }

@@ -44,7 +44,7 @@ public class Main extends StateBasedGame {
     public static ArrayList<PlayableCharacter> characters;
 
     public static AbstractQueue<Displayable> displayables = new ConcurrentLinkedQueue<>();
-    public static AbstractQueue<DialogBox> menus = new ConcurrentLinkedQueue<>();
+    public static AbstractQueue<Menu> menus = new ConcurrentLinkedQueue<>();
 
     public Main(String name) throws SlickException {
         super(name);

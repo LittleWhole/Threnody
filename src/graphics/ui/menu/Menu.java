@@ -35,7 +35,7 @@ public abstract class Menu implements UserInterfaceable {
     @Override
     public void render(Graphics g, int mouseX, int mouseY) {
         if (!show) return;
-        g.setColor(new Color(0, 0, 0, 120));
+        g.setColor(new Color(0, 0, 0, 170));
         DrawUtilities.fillShapeCentered(g, new RoundedRectangle(0, 0, width, height, RoundedRectangle.ALL), x, y);
         this.subrender(g);
     };

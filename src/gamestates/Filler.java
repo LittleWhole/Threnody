@@ -43,6 +43,7 @@ public class Filler extends ThrenodyGameState {
     public void render(GameContainer gc, StateBasedGame sbg, Graphics g) throws SlickException
     {
         g.setBackground(Color.black);
+        super.render(gc, sbg, g);
     }
 
 }
