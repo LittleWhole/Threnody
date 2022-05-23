@@ -14,7 +14,7 @@ import org.newdawn.slick.state.transition.FadeOutTransition;
 import graphics.ui.Button;
 import util.DrawUtilities;
 
-public class TitleScreen extends BasicGameState {
+public class TitleScreen extends ThrenodyGameState {
     private int id;
     public Background background;
     private Button bNEW_GAME;

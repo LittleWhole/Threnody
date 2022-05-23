@@ -25,7 +25,7 @@ import java.util.EnumMap;
 import java.util.Map;
 import java.util.function.Predicate;
 
-public class Game extends BasicGameState {
+public class Game extends ThrenodyGameState {
 
     private static GameContainer gc;
     private final int id;
@@ -228,6 +228,7 @@ public class Game extends BasicGameState {
 
 
     public void keyPressed(int key, char c) {
+        super.keyPressed(key, c);
         if(key == Input.KEY_F3) Main.debug = !Main.debug;
         if(key == Input.KEY_E) plr.interact(npc);
     }

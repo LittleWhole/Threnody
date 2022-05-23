@@ -7,7 +7,7 @@ import org.newdawn.slick.*;
 import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
 
-public class IntroCredit extends BasicGameState {
+public class IntroCredit extends ThrenodyGameState {
 
     private int id;
     private Image logo;

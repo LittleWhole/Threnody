@@ -1,5 +1,12 @@
 package combat.artes;
 
 public enum ArteType {
-    SUPPORT, MARTIAL, ELEMENTAL, MYSTIC;
+    SUPPORT("Support Arte"), MARTIAL("Martial Arte"), ELEMENTAL("Elemental Arte"), MYSTIC("Mystic Arte");
+
+    public final String name;
+
+    ArteType(String name) {
+        this.name = name;
+    }
+
 }

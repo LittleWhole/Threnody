@@ -18,7 +18,7 @@ import util.Resource;
 import java.io.File;
 import java.io.IOException;
 
-public class LoadingScreen extends BasicGameState {
+public class LoadingScreen extends ThrenodyGameState {
     public static final String RES = System.getProperty("user.dir") + "/res";
 
     private LoadingList loadingList;

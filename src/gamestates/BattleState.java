@@ -17,7 +17,7 @@ import java.util.ArrayList;
 import java.util.Random;
 import java.util.stream.Collectors;
 
-public class BattleState extends BasicGameState {
+public class BattleState extends ThrenodyGameState {
     private final int id;
     public static ArrayList<Unit> plrs;
     public static ArrayList<Unit> enemies;
@@ -117,7 +117,7 @@ public class BattleState extends BasicGameState {
 
 
     public void keyPressed(int key, char c) {
-
+        super.keyPressed(key, c);
     }
 
     public void mousePressed(int button, int x, int y) {

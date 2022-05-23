@@ -14,6 +14,7 @@ import entities.core.Coordinate;
 import entities.units.npc.NPC;
 import entities.units.Unit;
 import gamestates.Game;
+import gamestates.TitleScreen;
 import org.apache.commons.lang3.StringUtils;
 import org.newdawn.slick.*;
 import org.newdawn.slick.geom.Rectangle;
@@ -79,8 +80,8 @@ public final class Player extends Unit {
         for(int i = 0; i < arteHand.size(); i++)    {
             arteHand.get(i).getCard().drawCentered((Main.getScreenWidth()/7)*(i+1), Main.getScreenHeight()-300);
             g.setColor(Color.white);
-            DrawUtilities.drawStringCentered(g, arteHand.get(i).getName(), (Main.getScreenWidth()/7)*(i+1), Main.getScreenHeight()-300);
-            DrawUtilities.drawStringCentered(g, StringUtils.capitalize(String.valueOf(arteHand.get(i).getArteType())) + " Arte", (Main.getScreenWidth()/7)*(i+1), Main.getScreenHeight()-400);
+            DrawUtilities.drawStringCentered(g, arteHand.get(i).getName(), Main.font, (Main.getScreenWidth()/7)*(i+1), Main.getScreenHeight()-300);
+            DrawUtilities.drawStringCentered(g, arteHand.get(i).getArteType().name, Main.font, (Main.getScreenWidth()/7)*(i+1), Main.getScreenHeight()-400);
         }
         move = cardSelect(gc.getInput());
         if(move != null) {

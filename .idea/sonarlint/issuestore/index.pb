@@ -8,8 +8,6 @@ X
 M
 src/entities/core/Entity.java,3\c\3cdf84ae7c6904188a280585e0666fee897f915a
 N
-src/managers/ImageManager.java,7\4\742369e289e0ceff08948582a0f9614cce67c16f
-N
 src/managers/SoundManager.java,7\6\76fafc7024265e846f7a16c874307dd927e94d6b
 L
 src/graphics/Background.java,9\c\9cb452fd095f69f4a72bfa4cdd3c39199e02c276
