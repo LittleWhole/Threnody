@@ -28,7 +28,7 @@ public class Enemy extends Unit {
 
     protected EnemyStates combatState;
     public Enemy(float x, float y) throws SlickException {//later change parameters to also change size, level, speed, and sprite
-        moveDuration = 200;
+        this.moveDuration = 1000;
         this.width = 80;
         this.height = 256;
         this.position = new Coordinate(x, y);
