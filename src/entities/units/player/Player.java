@@ -41,7 +41,6 @@ public final class Player extends Unit {
     protected Arte move;
     protected int queue;
     protected PlayableCharacter character;
-    protected PlayerStats stats;
     // Abbreviations: LVL, EXP, HP, ATK, DEF, CR, CD, EATK, EDEF, AFF
 
     public Player(Coordinate pos) throws SlickException {
@@ -191,21 +190,14 @@ public final class Player extends Unit {
 
     public void gainExp(int amount) {
         this.character.gainExp(amount);
-        this.stats.exp+=amount;
-    }
-    public void gainMoney(int amount)   {
-        this.stats.gold+=amount;
     }
 
     public int getExp() {
-        return this.stats.exp;
-    }
-    public int getMoney()   {
-        return this.stats.gold;
+        return character.getExp();
     }
 
     public int getLevel()   {
-        return this.stats.level;
+        return character.getLevel();
     }
 
     @Override

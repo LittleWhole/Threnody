@@ -129,9 +129,9 @@ public class Game extends BasicGameState {
         npc.render(gc, plrPosition.getX(), plrPosition.getY());
         plr.render(g);
         g.drawString("Coords: " + plr.getPosition().toString(), 100, 200);
-        DrawUtilities.drawStringCentered(g,"Level: " + plr.getLevel(), 100, 50);
-        DrawUtilities.drawStringCentered(g, "Exp: " + plr.getExp(), 100, 100);
-        DrawUtilities.drawStringCentered(g, "Money: " + plr.getMoney(), 100, 150);
+        DrawUtilities.drawStringCentered(g,"Level: " + Main.stats.level, 100, 50);
+        DrawUtilities.drawStringCentered(g, "Exp: " + Main.stats.exp + "/" + Main.stats.maxExp, 100, 100);
+        DrawUtilities.drawStringCentered(g, "Gold: " + Main.stats.gold, 100, 150);
         if(Main.debug)  {
             plr.drawHitBox(g);
             enemy.drawHitBox(g);
@@ -183,7 +183,7 @@ public class Game extends BasicGameState {
     public void enter(GameContainer gc, StateBasedGame sbg) throws SlickException {
         System.out.println("Entering game");
         plr.gainExp(BattleState.expGain);
-        plr.gainMoney(BattleState.currencyGain);
+        Main.stats.gainGold(BattleState.currencyGain);
         // Reset time
         time = 0;
         System.out.println("[VERBOSE] Time reset");
