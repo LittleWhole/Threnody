@@ -15,8 +15,6 @@ import java.util.ArrayList;
 public final class DisplayManager {
 	private Graphics graphics;
 
-	private Background background;
-
 	private Coordinate center; // The entity the camera will be rendered around
 	private Game game; // The game (so we can reference it)
 	
@@ -24,13 +22,7 @@ public final class DisplayManager {
 		this.game = g;
 		// this.center = center;
 
-		this.center = new Coordinate(PlayerOld.PLAYER_X_SPAWN, PlayerOld.PLAYER_Y_SPAWN);
-		//		game.getPlayer().getPosition();
-
-		this.graphics = graphics;
-
-		// Initialize Background
-		this.background = new Background();
+		this.center = game.getPlayer().getPosition();
 	}
 
 	// Returns pixel coordinates on screen of some game position
@@ -41,26 +33,7 @@ public final class DisplayManager {
 	public float gameX(float x) { return center.getX() + (x - Constants.ImageConstants.CENTER_X) / Constants.ImageConstants.PIXELS_PER_UNIT; }
 	public float gameY(float y) { return center.getY() + 1 + (Constants.ImageConstants.CENTER_Y - y) / Constants.ImageConstants.PIXELS_PER_UNIT; }
 
-	// Main rendering method
-	public void renderEntities(Graphics g) {
-		// Render entities in game
-		for(ArrayList<Entity> list: game.getEntities().values()) {
-			for(Entity e: list) { e.render(g); }
-		}
-	}
-	// Display player score and lives
+	// Render Player HUD
 	public void renderInterface(Graphics g) {
-		// Rendering player score
-		g.setColor(Color.white);
-		g.resetLineWidth();
-
-		/*String scoreDisplay = "Score: " + game.getPlayer().getScore();
-
-		g.drawRect(Engine.RESOLUTION_X * 0.021f, Engine.RESOLUTION_Y * 0.037f,
-				g.getFont().getWidth(scoreDisplay) + Engine.RESOLUTION_X * 0.005f * 2f,
-				g.getFont().getHeight(scoreDisplay) + Engine.RESOLUTION_Y * 0.009f * 2f);
-		g.drawString(scoreDisplay, Engine.RESOLUTION_X * 0.026f, Engine.RESOLUTION_Y * 0.046f);*/
 	}
-	// Render Background
-	public void renderBackground(Graphics g) { background.render(g); }
 }

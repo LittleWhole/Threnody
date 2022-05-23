@@ -11,10 +11,10 @@ import util.DrawUtilities;
 import java.util.function.Function;
 
 public class Button implements UserInterfaceable {
-    private float x, y, width, height;
-    private String text;
-    private Commandable command;
-    private UserInterfaceable parent;
+    protected float x, y, width, height;
+    protected String text;
+    protected Commandable command;
+    protected UserInterfaceable parent;
 
     public Button(String text) {
         this.x = 0;

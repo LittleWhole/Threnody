@@ -64,7 +64,7 @@ public class DialogBox extends Menu implements UserInterfaceable {
 
     public void formatBody() {
         String temp = "";
-        String clone = new String(body);
+        String clone = body;
         int lastIndex = 0;
         for (var i = 0; i < clone.length(); i++) {
             temp = clone.substring(lastIndex, i);
