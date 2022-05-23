@@ -2,10 +2,7 @@ package graphics.ui.menu;
 
 import core.Main;
 import graphics.ui.UserInterfaceable;
-import org.newdawn.slick.Color;
-import org.newdawn.slick.GameContainer;
-import org.newdawn.slick.Graphics;
-import org.newdawn.slick.TrueTypeFont;
+import org.newdawn.slick.*;
 import org.newdawn.slick.geom.RoundedRectangle;
 import util.DrawUtilities;
 
@@ -17,7 +14,7 @@ public abstract class Menu implements UserInterfaceable {
     protected final int x;
     protected final int y;
     protected boolean show = true;
-    protected Map<String, TrueTypeFont> fonts;
+    protected Map<String, Font> fonts;
 
     protected Menu(int width, int height) {
         this.width = width;
@@ -49,6 +46,8 @@ public abstract class Menu implements UserInterfaceable {
     public void close() { this.show = false; }
     public void toggle() { this.show ^= true; }
     public void open() { this.show = true; }
+
+    public void remove() { Main.menus.remove(this); }
 
     protected abstract void subrender(Graphics g);
     protected abstract void initializeFonts();

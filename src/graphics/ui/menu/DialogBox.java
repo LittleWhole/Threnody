@@ -47,7 +47,10 @@ public class DialogBox extends Menu implements UserInterfaceable {
     }
 
     public void initializeButtons(Button... buttons) {
-        for (Button b : buttons) b.setParent(this);
+        for (Button b : buttons) {
+            b.setParent(this);
+            if (b instanceof CloseButton) b.setCommand(this::remove);
+        }
         this.buttons = List.of(buttons);
     }
 
@@ -63,7 +66,8 @@ public class DialogBox extends Menu implements UserInterfaceable {
     }
 
     public void formatBody() {
-        String temp = "";
+        bodyLines.add(body);
+        /*String temp = "";
         String clone = body;
         int lastIndex = 0;
         for (var i = 0; i < clone.length(); i++) {
@@ -72,16 +76,15 @@ public class DialogBox extends Menu implements UserInterfaceable {
                 bodyLines.add(clone.substring(lastIndex, i));
                 lastIndex = i;
             }
-        }
+        }*/
     }
 
     @Override
     protected void subrender(Graphics g) {
         g.setColor(Color.white);
-        System.out.println(body);
-        DrawUtilities.drawStringCentered(g, title, new TrueTypeFont(new java.awt.Font("Bahnschrift", java.awt.Font.PLAIN, 50), true), x, y - height / 2 + 40);
+        DrawUtilities.drawStringCentered(g, title, fonts.get("title"), x, y - height / 2 + 40);
         for (var i = 0; i < bodyLines.size(); i++) {
-            DrawUtilities.drawStringCentered(g, bodyLines.get(i), new TrueTypeFont(new java.awt.Font("Bahnschrift", java.awt.Font.PLAIN, 30), true), x, y + (height / bodyLines.size() * (i + 1)));
+            DrawUtilities.drawStringCentered(g, bodyLines.get(i), fonts.get("body"), x, y/* + (height / bodyLines.size() * (i + 1))*/);
         };
         for (var i = 0; i < buttons.size(); i++) {
             buttons.get(i).setX(x / buttons.size() * (i + 1));
