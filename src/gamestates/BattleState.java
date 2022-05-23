@@ -96,7 +96,7 @@ public class BattleState extends ThrenodyGameState {
         }
         for(int i = 0; i < enemies.size(); i++)   {
             //enemies.get(i).setPosition( i * 200,  i * 200);
-            enemies.get(i).setPosition( -100,  0);
+            enemies.get(i).setPosition( -100 - (i*100),  0);
         }
 
         combat = new CombatManager(plrs, enemies);
