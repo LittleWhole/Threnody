@@ -34,7 +34,7 @@ public class SonicSlash extends Arte {
     public void animation(Unit target, Graphics g) {
         if(!finished()) {
             this.aniFrame = aniSheet.getSprite(timer, 0);
-            g.drawImage(aniFrame,-target.getPosition().getX(), target.getPosition().getY()+target.getHeight());
+            g.drawImage(aniFrame,-target.getPosition().getX(), -target.getY() + target.getHeight());
         }
 
     }

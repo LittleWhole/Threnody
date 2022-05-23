@@ -29,7 +29,7 @@ public class CombatManager {
             ((Player)players.get(i)).setState(PlayerState.SELECTING);
         }
         for(int i = 0; i < enemies.size(); i++) {
-            ((Enemy)enemies.get(i)).setCombatState(EnemyStates.MOVING);
+            ((Enemy)enemies.get(i)).setCombatState(EnemyStates.CHOOSING);
         }
     }
 
@@ -59,8 +59,12 @@ public class CombatManager {
             if (players.size() == 0) {
                 return 'l';
             }
-            ((Enemy) enemies.get(turn-(players.size()-1))).setCombatState(EnemyStates.MOVING);
-            ((Enemy) enemies.get(turn-(players.size()-1))).battleMove(players.get(0), gc);
+            if(((Enemy) enemies.get(turn-(players.size()-1))).getCombatState()== EnemyStates.CHOOSING)  {
+                ((Enemy) enemies.get(turn-(players.size()-1))).battleSelect();
+            }
+            if(((Enemy) enemies.get(turn-(players.size()-1))).getCombatState()== EnemyStates.MOVING)  {
+                ((Enemy) enemies.get(turn-(players.size()-1))).battleMove(players.get(0), gc);
+            }
             if(((Enemy) enemies.get(turn-(players.size()-1))).getCombatState()== EnemyStates.DONE) {
                 updateTeams(players);
                 if (players.size() == 0) {

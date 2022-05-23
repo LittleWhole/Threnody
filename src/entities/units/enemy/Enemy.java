@@ -16,6 +16,7 @@ public class Enemy extends Unit {
     protected EnemyStates turn;
     protected int moveDuration;
     protected long moveTimeStamp;
+    protected int timer;
 
     public void setCombatState(EnemyStates combatState) {
         this.combatState = combatState;
@@ -47,7 +48,7 @@ public class Enemy extends Unit {
         hitBox.setX(-plrX - position.getX() + width);
         hitBox.setY((-plrY/2) + this.getHeight()*1.6f);
         if(this.getCombatState() == EnemyStates.MOVING) {
-            DrawUtilities.drawStringCentered(g, "MOVING", 1000, 100);
+            DrawUtilities.drawStringCentered(g, "MOVING", 800, 100);
         }
     }
 
@@ -55,22 +56,28 @@ public class Enemy extends Unit {
 
     }
 
-    public void battleMove(Unit target, GameContainer gc)    {
-        this.moveTimeStamp = BattleState.time;
+    public void battleSelect()  {
         if(turn != EnemyStates.CHARGE)  {
             this.turn = decideState();
         }
+        timer = 0;
         this.combatState = EnemyStates.MOVING;
+    }
+
+    public void battleMove(Unit target, GameContainer gc)    {
+        timer++;
+
         animation();
 
-        if(BattleState.time -moveTimeStamp>=moveDuration) {
+        if(timer>=moveDuration) {
             this.combatState = EnemyStates.DONE;
+            this.sprite = sheet.getSprite(0,0);
             action(target);
         }
 
     }
     public void animation() {
-
+        if(timer < sheet.getWidth()) this.sprite = sheet.getSprite(timer, 0);
     }
     public void action(Unit target)    {
         switch(turn)   {

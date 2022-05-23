@@ -91,12 +91,12 @@ public class BattleState extends ThrenodyGameState {
         // This code happens when you enter a gameState.
         for(int i = 0; i < plrs.size(); i++)   {
             //plrs.get(i).setPosition( -200 + i*200, i*1000);
-            plrs.get(i).setPosition( 0, 0);
+            plrs.get(i).setPosition( -600, -25);
             ((Player)(plrs.get(i))).startBattle();
         }
         for(int i = 0; i < enemies.size(); i++)   {
             //enemies.get(i).setPosition( i * 200,  i * 200);
-            enemies.get(i).setPosition( -100 - (i*100),  0);
+            enemies.get(i).setPosition( -1000 - (i*100),  0 - (i*50));
         }
 
         combat = new CombatManager(plrs, enemies);
