@@ -1,9 +1,11 @@
 package gamestates;
 
+import combat.artes.Arte;
 import core.Main;
 import entities.units.Unit;
 import entities.units.enemy.Enemy;
 import entities.units.player.Player;
+import entities.units.player.PlayerState;
 import graphics.ui.combat.DamageNumber;
 import managers.CombatManager;
 import map.GameMap;
@@ -116,8 +118,6 @@ public class BattleState extends BasicGameState {
 
 
     public void keyPressed(int key, char c) {
-
-
 
     }
 

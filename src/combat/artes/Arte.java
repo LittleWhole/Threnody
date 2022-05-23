@@ -12,8 +12,8 @@ public abstract class Arte<C extends PlayableCharacter> {
 
     protected Class<? extends PlayableCharacter> character; // The character that can use the Arte
     protected C owner; // The owner of the arte
-    public static String name; // The name displayed by the Arte
-    public static ArteType arteType;
+    protected String name; // The name displayed by the Arte
+    protected ArteType arteType;
     protected int useTimestamp; // The exact timestamp when the Arte started use
     protected boolean using; // If the arte is activated or not
     protected long castTimestamp; // The exact timestamp when the Arte started casting
@@ -74,4 +74,11 @@ public abstract class Arte<C extends PlayableCharacter> {
 
     public abstract void activation(Unit u);
 
+    public String getName() {
+        return name;
+    }
+
+    public ArteType getArteType() {
+        return arteType;
+    }
 }

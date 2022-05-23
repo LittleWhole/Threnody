@@ -1,5 +1,6 @@
 package entities.units.player;
 
+import com.google.common.base.CaseFormat;
 import combat.artes.Arte;
 import combat.artes.martial.DragonFang;
 import combat.artes.martial.ImpactCross;
@@ -13,6 +14,7 @@ import entities.core.Coordinate;
 import entities.units.npc.NPC;
 import entities.units.Unit;
 import gamestates.Game;
+import org.apache.commons.lang3.StringUtils;
 import org.newdawn.slick.*;
 import org.newdawn.slick.geom.Rectangle;
 import org.newdawn.slick.state.StateBasedGame;
@@ -70,15 +72,15 @@ public final class Player extends Unit {
 
     public void startBattle()   {
         queue = 5;
-        this.arteHand = new ArrayList<Arte>(arteDeck.subList(0,6));
+        this.arteHand = new ArrayList<>(arteDeck.subList(0,6));
     }
 
     public void move(Unit target, GameContainer gc, Graphics g) throws InterruptedException {
         for(int i = 0; i < arteHand.size(); i++)    {
             arteHand.get(i).getSprite().drawCentered((Main.getScreenWidth()/7)*(i+1), Main.getScreenHeight()-300);
             g.setColor(Color.white);
-            DrawUtilities.drawStringCentered(g, arteHand.get(i).name, (Main.getScreenWidth()/7)*(i+1), Main.getScreenHeight()-300);
-            DrawUtilities.drawStringCentered(g, String.valueOf(arteHand.get(i).arteType) + "ARTE", (Main.getScreenWidth()/7)*(i+1), Main.getScreenHeight()-400);
+            DrawUtilities.drawStringCentered(g, arteHand.get(i).getName(), (Main.getScreenWidth()/7)*(i+1), Main.getScreenHeight()-300);
+            DrawUtilities.drawStringCentered(g, StringUtils.capitalize(String.valueOf(arteHand.get(i).getArteType())) + " Arte", (Main.getScreenWidth()/7)*(i+1), Main.getScreenHeight()-400);
         }
         move = cardSelect(gc.getInput());
         if(move != null) {
@@ -107,61 +109,33 @@ public final class Player extends Unit {
         }
     }
 
-    public Arte cardSelect(Input input) throws InterruptedException {//too many repeated crap but idc man
+    public Arte cardSelect(Input input) {
         Arte selected = null;
         if(queue >= arteDeck.size()) {
             this.health = 0;
             return selected;
         }
-        if(input.isKeyDown(Input.KEY_1)) {
-            selected = arteHand.get(0);
-            arteHand.remove(0);
-            queue++;
-            arteHand.add(arteDeck.get(queue));
-            this.state = PlayerState.CASTING;
-            return selected;
-        }
-        if(input.isKeyDown(Input.KEY_2))    {
-            selected = arteHand.get(1);
-            arteHand.remove(1);
-            queue++;
-            arteHand.add(arteDeck.get(queue));
-            this.state = PlayerState.CASTING;
-            return selected;
-        }
-        if(input.isKeyDown(Input.KEY_3))    {
-            selected = arteHand.get(2);
-            arteHand.remove(2);
-            queue++;
-            arteHand.add(arteDeck.get(queue));
-            this.state = PlayerState.CASTING;
-            return selected;
-        }
-        if(input.isKeyDown(Input.KEY_4))    {
-            selected = arteHand.get(3);
-            arteHand.remove(3);
-            queue++;
-            arteHand.add(arteDeck.get(queue));
-            this.state = PlayerState.CASTING;
-            return selected;
-        }
-        if(input.isKeyDown(Input.KEY_5)) {
-            selected = arteHand.get(4);
-            arteHand.remove(4);
-            queue++;
-            arteHand.add(arteDeck.get(queue));
-            this.state = PlayerState.CASTING;
-            return selected;
-        }
-        if(input.isKeyDown(Input.KEY_6))    {
-            selected = arteHand.get(5);
-            arteHand.remove(5);
-            queue++;
-            this.state = PlayerState.CASTING;
-            return selected;
-        }
+        return switch (input) {
+            case Input i && i.isKeyPressed(Input.KEY_1) -> selection(0);
+            case Input i && i.isKeyPressed(Input.KEY_2) -> selection(1);
+            case Input i && i.isKeyPressed(Input.KEY_3) -> selection(2);
+            case Input i && i.isKeyPressed(Input.KEY_4) -> selection(3);
+            case Input i && i.isKeyPressed(Input.KEY_5) -> selection(4);
+            case Input i && i.isKeyPressed(Input.KEY_6) -> selection(5);
+            default -> selected;
+        };
+    }
+
+    public Arte selection(int i) {
+        Arte selected;
+        selected = arteHand.get(i);
+        arteHand.remove(i);
+        queue++;
+        arteHand.add(arteDeck.get(queue));
+        this.state = PlayerState.CASTING;
         return selected;
     }
+
     public void setState(PlayerState s) {
         this.state = s;
     }

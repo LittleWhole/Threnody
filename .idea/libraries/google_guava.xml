@@ -1,0 +1,30 @@
+<component name="libraryTable">
+  <library name="google.guava" type="repository">
+    <properties maven-id="com.google.guava:guava:31.1-jre" />
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/libs/guava-31.1-jre.jar!/" />
+      <root url="jar://$PROJECT_DIR$/libs/failureaccess-1.0.1.jar!/" />
+      <root url="jar://$PROJECT_DIR$/libs/listenablefuture-9999.0-empty-to-avoid-conflict-with-guava.jar!/" />
+      <root url="jar://$PROJECT_DIR$/libs/jsr305-3.0.2.jar!/" />
+      <root url="jar://$PROJECT_DIR$/libs/checker-qual-3.12.0.jar!/" />
+      <root url="jar://$PROJECT_DIR$/libs/error_prone_annotations-2.11.0.jar!/" />
+      <root url="jar://$PROJECT_DIR$/libs/j2objc-annotations-1.3.jar!/" />
+    </CLASSES>
+    <JAVADOC>
+      <root url="jar://$PROJECT_DIR$/libs/guava-31.1-jre-javadoc.jar!/" />
+      <root url="jar://$PROJECT_DIR$/libs/failureaccess-1.0.1-javadoc.jar!/" />
+      <root url="jar://$PROJECT_DIR$/libs/jsr305-3.0.2-javadoc.jar!/" />
+      <root url="jar://$PROJECT_DIR$/libs/checker-qual-3.12.0-javadoc.jar!/" />
+      <root url="jar://$PROJECT_DIR$/libs/error_prone_annotations-2.11.0-javadoc.jar!/" />
+      <root url="jar://$PROJECT_DIR$/libs/j2objc-annotations-1.3-javadoc.jar!/" />
+    </JAVADOC>
+    <SOURCES>
+      <root url="jar://$PROJECT_DIR$/libs/guava-31.1-jre-sources.jar!/" />
+      <root url="jar://$PROJECT_DIR$/libs/failureaccess-1.0.1-sources.jar!/" />
+      <root url="jar://$PROJECT_DIR$/libs/jsr305-3.0.2-sources.jar!/" />
+      <root url="jar://$PROJECT_DIR$/libs/checker-qual-3.12.0-sources.jar!/" />
+      <root url="jar://$PROJECT_DIR$/libs/error_prone_annotations-2.11.0-sources.jar!/" />
+      <root url="jar://$PROJECT_DIR$/libs/j2objc-annotations-1.3-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>
