@@ -3,10 +3,13 @@ package combat.artes;
 import entities.units.Unit;
 import gamestates.BattleState;
 import gamestates.Game;
+import graphics.ui.combat.DamageNumber;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
+import org.newdawn.slick.SpriteSheet;
 import playerdata.characters.PlayableCharacter;
+import util.DrawUtilities;
 
 public abstract class Arte<C extends PlayableCharacter> {
 
@@ -18,13 +21,25 @@ public abstract class Arte<C extends PlayableCharacter> {
     protected boolean using; // If the arte is activated or not
     protected long castTimestamp; // The exact timestamp when the Arte started casting
     protected int castDuration; // The amount of time casting takes
+    protected int timer;
     protected int cost;
 
-    public Image getSprite() {
-        return sprite;
+    public SpriteSheet getAniSheet() {
+        return aniSheet;
     }
 
-    protected Image sprite;
+    public Image getAniFrame() {
+        return aniFrame;
+    }
+
+    protected SpriteSheet aniSheet;
+    protected Image aniFrame;
+
+    public Image getCard() {
+        return card;
+    }
+
+    protected Image card;
 
     protected ArteType type;
     protected ElementType element;
@@ -32,6 +47,7 @@ public abstract class Arte<C extends PlayableCharacter> {
     protected Arte(C owner) {
         assert character != null;
         /*if (character.isInstance(owner))*/ this.owner = owner;
+        timer = 0;
         this.castTimestamp = -1;
         this.useTimestamp = -1;
     }
@@ -58,19 +74,24 @@ public abstract class Arte<C extends PlayableCharacter> {
     }*/
     public abstract void use(Unit target, GameContainer gc);
 
-    public void render(Graphics g) {
-        if (using) {
-            animation();
-        }
+    public void render(Unit target, Graphics g) {
 
-        if (BattleState.time - castTimestamp < castDuration) {
-            g.drawArc(owner.getEntity().getX(), owner.getEntity().getY(), 50f, 50f, 0f, (float) Math.toRadians((float) castTimestamp / castDuration * 360));
+        if (!finished()) {
+            animation(target, g);
+            DrawUtilities.drawStringCentered(g, String.valueOf(timer), 100, 0);
         }
+        if(timer == castDuration){
+            BattleState.damageNumbers.add(new DamageNumber(owner.getAttack(), (int)target.getPosition().getX(), (int)(target.getPosition().getY()+target.getHeight()/2)));
+        }
+        timer++;
+        /*if (BattleState.time - castTimestamp < castDuration) {
+            g.drawArc(owner.getEntity().getX(), owner.getEntity().getY(), 50f, 50f, 0f, (float) Math.toRadians((float) castTimestamp / castDuration * 360));
+        }*/
     }
-    public boolean finished(GameContainer gc)   {
-        return (BattleState.time -castTimestamp >= castDuration);
+    public boolean finished()   {
+        return (timer >= castDuration);
     }
-    public abstract void animation();
+    public abstract void animation(Unit target, Graphics g);
 
     public abstract void activation(Unit u);
 

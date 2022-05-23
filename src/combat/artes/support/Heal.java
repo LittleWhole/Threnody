@@ -5,6 +5,7 @@ import combat.artes.ArteType;
 import entities.units.Unit;
 import gamestates.BattleState;
 import org.newdawn.slick.GameContainer;
+import org.newdawn.slick.Graphics;
 import playerdata.characters.Phaedra;
 import playerdata.characters.PlayableCharacter;
 
@@ -23,12 +24,12 @@ public class Heal extends Arte {
     @Override
     public void use(Unit target, GameContainer gc) {
         castTimestamp = BattleState.time;
-        animation();
+        animation(target, gc.getGraphics());
         activation(target);
     }
 
     @Override
-    public void animation() {
+    public void animation(Unit target, Graphics g) {
 
     }
 

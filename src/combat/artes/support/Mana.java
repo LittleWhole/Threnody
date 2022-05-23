@@ -4,6 +4,7 @@ import combat.artes.Arte;
 import combat.artes.ArteType;
 import entities.units.Unit;
 import org.newdawn.slick.GameContainer;
+import org.newdawn.slick.Graphics;
 import playerdata.characters.PlayableCharacter;
 
 public class Mana extends Arte {
@@ -21,12 +22,12 @@ public class Mana extends Arte {
     @Override
     public void use(Unit target, GameContainer gc) {
         castTimestamp = gc.getTime();
-        animation();
+        animation(target, gc.getGraphics());
         activation(target);
     }
 
     @Override
-    public void animation() {
+    public void animation(Unit target, Graphics g) {
 
     }
 
