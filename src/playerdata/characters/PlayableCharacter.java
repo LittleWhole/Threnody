@@ -25,7 +25,6 @@ public abstract strictfp sealed class PlayableCharacter extends PlayerData imple
     protected Image sprite;
 
     protected Player entity;
-    private PlayerState state;
 
     public int getLevel() {
         return level;

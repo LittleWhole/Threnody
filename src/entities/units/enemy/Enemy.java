@@ -18,8 +18,11 @@ import java.util.List;
 import java.util.Queue;
 import java.util.concurrent.ConcurrentLinkedQueue;
 
+import java.util.ArrayList;
+
 public class Enemy extends Unit {
     protected EnemyStates turn;
+    protected ArrayList<Enemy> enemyTeam;
     protected int moveDuration;
     protected long moveTimeStamp;
     protected int timer;

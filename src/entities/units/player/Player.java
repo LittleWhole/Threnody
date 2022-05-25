@@ -170,6 +170,10 @@ public final class Player extends Unit {
 
     }
 
+    public void addToDeck(Arte<Player> a)   {
+        this.arteDeck.add(a);
+    }
+
     public void gainExp(int amount) {
         this.character.gainExp(amount);
     }
