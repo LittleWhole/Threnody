@@ -42,7 +42,7 @@ public class Game extends ThrenodyGameState {
     // Managers
     private KeyManager keyDown; // Key Manager
     public DisplayManager displayManager; // Display Manager 
-    private Coordinate plrPosition;
+    public static Coordinate plrPosition;
     private Player plr;
     private Enemy enemy;
     private NPC npc;

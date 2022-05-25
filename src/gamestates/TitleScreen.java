@@ -4,6 +4,7 @@ package gamestates;
 
 import core.Constants;
 import core.Main;
+import entities.core.Coordinate;
 import graphics.Background;
 import graphics.ui.menu.CloseButton;
 import graphics.ui.menu.DialogBox;
@@ -76,6 +77,7 @@ public class TitleScreen extends ThrenodyGameState {
         if (!Main.menus.isEmpty()) return;
         if (bNEW_GAME.onButton(x, y)) {
             SoundManager.stopBackgroundMusic();
+            Game.plrPosition = new Coordinate(0,0);
             sbg.enterState(Main.GAME_ID, new FadeOutTransition(), new FadeInTransition());
         }
         if (bCONTINUE.onButton(x, y)) {
