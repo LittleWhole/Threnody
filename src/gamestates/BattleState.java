@@ -57,11 +57,18 @@ public class BattleState extends ThrenodyGameState {
             battlefield.render(1000, -200);
             for(Player p : plrs) {
                 p.battleRender(g, 0,0);
-                DrawUtilities.drawStringCentered(g, String.valueOf(((Player) p).getHealth()), 100, 100);
+                DrawUtilities.drawStringCentered(g, String.valueOf(p.getHealth()), 100, 100);
             }
             for(Enemy e : enemies) {
                 e.render(g, 0,0);
             }
+
+            damageNumbers.forEach(n -> {
+                n.update(gc);
+                n.render(g, 0, 0);
+                if (n.isExpired()) damageNumbers.remove(n);
+            });
+
             try {
                 result = combat.combat(g, gc);
             } catch (InterruptedException | IndexOutOfBoundsException e) {
@@ -79,12 +86,6 @@ public class BattleState extends ThrenodyGameState {
                     break;
             }
         }
-
-        damageNumbers.forEach(n -> {
-            n.update(gc);
-            n.render(g, 0, 0);
-            if (n.isExpired()) damageNumbers.remove(n);
-        });
         super.render(gc, sbg, g);
     }
 
@@ -110,11 +111,11 @@ public class BattleState extends ThrenodyGameState {
         gc.getGraphics().setFont(new TrueTypeFont(new java.awt.Font("Bahnschrift", java.awt.Font.PLAIN, 20), true));
         gc.getGraphics().setBackground(new Color(100, 100, 100));
 
-        var temp = new Random();
-
-        for (var i = 0; i < 100; i++) {
-            damageNumbers.add(new DamageNumber(temp.nextInt(0, 3000), temp.nextInt(0, 1920), temp.nextInt(0, 1080)));
-        }
+//        var temp = new Random();
+//
+//        for (var i = 0; i < 100; i++) {
+//            damageNumbers.add(new DamageNumber(temp.nextInt(0, 3000), temp.nextInt(0, 1920), temp.nextInt(0, 1080)));
+//        }
     }
 
     public void leave(GameContainer gc, StateBasedGame sbg) {
