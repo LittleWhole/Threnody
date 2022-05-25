@@ -35,14 +35,10 @@ U
 %src/graphics/ui/menu/CloseButton.java,c\b\cb218156e23db2152ca6432358dfe9ec9b943149
 U
 %src/gamestates/ThrenodyGameState.java,b\8\b8e844fbc4d907594c02d6904efa1bf4873a1552
-G
-src/core/Constants.java,4\9\499b05d514433296431f0625e1b08c422fc35866
 M
 src/entities/core/Entity.java,3\c\3cdf84ae7c6904188a280585e0666fee897f915a
 Q
 !src/entities/core/Coordinate.java,2\9\29234301379b87072a71077e9a33930c1a942dd4
-H
-src/gamestates/Game.java,c\2\c2bc8889dbe42767a32050ab5b08c0287ff39286
 O
 src/gamestates/IntroCredit.java,f\f\ffcbfc7f46a371ab118dc9ef89be0ee081a7ac8a
 J

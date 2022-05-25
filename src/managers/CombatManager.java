@@ -10,14 +10,15 @@ import entities.units.player.PlayerState;
 import util.DrawUtilities;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class CombatManager {
 
-    private volatile ArrayList<Unit> players;
-    private volatile ArrayList<Unit> enemies;
+    private volatile List<Player> players;
+    private volatile List<Enemy> enemies;
     private int round;
     private int turn = 0;
-    public CombatManager(ArrayList<Unit> plrs, ArrayList<Unit> enemies)  {
+    public CombatManager(List<Player> plrs, List<Enemy> enemies)  {
 
         this.players = plrs;
         this.enemies = enemies;
@@ -27,10 +28,10 @@ public class CombatManager {
     public void roundStart() {
         turn = 0;
         for(int i = 0; i < players.size(); i++) {
-            ((Player)players.get(i)).setState(PlayerState.SELECTING);
+            (players.get(i)).setState(PlayerState.SELECTING);
         }
         for(int i = 0; i < enemies.size(); i++) {
-            ((Enemy)enemies.get(i)).setCombatState(EnemyStates.CHOOSING);
+            (enemies.get(i)).setCombatState(EnemyStates.CHOOSING);
         }
     }
 
@@ -41,14 +42,15 @@ public class CombatManager {
             if (enemies.size() == 0) {
                 return 'w';
             }
-            if(((Player) players.get(turn)).getState() == PlayerState.SELECTING) {
-                ((Player) players.get(turn)).move(enemies.get(0), gc, g);
+            if(players.get(turn).getState() == PlayerState.SELECTING) {
+                players.get(turn).move(enemies.get(0), gc, g);
+                g.drawString("SELECTING", 100, 0);
             }
-            if(((Player)players.get(turn)).getState() == PlayerState.CASTING)   {
-                ((Player) players.get(turn)).attack(enemies.get(0), gc);
+            if(players.get(turn).getState() == PlayerState.CASTING)   {
+                players.get(turn).attack(enemies.get(0), gc);
                 g.drawString("CASTING", 100, 0);
             }
-            if(((Player) players.get(turn)).getState() == PlayerState.DONE) {
+            if((players.get(turn)).getState() == PlayerState.DONE) {
                 updateTeams(enemies);
                 if (enemies.size() == 0) {
                     return 'w';
@@ -60,14 +62,14 @@ public class CombatManager {
             if (players.size() == 0) {
                 return 'l';
             }
-            if(((Enemy) enemies.get(turn-(players.size()-1))).getCombatState() == EnemyStates.CHOOSING)  {
-                ((Enemy) enemies.get(turn-(players.size()-1))).battleSelect();
+            if((enemies.get(turn-(players.size()-1))).getCombatState() == EnemyStates.CHOOSING)  {
+                (enemies.get(turn-(players.size()-1))).battleSelect();
             }
-            if(((Enemy) enemies.get(turn-(players.size()-1))).getCombatState() == EnemyStates.MOVING)  {
-                ((Enemy) enemies.get(turn-(players.size()-1))).battleMove(players.get(0), gc);
+            if((enemies.get(turn-(players.size()-1))).getCombatState() == EnemyStates.MOVING)  {
+                (enemies.get(turn-(players.size()-1))).battleMove(players.get(0), gc);
                 DrawUtilities.drawStringCentered(g, "MOVING", 800, 100);
             }
-            if(((Enemy) enemies.get(turn-(players.size()-1))).getCombatState() == EnemyStates.DONE) {
+            if((enemies.get(turn-(players.size()-1))).getCombatState() == EnemyStates.DONE) {
                 updateTeams(players);
                 if (players.size() == 0) {
                     return 'l';
@@ -89,7 +91,7 @@ public class CombatManager {
         return round;
     }
 
-    private void updateTeams (ArrayList<Unit> units)    {
+    private void updateTeams (List<? extends Unit> units)    {
         for(int i = 0; i < units.size();i++)  {
             if(units.get(i).getHealth() <= 0) {
                 units.remove(i);
@@ -97,11 +99,11 @@ public class CombatManager {
         }
     }
 
-    public ArrayList<Unit> getPlayers() {
+    public List<Player> getPlayers() {
         return players;
     }
 
-    public ArrayList<Unit> getEnemies() {
+    public List<Enemy> getEnemies() {
         return enemies;
     }
 

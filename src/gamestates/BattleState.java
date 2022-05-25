@@ -15,14 +15,17 @@ import org.newdawn.slick.state.StateBasedGame;
 import util.DrawUtilities;
 
 import java.util.ArrayList;
+import java.util.List;
+import java.util.Queue;
 import java.util.Random;
+import java.util.concurrent.ConcurrentLinkedQueue;
 import java.util.stream.Collectors;
 
 public class BattleState extends ThrenodyGameState {
     private final int id;
     private GameContainer gc;
-    public static ArrayList<Unit> plrs;
-    public static ArrayList<Unit> enemies;
+    public static List<Player> plrs;
+    public static List<Enemy> enemies;
     private GameMap battlefield;
     private CombatManager combat;
     private char result;
@@ -30,8 +33,7 @@ public class BattleState extends ThrenodyGameState {
     public static int expGain;
     public static int currencyGain;
 
-    public static ArrayList<DamageNumber> damageNumbers;
-    private ArrayList<DamageNumber> toRemove = new ArrayList<>();
+    public static Queue<DamageNumber> damageNumbers;
 
     public BattleState(int id) throws SlickException {
         this.id = id;
@@ -42,7 +44,7 @@ public class BattleState extends ThrenodyGameState {
         // This code happens when you enter a game state for the *first time.*
         battlefield = new GameMap("res/tilemap/battleworld.tmx");
         gc.setShowFPS(true);
-        damageNumbers = new ArrayList<>();
+        damageNumbers = new ConcurrentLinkedQueue<>();
         expGain = 0;
         currencyGain = 0;
         this.gc = gc;
@@ -53,12 +55,12 @@ public class BattleState extends ThrenodyGameState {
         if(sbg.getCurrentStateID() == Main.BATTLE_ID){
 
             battlefield.render(1000, -200);
-            for(Unit p : plrs) {
-                ((Player) p).battleRender(g, 0,0);
+            for(Player p : plrs) {
+                p.battleRender(g, 0,0);
                 DrawUtilities.drawStringCentered(g, String.valueOf(((Player) p).getHealth()), 100, 100);
             }
-            for(Unit e:enemies) {
-                ((Enemy) e).render(g, 0,0);
+            for(Enemy e : enemies) {
+                e.render(g, 0,0);
             }
             try {
                 result = combat.combat(g, gc);
@@ -81,9 +83,8 @@ public class BattleState extends ThrenodyGameState {
         damageNumbers.forEach(n -> {
             n.update(gc);
             n.render(g, 0, 0);
-            if (n.isExpired()) toRemove.add(n);
+            if (n.isExpired()) damageNumbers.remove(n);
         });
-        damageNumbers.removeAll(toRemove);
         super.render(gc, sbg, g);
     }
 
@@ -109,11 +110,11 @@ public class BattleState extends ThrenodyGameState {
         gc.getGraphics().setFont(new TrueTypeFont(new java.awt.Font("Bahnschrift", java.awt.Font.PLAIN, 20), true));
         gc.getGraphics().setBackground(new Color(100, 100, 100));
 
-        //var temp = new Random();
+        var temp = new Random();
 
-        /*for (var i = 0; i < 100; i++) {
+        for (var i = 0; i < 100; i++) {
             damageNumbers.add(new DamageNumber(temp.nextInt(0, 3000), temp.nextInt(0, 1920), temp.nextInt(0, 1080)));
-        }*/
+        }
     }
 
     public void leave(GameContainer gc, StateBasedGame sbg) {
@@ -121,9 +122,10 @@ public class BattleState extends ThrenodyGameState {
     }
 
 
+    @Override
     public void keyPressed(int key, char c) {
         super.keyPressed(key, c);
-        if (key == Input.KEY_ENTER) ((Player) plrs.get(combat.getTurn())).setState(PlayerState.CASTING);
+        if (key == Input.KEY_ENTER) plrs.forEach(p -> p.setState(PlayerState.CASTING));
     }
 
     public void mousePressed(int button, int x, int y) {

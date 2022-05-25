@@ -14,7 +14,7 @@ import util.DrawUtilities;
 
 public abstract class Arte<T extends Unit> {
 
-    protected PlayableCharacter character; // The character that can use the Arte
+    protected Class<? extends PlayableCharacter> character; // The character that can use the Arte
     protected T owner; // The owner of the arte
     protected String name; // The name displayed by the Arte
     protected ArteType arteType;

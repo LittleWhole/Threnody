@@ -24,9 +24,11 @@ import util.DrawUtilities;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Queue;
+import java.util.concurrent.ConcurrentLinkedQueue;
 
 public final class Player extends Unit {
-    protected int mana;
+    private int mana;
 
     public PlayerState getState() {
         return state;
@@ -38,11 +40,12 @@ public final class Player extends Unit {
     final public static float PLAYER_X_SPAWN = (float) Main.RESOLUTION_X / 2 / Constants.ImageConstants.PIXELS_PER_UNIT;
     final public static float PLAYER_Y_SPAWN = (float) Main.RESOLUTION_Y / 2 / Constants.ImageConstants.PIXELS_PER_UNIT;
 
-    protected List<Arte> arteDeck;
-    protected List<Arte> arteHand;
-    protected Arte move;
-    protected int queue;
-    protected PlayableCharacter character;
+    private List<Arte<? super Player>> arteDeck;
+    private List<Arte<? super Player>> arteHand;
+    private Queue<Arte<? super Player>> arteQueue;
+    private Arte<? super Player> move;
+    private int queue;
+    private PlayableCharacter character;
     // Abbreviations: LVL, EXP, HP, ATK, DEF, CR, CD, EATK, EDEF, AFF
 
     public Player(Coordinate pos) throws SlickException {
@@ -55,6 +58,7 @@ public final class Player extends Unit {
         this.sprite = sheet.getSprite(0,0);
         this.character = new Sigur();
         this.arteDeck = new ArrayList<>();
+        this.arteQueue = new ConcurrentLinkedQueue<>();
         for(int i = 0; i < 20; i++) {
             arteDeck.add(new SonicSlash(this));
             arteDeck.add(new DragonFang(this));
@@ -73,7 +77,7 @@ public final class Player extends Unit {
     public void startBattle()   {
         queue = 5;
         this.arteHand = new ArrayList<>(arteDeck.subList(0,6));
-        this.arteQueue = new ArrayList<>();
+        this.arteQueue = new ConcurrentLinkedQueue<>();
     }
 
     public void move(Unit target, GameContainer gc, Graphics g) throws InterruptedException {
@@ -91,10 +95,13 @@ public final class Player extends Unit {
     }
 
     public void attack(Unit target, GameContainer gc)   {
-        if(move != null) {
-            move.use(target, gc);
-            if(move.finished())this.setState(PlayerState.DONE);
+        if (arteQueue.isEmpty()) {
+            this.state = PlayerState.DONE;
+            return;
         }
+        Arte<? super Player> arte = arteQueue.element();
+        arte.use(target, gc);
+        if (arte.finished()) arteQueue.remove(arte);
     }
 
     public void update(StateBasedGame sbg, Unit u, Game g) throws SlickException {
@@ -112,8 +119,8 @@ public final class Player extends Unit {
         }
     }
 
-    public Arte cardSelect(Input input) {
-        Arte selected = null;
+    public Arte<? super Player> cardSelect(Input input) {
+        Arte<Player> selected = null;
         if(queue >= arteDeck.size()) {
             this.health = 0;
             return selected;
@@ -129,13 +136,13 @@ public final class Player extends Unit {
         };
     }
 
-    public Arte selection(int i) {
-        Arte selected;
+    public Arte<? super Player> selection(int i) {
+        Arte<? super Player> selected;
         selected = arteHand.get(i);
         arteHand.remove(i);
         queue++;
         arteHand.add(arteDeck.get(queue));
-        this.state = PlayerState.CASTING;
+        this.state = PlayerState.SELECTING;
         return selected;
     }
 

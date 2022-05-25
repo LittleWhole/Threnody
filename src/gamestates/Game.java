@@ -36,8 +36,8 @@ public class Game extends ThrenodyGameState {
 
     EnumMap<EntityType, ArrayList<Entity>> newEntities; // Add new entities to the game
 
-    public ArrayList<Unit> plrTeam;
-    public ArrayList<Unit> enemyTeam;
+    public ArrayList<Player> plrTeam;
+    public ArrayList<Enemy> enemyTeam;
 
     // Managers
     private KeyManager keyDown; // Key Manager

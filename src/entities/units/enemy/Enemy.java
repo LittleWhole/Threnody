@@ -1,8 +1,10 @@
 package entities.units.enemy;
 
+import combat.artes.Arte;
 import entities.core.Coordinate;
 import entities.core.Team;
 import entities.units.Unit;
+import entities.units.player.Player;
 import gamestates.BattleState;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
@@ -12,11 +14,20 @@ import org.newdawn.slick.SpriteSheet;
 import org.newdawn.slick.geom.Rectangle;
 import util.DrawUtilities;
 
+import java.util.List;
+import java.util.Queue;
+import java.util.concurrent.ConcurrentLinkedQueue;
+
 public class Enemy extends Unit {
     protected EnemyStates turn;
     protected int moveDuration;
     protected long moveTimeStamp;
     protected int timer;
+
+    protected List<Arte<? super Enemy>> arteDeck;
+    protected List<Arte<? super Enemy>> arteHand;
+    protected Queue<Arte<? super Enemy>> arteQueue;
+    protected Arte<? super Enemy> move;
 
     public void setCombatState(EnemyStates combatState) {
         this.combatState = combatState;
@@ -42,6 +53,7 @@ public class Enemy extends Unit {
         this.timer = 0;
         turn = EnemyStates.IDLE;
         this.team = Team.ENEMY;
+        this.arteQueue = new ConcurrentLinkedQueue<>();
     }
 
     public void render(Graphics g, float plrX, float plrY)  {
