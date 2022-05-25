@@ -111,6 +111,7 @@ public class Game extends ThrenodyGameState {
         SoundManager.playBackgroundMusic("02");
     }
 
+
     public void render(GameContainer gc, StateBasedGame sbg, Graphics g) throws SlickException {
         g.setFont(Main.font);
         g.setColor(Color.white);
@@ -188,6 +189,7 @@ public class Game extends ThrenodyGameState {
         // Reset time
         time = 0;
         System.out.println("[VERBOSE] Time reset");
+        overworld.generateHitboxes();
         //enemy = new Enemy(10,0);
         //plr.setPosition(0,0);
         //plrTeam.add(plr);
@@ -227,12 +229,13 @@ public class Game extends ThrenodyGameState {
         BattleState.enemies = enemyTeam;
     }
 
-
     public void keyPressed(int key, char c) {
         super.keyPressed(key, c);
         if(key == Input.KEY_F3) Main.debug = !Main.debug;
         if(key == Input.KEY_E) plr.interact(npc);
     }
+
+
 
 
     public void mousePressed(int button, int x, int y) {
