@@ -9,7 +9,6 @@ import org.newdawn.slick.Graphics;
 import entities.units.player.PlayerState;
 import util.DrawUtilities;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class CombatManager {
@@ -17,7 +16,8 @@ public class CombatManager {
     private volatile List<Player> players;
     private volatile List<Enemy> enemies;
     private int round;
-    private int turn = 0;
+    private int plrTurn;
+    private int enemyTurn;
     public CombatManager(List<Player> plrs, List<Enemy> enemies)  {
 
         this.players = plrs;
@@ -26,7 +26,8 @@ public class CombatManager {
     }
 
     public void roundStart() {
-        turn = 0;
+        plrTurn = 0;
+        enemyTurn = 0;
         for(int i = 0; i < players.size(); i++) {
             (players.get(i)).setState(PlayerState.SELECTING);
         }
@@ -38,47 +39,48 @@ public class CombatManager {
     public char combat(Graphics g, GameContainer gc) throws InterruptedException {
         boolean plrsAlive = true;
         boolean enemiesAlive = true;
-        if(turn < players.size()) {
+        if(plrTurn < players.size()) {
             if (enemies.size() == 0) {
                 return 'w';
             }
-            if(players.get(turn).getState() == PlayerState.SELECTING) {
-                players.get(turn).move(enemies.get(0), gc, g);
+            if(players.get(plrTurn).getState() == PlayerState.SELECTING) {
+                players.get(plrTurn).move(enemies.get(0), gc, g);
                 g.drawString("SELECTING", 100, 0);
             }
-            if(players.get(turn).getState() == PlayerState.CASTING)   {
-                players.get(turn).attack(enemies.get(0), gc);
+            if(players.get(plrTurn).getState() == PlayerState.CASTING)   {
+                players.get(plrTurn).attack(enemies.get(0), gc);
                 g.drawString("CASTING", 100, 0);
             }
-            if((players.get(turn)).getState() == PlayerState.DONE) {
+            if((players.get(plrTurn)).getState() == PlayerState.DONE) {
                 updateTeams(enemies);
                 if (enemies.size() == 0) {
                     return 'w';
                 }
-                turn++;
+                plrTurn++;
             }
         }
-        else if(turn >= players.size() && turn <= enemies.size()+players.size())   {
+        else if(plrTurn >= players.size() && enemyTurn < enemies.size()+players.size())   {
             if (players.size() == 0) {
                 return 'l';
             }
-            if((enemies.get(turn-(players.size()-1))).getCombatState() == EnemyStates.CHOOSING)  {
-                (enemies.get(turn-(players.size()-1))).battleSelect();
+            if((enemies.get(enemyTurn-(players.size()-1))).getCombatState() == EnemyStates.CHOOSING)  {
+                (enemies.get(enemyTurn-(players.size()-1))).battleSelect();
             }
-            if((enemies.get(turn-(players.size()-1))).getCombatState() == EnemyStates.MOVING)  {
-                (enemies.get(turn-(players.size()-1))).battleMove(players.get(0), gc);
+            if((enemies.get(enemyTurn-(players.size()-1))).getCombatState() == EnemyStates.MOVING)  {
+                (enemies.get(enemyTurn-(players.size()-1))).battleMove(players.get(0), gc);
                 DrawUtilities.drawStringCentered(g, "MOVING", 800, 100);
             }
-            if((enemies.get(turn-(players.size()-1))).getCombatState() == EnemyStates.DONE) {
+            if((enemies.get(enemyTurn-(players.size()-1))).getCombatState() == EnemyStates.DONE) {
                 updateTeams(players);
                 if (players.size() == 0) {
                     return 'l';
                 }
-                turn++;
+                enemyTurn++;
             }
         }
         else    {
-            turn = 0;
+            updateTeams(enemies);
+            updateTeams(players);
             round++;
             roundStart();
             return 'a';
@@ -107,7 +109,11 @@ public class CombatManager {
         return enemies;
     }
 
-    public int getTurn() {
-        return turn;
+    public int getPlrTurn() {
+        return plrTurn;
     }
+    public int getEnemyTurn()   {
+        return enemyTurn;
+    }
+
 }
