@@ -12,6 +12,7 @@ import map.GameMap;
 import org.newdawn.slick.*;
 import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
+import util.DrawUtilities;
 
 import java.util.ArrayList;
 import java.util.Random;
@@ -52,6 +53,7 @@ public class BattleState extends ThrenodyGameState {
             battlefield.render(1000, -200);
             for(Unit p : plrs) {
                 ((Player) p).battleRender(g, 0,0);
+                DrawUtilities.drawStringCentered(g, String.valueOf(((Player) p).getHealth()), 100, 100);
             }
             for(Unit e:enemies) {
                 ((Enemy) e).render(g, 0,0);
@@ -69,7 +71,7 @@ public class BattleState extends ThrenodyGameState {
                     sbg.enterState(Main.GAME_ID);
                     break;
                 case 'l':
-                    sbg.enterState(Main.LOADING_ID);
+                    sbg.enterState(Main.TITLE_ID);
                     break;
             }
         }

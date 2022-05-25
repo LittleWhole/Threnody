@@ -28,7 +28,8 @@ public class Enemy extends Unit {
 
     protected EnemyStates combatState;
     public Enemy(float x, float y) throws SlickException {//later change parameters to also change size, level, speed, and sprite
-        moveDuration = 1000;
+        this.health = 5;
+        moveDuration = 100;
         this.width = 80;
         this.height = 256;
         this.position = new Coordinate(x, y);
@@ -38,6 +39,7 @@ public class Enemy extends Unit {
         this.sheet = new SpriteSheet("res/experimentalEnemy.png", 256, 512);
         this.sprite = sheet.getSprite(0, 0);
         this.level = 1;
+        this.timer = 0;
         turn = EnemyStates.IDLE;
         this.team = Team.ENEMY;
     }
@@ -66,18 +68,19 @@ public class Enemy extends Unit {
 
     public void battleMove(Unit target, GameContainer gc)    {
         timer++;
+        gc.getGraphics().drawString(String.valueOf(timer), 700, 100);
 
         animation();
 
-        if(timer>moveDuration) {
-            //this.combatState = EnemyStates.DONE;
-            //this.sprite = sheet.getSprite(0,0);
-            //action(target);
+        if(timer==moveDuration) {
+            this.combatState = EnemyStates.DONE;
+            this.sprite = sheet.getSprite(0,0);
+            action(target);
         }
 
     }
     public void animation() {
-        if(timer < sheet.getWidth()) this.sprite = sheet.getSprite(timer, 0);
+       this.sprite = sheet.getSprite(timer% sheet.getHorizontalCount(), 0);
     }
     public void action(Unit target)    {
         switch(turn)   {
@@ -97,13 +100,14 @@ public class Enemy extends Unit {
     }
 
     private EnemyStates decideState()  {
-        switch((int)(Math.random()*4)) {
+        /*switch((int)(Math.random()*4)) {
             case 0:
                 return EnemyStates.IDLE;
             case 1:
                 return EnemyStates.CHARGE;
             default: return EnemyStates.ATTACK;
-        }
+        }*/
+        return EnemyStates.ATTACK;
     }
 
     public void drawHitBox(Graphics g)  {

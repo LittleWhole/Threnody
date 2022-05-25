@@ -56,7 +56,7 @@ public class CombatManager {
                 turn++;
             }
         }
-        else if(turn > players.size() && turn <= enemies.size()+players.size())   {
+        else if(turn >= players.size() && turn <= enemies.size()+players.size())   {
             if (players.size() == 0) {
                 return 'l';
             }
