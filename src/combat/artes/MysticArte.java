@@ -1,10 +1,11 @@
 package combat.artes;
 
+import entities.units.Unit;
 import playerdata.characters.PlayableCharacter;
 
-public abstract class MysticArte extends Arte {
+public abstract class MysticArte<T extends Unit> extends Arte<T> {
 
-    public MysticArte(PlayableCharacter owner) {
+    public MysticArte(T owner) {
         super(owner);
     }
 

@@ -4,15 +4,16 @@ import combat.artes.Arte;
 import combat.artes.ArteType;
 import combat.artes.ElementType;
 import entities.units.Unit;
+import entities.units.player.Player;
 import gamestates.BattleState;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import playerdata.characters.PlayableCharacter;
 
-public class RendingGale extends Arte {
+public class RendingGale extends Arte<Player> {
 
 
-    public RendingGale(PlayableCharacter owner) {
+    public RendingGale(Player owner) {
         super(owner);
         name = "Rending Gale";
         arteType = ArteType.ELEMENTAL;

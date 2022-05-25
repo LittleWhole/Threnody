@@ -3,6 +3,7 @@ package combat.artes.martial;
 import combat.artes.Arte;
 import combat.artes.ArteType;
 import entities.units.Unit;
+import entities.units.player.Player;
 import gamestates.BattleState;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
@@ -10,9 +11,9 @@ import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
 import playerdata.characters.PlayableCharacter;
 
-public class ImpactCross extends Arte {
+public class ImpactCross extends Arte<Player> {
 
-    public ImpactCross(PlayableCharacter owner) throws SlickException {
+    public ImpactCross(Player owner) throws SlickException {
         super(owner);
         name = "Impact Cross";
         arteType = ArteType.MARTIAL;

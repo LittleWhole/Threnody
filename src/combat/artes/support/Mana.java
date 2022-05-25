@@ -3,17 +3,18 @@ package combat.artes.support;
 import combat.artes.Arte;
 import combat.artes.ArteType;
 import entities.units.Unit;
+import entities.units.player.Player;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import playerdata.characters.PlayableCharacter;
 
-public class Mana extends Arte {
+public class Mana extends Arte<Player> {
 
     public static final String name = "Fortification";
     public static final ArteType type = ArteType.SUPPORT;
     private final int healingValue = 10;
 
-    public Mana(PlayableCharacter owner) {
+    public Mana(Player owner) {
         super(owner);
         cost = 0;
         castDuration = 100;

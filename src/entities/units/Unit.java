@@ -1,12 +1,16 @@
 package entities.units;
 
+import combat.artes.Arte;
 import combat.artes.ElementType;
 import entities.core.Coordinate;
 import entities.core.Entity;
 import entities.core.EntityType;
+import gamestates.BattleState;
+import graphics.ui.combat.DamageNumber;
 import org.newdawn.slick.Graphics;
 
 import java.util.EnumMap;
+import java.util.List;
 import java.util.Map;
 
 import static combat.artes.ElementType.*;
@@ -23,6 +27,8 @@ public class Unit extends Entity {
     protected int eAttack;
     protected int eDefense;
     protected Map<ElementType, Integer> eAffinity = Map.of(FIRE, 0, WATER, 0, EARTH, 0, ICE, 0, WIND, 0, ELECTRIC, 0, LIGHT, 0, DARK, 0, POISON, 0);
+
+    protected List<Arte> arteQueue;
 
     public int getMana() {
         return mana;
@@ -72,6 +78,7 @@ public class Unit extends Entity {
 
     public void takeDamage(int amount)  {
         this.health-=amount;
+        BattleState.damageNumbers.add(new DamageNumber(amount, this.getPosition().getX(), this.getPosition().getY()+this.getHeight()/2));
     }
 
     public void regenerate(int amount)    {
@@ -92,5 +99,9 @@ public class Unit extends Entity {
 
     public void setHealth(int health) {
         this.health = health;
+    }
+
+    public List<Arte> getArteQueue() {
+        return arteQueue;
     }
 }

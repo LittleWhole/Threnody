@@ -63,7 +63,7 @@ public class LoadingScreen extends ThrenodyGameState {
         Main.font = new TrueTypeFont(new java.awt.Font("Bahnschrift", java.awt.Font.PLAIN, 20), true);
         background = new Background();
         music = new Sound("res/audio/music/01.ogg");
-        logo = new Image("/res/logo.png");
+        logo = new Image("res/logo.png");
     }
 
     @Override // Begin file loading upon entering the gamestate

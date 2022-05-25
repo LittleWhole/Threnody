@@ -1,6 +1,5 @@
 package entities.units.player;
 
-import com.google.common.base.CaseFormat;
 import combat.artes.Arte;
 import combat.artes.martial.DragonFang;
 import combat.artes.martial.ImpactCross;
@@ -15,7 +14,6 @@ import entities.units.npc.NPC;
 import entities.units.Unit;
 import gamestates.Game;
 import gamestates.TitleScreen;
-import org.apache.commons.lang3.StringUtils;
 import org.newdawn.slick.*;
 import org.newdawn.slick.geom.Rectangle;
 import org.newdawn.slick.state.StateBasedGame;
@@ -25,6 +23,7 @@ import playerdata.characters.Sigur;
 import util.DrawUtilities;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public final class Player extends Unit {
     protected int mana;
@@ -39,8 +38,8 @@ public final class Player extends Unit {
     final public static float PLAYER_X_SPAWN = (float) Main.RESOLUTION_X / 2 / Constants.ImageConstants.PIXELS_PER_UNIT;
     final public static float PLAYER_Y_SPAWN = (float) Main.RESOLUTION_Y / 2 / Constants.ImageConstants.PIXELS_PER_UNIT;
 
-    protected ArrayList<Arte> arteDeck;
-    protected ArrayList<Arte> arteHand;
+    protected List<Arte> arteDeck;
+    protected List<Arte> arteHand;
     protected Arte move;
     protected int queue;
     protected PlayableCharacter character;
@@ -57,12 +56,12 @@ public final class Player extends Unit {
         this.character = new Sigur();
         this.arteDeck = new ArrayList<>();
         for(int i = 0; i < 20; i++) {
-            arteDeck.add(new SonicSlash(character));
-            arteDeck.add(new DragonFang(character));
-            arteDeck.add(new ImpactCross(character));
-            arteDeck.add(new Expiation(character));
-            arteDeck.add(new InnumerableWounds(character));
-            arteDeck.add(new TrillionDrive(character));
+            arteDeck.add(new SonicSlash(this));
+            arteDeck.add(new DragonFang(this));
+            arteDeck.add(new ImpactCross(this));
+            arteDeck.add(new Expiation(this));
+            arteDeck.add(new InnumerableWounds(this));
+            arteDeck.add(new TrillionDrive(this));
         }
         this.hitBox = new Rectangle((Main.getScreenWidth()/2) - this.getWidth()/2, (Main.getScreenHeight()/2) + 170, this.width, this.height-100); // set size to tiles
     }
@@ -74,6 +73,7 @@ public final class Player extends Unit {
     public void startBattle()   {
         queue = 5;
         this.arteHand = new ArrayList<>(arteDeck.subList(0,6));
+        this.arteQueue = new ArrayList<>();
     }
 
     public void move(Unit target, GameContainer gc, Graphics g) throws InterruptedException {
@@ -84,14 +84,15 @@ public final class Player extends Unit {
             DrawUtilities.drawStringCentered(g, arteHand.get(i).getArteType().name, Main.font, (Main.getScreenWidth()/7)*(i+1), Main.getScreenHeight()-400);
         }
         move = cardSelect(gc.getInput());
-        if(move != null) {
+        if (move != null) arteQueue.add(move);
+        /*if(move != null) {
             move.use(target, gc);
-        }
+        }*/
     }
 
     public void attack(Unit target, GameContainer gc)   {
         if(move != null) {
-            move.render(target, gc.getGraphics());
+            move.use(target, gc);
             if(move.finished())this.setState(PlayerState.DONE);
         }
     }
@@ -181,5 +182,9 @@ public final class Player extends Unit {
 
     public void setMana(int mana) {
         this.mana = mana;
+    }
+
+    public PlayableCharacter getCharacter() {
+        return character;
     }
 }

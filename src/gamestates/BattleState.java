@@ -20,6 +20,7 @@ import java.util.stream.Collectors;
 
 public class BattleState extends ThrenodyGameState {
     private final int id;
+    private GameContainer gc;
     public static ArrayList<Unit> plrs;
     public static ArrayList<Unit> enemies;
     private GameMap battlefield;
@@ -44,6 +45,7 @@ public class BattleState extends ThrenodyGameState {
         damageNumbers = new ArrayList<>();
         expGain = 0;
         currencyGain = 0;
+        this.gc = gc;
     }
 
     public void render(GameContainer gc, StateBasedGame sbg, Graphics g) throws SlickException {
@@ -121,6 +123,7 @@ public class BattleState extends ThrenodyGameState {
 
     public void keyPressed(int key, char c) {
         super.keyPressed(key, c);
+        if (key == Input.KEY_ENTER) ((Player) plrs.get(combat.getTurn())).setState(PlayerState.CASTING);
     }
 
     public void mousePressed(int button, int x, int y) {

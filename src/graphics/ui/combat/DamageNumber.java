@@ -10,13 +10,13 @@ import util.DrawUtilities;
 
 public class DamageNumber implements Updatable {
     private int value;
-    private int x;
-    private int y;
+    private float x;
+    private float y;
     private TrueTypeFont font;
     private Color color;
     private int lifetime;
 
-    public DamageNumber(int value, int x, int y) {
+    public DamageNumber(int value, float x, float y) {
         this.value = value;
         this.x = x;
         this.y = y;

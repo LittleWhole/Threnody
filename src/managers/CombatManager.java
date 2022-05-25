@@ -16,7 +16,7 @@ public class CombatManager {
     private volatile ArrayList<Unit> players;
     private volatile ArrayList<Unit> enemies;
     private int round;
-    int turn = 0;
+    private int turn = 0;
     public CombatManager(ArrayList<Unit> plrs, ArrayList<Unit> enemies)  {
 
         this.players = plrs;
@@ -97,4 +97,15 @@ public class CombatManager {
         }
     }
 
+    public ArrayList<Unit> getPlayers() {
+        return players;
+    }
+
+    public ArrayList<Unit> getEnemies() {
+        return enemies;
+    }
+
+    public int getTurn() {
+        return turn;
+    }
 }

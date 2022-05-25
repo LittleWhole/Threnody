@@ -17,8 +17,6 @@ V
 &src/graphics/ui/UserInterfaceable.java,7\3\7363b2eff4fb376b13ac299ecbb184b2a3c0339f
 Y
 )src/entities/units/enemy/EnemyStates.java,f\0\f090764c2994f48ab8b1afc3e20a4d91db0c1b7c
-X
-(src/graphics/ui/combat/DamageNumber.java,d\2\d23a51ec8381f8eca3d2db913d75aedc7ddb55a8
 S
 #src/playerdata/PlayerInventory.java,4\8\48222a87e93c0aba40f80c677871a65ceb19b097
 ^
@@ -35,22 +33,14 @@ E
 src/core/Utility.java,9\a\9a1a562407d78006026e7706fb21c7878f7c089c
 U
 %src/graphics/ui/menu/CloseButton.java,c\b\cb218156e23db2152ca6432358dfe9ec9b943149
-K
-src/util/DrawUtilities.java,0\d\0d53cac0c74ea033fe2c9a828a8bb4607fcb3d26
 U
 %src/gamestates/ThrenodyGameState.java,b\8\b8e844fbc4d907594c02d6904efa1bf4873a1552
 G
 src/core/Constants.java,4\9\499b05d514433296431f0625e1b08c422fc35866
-U
-%src/entities/units/player/Player.java,f\3\f3a4d16d3bbae99a65e6551a7926c5af14a891b7
-L
-src/entities/units/Unit.java,a\f\af99dbb5f9e61863a4bac612a52dad0f19238aa7
 M
 src/entities/core/Entity.java,3\c\3cdf84ae7c6904188a280585e0666fee897f915a
 Q
 !src/entities/core/Coordinate.java,2\9\29234301379b87072a71077e9a33930c1a942dd4
-Q
-!src/gamestates/LoadingScreen.java,5\e\5e528567604746e2baf46e03012c6e659ee06c5e
 H
 src/gamestates/Game.java,c\2\c2bc8889dbe42767a32050ab5b08c0287ff39286
 O
@@ -61,3 +51,5 @@ O
 src/util/DevDebugException.java,5\b\5b9f8330d102720f8cc164b27218293732c2ce2c
 O
 src/util/ThrenodyException.java,f\c\fce4f1b7da629e66148b1af2b400acd0b4ff4912
+S
+#.idea/sonarlint/issuestore/index.pb,9\f\9fe84ebb15faf917b7def6236dba604453cc61e0
