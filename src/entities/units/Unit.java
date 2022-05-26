@@ -18,7 +18,7 @@ import java.util.concurrent.ConcurrentLinkedQueue;
 
 import static combat.artes.ElementType.*;
 
-public class Unit extends Entity {
+public abstract class Unit<T extends Unit<?>> extends Entity {
 
     // Abbreviations: LVL, EXP, HP, ATK, DEF, CR, CD, EATK, EDEF, AFF
     protected int level;
@@ -97,11 +97,12 @@ public class Unit extends Entity {
     }
     public void setPosition(Coordinate c) {this.position = c;}
 
-    public void takeDamage(int amount)  {
+    public T takeDamage(int amount)  {
         System.out.println(position.toString());
         if(amount>=health) BattleState.damageNumbers.add(new DamageNumber(amount, hitBox.getCenterX(), hitBox.getCenterY(), Color.red));
         else BattleState.damageNumbers.add(new DamageNumber(amount, hitBox.getCenterX(), hitBox.getCenterY()));
         this.health-=amount;
+        return (T) this;
     }
 
     public void regenerate(int amount)    {
@@ -120,15 +121,37 @@ public class Unit extends Entity {
         return health;
     }
 
-    public void setHealth(int health) {
+    public T setHealth(int health) {
         this.health = health;
+        return (T) this;
     }
 
-    public void setAttack(int attack) {
+    public T setAttack(int attack) {
         this.attack = attack;
+        return (T) this;
     }
 
     public Queue<Arte<? extends Unit>> getArteQueue() {
         return arteQueue;
+    }
+
+    @Override
+    public String toString() {
+        return "Unit{" +
+                "level=" + level +
+                ", health=" + health +
+                ", attack=" + attack +
+                ", defense=" + defense +
+                ", critRate=" + critRate +
+                ", critDamage=" + critDamage +
+                ", eAttack=" + eAttack +
+                ", eDefense=" + eDefense +
+                ", eAffinity=" + eAffinity +
+                ", arteDeck=" + arteDeck +
+                ", arteHand=" + arteHand +
+                ", arteQueue=" + arteQueue +
+                ", move=" + move +
+                ", mana=" + mana +
+                '}';
     }
 }

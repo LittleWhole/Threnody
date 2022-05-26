@@ -26,7 +26,7 @@ import java.util.List;
 import java.util.Queue;
 import java.util.concurrent.ConcurrentLinkedQueue;
 
-public final class Player extends Unit {
+public final class Player<T extends Player<?>> extends Unit<T> {
     private int mana;
     public PlayerState getState() {
         return state;
@@ -175,8 +175,9 @@ public final class Player extends Unit {
         this.arteDeck.add(a);
     }
 
-    public void gainExp(int amount) {
+    public T gainExp(int amount) {
         this.character.gainExp(amount);
+        return (T) this;
     }
 
     public int getExp() {
@@ -192,8 +193,9 @@ public final class Player extends Unit {
         return mana;
     }
 
-    public void setMana(int mana) {
+    public T setMana(int mana) {
         this.mana = mana;
+        return (T) this;
     }
 
     public void setDirection(Direction ns, Direction ew )   {
@@ -210,5 +212,19 @@ public final class Player extends Unit {
 
     public PlayableCharacter getCharacter() {
         return character;
+    }
+
+    @Override
+    public String toString() {
+        return "Player{" +
+                "mana=" + mana +
+                ", state=" + state +
+                ", arteDeck=" + arteDeck +
+                ", arteHand=" + arteHand +
+                ", arteQueue=" + arteQueue +
+                ", move=" + move +
+                ", queue=" + queue +
+                ", character=" + character +
+                '}';
     }
 }
