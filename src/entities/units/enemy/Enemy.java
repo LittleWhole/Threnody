@@ -1,6 +1,7 @@
 package entities.units.enemy;
 
 import combat.artes.Arte;
+import core.Main;
 import entities.core.Coordinate;
 import entities.core.Team;
 import entities.units.Unit;
@@ -61,12 +62,9 @@ public class Enemy extends Unit {
 
     public void render(Graphics g, float plrX, float plrY)  {
         g.drawImage(sprite, -plrX - position.getX(), -plrY/2 - position.getY());
-        g.setColor(new Color(255, 0,0,0.5f));
+
         hitBox.setX(-plrX - position.getX() + width);
         hitBox.setY((-plrY/2) + this.getHeight()*1.6f);
-        if(this.getCombatState() == EnemyStates.MOVING) {
-            DrawUtilities.drawStringCentered(g, "MOVING", 800, 100);
-        }
     }
 
     public void overworldUpdate()    {
@@ -83,7 +81,7 @@ public class Enemy extends Unit {
 
     public void battleMove(Unit target, GameContainer gc)    {
         timer++;
-        gc.getGraphics().drawString(String.valueOf(timer), 700, 100);
+        if( Main.debug) gc.getGraphics().drawString(String.valueOf(timer), 700, 100);
 
         animation();
 
@@ -115,17 +113,17 @@ public class Enemy extends Unit {
     }
 
     private EnemyStates decideState()  {
-        /*switch((int)(Math.random()*4)) {
+        switch((int)(Math.random()*4)) {
             case 0:
                 return EnemyStates.IDLE;
             case 1:
                 return EnemyStates.CHARGE;
             default: return EnemyStates.ATTACK;
-        }*/
-        return EnemyStates.ATTACK;
+        }
     }
 
     public void drawHitBox(Graphics g)  {
+        g.setColor(new Color(255, 0,0,0.5f));
         g.fill(hitBox);
     }
 

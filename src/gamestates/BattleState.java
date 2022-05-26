@@ -58,24 +58,17 @@ public class BattleState extends ThrenodyGameState {
         battlefield.render(1000, -200);
         for(Player p : plrs) {
             p.battleRender(g, 0,0);
-            DrawUtilities.drawStringCentered(g, String.valueOf(p.getHealth()), 100, 100);
+
         }
         for(Enemy e : enemies) {
             e.render(g, 0,0);
         }
-
-        damageNumbers.forEach(n -> {
-            n.update(gc);
-            n.render(g, 0, 0);
-            if (n.isExpired()) damageNumbers.remove(n);
-        });
-
         try {
             result = combat.combat(g, gc);
         } catch (InterruptedException | IndexOutOfBoundsException e) {
             e.printStackTrace();
         }
-        g.drawString("" + combat.getRound(), 0, 0);
+
         switch (result) {
             case 'w':
                 time++;
@@ -86,7 +79,6 @@ public class BattleState extends ThrenodyGameState {
                 DrawUtilities.drawStringCentered(g,"EXP GAINED:" + (Math.min(time / 2, expGain)),Main.getScreenWidth()/2, Main.getScreenHeight()/2 );
                 DrawUtilities.drawStringCentered(g,"MONEY GAINED:" + (Math.min(time / 2, currencyGain)),Main.getScreenWidth()/2, Main.getScreenHeight()/2 );
                 if (time > resultDuration) {
-
                     sbg.enterState(Main.GAME_ID);
                 }
                 break;
@@ -100,6 +92,17 @@ public class BattleState extends ThrenodyGameState {
                     sbg.enterState(Main.TITLE_ID);
                 }
                 break;
+        }
+        damageNumbers.forEach(n -> {
+            n.update(gc);
+            n.render(g, 0, 0);
+            if (n.isExpired()) damageNumbers.remove(n);
+        });
+        if(Main.debug)  {
+            for(Player p : plrs) {
+                DrawUtilities.drawStringCentered(g, String.valueOf(p.getHealth()), 100, 100);
+            }
+            g.drawString("" + combat.getRound(), 0, 0);
         }
     }
 
