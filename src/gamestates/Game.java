@@ -29,6 +29,7 @@ public class Game extends ThrenodyGameState {
 
     private static GameContainer gc;
     private final int id;
+    public static boolean firstTime;
     public static int time;
     public static long battleTimeStamp;
     public static int battleCooldown;
@@ -72,6 +73,7 @@ public class Game extends ThrenodyGameState {
 
     public void init(GameContainer gc, StateBasedGame sbg) throws SlickException {
         // This code happens when you enter a game state for the *first time.*
+        firstTime = true;
         overworld = new GameMap("res/tilemap/overworld.tmx");
         background = new Background();
         gc.setShowFPS(true);
@@ -111,6 +113,7 @@ public class Game extends ThrenodyGameState {
         // Play BGM
         SoundManager.playBackgroundMusic("02");
     }
+
 
     public void render(GameContainer gc, StateBasedGame sbg, Graphics g) throws SlickException {
         g.setFont(Main.font);
@@ -182,6 +185,11 @@ public class Game extends ThrenodyGameState {
     }
 
     public void enter(GameContainer gc, StateBasedGame sbg) throws SlickException {
+        if(firstTime)   {
+            init(gc, sbg);
+            firstTime = false;
+            return;
+        }
         System.out.println("Entering game");
         plr.gainExp(BattleState.expGain);
         Main.stats.gainGold(BattleState.currencyGain);
@@ -227,12 +235,13 @@ public class Game extends ThrenodyGameState {
         BattleState.enemies = enemyTeam;
     }
 
-
     public void keyPressed(int key, char c) {
         super.keyPressed(key, c);
         if(key == Input.KEY_F3) Main.debug = !Main.debug;
         if(key == Input.KEY_E) plr.interact(npc);
     }
+
+
 
 
     public void mousePressed(int button, int x, int y) {

@@ -29,7 +29,8 @@ public class BattleState extends ThrenodyGameState {
     private GameMap battlefield;
     private CombatManager combat;
     private char result;
-    public static long time;
+    private int resultDuration;
+    public static int time;
     public static int expGain;
     public static int currencyGain;
 
@@ -48,45 +49,58 @@ public class BattleState extends ThrenodyGameState {
         expGain = 0;
         currencyGain = 0;
         this.gc = gc;
+        resultDuration = 255;
     }
 
     public void render(GameContainer gc, StateBasedGame sbg, Graphics g) throws SlickException {
-        time++;
-        if(sbg.getCurrentStateID() == Main.BATTLE_ID){
-
-            battlefield.render(1000, -200);
-            for(Player p : plrs) {
-                p.battleRender(g, 0,0);
-                DrawUtilities.drawStringCentered(g, String.valueOf(p.getHealth()), 100, 100);
-            }
-            for(Enemy e : enemies) {
-                e.render(g, 0,0);
-            }
-
-            damageNumbers.forEach(n -> {
-                n.update(gc);
-                n.render(g, 0, 0);
-                if (n.isExpired()) damageNumbers.remove(n);
-            });
-
-            try {
-                result = combat.combat(g, gc);
-            } catch (InterruptedException | IndexOutOfBoundsException e) {
-                e.printStackTrace();
-            }
-            g.drawString("" + combat.getRound(), 0, 0);
-            switch (result) {
-                case 'w':
-                    expGain = 10;
-                    currencyGain = 10;
-                    sbg.enterState(Main.GAME_ID);
-                    break;
-                case 'l':
-                    sbg.enterState(Main.TITLE_ID);
-                    break;
-            }
+        g.setFont(gc.getDefaultFont());
+        //super.render(gc, sbg, g);
+        battlefield.render(1000, -200);
+        for(Player p : plrs) {
+            p.battleRender(g, 0,0);
+            DrawUtilities.drawStringCentered(g, String.valueOf(p.getHealth()), 100, 100);
         }
-        super.render(gc, sbg, g);
+        for(Enemy e : enemies) {
+            e.render(g, 0,0);
+        }
+
+        damageNumbers.forEach(n -> {
+            n.update(gc);
+            n.render(g, 0, 0);
+            if (n.isExpired()) damageNumbers.remove(n);
+        });
+
+        try {
+            result = combat.combat(g, gc);
+        } catch (InterruptedException | IndexOutOfBoundsException e) {
+            e.printStackTrace();
+        }
+        g.drawString("" + combat.getRound(), 0, 0);
+        switch (result) {
+            case 'w':
+                time++;
+                expGain = 10;
+                currencyGain = 10;
+                if(time/2 > Math.max(expGain, currencyGain)) g.setColor(Color.red);
+                else g.setColor(Color.white);
+                DrawUtilities.drawStringCentered(g,"EXP GAINED:" + (Math.min(time / 2, expGain)),Main.getScreenWidth()/2, Main.getScreenHeight()/2 );
+                DrawUtilities.drawStringCentered(g,"MONEY GAINED:" + (Math.min(time / 2, currencyGain)),Main.getScreenWidth()/2, Main.getScreenHeight()/2 );
+                if (time > resultDuration) {
+
+                    sbg.enterState(Main.GAME_ID);
+                }
+                break;
+            case 'l':
+                time++;
+                g.setColor(new Color(0,0,0, Math.min(time, 255)));
+                g.fillRect(0,0,Main.getScreenWidth(), Main.getScreenHeight());
+                g.setColor(Color.red);
+                DrawUtilities.drawStringCentered(g,"YOU DIED", Main.RESOLUTION_X/2, Main.RESOLUTION_Y/2);
+                if (time > resultDuration) {
+                    sbg.enterState(Main.TITLE_ID);
+                }
+                break;
+        }
     }
 
     public void update(GameContainer gc, StateBasedGame sbg, int delta) throws SlickException {
