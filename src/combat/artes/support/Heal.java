@@ -16,7 +16,7 @@ public class Heal extends Arte<Unit> {
         name = "Heal";
         arteType = ArteType.SUPPORT;
         cost = 1;
-        castDuration = 80;
+        castDuration = 60;
         this.aniSheet = new SpriteSheet("res/animations/combat/heal.png",200, 200);
         this.card = new Image("res/healCard.png");
     }
@@ -30,7 +30,10 @@ public class Heal extends Arte<Unit> {
 
     @Override
     public void animation(Unit target, Graphics g) {
-
+        if (!finished()) {
+            this.aniFrame = aniSheet.getSprite(timer, 0);
+            g.drawImage(aniFrame, -owner.getPosition().getX() + (owner.getWidth()/2), owner.getY() + owner.getHeight()*2.5f);
+        }
     }
 
     @Override

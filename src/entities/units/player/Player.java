@@ -174,8 +174,8 @@ public final class Player<T extends Player<?>> extends Unit<T> {
     public void battleRender(Graphics g, float plrX, float plrY)  {
         g.drawImage(sprite, -plrX - position.getX(), -plrY/2 - position.getY());
         g.setColor(new Color(255, 0,0,0.5f));
-        hitBox.setX(-plrX - position.getX() + width);
-        hitBox.setY((plrY) + this.getHeight()*1.6f);
+        hitBox.setX(plrX - position.getX() + width);
+        hitBox.setY((-plrY/2) + this.getHeight()*1.6f);
         var rect = new RoundedRectangle(hitBox.getX(), hitBox.getY(), 50, 50, RoundedRectangle.ALL);
         g.setColor(Color.red);
         g.fill(rect);
