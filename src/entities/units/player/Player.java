@@ -108,7 +108,11 @@ public final class Player<T extends Player<?>> extends Unit<T> {
         }
         Arte<? super Player> arte = arteQueue.element();
         arte.use(target, gc);
-        if (arte.finished()) arteQueue.remove(arte);
+        if (arte.finished()) {
+            arteQueue.remove(arte);
+            arteHand.add(arteDeck.get(queue));
+            queue++;
+        }
     }
 
     public void update(StateBasedGame sbg, Unit u, Game g) throws SlickException {
@@ -149,8 +153,6 @@ public final class Player<T extends Player<?>> extends Unit<T> {
         Arte<? super Player> selected;
         selected = arteHand.get(i);
         arteHand.remove(i);
-        queue++;
-        arteHand.add(arteDeck.get(queue));
         this.state = PlayerState.SELECTING;
         return selected;
     }
