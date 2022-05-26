@@ -1,14 +1,12 @@
 package combat.artes;
 
+import core.Main;
 import entities.units.Unit;
 import entities.units.player.Player;
 import gamestates.BattleState;
 import gamestates.Game;
 import graphics.ui.combat.DamageNumber;
-import org.newdawn.slick.GameContainer;
-import org.newdawn.slick.Graphics;
-import org.newdawn.slick.Image;
-import org.newdawn.slick.SpriteSheet;
+import org.newdawn.slick.*;
 import playerdata.characters.PlayableCharacter;
 import util.DrawUtilities;
 
@@ -73,6 +71,27 @@ public abstract class Arte<T extends Unit> {
     public void use(Unit target, GameContainer gc) {
         if (!finished()) {
             activation(target);
+            if (timer < 60) {
+                if (timer < 20) gc.getGraphics().setColor(new Color(221, 201, 85, (255 / 20) * timer));
+                else if (timer < 40) gc.getGraphics().setColor(new Color(221, 201, 85));
+                else gc.getGraphics().setColor(new Color(221, 201, 85, (255 / 20) * (60 - timer)));
+
+                gc.getGraphics().fill(DrawUtilities.createRectangleCentered(Main.RESOLUTION_X / 2 + timer, 100, 400, 80));
+
+
+                if (timer < 20) gc.getGraphics().setColor(new Color(85, 138, 221, (255 / 20) * timer));
+                else if (timer < 40) gc.getGraphics().setColor(new Color(85, 138, 221));
+                else gc.getGraphics().setColor(new Color(85, 138, 221, (255 / 20) * (60 - timer)));
+
+                var rect = DrawUtilities.createRectangleCentered(Main.RESOLUTION_X / 2 + timer, 100, 400, 60);
+                gc.getGraphics().fill(rect);
+
+                if (timer < 30) gc.getGraphics().setColor(new Color(255, 255, 255, (255 / 20) * timer));
+                else if (timer < 40) gc.getGraphics().setColor(new Color(255, 255, 255));
+                else gc.getGraphics().setColor(new Color(255, 255, 255, (255 / 20) * (60 - timer)));
+
+                DrawUtilities.drawStringCentered(gc.getGraphics(), this.name, rect);
+            }
             animation(target, gc.getGraphics());
             DrawUtilities.drawStringCentered(gc.getGraphics(), String.valueOf(timer), 100, 0);
         }

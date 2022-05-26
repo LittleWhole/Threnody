@@ -41,6 +41,6 @@ public class SonicSlash extends Arte<Player> {
 
     @Override
     public void activation(Unit target) {
-        if (timer == 40) target.takeDamage((int) (owner.calculateDamage(ElementType.PHYSICAL) * 1.1), ElementType.PHYSICAL);
+        if (timer == 40) target.takeDamage((int) (owner.calculateDamage(ElementType.PHYSICAL) * 0.9), ElementType.PHYSICAL);
     }
 }

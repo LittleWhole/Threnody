@@ -16,7 +16,7 @@ public class Heal extends Arte<Unit> {
         name = "Heal";
         arteType = ArteType.SUPPORT;
         cost = 1;
-        castDuration = 120;
+        castDuration = 80;
         this.aniSheet = new SpriteSheet("res/animations/combat/heal.png",200, 200);
         this.card = new Image("res/healCard.png");
     }
@@ -35,6 +35,6 @@ public class Heal extends Arte<Unit> {
 
     @Override
     public void activation(Unit target) {
-        if (timer == 119) owner.regenerate(owner.getAttack());
+        if (timer == 30) owner.regenerate(owner.getAttack());
     }
 }

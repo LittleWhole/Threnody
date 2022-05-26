@@ -2,6 +2,7 @@ package combat.artes.strike;
 
 import combat.artes.Arte;
 import combat.artes.ArteType;
+import combat.artes.ElementType;
 import entities.units.Unit;
 import entities.units.player.Player;
 import gamestates.BattleState;
@@ -16,14 +17,8 @@ public class DragonFang extends Arte<Player> {
         super(owner);
         name = "Dragon Fang";
         arteType = ArteType.STRIKE;
+        castDuration = 74;
         this.card = new Image("res/martialCard.png");
-    }
-
-    @Override
-    public void use(Unit target, GameContainer gc) {
-        castTimestamp = BattleState.time;
-        animation(target, gc.getGraphics());
-        activation(target);
     }
 
     @Override
@@ -33,6 +28,6 @@ public class DragonFang extends Arte<Player> {
 
     @Override
     public void activation(Unit target) {
-
+        if (timer == 50) target.takeDamage((int) (owner.calculateDamage(ElementType.PHYSICAL) * 1.15), ElementType.PHYSICAL);
     }
 }

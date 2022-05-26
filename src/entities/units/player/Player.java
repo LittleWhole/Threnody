@@ -2,6 +2,8 @@ package entities.units.player;
 
 import combat.artes.Arte;
 import combat.artes.elemental.AquaLimit;
+import combat.artes.elemental.DualTheSol;
+import combat.artes.elemental.RendingGale;
 import combat.artes.strike.DragonFang;
 import combat.artes.strike.ImpactCross;
 import combat.artes.strike.SonicSlash;
@@ -65,11 +67,12 @@ public final class Player<T extends Player<?>> extends Unit<T> {
         this.arteQueue = new ConcurrentLinkedQueue<>();
         for(int i = 0; i < 20; i++) {
             arteDeck.add(new SonicSlash(this));
+            arteDeck.add(new DragonFang(this));
             arteDeck.add(new Heal(this));
             arteDeck.add(new ImpactCross(this));
-            arteDeck.add(new Expiation(this));
+            arteDeck.add(new RendingGale(this));
             arteDeck.add(new AquaLimit(this));
-            arteDeck.add(new TrillionDrive(this));
+            arteDeck.add(new DualTheSol(this));
         }
         this.hitBox = new Rectangle((Main.getScreenWidth()/2) - this.getWidth()/2, (Main.getScreenHeight()/2) + 170, this.width, this.height-100); // set size to tiles
     }

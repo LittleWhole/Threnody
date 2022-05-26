@@ -8,22 +8,19 @@ import entities.units.player.Player;
 import gamestates.BattleState;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
+import org.newdawn.slick.Image;
+import org.newdawn.slick.SlickException;
 import playerdata.characters.PlayableCharacter;
 
 public class DualTheSol extends Arte<Player> {
 
-    public DualTheSol(Player owner) {
+    public DualTheSol(Player owner) throws SlickException {
         super(owner);
         name = "Dual the Sol";
         arteType = ArteType.ELEMENTAL;
         element = ElementType.LIGHT;
-    }
-
-    @Override
-    public void use(Unit target, GameContainer gc) {
-        castTimestamp = BattleState.time;
-        animation(target, gc.getGraphics());
-        activation(target);
+        castDuration = 74;
+        this.card = new Image("res/elementalCard.png");
     }
 
     @Override
@@ -33,6 +30,6 @@ public class DualTheSol extends Arte<Player> {
 
     @Override
     public void activation(Unit target) {
-
+        if (timer == 40) target.takeDamage((int) (owner.calculateDamage(element) * 1.5), element);
     }
 }
