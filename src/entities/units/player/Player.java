@@ -14,6 +14,7 @@ import entities.units.Direction;
 import entities.units.npc.NPC;
 import entities.units.Unit;
 import gamestates.Game;
+import managers.AnimationManager;
 import org.newdawn.slick.*;
 import org.newdawn.slick.geom.Rectangle;
 import org.newdawn.slick.state.StateBasedGame;
@@ -48,12 +49,12 @@ public final class Player<T extends Player<?>> extends Unit<T> {
 
     public Player(Coordinate pos) throws SlickException {
         this.health = 100;
-        this.width = 64;
-        this.height = 135;
+        this.width = 90;
+        this.height = 175;
         this.position = pos;
         this.xSpeed = 10;
         this.ySpeed = 10;
-        this.sheet = new SpriteSheet("res/experimentalCharacter.png", 256, 512);
+        this.sheet = new SpriteSheet("res/animations/character/MCSPRITESHEET.png", 90, 175, 12);
         this.sprite = sheet.getSprite(0,0);
         this.character = new Sigur();
         this.arteDeck = new ArrayList<>();
@@ -105,7 +106,8 @@ public final class Player<T extends Player<?>> extends Unit<T> {
 
     public void update(StateBasedGame sbg, Unit u, Game g) throws SlickException {
         ewDir = (dx>0?Direction.EAST:dx<0?Direction.WEST:Direction.NONE);
-        nsDir = (dy>0?Direction.NORTH:dy<0?Direction.SOUTH:Direction.NONE);
+        nsDir = (dy<0?Direction.NORTH:dy>0?Direction.SOUTH:Direction.NONE);
+        AnimationManager.animationSelect(this);
         this.position.updatePosition(dx,dy);
         this.dx = 0;
         this.dy = 0;
@@ -160,7 +162,7 @@ public final class Player<T extends Player<?>> extends Unit<T> {
     }
 
     protected void drawSprite(Graphics g) { // Draw the entity sprite
-        g.drawImage(this.sprite, (Main.getScreenWidth()/2) - 128, (Main.getScreenHeight()/2) - 256);
+        DrawUtilities.drawImageCentered(g,this.sprite, (Main.getScreenWidth()/2), (Main.getScreenHeight()/2) + 128);
 
     }
     public void battleRender(Graphics g, float plrX, float plrY)  {

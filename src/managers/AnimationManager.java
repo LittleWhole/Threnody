@@ -9,7 +9,7 @@ public class AnimationManager {
         //some terribly structured code my monkey brain cant do any better
         if(u.getEwDir() == Direction.NONE)   {
             if(u.getNsDir() == Direction.NORTH) {
-                u.setSprite(u.getSheet().getSprite(1,0));
+                u.setSprite(u.getSheet().getSprite(0,1));
             }
             else if(u.getNsDir() == Direction.SOUTH)    {
                 u.setSprite(u.getSheet().getSprite(0,0));
@@ -17,24 +17,24 @@ public class AnimationManager {
         }
         else if(u.getEwDir() == Direction.EAST) {
             if(u.getNsDir() == Direction.NORTH) {
-                u.setSprite(u.getSheet().getSprite(1,0));
+                u.setSprite(u.getSheet().getSprite(0,1));
             }
             else if(u.getNsDir() == Direction.SOUTH)    {
-                u.setSprite(u.getSheet().getSprite(4,0));
+                u.setSprite(u.getSheet().getSprite(0,4));
             }
             else {
-                u.setSprite(u.getSheet().getSprite(3,0));
+                u.setSprite(u.getSheet().getSprite(0,3));
             }
         }
         else {
             if(u.getNsDir() == Direction.NORTH) {
-                u.setSprite(u.getSheet().getSprite(1,0));
+                u.setSprite(u.getSheet().getSprite(0,1));
             }
             else if(u.getNsDir() == Direction.SOUTH)    {
-                u.setSprite(u.getSheet().getSprite(5,0));
+                u.setSprite(u.getSheet().getSprite(0,4).getFlippedCopy(true, false));
             }
             else {
-                u.setSprite(u.getSheet().getSprite(2,0));
+                u.setSprite(u.getSheet().getSprite(0,2));
             }
         }
     }
