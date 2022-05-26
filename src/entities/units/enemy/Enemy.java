@@ -21,7 +21,7 @@ import java.util.concurrent.ConcurrentLinkedQueue;
 
 import java.util.ArrayList;
 
-public class Enemy extends Unit {
+public class Enemy<T extends Enemy<?>> extends Unit<T> {
     protected EnemyStates turn;
     protected ArrayList<Enemy> enemyTeam;
     protected int moveDuration;
@@ -129,5 +129,21 @@ public class Enemy extends Unit {
 
     public Enemy getEnemy() {
         return this;
+    }
+
+    @Override
+    public String toString() {
+        return "Enemy{" +
+                "turn=" + turn +
+                ", enemyTeam=" + enemyTeam +
+                ", moveDuration=" + moveDuration +
+                ", moveTimeStamp=" + moveTimeStamp +
+                ", timer=" + timer +
+                ", arteDeck=" + arteDeck +
+                ", arteHand=" + arteHand +
+                ", arteQueue=" + arteQueue +
+                ", move=" + move +
+                ", combatState=" + combatState +
+                '}';
     }
 }
