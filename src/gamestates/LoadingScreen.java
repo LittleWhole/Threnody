@@ -3,6 +3,7 @@
 package gamestates;
 
 import core.Constants;
+import core.Fonts;
 import core.Main;
 import graphics.Background;
 import managers.SoundManager;
@@ -58,9 +59,10 @@ public class LoadingScreen extends ThrenodyGameState {
     {
         gc.setShowFPS(false);
         gc.setDefaultFont(new TrueTypeFont(new java.awt.Font("Bahnschrift", java.awt.Font.PLAIN, 20), true));
+        Main.fonts = new Fonts();
+        Main.font = new TrueTypeFont(new java.awt.Font("Bahnschrift", java.awt.Font.PLAIN, 20), true);
 
         this.loadingList = LoadingList.get();
-        Main.font = new TrueTypeFont(new java.awt.Font("Bahnschrift", java.awt.Font.PLAIN, 20), true);
         background = new Background();
         music = new Sound("res/audio/music/01.ogg");
         logo = new Image("res/logo.png");

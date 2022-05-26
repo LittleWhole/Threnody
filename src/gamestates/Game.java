@@ -97,6 +97,7 @@ public class Game extends ThrenodyGameState {
 
         // Initialize the Player
         plr = new Player(plrPosition);
+        plr.setAttack(20);
         plrTeam.add(plr);
         System.out.println("[VERBOSE] Player initialized");
         enemy = new Enemy(10, 0);
@@ -160,7 +161,6 @@ public class Game extends ThrenodyGameState {
         // Update Player
         plr.update(sbg, enemy, this);
         enemy.overworldUpdate();
-        System.out.println(plr.getX()+ " " + plr.getY());
 
         // Update all entities, and remove those marked for removal
         Predicate<Entity> filter = Entity::isMarked;
