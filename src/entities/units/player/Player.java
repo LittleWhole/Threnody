@@ -150,11 +150,15 @@ public final class Player<T extends Player<?>> extends Unit<T> {
     }
 
     public Arte<? super Player> selection(int i) {
-        Arte<? super Player> selected;
-        selected = arteHand.get(i);
-        arteHand.remove(i);
-        this.state = PlayerState.SELECTING;
-        return selected;
+        Arte<? super Player> selected = null;
+        try {
+            selected = arteHand.get(i);
+            arteHand.remove(i);
+        } catch (IndexOutOfBoundsException ignored) {}
+        finally {
+            this.state = PlayerState.SELECTING;
+            return selected;
+        }
     }
 
     public void setState(PlayerState s) {
