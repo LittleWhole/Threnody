@@ -47,6 +47,7 @@ public final class Player extends Unit {
     // Abbreviations: LVL, EXP, HP, ATK, DEF, CR, CD, EATK, EDEF, AFF
 
     public Player(Coordinate pos) throws SlickException {
+        this.health = 100;
         this.width = 64;
         this.height = 135;
         this.position = pos;
