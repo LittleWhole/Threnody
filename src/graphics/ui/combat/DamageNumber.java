@@ -28,6 +28,15 @@ public class DamageNumber implements Updatable {
         this.color = new Color(Color.white);
         this.lifetime = 120;
     }
+    public DamageNumber(int value, float x, float y, Color c) {
+        this.value = value;
+        this.x = x;
+        this.y = y;
+        this.font = Main.fonts.DAMAGE_NUMBER;
+        this.fontOutline = Main.fonts.DAMAGE_NUMBER_OUTLINE;
+        this.color = c;
+        this.lifetime = 120;
+    }
 
     @Override
     public void render(Graphics g, int mouseX, int mouseY) {
@@ -40,7 +49,7 @@ public class DamageNumber implements Updatable {
 
     @Override
     public void update(GameContainer gc) {
-        this.color = new Color(255, 255, 255, (255 / 60) * lifetime);
+        this.color = new Color(color.getRed(), color.getGreen(), color.getBlue(), (255 / 60) * lifetime);
         lifetime--;
     }
 

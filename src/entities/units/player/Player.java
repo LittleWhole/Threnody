@@ -10,6 +10,7 @@ import combat.artes.mystic.TrillionDrive;
 import core.Constants;
 import core.Main;
 import entities.core.Coordinate;
+import entities.units.Direction;
 import entities.units.npc.NPC;
 import entities.units.Unit;
 import gamestates.Game;
@@ -27,7 +28,6 @@ import java.util.concurrent.ConcurrentLinkedQueue;
 
 public final class Player extends Unit {
     private int mana;
-
     public PlayerState getState() {
         return state;
     }
@@ -104,6 +104,8 @@ public final class Player extends Unit {
     }
 
     public void update(StateBasedGame sbg, Unit u, Game g) throws SlickException {
+        ewDir = (dx>0?Direction.EAST:dx<0?Direction.WEST:Direction.NONE);
+        nsDir = (dy>0?Direction.NORTH:dy<0?Direction.SOUTH:Direction.NONE);
         this.position.updatePosition(dx,dy);
         this.dx = 0;
         this.dy = 0;
@@ -193,6 +195,18 @@ public final class Player extends Unit {
     public void setMana(int mana) {
         this.mana = mana;
     }
+
+    public void setDirection(Direction ns, Direction ew )   {
+        this.nsDir = ns;
+        this.ewDir = ew;
+    }
+    public void setEWDirection(Direction ew )   {
+        this.ewDir = ew;
+    }
+    public void setNSDirection(Direction ns)   {
+        this.nsDir = ns;
+    }
+
 
     public PlayableCharacter getCharacter() {
         return character;

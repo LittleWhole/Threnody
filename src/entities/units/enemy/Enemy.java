@@ -44,6 +44,7 @@ public class Enemy extends Unit {
     protected EnemyStates combatState;
     public Enemy(float x, float y) throws SlickException {//later change parameters to also change size, level, speed, and sprite
         this.health = 100;
+        this.attack = 20;
         moveDuration = 100;
         this.width = 80;
         this.height = 256;
@@ -72,7 +73,7 @@ public class Enemy extends Unit {
     }
 
     public void battleSelect()  {
-        if(turn != EnemyStates.CHARGE)  {
+        if(turn != EnemyStates.CHARGE && turn != EnemyStates.SPECIAL)  {
             this.turn = decideState();
         }
         timer = 0;
