@@ -1,6 +1,7 @@
 package entities.units.enemy;
 
 import combat.artes.Arte;
+import combat.artes.ElementType;
 import core.Main;
 import entities.core.Coordinate;
 import entities.core.Team;
@@ -21,6 +22,7 @@ import java.util.concurrent.ConcurrentLinkedQueue;
 
 import java.util.ArrayList;
 
+@SuppressWarnings({"unchecked"})
 public class Enemy<T extends Enemy<?>> extends Unit<T> {
     protected EnemyStates turn;
     protected ArrayList<Enemy> enemyTeam;
@@ -43,8 +45,12 @@ public class Enemy<T extends Enemy<?>> extends Unit<T> {
 
     protected EnemyStates combatState;
     public Enemy(float x, float y) throws SlickException {//later change parameters to also change size, level, speed, and sprite
+        super();
         this.health = 100;
         this.attack = 20;
+        this.defense = 10;
+        this.critRate = 0.05;
+        this.critDamage = 50;
         moveDuration = 100;
         this.width = 80;
         this.height = 256;
@@ -102,24 +108,22 @@ public class Enemy<T extends Enemy<?>> extends Unit<T> {
                 break;
             }
             case ATTACK -> {
-                target.takeDamage(this.attack);
+                target.takeDamage(this.attack, ElementType.PHYSICAL);
             }
             case CHARGE -> {
                 this.turn = EnemyStates.SPECIAL;
             }
             case SPECIAL -> {
-                target.takeDamage(this.attack*3);
+                target.takeDamage(this.attack*3, ElementType.PHYSICAL);
             }
         }
     }
 
     private EnemyStates decideState()  {
         switch((int)(Math.random()*4)) {
-            case 0:
-                return EnemyStates.IDLE;
-            case 1:
-                return EnemyStates.CHARGE;
-            default: return EnemyStates.ATTACK;
+            case 0 -> { return EnemyStates.IDLE; }
+            case 1 -> { return EnemyStates.CHARGE; }
+            default -> { return EnemyStates.ATTACK; }
         }
     }
 

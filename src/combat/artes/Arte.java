@@ -41,7 +41,6 @@ public abstract class Arte<T extends Unit> {
 
     protected Image card;
 
-    protected ArteType type;
     protected ElementType element;
 
     protected Arte(T owner) {

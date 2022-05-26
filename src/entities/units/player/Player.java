@@ -1,12 +1,14 @@
 package entities.units.player;
 
 import combat.artes.Arte;
-import combat.artes.martial.DragonFang;
-import combat.artes.martial.ImpactCross;
-import combat.artes.martial.SonicSlash;
+import combat.artes.elemental.AquaLimit;
+import combat.artes.strike.DragonFang;
+import combat.artes.strike.ImpactCross;
+import combat.artes.strike.SonicSlash;
 import combat.artes.mystic.Expiation;
 import combat.artes.mystic.InnumerableWounds;
 import combat.artes.mystic.TrillionDrive;
+import combat.artes.support.Heal;
 import core.Constants;
 import core.Main;
 import entities.core.Coordinate;
@@ -26,6 +28,7 @@ import java.util.List;
 import java.util.Queue;
 import java.util.concurrent.ConcurrentLinkedQueue;
 
+@SuppressWarnings({"unchecked"})
 public final class Player<T extends Player<?>> extends Unit<T> {
     private int mana;
     public PlayerState getState() {
@@ -47,6 +50,7 @@ public final class Player<T extends Player<?>> extends Unit<T> {
     // Abbreviations: LVL, EXP, HP, ATK, DEF, CR, CD, EATK, EDEF, AFF
 
     public Player(Coordinate pos) throws SlickException {
+        super();
         this.health = 100;
         this.width = 64;
         this.height = 135;
@@ -60,10 +64,10 @@ public final class Player<T extends Player<?>> extends Unit<T> {
         this.arteQueue = new ConcurrentLinkedQueue<>();
         for(int i = 0; i < 20; i++) {
             arteDeck.add(new SonicSlash(this));
-            arteDeck.add(new DragonFang(this));
+            arteDeck.add(new Heal(this));
             arteDeck.add(new ImpactCross(this));
             arteDeck.add(new Expiation(this));
-            arteDeck.add(new InnumerableWounds(this));
+            arteDeck.add(new AquaLimit(this));
             arteDeck.add(new TrillionDrive(this));
         }
         this.hitBox = new Rectangle((Main.getScreenWidth()/2) - this.getWidth()/2, (Main.getScreenHeight()/2) + 170, this.width, this.height-100); // set size to tiles

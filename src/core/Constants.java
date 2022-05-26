@@ -20,4 +20,9 @@ public final class Constants {
         final public static float CENTER_Y = Main.RESOLUTION_Y / 2f;
     }
 
+    public static final class CombatConstants {
+        public static final double DEFENSE_MULTIPLIER = 100;
+        public static final double EDEF_DEF_DIVISOR = 0.2;
+    }
+
 }

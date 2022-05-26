@@ -17,15 +17,19 @@ import java.util.List;
 import java.util.concurrent.ConcurrentLinkedQueue;
 
 import static combat.artes.ElementType.*;
+import static core.Constants.CombatConstants.*;
 
+@SuppressWarnings({"unchecked"})
 public abstract class Unit<T extends Unit<?>> extends Entity {
+
+    private final Random R = new Random();
 
     // Abbreviations: LVL, EXP, HP, ATK, DEF, CR, CD, EATK, EDEF, AFF
     protected int level;
     protected int health;
     protected int attack;
     protected int defense;
-    protected int critRate;
+    protected double critRate;
     protected int critDamage;
     protected int eAttack;
     protected int eDefense;
@@ -72,7 +76,7 @@ public abstract class Unit<T extends Unit<?>> extends Entity {
         this.ewDir = Direction.randomEastWest();
         this.nsDir = Direction.randomNorthSouth();
         this.eAffinity = new EnumMap<>(ElementType.class);
-        eAffinity.putAll(Map.of(FIRE, 0, WATER, 0, EARTH, 0, ICE, 0, WIND, 0, ELECTRIC, 0, LIGHT, 0, DARK, 0, POISON, 0));
+        eAffinity.putAll(Map.of(PHYSICAL, 0, FIRE, 0, WATER, 0, EARTH, 0, ICE, 0, WIND, 0, ELECTRIC, 0, LIGHT, 0, DARK, 0));
     }
 
     @Override
@@ -97,11 +101,14 @@ public abstract class Unit<T extends Unit<?>> extends Entity {
     }
     public void setPosition(Coordinate c) {this.position = c;}
 
-    public T takeDamage(int amount)  {
+    public T takeDamage(int amount, ElementType element)  {
+        double damage;
         System.out.println(position.toString());
-        if(amount>=health) BattleState.damageNumbers.add(new DamageNumber(amount, hitBox.getCenterX(), hitBox.getCenterY(), Color.red));
-        else BattleState.damageNumbers.add(new DamageNumber(amount, hitBox.getCenterX(), hitBox.getCenterY()));
-        this.health-=amount;
+        if (element == PHYSICAL) damage = (amount * DEFENSE_MULTIPLIER)/(DEFENSE_MULTIPLIER + defense);
+        else damage = (amount * DEFENSE_MULTIPLIER)/(DEFENSE_MULTIPLIER + (defense * EDEF_DEF_DIVISOR) + eDefense);
+        //if(amount>=health) BattleState.damageNumbers.add(new DamageNumber(amount, hitBox.getCenterX(), hitBox.getCenterY(), element.color));
+        /*else*/ BattleState.damageNumbers.add(new DamageNumber((int) damage, hitBox.getCenterX(), hitBox.getCenterY(), element.color));
+        health -= damage;
         return (T) this;
     }
 
@@ -129,6 +136,10 @@ public abstract class Unit<T extends Unit<?>> extends Entity {
     public T setAttack(int attack) {
         this.attack = attack;
         return (T) this;
+    }
+
+    public int calculateDamage(ElementType element) {
+        return attack * (1 + eAffinity.get(element)/100) * (1 + (Math.random() <= critRate ? critDamage : 0));
     }
 
     public Queue<Arte<? extends Unit>> getArteQueue() {

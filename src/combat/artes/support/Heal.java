@@ -4,31 +4,29 @@ import combat.artes.Arte;
 import combat.artes.ArteType;
 import entities.units.Unit;
 import gamestates.BattleState;
-import org.newdawn.slick.GameContainer;
-import org.newdawn.slick.Graphics;
-import org.newdawn.slick.SlickException;
-import org.newdawn.slick.SpriteSheet;
+import org.newdawn.slick.*;
 import playerdata.characters.Phaedra;
 import playerdata.characters.PlayableCharacter;
 
 public class Heal extends Arte<Unit> {
 
-    public static final String name = "Heal";
-    public static final ArteType type = ArteType.SUPPORT;
-    private final int castDuration = 120;
 
     public Heal(Unit owner) throws SlickException {
         super(owner);
-        this.aniSheet = new SpriteSheet("res/animations/heal.png",200, 200);
+        name = "Heal";
+        arteType = ArteType.SUPPORT;
         cost = 1;
+        castDuration = 120;
+        this.aniSheet = new SpriteSheet("res/animations/combat/heal.png",200, 200);
+        this.card = new Image("res/healCard.png");
     }
 
-    @Override
+    /*@Override
     public void use(Unit target, GameContainer gc) {
         castTimestamp = BattleState.time;
         animation(target, gc.getGraphics());
         activation(target);
-    }
+    }*/
 
     @Override
     public void animation(Unit target, Graphics g) {

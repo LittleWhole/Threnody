@@ -1,15 +1,11 @@
 package entities.units.npc;
 
-import combat.artes.Arte;
 import combat.artes.Card;
-import combat.artes.martial.SonicSlash;
+import combat.artes.strike.SonicSlash;
 import core.Main;
-import entities.core.Coordinate;
 import entities.units.player.Player;
 import org.newdawn.slick.SlickException;
-import playerdata.characters.Sigur;
 
-import java.util.List;
 import java.util.Map;
 
 public class Carder extends NPC {
