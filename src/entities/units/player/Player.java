@@ -18,6 +18,7 @@ import entities.units.Unit;
 import gamestates.Game;
 import org.newdawn.slick.*;
 import org.newdawn.slick.geom.Rectangle;
+import org.newdawn.slick.geom.RoundedRectangle;
 import org.newdawn.slick.state.StateBasedGame;
 import playerdata.characters.PlayableCharacter;
 import playerdata.characters.Sigur;
@@ -171,8 +172,12 @@ public final class Player<T extends Player<?>> extends Unit<T> {
         g.drawImage(sprite, -plrX - position.getX(), -plrY/2 - position.getY());
         g.setColor(new Color(255, 0,0,0.5f));
         hitBox.setX(-plrX - position.getX() + width);
-        hitBox.setY((-plrY/2) + this.getHeight()*1.6f);
-
+        hitBox.setY((plrY) + this.getHeight()*1.6f);
+        var rect = new RoundedRectangle(hitBox.getX(), hitBox.getY(), 50, 50, RoundedRectangle.ALL);
+        g.setColor(Color.red);
+        g.fill(rect);
+        g.setColor(Color.white);
+        DrawUtilities.drawStringCentered(g, String.valueOf(health), rect);
     }
 
     public void addToDeck(Arte<Player> a)   {

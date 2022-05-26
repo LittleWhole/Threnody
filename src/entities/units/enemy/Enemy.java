@@ -14,6 +14,7 @@ import org.newdawn.slick.Graphics;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.SpriteSheet;
 import org.newdawn.slick.geom.Rectangle;
+import org.newdawn.slick.geom.RoundedRectangle;
 import util.DrawUtilities;
 
 import java.util.List;
@@ -72,6 +73,11 @@ public class Enemy<T extends Enemy<?>> extends Unit<T> {
 
         hitBox.setX(-plrX - position.getX() + width);
         hitBox.setY((-plrY/2) + this.getHeight()*1.6f);
+        var rect = new RoundedRectangle(hitBox.getX(), hitBox.getY(), 50, 50, RoundedRectangle.ALL);
+        g.setColor(Color.red);
+        g.fill(rect);
+        g.setColor(Color.white);
+        DrawUtilities.drawStringCentered(g, String.valueOf(health), rect);
     }
 
     public void overworldUpdate()    {

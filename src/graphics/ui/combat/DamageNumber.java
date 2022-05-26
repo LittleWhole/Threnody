@@ -17,6 +17,7 @@ public class DamageNumber implements Updatable {
     private TrueTypeFont font;
     private TrueTypeFont fontOutline;
     private Color color;
+    private Color outlineColor;
     private int lifetime;
 
     public DamageNumber(int value, float x, float y) {
@@ -25,7 +26,8 @@ public class DamageNumber implements Updatable {
         this.y = y;
         this.font = Main.fonts.DAMAGE_NUMBER;
         this.fontOutline = Main.fonts.DAMAGE_NUMBER_OUTLINE;
-        this.color = new Color(Color.white);
+        this.color = Color.white;
+        this.outlineColor = Color.black;
         this.lifetime = 120;
     }
     public DamageNumber(int value, float x, float y, Color c) {
@@ -35,12 +37,13 @@ public class DamageNumber implements Updatable {
         this.font = Main.fonts.DAMAGE_NUMBER;
         this.fontOutline = Main.fonts.DAMAGE_NUMBER_OUTLINE;
         this.color = c;
+        this.outlineColor = Color.black;
         this.lifetime = 120;
     }
 
     @Override
     public void render(Graphics g, int mouseX, int mouseY) {
-        g.setColor(Color.black);
+        g.setColor(outlineColor);
         DrawUtilities.drawStringCentered(g, String.valueOf(value), fontOutline, x, y);
         g.setColor(color);
         DrawUtilities.drawStringCentered(g, String.valueOf(value), font, x, y);
@@ -50,8 +53,14 @@ public class DamageNumber implements Updatable {
     @Override
     public void update(GameContainer gc) {
         this.color = new Color(color.getRed(), color.getGreen(), color.getBlue(), (255 / 60) * lifetime);
+        this.outlineColor = new Color(outlineColor.getRed(), outlineColor.getGreen(), outlineColor.getBlue(), (255 / 60) * lifetime);
         lifetime--;
     }
 
     public boolean isExpired() { return lifetime <= 0; }
+
+    public DamageNumber setOutlineColor(Color outlineColor) {
+        this.outlineColor = outlineColor;
+        return this;
+    }
 }

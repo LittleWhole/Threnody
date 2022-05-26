@@ -35,6 +35,6 @@ public class Heal extends Arte<Unit> {
 
     @Override
     public void activation(Unit target) {
-        target.regenerate(owner.getAttack());
+        if (timer == 119) owner.regenerate(owner.getAttack());
     }
 }
