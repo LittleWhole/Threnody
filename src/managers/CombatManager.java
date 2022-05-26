@@ -45,11 +45,11 @@ public class CombatManager {
             }
             if(players.get(plrTurn).getState() == PlayerState.SELECTING) {
                 players.get(plrTurn).move(enemies.get(0), gc, g);
-                //g.drawString("SELECTING", 100, 0);
+                g.drawString("SELECTING", 100, 0);
             }
             if(players.get(plrTurn).getState() == PlayerState.CASTING)   {
                 players.get(plrTurn).attack(enemies.get(0), gc);
-                //g.drawString("CASTING", 100, 0);
+                g.drawString("CASTING", 100, 0);
             }
             if((players.get(plrTurn)).getState() == PlayerState.DONE) {
                 updateTeams(enemies);
@@ -59,7 +59,7 @@ public class CombatManager {
                 plrTurn++;
             }
         }
-        else if(plrTurn >= players.size() && enemyTurn < enemies.size()+players.size())   {
+        else if(plrTurn >= players.size() && enemyTurn < enemies.size())   {
             if (players.size() == 0) {
                 return 'l';
             }
@@ -68,7 +68,7 @@ public class CombatManager {
             }
             if((enemies.get(enemyTurn-(players.size()-1))).getCombatState() == EnemyStates.MOVING)  {
                 (enemies.get(enemyTurn-(players.size()-1))).battleMove(players.get(0), gc);
-                //DrawUtilities.drawStringCentered(g, "MOVING", 800, 100);
+                DrawUtilities.drawStringCentered(g, "MOVING", 800, 100);
             }
             if((enemies.get(enemyTurn-(players.size()-1))).getCombatState() == EnemyStates.DONE) {
                 updateTeams(players);
