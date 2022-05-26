@@ -1,8 +1,11 @@
 package entities.units.enemy;
 
+import combat.artes.Arte;
+import core.Main;
 import entities.core.Coordinate;
 import entities.core.Team;
 import entities.units.Unit;
+import entities.units.player.Player;
 import gamestates.BattleState;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
@@ -12,10 +15,23 @@ import org.newdawn.slick.SpriteSheet;
 import org.newdawn.slick.geom.Rectangle;
 import util.DrawUtilities;
 
-public class Enemy extends Unit {
+import java.util.List;
+import java.util.Queue;
+import java.util.concurrent.ConcurrentLinkedQueue;
+
+import java.util.ArrayList;
+
+public class Enemy<T extends Enemy<?>> extends Unit<T> {
     protected EnemyStates turn;
+    protected ArrayList<Enemy> enemyTeam;
     protected int moveDuration;
     protected long moveTimeStamp;
+    protected int timer;
+
+    protected List<Arte<? super Enemy>> arteDeck;
+    protected List<Arte<? super Enemy>> arteHand;
+    protected Queue<Arte<? super Enemy>> arteQueue;
+    protected Arte<? super Enemy> move;
 
     public void setCombatState(EnemyStates combatState) {
         this.combatState = combatState;
@@ -27,7 +43,9 @@ public class Enemy extends Unit {
 
     protected EnemyStates combatState;
     public Enemy(float x, float y) throws SlickException {//later change parameters to also change size, level, speed, and sprite
-        moveDuration = 200;
+        this.health = 100;
+        this.attack = 20;
+        moveDuration = 100;
         this.width = 80;
         this.height = 256;
         this.position = new Coordinate(x, y);
@@ -37,40 +55,46 @@ public class Enemy extends Unit {
         this.sheet = new SpriteSheet("res/experimentalEnemy.png", 256, 512);
         this.sprite = sheet.getSprite(0, 0);
         this.level = 1;
+        this.timer = 0;
         turn = EnemyStates.IDLE;
         this.team = Team.ENEMY;
+        this.arteQueue = new ConcurrentLinkedQueue<>();
     }
 
     public void render(Graphics g, float plrX, float plrY)  {
         g.drawImage(sprite, -plrX - position.getX(), -plrY/2 - position.getY());
-        g.setColor(new Color(255, 0,0,0.5f));
+
         hitBox.setX(-plrX - position.getX() + width);
         hitBox.setY((-plrY/2) + this.getHeight()*1.6f);
-        if(this.getCombatState() == EnemyStates.MOVING) {
-            DrawUtilities.drawStringCentered(g, "MOVING", 1000, 100);
-        }
     }
 
     public void overworldUpdate()    {
 
     }
 
-    public void battleMove(Unit target, GameContainer gc)    {
-        this.moveTimeStamp = BattleState.time;
-        if(turn != EnemyStates.CHARGE)  {
+    public void battleSelect()  {
+        if(turn != EnemyStates.CHARGE && turn != EnemyStates.SPECIAL)  {
             this.turn = decideState();
         }
+        timer = 0;
         this.combatState = EnemyStates.MOVING;
+    }
+
+    public void battleMove(Unit target, GameContainer gc)    {
+        timer++;
+        if( Main.debug) gc.getGraphics().drawString(String.valueOf(timer), 700, 100);
+
         animation();
 
-        if(BattleState.time -moveTimeStamp>=moveDuration) {
+        if(timer==moveDuration) {
             this.combatState = EnemyStates.DONE;
+            this.sprite = sheet.getSprite(0,0);
             action(target);
         }
 
     }
     public void animation() {
-
+       this.sprite = sheet.getSprite(timer% sheet.getHorizontalCount(), 0);
     }
     public void action(Unit target)    {
         switch(turn)   {
@@ -100,10 +124,27 @@ public class Enemy extends Unit {
     }
 
     public void drawHitBox(Graphics g)  {
+        g.setColor(new Color(255, 0,0,0.5f));
         g.fill(hitBox);
     }
 
     public Enemy getEnemy() {
         return this;
+    }
+
+    @Override
+    public String toString() {
+        return "Enemy{" +
+                "turn=" + turn +
+                ", enemyTeam=" + enemyTeam +
+                ", moveDuration=" + moveDuration +
+                ", moveTimeStamp=" + moveTimeStamp +
+                ", timer=" + timer +
+                ", arteDeck=" + arteDeck +
+                ", arteHand=" + arteHand +
+                ", arteQueue=" + arteQueue +
+                ", move=" + move +
+                ", combatState=" + combatState +
+                '}';
     }
 }

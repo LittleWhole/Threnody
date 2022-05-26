@@ -1,6 +1,5 @@
 package entities.units.player;
 
-import com.google.common.base.CaseFormat;
 import combat.artes.Arte;
 import combat.artes.martial.DragonFang;
 import combat.artes.martial.ImpactCross;
@@ -11,24 +10,24 @@ import combat.artes.mystic.TrillionDrive;
 import core.Constants;
 import core.Main;
 import entities.core.Coordinate;
+import entities.units.Direction;
 import entities.units.npc.NPC;
 import entities.units.Unit;
 import gamestates.Game;
-import gamestates.TitleScreen;
-import org.apache.commons.lang3.StringUtils;
 import org.newdawn.slick.*;
 import org.newdawn.slick.geom.Rectangle;
 import org.newdawn.slick.state.StateBasedGame;
-import playerdata.PlayerStats;
 import playerdata.characters.PlayableCharacter;
 import playerdata.characters.Sigur;
 import util.DrawUtilities;
 
 import java.util.ArrayList;
+import java.util.List;
+import java.util.Queue;
+import java.util.concurrent.ConcurrentLinkedQueue;
 
-public final class Player extends Unit {
-    protected int mana;
-
+public final class Player<T extends Player<?>> extends Unit<T> {
+    private int mana;
     public PlayerState getState() {
         return state;
     }
@@ -39,14 +38,16 @@ public final class Player extends Unit {
     final public static float PLAYER_X_SPAWN = (float) Main.RESOLUTION_X / 2 / Constants.ImageConstants.PIXELS_PER_UNIT;
     final public static float PLAYER_Y_SPAWN = (float) Main.RESOLUTION_Y / 2 / Constants.ImageConstants.PIXELS_PER_UNIT;
 
-    protected ArrayList<Arte> arteDeck;
-    protected ArrayList<Arte> arteHand;
-    protected Arte move;
-    protected int queue;
-    protected PlayableCharacter character;
+    private List<Arte<? super Player>> arteDeck;
+    private List<Arte<? super Player>> arteHand;
+    private Queue<Arte<? super Player>> arteQueue;
+    private Arte<? super Player> move;
+    private int queue;
+    private PlayableCharacter character;
     // Abbreviations: LVL, EXP, HP, ATK, DEF, CR, CD, EATK, EDEF, AFF
 
     public Player(Coordinate pos) throws SlickException {
+        this.health = 100;
         this.width = 64;
         this.height = 135;
         this.position = pos;
@@ -56,13 +57,14 @@ public final class Player extends Unit {
         this.sprite = sheet.getSprite(0,0);
         this.character = new Sigur();
         this.arteDeck = new ArrayList<>();
+        this.arteQueue = new ConcurrentLinkedQueue<>();
         for(int i = 0; i < 20; i++) {
-            arteDeck.add(new SonicSlash(character));
-            arteDeck.add(new DragonFang(character));
-            arteDeck.add(new ImpactCross(character));
-            arteDeck.add(new Expiation(character));
-            arteDeck.add(new InnumerableWounds(character));
-            arteDeck.add(new TrillionDrive(character));
+            arteDeck.add(new SonicSlash(this));
+            arteDeck.add(new DragonFang(this));
+            arteDeck.add(new ImpactCross(this));
+            arteDeck.add(new Expiation(this));
+            arteDeck.add(new InnumerableWounds(this));
+            arteDeck.add(new TrillionDrive(this));
         }
         this.hitBox = new Rectangle((Main.getScreenWidth()/2) - this.getWidth()/2, (Main.getScreenHeight()/2) + 170, this.width, this.height-100); // set size to tiles
     }
@@ -74,6 +76,7 @@ public final class Player extends Unit {
     public void startBattle()   {
         queue = 5;
         this.arteHand = new ArrayList<>(arteDeck.subList(0,6));
+        this.arteQueue = new ConcurrentLinkedQueue<>();
     }
 
     public void move(Unit target, GameContainer gc, Graphics g) throws InterruptedException {
@@ -84,19 +87,25 @@ public final class Player extends Unit {
             DrawUtilities.drawStringCentered(g, arteHand.get(i).getArteType().name, Main.font, (Main.getScreenWidth()/7)*(i+1), Main.getScreenHeight()-400);
         }
         move = cardSelect(gc.getInput());
-        if(move != null) {
+        if (move != null) arteQueue.add(move);
+        /*if(move != null) {
             move.use(target, gc);
-        }
+        }*/
     }
 
     public void attack(Unit target, GameContainer gc)   {
-        if(move != null) {
-            move.render(target, gc.getGraphics());
-            if(move.finished())this.setState(PlayerState.DONE);
+        if (arteQueue.isEmpty()) {
+            this.state = PlayerState.DONE;
+            return;
         }
+        Arte<? super Player> arte = arteQueue.element();
+        arte.use(target, gc);
+        if (arte.finished()) arteQueue.remove(arte);
     }
 
     public void update(StateBasedGame sbg, Unit u, Game g) throws SlickException {
+        ewDir = (dx>0?Direction.EAST:dx<0?Direction.WEST:Direction.NONE);
+        nsDir = (dy>0?Direction.NORTH:dy<0?Direction.SOUTH:Direction.NONE);
         this.position.updatePosition(dx,dy);
         this.dx = 0;
         this.dy = 0;
@@ -111,8 +120,8 @@ public final class Player extends Unit {
         }
     }
 
-    public Arte cardSelect(Input input) {
-        Arte selected = null;
+    public Arte<? super Player> cardSelect(Input input) {
+        Arte<Player> selected = null;
         if(queue >= arteDeck.size()) {
             this.health = 0;
             return selected;
@@ -128,13 +137,13 @@ public final class Player extends Unit {
         };
     }
 
-    public Arte selection(int i) {
-        Arte selected;
+    public Arte<? super Player> selection(int i) {
+        Arte<? super Player> selected;
         selected = arteHand.get(i);
         arteHand.remove(i);
         queue++;
         arteHand.add(arteDeck.get(queue));
-        this.state = PlayerState.CASTING;
+        this.state = PlayerState.SELECTING;
         return selected;
     }
 
@@ -162,8 +171,13 @@ public final class Player extends Unit {
 
     }
 
-    public void gainExp(int amount) {
+    public void addToDeck(Arte<Player> a)   {
+        this.arteDeck.add(a);
+    }
+
+    public T gainExp(int amount) {
         this.character.gainExp(amount);
+        return (T) this;
     }
 
     public int getExp() {
@@ -179,7 +193,38 @@ public final class Player extends Unit {
         return mana;
     }
 
-    public void setMana(int mana) {
+    public T setMana(int mana) {
         this.mana = mana;
+        return (T) this;
+    }
+
+    public void setDirection(Direction ns, Direction ew )   {
+        this.nsDir = ns;
+        this.ewDir = ew;
+    }
+    public void setEWDirection(Direction ew )   {
+        this.ewDir = ew;
+    }
+    public void setNSDirection(Direction ns)   {
+        this.nsDir = ns;
+    }
+
+
+    public PlayableCharacter getCharacter() {
+        return character;
+    }
+
+    @Override
+    public String toString() {
+        return "Player{" +
+                "mana=" + mana +
+                ", state=" + state +
+                ", arteDeck=" + arteDeck +
+                ", arteHand=" + arteHand +
+                ", arteQueue=" + arteQueue +
+                ", move=" + move +
+                ", queue=" + queue +
+                ", character=" + character +
+                '}';
     }
 }

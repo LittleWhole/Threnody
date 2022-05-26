@@ -7,13 +7,13 @@ import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import playerdata.characters.PlayableCharacter;
 
-public class Fortification extends Arte {
+public class Fortification extends Arte<Unit> {
 
     public static final String name = "Fortification";
     public static final ArteType type = ArteType.SUPPORT;
     private final int healingValue = 10;
 
-    public Fortification(PlayableCharacter owner) {
+    public Fortification(Unit owner) {
         super(owner);
     }
 

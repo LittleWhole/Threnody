@@ -1,6 +1,9 @@
 package core;
 
 import gamestates.*;
+import graphics.ui.Displayable;
+import graphics.ui.menu.DialogBox;
+import graphics.ui.menu.Menu;
 import org.newdawn.slick.AppGameContainer;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.SlickException;
@@ -10,13 +13,17 @@ import playerdata.PlayerStats;
 import playerdata.characters.PlayableCharacter;
 
 import java.awt.*;
+import java.util.AbstractQueue;
 import java.util.ArrayList;
+import java.util.concurrent.ConcurrentLinkedQueue;
+import java.util.concurrent.ConcurrentMap;
 
 public class Main extends StateBasedGame {
-    public static int RESOLUTION_X;
-    public static int RESOLUTION_Y;
+    public static final int RESOLUTION_X = 1920;
+    public static final int RESOLUTION_Y = 1080;
     public static final int FRAMES_PER_SECOND = 60;
     public static TrueTypeFont font;
+    public static Fonts fonts;
     public static final Object LOCK = new Object();
 
     private static AppGameContainer appgc;
@@ -37,6 +44,9 @@ public class Main extends StateBasedGame {
     public static PlayerStats stats = new PlayerStats();
     public static ArrayList<PlayableCharacter> characters;
 
+    public static AbstractQueue<Displayable> displayables = new ConcurrentLinkedQueue<>();
+    public static AbstractQueue<Menu> menus = new ConcurrentLinkedQueue<>();
+
     public Main(String name) throws SlickException {
         super(name);
 
@@ -49,11 +59,13 @@ public class Main extends StateBasedGame {
     }
 
     public static int getScreenWidth() {
-        return appgc.getScreenWidth();
+//        return appgc.getScreenWidth();
+        return RESOLUTION_X;
     }
 
     public static int getScreenHeight() {
-        return appgc.getScreenHeight();
+//        return appgc.getScreenHeight();
+        return RESOLUTION_Y;
     }
 
 
@@ -72,18 +84,13 @@ public class Main extends StateBasedGame {
             appgc = new AppGameContainer(new Main("Threnody"));
             System.setProperty("org.lwjgl.opengl.Window.undecorated", "true");
 
-            RESOLUTION_X = getScreenWidth();
-            RESOLUTION_Y = getScreenHeight();
+//            RESOLUTION_X = getScreenWidth();
+//            RESOLUTION_Y = getScreenHeight();
 
             appgc.setDisplayMode(getScreenWidth(), getScreenHeight(), false);
             appgc.setTargetFrameRate(FRAMES_PER_SECOND);
-            appgc.start();
             appgc.setVSync(true);
-            appgc.setDefaultFont(new TrueTypeFont(new Font("Bahnschrift", Font.PLAIN, 20), true));
-            appgc.getGraphics().setFont(new TrueTypeFont(new Font("Bahnschrift", Font.PLAIN, 20), true));
-            appgc.setSoundOn(false);
-            font = new TrueTypeFont(new java.awt.Font("Bahnschrift", java.awt.Font.PLAIN, 20), true);
-
+            appgc.start();
         } catch (SlickException e) {
             e.printStackTrace();
         }

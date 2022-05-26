@@ -4,14 +4,15 @@ import combat.artes.Arte;
 import combat.artes.ArteType;
 import combat.artes.ElementType;
 import entities.units.Unit;
+import entities.units.player.Player;
 import gamestates.BattleState;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import playerdata.characters.PlayableCharacter;
 
-public class DualTheSol extends Arte {
+public class DualTheSol extends Arte<Player> {
 
-    public DualTheSol(PlayableCharacter owner) {
+    public DualTheSol(Player owner) {
         super(owner);
         name = "Dual the Sol";
         arteType = ArteType.ELEMENTAL;

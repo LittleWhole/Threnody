@@ -7,16 +7,18 @@ import entities.units.player.Player;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import entities.units.player.PlayerState;
+import util.DrawUtilities;
 
-import java.util.ArrayList;
+import java.util.List;
 
 public class CombatManager {
 
-    private volatile ArrayList<Unit> players;
-    private volatile ArrayList<Unit> enemies;
+    private volatile List<Player> players;
+    private volatile List<Enemy> enemies;
     private int round;
-    int turn = 0;
-    public CombatManager(ArrayList<Unit> plrs, ArrayList<Unit> enemies)  {
+    private int plrTurn;
+    private int enemyTurn;
+    public CombatManager(List<Player> plrs, List<Enemy> enemies)  {
 
         this.players = plrs;
         this.enemies = enemies;
@@ -24,53 +26,61 @@ public class CombatManager {
     }
 
     public void roundStart() {
-        turn = 0;
+        plrTurn = 0;
+        enemyTurn = 0;
         for(int i = 0; i < players.size(); i++) {
-            ((Player)players.get(i)).setState(PlayerState.SELECTING);
+            (players.get(i)).setState(PlayerState.SELECTING);
         }
         for(int i = 0; i < enemies.size(); i++) {
-            ((Enemy)enemies.get(i)).setCombatState(EnemyStates.MOVING);
+            (enemies.get(i)).setCombatState(EnemyStates.CHOOSING);
         }
     }
 
     public char combat(Graphics g, GameContainer gc) throws InterruptedException {
         boolean plrsAlive = true;
         boolean enemiesAlive = true;
-        if(turn < players.size()) {
+        if(plrTurn < players.size()) {
             if (enemies.size() == 0) {
                 return 'w';
             }
-            if(((Player) players.get(turn)).getState() == PlayerState.SELECTING) {
-                ((Player) players.get(turn)).move(enemies.get(0), gc, g);
+            if(players.get(plrTurn).getState() == PlayerState.SELECTING) {
+                players.get(plrTurn).move(enemies.get(0), gc, g);
+                g.drawString("SELECTING", 100, 0);
             }
-            if(((Player)players.get(turn)).getState() == PlayerState.CASTING)   {
-                ((Player) players.get(turn)).attack(enemies.get(0), gc);
+            if(players.get(plrTurn).getState() == PlayerState.CASTING)   {
+                players.get(plrTurn).attack(enemies.get(0), gc);
                 g.drawString("CASTING", 100, 0);
             }
-            if(((Player) players.get(turn)).getState() == PlayerState.DONE) {
+            if((players.get(plrTurn)).getState() == PlayerState.DONE) {
                 updateTeams(enemies);
                 if (enemies.size() == 0) {
                     return 'w';
                 }
-                turn++;
+                plrTurn++;
             }
         }
-        else if(turn > players.size() && turn <= enemies.size()+players.size())   {
+        else if(plrTurn >= players.size() && enemyTurn < enemies.size())   {
             if (players.size() == 0) {
                 return 'l';
             }
-            ((Enemy) enemies.get(turn-(players.size()-1))).setCombatState(EnemyStates.MOVING);
-            ((Enemy) enemies.get(turn-(players.size()-1))).battleMove(players.get(0), gc);
-            if(((Enemy) enemies.get(turn-(players.size()-1))).getCombatState()== EnemyStates.DONE) {
+            if((enemies.get(enemyTurn-(players.size()-1))).getCombatState() == EnemyStates.CHOOSING)  {
+                (enemies.get(enemyTurn-(players.size()-1))).battleSelect();
+            }
+            if((enemies.get(enemyTurn-(players.size()-1))).getCombatState() == EnemyStates.MOVING)  {
+                (enemies.get(enemyTurn-(players.size()-1))).battleMove(players.get(0), gc);
+                DrawUtilities.drawStringCentered(g, "MOVING", 800, 100);
+            }
+            if((enemies.get(enemyTurn-(players.size()-1))).getCombatState() == EnemyStates.DONE) {
                 updateTeams(players);
                 if (players.size() == 0) {
                     return 'l';
                 }
-                turn++;
+                enemyTurn++;
             }
         }
         else    {
-            turn = 0;
+            updateTeams(enemies);
+            updateTeams(players);
             round++;
             roundStart();
             return 'a';
@@ -83,12 +93,27 @@ public class CombatManager {
         return round;
     }
 
-    private void updateTeams (ArrayList<Unit> units)    {
+    private void updateTeams (List<? extends Unit> units)    {
         for(int i = 0; i < units.size();i++)  {
             if(units.get(i).getHealth() <= 0) {
                 units.remove(i);
             }
         }
+    }
+
+    public List<Player> getPlayers() {
+        return players;
+    }
+
+    public List<Enemy> getEnemies() {
+        return enemies;
+    }
+
+    public int getPlrTurn() {
+        return plrTurn;
+    }
+    public int getEnemyTurn()   {
+        return enemyTurn;
     }
 
 }

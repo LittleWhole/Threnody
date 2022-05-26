@@ -1,5 +1,6 @@
 package managers;
 
+import entities.units.Direction;
 import entities.units.player.Player;
 import gamestates.Game;
 import map.GameMap;

@@ -29,6 +29,7 @@ public class Game extends ThrenodyGameState {
 
     private static GameContainer gc;
     private final int id;
+    public static boolean firstTime;
     public static int time;
     public static long battleTimeStamp;
     public static int battleCooldown;
@@ -36,13 +37,13 @@ public class Game extends ThrenodyGameState {
 
     EnumMap<EntityType, ArrayList<Entity>> newEntities; // Add new entities to the game
 
-    public ArrayList<Unit> plrTeam;
-    public ArrayList<Unit> enemyTeam;
+    public ArrayList<Player> plrTeam;
+    public ArrayList<Enemy> enemyTeam;
 
     // Managers
     private KeyManager keyDown; // Key Manager
     public DisplayManager displayManager; // Display Manager 
-    private Coordinate plrPosition;
+    public static Coordinate plrPosition;
     private Player plr;
     private Enemy enemy;
     private NPC npc;
@@ -72,6 +73,7 @@ public class Game extends ThrenodyGameState {
 
     public void init(GameContainer gc, StateBasedGame sbg) throws SlickException {
         // This code happens when you enter a game state for the *first time.*
+        firstTime = true;
         overworld = new GameMap("res/tilemap/overworld.tmx");
         background = new Background();
         gc.setShowFPS(true);
@@ -82,7 +84,7 @@ public class Game extends ThrenodyGameState {
         enemy = new Enemy(10, 0);
         npc = new NPC(200,0);
         battleCooldown = 200;
-        dialog = new DialogBox(700, 400, "Notice", "This is a test dialog box!!!!! FE FEH FEUIFH UHUEUIEGHUIESFIEFOEIJGOIESJFEIOSGIOEHSFJEIOSGIOESJFIOSHGS EFIESJIOGSIOEJFO HSEGJOIEFJIO EF", new Button("Got it", () -> dialog.close()));
+        dialog = new DialogBox(700, 400, "Notice", "This is a test dialog box!!!!!", new Button("Got it", () -> dialog.close()));
         // Initialize Both Entity Maps
         entities = new EnumMap<>(Map.of(
                 EntityType.UNIT, new ArrayList<>(),
@@ -97,6 +99,7 @@ public class Game extends ThrenodyGameState {
 
         // Initialize the Player
         plr = new Player(plrPosition);
+        plr.setAttack(20);
         plrTeam.add(plr);
         System.out.println("[VERBOSE] Player initialized");
         enemy = new Enemy(10, 0);
@@ -110,6 +113,7 @@ public class Game extends ThrenodyGameState {
         // Play BGM
         SoundManager.playBackgroundMusic("02");
     }
+
 
     public void render(GameContainer gc, StateBasedGame sbg, Graphics g) throws SlickException {
         g.setFont(Main.font);
@@ -139,7 +143,8 @@ public class Game extends ThrenodyGameState {
             overworld.drawDebugRects(g);
         }
 
-        //dialog.render(g, gc.getInput().getMouseX(), gc.getInput().getMouseY());
+        dialog.render(g, gc.getInput().getMouseX(), gc.getInput().getMouseY());
+        super.render(gc, sbg, g);
     }
 
     public void update(GameContainer gc, StateBasedGame sbg, int delta) throws SlickException {
@@ -159,7 +164,6 @@ public class Game extends ThrenodyGameState {
         // Update Player
         plr.update(sbg, enemy, this);
         enemy.overworldUpdate();
-        System.out.println(plr.getX()+ " " + plr.getY());
 
         // Update all entities, and remove those marked for removal
         Predicate<Entity> filter = Entity::isMarked;
@@ -176,11 +180,16 @@ public class Game extends ThrenodyGameState {
             newEntities.get(type).clear();
         }
 
-        //dialog.update(gc);
+        dialog.update(gc);
 
     }
 
     public void enter(GameContainer gc, StateBasedGame sbg) throws SlickException {
+        if(firstTime)   {
+            init(gc, sbg);
+            firstTime = false;
+            return;
+        }
         System.out.println("Entering game");
         plr.gainExp(BattleState.expGain);
         Main.stats.gainGold(BattleState.currencyGain);
@@ -226,12 +235,13 @@ public class Game extends ThrenodyGameState {
         BattleState.enemies = enemyTeam;
     }
 
-
     public void keyPressed(int key, char c) {
         super.keyPressed(key, c);
         if(key == Input.KEY_F3) Main.debug = !Main.debug;
         if(key == Input.KEY_E) plr.interact(npc);
     }
+
+
 
 
     public void mousePressed(int button, int x, int y) {

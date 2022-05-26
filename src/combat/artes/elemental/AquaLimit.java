@@ -4,14 +4,15 @@ import combat.artes.Arte;
 import combat.artes.ArteType;
 import combat.artes.ElementType;
 import entities.units.Unit;
+import entities.units.player.Player;
 import gamestates.BattleState;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import playerdata.characters.PlayableCharacter;
 
-public class AquaLimit extends Arte {
+public class AquaLimit extends Arte<Player> {
 
-    public AquaLimit(PlayableCharacter owner) {
+    public AquaLimit(Player owner) {
         super(owner);
         name = "Aqua Limit";
         arteType = ArteType.ELEMENTAL;

@@ -3,6 +3,7 @@ package combat.artes.mystic;
 import combat.artes.ArteType;
 import combat.artes.MysticArte;
 import entities.units.Unit;
+import entities.units.player.Player;
 import gamestates.BattleState;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
@@ -10,9 +11,9 @@ import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
 import playerdata.characters.PlayableCharacter;
 
-public class TrillionDrive extends MysticArte {
+public class TrillionDrive extends MysticArte<Player> {
 
-    public TrillionDrive(PlayableCharacter owner) throws SlickException {
+    public TrillionDrive(Player owner) throws SlickException {
         super(owner);
         name = "Trillion Drive";
         arteType = ArteType.MYSTIC;

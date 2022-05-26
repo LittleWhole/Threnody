@@ -4,7 +4,10 @@ package gamestates;
 
 import core.Constants;
 import core.Main;
+import entities.core.Coordinate;
 import graphics.Background;
+import graphics.ui.menu.CloseButton;
+import graphics.ui.menu.DialogBox;
 import managers.SoundManager;
 import org.newdawn.slick.*;
 import org.newdawn.slick.state.BasicGameState;
@@ -18,6 +21,8 @@ public class TitleScreen extends ThrenodyGameState {
     private int id;
     public Background background;
     private Button bNEW_GAME;
+    private Button bCONTINUE;
+    private Button bLOAD_GAME;
     private StateBasedGame sbg;
     public static Font font;
 
@@ -40,7 +45,9 @@ public class TitleScreen extends ThrenodyGameState {
     public void enter(GameContainer gc, StateBasedGame sbg) throws SlickException {
         font = new TrueTypeFont(new java.awt.Font("Bahnschrift", java.awt.Font.PLAIN, 50), true);
         gc.getGraphics().setFont(font);
-        bNEW_GAME = new Button(Main.getScreenWidth() / 2, Main.getScreenHeight() / 2 + 100, gc.getGraphics().getFont().getWidth("< New Game >"), gc.getGraphics().getFont().getHeight("New Game"), "New Game");
+        bNEW_GAME = new Button(Main.getScreenWidth() / 2, Main.getScreenHeight() / 2 + 100, gc.getGraphics().getFont().getWidth("New Game"), gc.getGraphics().getFont().getHeight("New Game"), "New Game");
+        bCONTINUE = new Button(Main.getScreenWidth() / 2, Main.getScreenHeight() / 2 + 200, gc.getGraphics().getFont().getWidth("Continue"), gc.getGraphics().getFont().getHeight("Continue"), "Continue");
+        bLOAD_GAME = new Button(Main.getScreenWidth() / 2, Main.getScreenHeight() / 2 + 300, gc.getGraphics().getFont().getWidth("Load Game"), gc.getGraphics().getFont().getHeight("Load Game"), "Load Game");
     }
 
     @Override
@@ -61,12 +68,23 @@ public class TitleScreen extends ThrenodyGameState {
 
         g.setColor(Color.black);
         bNEW_GAME.render(g, gc.getInput().getMouseX(), gc.getInput().getMouseY());
+        bCONTINUE.render(g, gc.getInput().getMouseX(), gc.getInput().getMouseY());
+        bLOAD_GAME.render(g, gc.getInput().getMouseX(), gc.getInput().getMouseY());
+        super.render(gc, sbg, g);
     }
 
     public void mousePressed(int button, int x, int y) {
+        if (!Main.menus.isEmpty()) return;
         if (bNEW_GAME.onButton(x, y)) {
             SoundManager.stopBackgroundMusic();
+            Game.firstTime = true;
             sbg.enterState(Main.GAME_ID, new FadeOutTransition(), new FadeInTransition());
+        }
+        if (bCONTINUE.onButton(x, y)) {
+            Main.menus.add(new DialogBox(700, 400, "Sorry!", "Savegame loading is currently still WIP!", new CloseButton("Got it")));
+        }
+        if (bLOAD_GAME.onButton(x, y)) {
+            Main.menus.add(new DialogBox(700, 400, "Sorry!", "Savegame loading is currently still WIP!", new CloseButton("Got it")));
         }
     }
 }

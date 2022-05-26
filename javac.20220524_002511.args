@@ -1,0 +1,6 @@
+--release
+18
+--enable-preview
+-cp
+./src:./libs
+src/entities/units/player/Player.java

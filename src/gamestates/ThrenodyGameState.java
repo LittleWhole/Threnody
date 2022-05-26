@@ -1,17 +1,28 @@
 package gamestates;
 
 import core.Main;
-import org.newdawn.slick.Image;
-import org.newdawn.slick.Input;
-import org.newdawn.slick.SlickException;
+import graphics.ui.Button;
+import graphics.ui.menu.CloseButton;
+import graphics.ui.menu.DialogBox;
+import org.newdawn.slick.*;
 import org.newdawn.slick.imageout.ImageOut;
 import org.newdawn.slick.state.BasicGameState;
+import org.newdawn.slick.state.StateBasedGame;
 
 import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public abstract class ThrenodyGameState extends BasicGameState {
+    @Override
+    public void render(GameContainer gc, StateBasedGame sbg, Graphics g) throws SlickException {
+        Main.displayables.forEach(d -> d.render(g, gc.getInput().getMouseX(), gc.getInput().getMouseY()));
+        Main.menus.forEach(m -> {
+            m.update(gc);
+            m.render(g, gc.getInput().getMouseX(), gc.getInput().getMouseY());
+        });
+    }
+
     @Override
     public void keyPressed(int key, char c) {
         if (key == Input.KEY_F2) {
@@ -29,6 +40,8 @@ public abstract class ThrenodyGameState extends BasicGameState {
             } catch (SlickException e) {
                 throw new RuntimeException(e);
             }
+
+            Main.menus.add(new DialogBox(700, 400, "Screenshot", "Screenshot saved in screenshots/ folder.", new CloseButton("Got it")));
         }
     }
 }

@@ -195,6 +195,13 @@ public abstract class Entity {
 		e.ySpeed = (C1Y + mass * C2Y) / (mass + e.mass);
 	}
 
+	public SpriteSheet getSheet() {
+		return sheet;
+	}
+	public void setSprite(Image i)	{
+		sprite = i;
+	}
+
 	public float getDx() {
 		return dx;
 	}
