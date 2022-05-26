@@ -1,11 +1,13 @@
 package graphics.ui.combat;
 
+import core.Main;
 import graphics.ui.Displayable;
 import graphics.ui.Updatable;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.TrueTypeFont;
+import org.newdawn.slick.font.effects.OutlineEffect;
 import util.DrawUtilities;
 
 public class DamageNumber implements Updatable {
@@ -13,6 +15,7 @@ public class DamageNumber implements Updatable {
     private float x;
     private float y;
     private TrueTypeFont font;
+    private TrueTypeFont fontOutline;
     private Color color;
     private int lifetime;
 
@@ -20,13 +23,16 @@ public class DamageNumber implements Updatable {
         this.value = value;
         this.x = x;
         this.y = y;
-        this.font = new TrueTypeFont(new java.awt.Font("Bahnschrift", java.awt.Font.PLAIN, 40), true);
+        this.font = Main.fonts.DAMAGE_NUMBER;
+        this.fontOutline = Main.fonts.DAMAGE_NUMBER_OUTLINE;
         this.color = new Color(Color.white);
         this.lifetime = 120;
     }
 
     @Override
     public void render(Graphics g, int mouseX, int mouseY) {
+        g.setColor(Color.black);
+        DrawUtilities.drawStringCentered(g, String.valueOf(value), fontOutline, x, y);
         g.setColor(color);
         DrawUtilities.drawStringCentered(g, String.valueOf(value), font, x, y);
         g.setColor(Color.white);

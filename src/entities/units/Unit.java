@@ -83,7 +83,8 @@ public class Unit extends Entity {
     public void setPosition(Coordinate c) {this.position = c;}
 
     public void takeDamage(int amount)  {
-        BattleState.damageNumbers.add(new DamageNumber(amount, position.getX(), position.getY()));
+        System.out.println(position.toString());
+        BattleState.damageNumbers.add(new DamageNumber(amount, hitBox.getCenterX(), hitBox.getCenterY()));
         this.health-=amount;
     }
 
@@ -105,6 +106,10 @@ public class Unit extends Entity {
 
     public void setHealth(int health) {
         this.health = health;
+    }
+
+    public void setAttack(int attack) {
+        this.attack = attack;
     }
 
     public Queue<Arte<? extends Unit>> getArteQueue() {

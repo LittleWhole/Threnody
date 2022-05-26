@@ -23,6 +23,7 @@ public class Main extends StateBasedGame {
     public static final int RESOLUTION_Y = 1080;
     public static final int FRAMES_PER_SECOND = 60;
     public static TrueTypeFont font;
+    public static Fonts fonts;
     public static final Object LOCK = new Object();
 
     private static AppGameContainer appgc;
@@ -88,13 +89,8 @@ public class Main extends StateBasedGame {
 
             appgc.setDisplayMode(getScreenWidth(), getScreenHeight(), false);
             appgc.setTargetFrameRate(FRAMES_PER_SECOND);
-            appgc.start();
             appgc.setVSync(true);
-            appgc.setDefaultFont(new TrueTypeFont(new Font("Bahnschrift", Font.PLAIN, 20), true));
-            appgc.getGraphics().setFont(new TrueTypeFont(new Font("Bahnschrift", Font.PLAIN, 20), true));
-            appgc.setSoundOn(false);
-            font = new TrueTypeFont(new java.awt.Font("Bahnschrift", java.awt.Font.PLAIN, 20), true);
-
+            appgc.start();
         } catch (SlickException e) {
             e.printStackTrace();
         }
