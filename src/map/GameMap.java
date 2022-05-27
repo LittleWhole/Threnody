@@ -37,8 +37,8 @@ public class GameMap extends TiledMap {
                         hitboxes[i][j].addPoint(0 ,((float)Math.sin(Math.PI/6)*tileWidth));
                         hitboxes[i][j].setClosed(true);
 
-                        hitboxes[i][j].setCenterX((Main.getScreenWidth()*0.55f)-((j-i)*tileWidth/2f));
-                        hitboxes[i][j].setCenterY((((Main.getScreenHeight()*0.899f))-(this.width*tileHeight/2f))+((i+j)*tileHeight/2f));
+                        hitboxes[i][j].setCenterX((Main.getScreenWidth()*0.54f)-((j-i)*tileWidth/2f));
+                        hitboxes[i][j].setCenterY((((Main.getScreenHeight()*0.72f))-(this.width*tileHeight/2f))+((i+j)*tileHeight/2f));
                     }
                 }
             }

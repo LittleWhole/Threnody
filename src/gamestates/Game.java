@@ -123,7 +123,7 @@ public class Game extends ThrenodyGameState {
 
         //overworld.render(plr);
 
-        overworld.render((int)((plr.getX()*-1)+(Main.getScreenWidth()/2)-(plr.getWidth()/2)),(int)((plr.getY()*-0.5)-(Main.getScreenHeight()*2)-(plr.getHeight()*(3/2))));
+        overworld.render((int)(((plr.getX()*-1)+(Main.getScreenWidth()/2)) - (plr.getWidth()/2)) /*-32*/,(int)(((plr.getY()*-0.5)-(Main.getScreenHeight()*2)-plr.getHeight()*1.5f)/*-132*/));
         //overworld.render((int)plr.getX(), (int)plr.getY());
 
         //overworld.render((int) plr.getX()/2+20, (int) plr.getY()/2-20);
