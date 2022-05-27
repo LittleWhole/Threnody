@@ -7,7 +7,8 @@ import org.newdawn.slick.*;
 import org.newdawn.slick.geom.Rectangle;
 import util.DrawUtilities;
 
-public class NPC extends Unit {
+@SuppressWarnings({"unchecked"})
+public class NPC<T extends NPC<?>> extends Unit<T> {
 
 
     public void setCombatState(EnemyStates combatState) {

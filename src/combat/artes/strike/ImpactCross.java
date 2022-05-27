@@ -1,7 +1,8 @@
-package combat.artes.martial;
+package combat.artes.strike;
 
 import combat.artes.Arte;
 import combat.artes.ArteType;
+import combat.artes.ElementType;
 import entities.units.Unit;
 import entities.units.player.Player;
 import gamestates.BattleState;
@@ -9,22 +10,15 @@ import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
-import playerdata.characters.PlayableCharacter;
 
-public class DragonFang extends Arte<Player> {
+public class ImpactCross extends Arte<Player> {
 
-    public DragonFang(Player owner) throws SlickException {
+    public ImpactCross(Player owner) throws SlickException {
         super(owner);
-        name = "Dragon Fang";
-        arteType = ArteType.MARTIAL;
+        name = "Impact Cross";
+        arteType = ArteType.STRIKE;
+        castDuration = 74;
         this.card = new Image("res/martialCard.png");
-    }
-
-    @Override
-    public void use(Unit target, GameContainer gc) {
-        castTimestamp = BattleState.time;
-        animation(target, gc.getGraphics());
-        activation(target);
     }
 
     @Override
@@ -34,6 +28,6 @@ public class DragonFang extends Arte<Player> {
 
     @Override
     public void activation(Unit target) {
-
+        if (timer == 40) target.takeDamage((int) (owner.calculateDamage(ElementType.PHYSICAL) * 1.1), ElementType.PHYSICAL);
     }
 }

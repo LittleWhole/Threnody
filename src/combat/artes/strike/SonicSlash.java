@@ -1,15 +1,13 @@
-package combat.artes.martial;
+package combat.artes.strike;
 
 import combat.artes.Arte;
 import combat.artes.ArteType;
+import combat.artes.ElementType;
 import entities.units.Unit;
 import entities.units.player.Player;
-import gamestates.BattleState;
-import graphics.ui.combat.DamageNumber;
 import org.newdawn.slick.*;
 import playerdata.characters.PlayableCharacter;
 import playerdata.characters.Sigur;
-import util.DrawUtilities;
 
 public class SonicSlash extends Arte<Player> {
 
@@ -18,7 +16,7 @@ public class SonicSlash extends Arte<Player> {
     public SonicSlash(Player owner) throws SlickException {
         super(owner);
         name = "Sonic Slash";
-        arteType = ArteType.MARTIAL;
+        arteType = ArteType.STRIKE;
         cost = 1;
         castDuration = 74;
         this.card = new Image("res/martialCard.png");
@@ -43,6 +41,6 @@ public class SonicSlash extends Arte<Player> {
 
     @Override
     public void activation(Unit target) {
-        if (timer == 40) System.out.println(target.takeDamage(owner.getAttack()));
+        if (timer == 40) target.takeDamage((int) (owner.calculateDamage(ElementType.PHYSICAL) * 0.9), ElementType.PHYSICAL);
     }
 }

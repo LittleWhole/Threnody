@@ -1,12 +1,16 @@
 package entities.units.player;
 
 import combat.artes.Arte;
-import combat.artes.martial.DragonFang;
-import combat.artes.martial.ImpactCross;
-import combat.artes.martial.SonicSlash;
+import combat.artes.elemental.AquaLimit;
+import combat.artes.elemental.DualTheSol;
+import combat.artes.elemental.RendingGale;
+import combat.artes.strike.DragonFang;
+import combat.artes.strike.ImpactCross;
+import combat.artes.strike.SonicSlash;
 import combat.artes.mystic.Expiation;
 import combat.artes.mystic.InnumerableWounds;
 import combat.artes.mystic.TrillionDrive;
+import combat.artes.support.Heal;
 import core.Constants;
 import core.Main;
 import entities.core.Coordinate;
@@ -17,6 +21,7 @@ import gamestates.Game;
 import managers.AnimationManager;
 import org.newdawn.slick.*;
 import org.newdawn.slick.geom.Rectangle;
+import org.newdawn.slick.geom.RoundedRectangle;
 import org.newdawn.slick.state.StateBasedGame;
 import playerdata.characters.PlayableCharacter;
 import playerdata.characters.Sigur;
@@ -27,6 +32,7 @@ import java.util.List;
 import java.util.Queue;
 import java.util.concurrent.ConcurrentLinkedQueue;
 
+@SuppressWarnings({"unchecked"})
 public final class Player<T extends Player<?>> extends Unit<T> {
     private int mana;
     public PlayerState getState() {
@@ -48,6 +54,7 @@ public final class Player<T extends Player<?>> extends Unit<T> {
     // Abbreviations: LVL, EXP, HP, ATK, DEF, CR, CD, EATK, EDEF, AFF
 
     public Player(Coordinate pos) throws SlickException {
+        super();
         this.health = 100;
         this.width = 90;
         this.height = 175;
@@ -62,10 +69,11 @@ public final class Player<T extends Player<?>> extends Unit<T> {
         for(int i = 0; i < 20; i++) {
             arteDeck.add(new SonicSlash(this));
             arteDeck.add(new DragonFang(this));
+            arteDeck.add(new Heal(this));
             arteDeck.add(new ImpactCross(this));
-            arteDeck.add(new Expiation(this));
-            arteDeck.add(new InnumerableWounds(this));
-            arteDeck.add(new TrillionDrive(this));
+            arteDeck.add(new RendingGale(this));
+            arteDeck.add(new AquaLimit(this));
+            arteDeck.add(new DualTheSol(this));
         }
         this.hitBox = new Rectangle((Main.getScreenWidth()/2) - this.getWidth()/2, (Main.getScreenHeight()/2) + 170, this.width, this.height-100); // set size to tiles
     }
@@ -101,7 +109,11 @@ public final class Player<T extends Player<?>> extends Unit<T> {
         }
         Arte<? super Player> arte = arteQueue.element();
         arte.use(target, gc);
-        if (arte.finished()) arteQueue.remove(arte);
+        if (arte.finished()) {
+            arteQueue.remove(arte);
+            arteHand.add(arteDeck.get(queue));
+            queue++;
+        }
     }
 
     public void update(StateBasedGame sbg, Unit u, Game g) throws SlickException {
@@ -140,13 +152,15 @@ public final class Player<T extends Player<?>> extends Unit<T> {
     }
 
     public Arte<? super Player> selection(int i) {
-        Arte<? super Player> selected;
-        selected = arteHand.get(i);
-        arteHand.remove(i);
-        queue++;
-        arteHand.add(arteDeck.get(queue));
-        this.state = PlayerState.SELECTING;
-        return selected;
+        Arte<? super Player> selected = null;
+        try {
+            selected = arteHand.get(i);
+            arteHand.remove(i);
+        } catch (IndexOutOfBoundsException ignored) {}
+        finally {
+            this.state = PlayerState.SELECTING;
+            return selected;
+        }
     }
 
     public void setState(PlayerState s) {
@@ -168,9 +182,13 @@ public final class Player<T extends Player<?>> extends Unit<T> {
     public void battleRender(Graphics g, float plrX, float plrY)  {
         g.drawImage(sprite, -plrX - position.getX(), -plrY/2 - position.getY());
         g.setColor(new Color(255, 0,0,0.5f));
-        hitBox.setX(-plrX - position.getX() + width);
+        hitBox.setX(plrX - position.getX() + width);
         hitBox.setY((-plrY/2) + this.getHeight()*1.6f);
-
+        var rect = new RoundedRectangle(hitBox.getX(), hitBox.getY(), 50, 50, RoundedRectangle.ALL);
+        g.setColor(Color.red);
+        g.fill(rect);
+        g.setColor(Color.white);
+        DrawUtilities.drawStringCentered(g, String.valueOf(health), rect);
     }
 
     public void addToDeck(Arte<Player> a)   {
