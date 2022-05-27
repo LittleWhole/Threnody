@@ -2,6 +2,7 @@ package combat.artes;
 
 import core.Main;
 import entities.units.Unit;
+import entities.units.enemy.Enemy;
 import entities.units.player.Player;
 import gamestates.BattleState;
 import gamestates.Game;
@@ -79,9 +80,15 @@ public abstract class Arte<T extends Unit> {
                 gc.getGraphics().fill(DrawUtilities.createRectangleCentered(Main.RESOLUTION_X / 2 + timer, 100, 400, 80));
 
 
-                if (timer < 20) gc.getGraphics().setColor(new Color(85, 138, 221, (255 / 20) * timer));
-                else if (timer < 40) gc.getGraphics().setColor(new Color(85, 138, 221));
-                else gc.getGraphics().setColor(new Color(85, 138, 221, (255 / 20) * (60 - timer)));
+                if (target instanceof Enemy) {
+                    if (timer < 20) gc.getGraphics().setColor(new Color(12, 46, 100, (255 / 20) * timer));
+                    else if (timer < 40) gc.getGraphics().setColor(new Color(12, 46, 100));
+                    else gc.getGraphics().setColor(new Color(12, 46, 100, (255 / 20) * (60 - timer)));
+                } else {
+                    if (timer < 20) gc.getGraphics().setColor(new Color(142, 27, 35, (255 / 20) * timer));
+                    else if (timer < 40) gc.getGraphics().setColor(new Color(142, 27, 35));
+                    else gc.getGraphics().setColor(new Color(142, 27, 35, (255 / 20) * (60 - timer)));
+                }
 
                 var rect = DrawUtilities.createRectangleCentered(Main.RESOLUTION_X / 2 + timer, 100, 400, 60);
                 gc.getGraphics().fill(rect);
@@ -89,6 +96,7 @@ public abstract class Arte<T extends Unit> {
                 if (timer < 30) gc.getGraphics().setColor(new Color(255, 255, 255, (255 / 20) * timer));
                 else if (timer < 40) gc.getGraphics().setColor(new Color(255, 255, 255));
                 else gc.getGraphics().setColor(new Color(255, 255, 255, (255 / 20) * (60 - timer)));
+
 
                 DrawUtilities.drawStringCentered(gc.getGraphics(), this.name, rect);
             }

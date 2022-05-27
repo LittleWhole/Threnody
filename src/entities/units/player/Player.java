@@ -91,8 +91,11 @@ public final class Player<T extends Player<?>> extends Unit<T> {
     }
 
     public void move(Unit target, GameContainer gc, Graphics g) throws InterruptedException {
-        for(int i = 0; i < arteHand.size(); i++)    {
-            arteHand.get(i).getCard().drawCentered((Main.getScreenWidth()/7)*(i+1), Main.getScreenHeight()-300);
+        for(int i = 0; i < arteHand.size(); i++) {
+            var cardX = (Main.getScreenWidth()/7)*(i+1);
+            var cardY = Main.getScreenHeight() - 300;
+            if (onCard(gc.getInput(), i)) arteHand.get(i).getCard().getScaledCopy(1.3f).drawCentered(cardX, cardY);
+            else arteHand.get(i).getCard().drawCentered(cardX, cardY);
             g.setColor(Color.white);
             DrawUtilities.drawStringCentered(g, arteHand.get(i).getName(), Main.font, (Main.getScreenWidth()/7)*(i+1), Main.getScreenHeight()-300);
             DrawUtilities.drawStringCentered(g, arteHand.get(i).getArteType().name, Main.font, (Main.getScreenWidth()/7)*(i+1), Main.getScreenHeight()-400);
@@ -153,8 +156,27 @@ public final class Player<T extends Player<?>> extends Unit<T> {
             case Input i && i.isKeyPressed(Input.KEY_4) -> selection(3);
             case Input i && i.isKeyPressed(Input.KEY_5) -> selection(4);
             case Input i && i.isKeyPressed(Input.KEY_6) -> selection(5);
+//            case Input i && i.isMousePressed(0) && onCard(i, 0) -> selection(0);
+//            case Input i && i.isMousePressed(0) && onCard(i, 1) -> selection(1);
+//            case Input i && i.isMousePressed(0) && onCard(i, 2) -> selection(2);
+//            case Input i && i.isMousePressed(0) && onCard(i, 3) -> selection(3);
+//            case Input i && i.isMousePressed(0) && onCard(i, 4) -> selection(4);
+//            case Input i && i.isMousePressed(0) && onCard(i, 5) -> selection(5);
             default -> selected;
         };
+    }
+
+    public boolean onCard(Input input, int i) {
+        try {
+            var card = arteHand.get(i).getCard();
+            var mouseX = input.getMouseX();
+            var mouseY = input.getMouseY();
+            var cardX = (Main.getScreenWidth() / 7) * (i + 1);
+            var cardY = Main.getScreenHeight() - 300;
+            return ((mouseX > cardX - card.getWidth() / 2 && mouseX < cardX + card.getWidth() / 2) &&
+                    (mouseY > cardY - card.getHeight() / 2 && mouseY < cardY + card.getHeight() / 2));
+        } catch (IndexOutOfBoundsException ignored) {}
+        return false;
     }
 
     public Arte<? super Player> selection(int i) {
@@ -229,6 +251,14 @@ public final class Player<T extends Player<?>> extends Unit<T> {
 
     public PlayableCharacter getCharacter() {
         return character;
+    }
+
+    public void setMove(Arte<? super Player> move) {
+        this.move = move;
+    }
+
+    public List<Arte<? super Player>> getArteHand() {
+        return arteHand;
     }
 
     @Override
