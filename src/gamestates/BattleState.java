@@ -2,6 +2,7 @@ package gamestates;
 
 import combat.artes.Arte;
 import core.Main;
+import entities.units.Direction;
 import entities.units.Unit;
 import entities.units.enemy.Enemy;
 import entities.units.player.Player;
@@ -76,8 +77,8 @@ public class BattleState extends ThrenodyGameState {
                 currencyGain = 10;
                 if(time/2 > Math.max(expGain, currencyGain)) g.setColor(Color.red);
                 else g.setColor(Color.white);
-                DrawUtilities.drawStringCentered(g,"EXP GAINED:" + (Math.min(time / 2, expGain)),Main.getScreenWidth()/2, Main.getScreenHeight()/2 );
-                DrawUtilities.drawStringCentered(g,"MONEY GAINED:" + (Math.min(time / 2, currencyGain)),Main.getScreenWidth()/2, Main.getScreenHeight()/2 );
+                DrawUtilities.drawStringCentered(g,"EXP GAINED:" + (Math.min(time / 2, expGain)),Main.getScreenWidth()/2, Main.getScreenHeight()/2 - 100 );
+                DrawUtilities.drawStringCentered(g,"MONEY GAINED:" + (Math.min(time / 2, currencyGain)),Main.getScreenWidth()/2, Main.getScreenHeight()/2 + 100 );
                 if (time > resultDuration) {
                     sbg.enterState(Main.GAME_ID);
                 }
@@ -115,12 +116,15 @@ public class BattleState extends ThrenodyGameState {
         // This code happens when you enter a gameState.
         for(int i = 0; i < plrs.size(); i++)   {
             //plrs.get(i).setPosition( -200 + i*200, i*1000);
-            plrs.get(i).setPosition( -800, -25);
+            plrs.get(i).setPosition( -900, -400);
+            plrs.get(i);
+            plrs.get(i).setDirection(Direction.NORTH, Direction.EAST);
             ((Player)(plrs.get(i))).startBattle();
         }
         for(int i = 0; i < enemies.size(); i++)   {
             //enemies.get(i).setPosition( i * 200,  i * 200);
             enemies.get(i).setPosition( -1000 - (i*100),  0 - (i*50));
+            enemies.get(i).setDirection(Direction.SOUTH, Direction.WEST);
         }
 
         combat = new CombatManager(plrs, enemies);

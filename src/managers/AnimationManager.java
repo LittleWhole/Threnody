@@ -9,33 +9,48 @@ public class AnimationManager {
         //some terribly structured code my monkey brain cant do any better
         if(u.getEwDir() == Direction.NONE)   {
             if(u.getNsDir() == Direction.NORTH) {
-                u.setSprite(u.getSheet().getSprite(0,1));
+
+                u.setSpriteY(1);
             }
             else if(u.getNsDir() == Direction.SOUTH)    {
-                u.setSprite(u.getSheet().getSprite(0,0));
+
+                u.setSpriteY(0);
             }
         }
         else if(u.getEwDir() == Direction.EAST) {
             if(u.getNsDir() == Direction.NORTH) {
-                u.setSprite(u.getSheet().getSprite(0,1));
+
+                u.setSpriteY(7);
             }
             else if(u.getNsDir() == Direction.SOUTH)    {
-                u.setSprite(u.getSheet().getSprite(0,4));
+
+                u.setSpriteY(4);
             }
             else {
-                u.setSprite(u.getSheet().getSprite(0,3));
+
+                u.setSpriteY(3);
             }
         }
         else {
             if(u.getNsDir() == Direction.NORTH) {
-                u.setSprite(u.getSheet().getSprite(0,1));
+
+                u.setSpriteY(6);
             }
             else if(u.getNsDir() == Direction.SOUTH)    {
-                u.setSprite(u.getSheet().getSprite(0,4).getFlippedCopy(true, false));
+
+                u.setSpriteY(5);
             }
             else {
-                u.setSprite(u.getSheet().getSprite(0,2));
+
+                u.setSpriteY(2);
             }
         }
     }
+
+    public static void animationCycle(Unit u)   {
+        u.setFrame((u.getFrame() + 1)/10 >= u.getSheet().getHorizontalCount()?10:u.getFrame()+1);
+        u.setSprite(u.getSheet().getSprite((u.getFrame()/10),u.getSpriteY()));
+
+    }
+
 }

@@ -35,6 +35,10 @@ public abstract class Unit<T extends Unit<?>> extends Entity {
     protected int eDefense;
     protected Map<ElementType, Integer> eAffinity;
 
+
+
+    protected int frame;
+    protected int spriteY;//where sprite is on spritesheet
     protected List<Arte<? extends Unit>> arteDeck;
     protected List<Arte<? extends Unit>> arteHand;
     protected Queue<Arte<? extends Unit>> arteQueue;
@@ -77,6 +81,9 @@ public abstract class Unit<T extends Unit<?>> extends Entity {
         this.nsDir = Direction.randomNorthSouth();
         this.eAffinity = new EnumMap<>(ElementType.class);
         eAffinity.putAll(Map.of(PHYSICAL, 0, FIRE, 0, WATER, 0, EARTH, 0, ICE, 0, WIND, 0, ELECTRIC, 0, LIGHT, 0, DARK, 0));
+        eAffinity.putAll(Map.of(FIRE, 0, WATER, 0, EARTH, 0, ICE, 0, WIND, 0, ELECTRIC, 0, LIGHT, 0, DARK, 0, POISON, 0));
+        this.frame = 0;
+        this.spriteY = 0;
     }
 
     @Override
@@ -164,5 +171,30 @@ public abstract class Unit<T extends Unit<?>> extends Entity {
                 ", move=" + move +
                 ", mana=" + mana +
                 '}';
+    }
+    public void setDirection(Direction ns, Direction ew )   {
+        this.nsDir = ns;
+        this.ewDir = ew;
+    }
+    public void setEWDirection(Direction ew )   {
+        this.ewDir = ew;
+    }
+    public void setNSDirection(Direction ns)   {
+        this.nsDir = ns;
+    }
+    public int getFrame() {
+        return frame;
+    }
+
+    public void setFrame(int frame) {
+        this.frame = frame;
+    }
+
+    public int getSpriteY() {
+        return spriteY;
+    }
+
+    public void setSpriteY(int spriteY) {
+        this.spriteY = spriteY;
     }
 }

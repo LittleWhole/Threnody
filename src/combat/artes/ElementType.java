@@ -9,9 +9,11 @@ public enum ElementType {
     EARTH(new Color(181, 101, 30)),
     ICE(Color.cyan),
     WIND(new Color(66, 245, 144)),
-    ELECTRIC(Color.magenta),
+    ELECTRIC(Color.yellow),
     LIGHT(Color.yellow),
-    DARK(Color.gray);
+    DARK(Color.gray),
+
+    POISON(Color.magenta);
 
     public final Color color;
 

@@ -56,12 +56,12 @@ public final class Player<T extends Player<?>> extends Unit<T> {
     public Player(Coordinate pos) throws SlickException {
         super();
         this.health = 100;
-        this.width = 90;
-        this.height = 175;
+        this.width = 104;
+        this.height = 216;
         this.position = pos;
         this.xSpeed = 10;
         this.ySpeed = 10;
-        this.sheet = new SpriteSheet("res/animations/character/MCSPRITESHEET.png", 90, 175, 12);
+        this.sheet = new SpriteSheet(new Image("res/animations/character/mc_walk.png"), (int)width, (int)height, 8, 8);
         this.sprite = sheet.getSprite(0,0);
         this.character = new Sigur();
         this.arteDeck = new ArrayList<>();
@@ -75,14 +75,16 @@ public final class Player<T extends Player<?>> extends Unit<T> {
             arteDeck.add(new AquaLimit(this));
             arteDeck.add(new DualTheSol(this));
         }
-        this.hitBox = new Rectangle((Main.getScreenWidth()/2) - this.getWidth()/2, (Main.getScreenHeight()/2) + 170, this.width, this.height-100); // set size to tiles
+        this.hitBox = new Rectangle((Main.getScreenWidth()/2) - this.getWidth()/2, (Main.getScreenHeight()/2) + this.height*0.6f, this.width, this.height/2);
     }
 
     public void resetHitbox()   {
-        this.hitBox = new Rectangle((Main.getScreenWidth()/2) - this.getWidth()/2, (Main.getScreenHeight()/2) + 170, this.width, this.height-100);
+        this.hitBox = new Rectangle((Main.getScreenWidth()/2) - this.getWidth()/2, (Main.getScreenHeight()/2) + this.height+0.6f, this.width, this.height/2);
     }
 
     public void startBattle()   {
+        AnimationManager.animationSelect(this);
+        AnimationManager.animationCycle(this);
         queue = 5;
         this.arteHand = new ArrayList<>(arteDeck.subList(0,6));
         this.arteQueue = new ConcurrentLinkedQueue<>();
@@ -120,6 +122,10 @@ public final class Player<T extends Player<?>> extends Unit<T> {
         ewDir = (dx>0?Direction.EAST:dx<0?Direction.WEST:Direction.NONE);
         nsDir = (dy<0?Direction.NORTH:dy>0?Direction.SOUTH:Direction.NONE);
         AnimationManager.animationSelect(this);
+
+        if(dy != 0 || dx != 0  ) AnimationManager.animationCycle(this);
+        else sprite = sheet.getSprite(0,spriteY);
+
         this.position.updatePosition(dx,dy);
         this.dx = 0;
         this.dy = 0;
@@ -182,7 +188,7 @@ public final class Player<T extends Player<?>> extends Unit<T> {
     public void battleRender(Graphics g, float plrX, float plrY)  {
         g.drawImage(sprite, -plrX - position.getX(), -plrY/2 - position.getY());
         g.setColor(new Color(255, 0,0,0.5f));
-        hitBox.setX(plrX - position.getX() + width);
+        hitBox.setX(plrX - position.getX() + width/2);
         hitBox.setY((-plrY/2) + this.getHeight()*1.6f);
         var rect = new RoundedRectangle(hitBox.getX(), hitBox.getY(), 50, 50, RoundedRectangle.ALL);
         g.setColor(Color.red);
@@ -218,16 +224,7 @@ public final class Player<T extends Player<?>> extends Unit<T> {
         return (T) this;
     }
 
-    public void setDirection(Direction ns, Direction ew )   {
-        this.nsDir = ns;
-        this.ewDir = ew;
-    }
-    public void setEWDirection(Direction ew )   {
-        this.ewDir = ew;
-    }
-    public void setNSDirection(Direction ns)   {
-        this.nsDir = ns;
-    }
+
 
 
     public PlayableCharacter getCharacter() {
