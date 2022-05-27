@@ -10,7 +10,7 @@ public enum Direction {
     private static final List<Direction> all = List.of(values());
     private static final List<Direction> northSouth = all.subList(1,3);
     private static final List<Direction> eastWest = all.subList(3,all.size());
-    private static final Random  RANDOM = new Random();
+    private static final Random RANDOM = new Random();
     public static Direction randomNorthSouth()  {
         return Math.random()>0.3?northSouth.get(RANDOM.nextInt(northSouth.size())):NONE;
     }

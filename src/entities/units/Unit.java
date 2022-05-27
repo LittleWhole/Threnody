@@ -22,8 +22,6 @@ import static core.Constants.CombatConstants.*;
 @SuppressWarnings({"unchecked"})
 public abstract class Unit<T extends Unit<?>> extends Entity {
 
-    private final Random R = new Random();
-
     // Abbreviations: LVL, EXP, HP, ATK, DEF, CR, CD, EATK, EDEF, AFF
     protected int level;
     protected int health;
