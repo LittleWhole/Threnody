@@ -61,7 +61,7 @@ public final class Player<T extends Player<?>> extends Unit<T> {
         this.position = pos;
         this.xSpeed = 10;
         this.ySpeed = 10;
-        this.sheet = new SpriteSheet(new Image("res/animations/character/mc_walk.png"), (int)width, (int)height, 8, 8);
+        this.sheet = new SpriteSheet(new Image("res/animations/character/player.png"), (int)width, (int)height, 8, 8);
         this.sprite = sheet.getSprite(0,0);
         this.character = new Sigur();
         this.arteDeck = new ArrayList<>();

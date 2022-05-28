@@ -8,11 +8,7 @@ import entities.core.Team;
 import entities.units.Unit;
 import entities.units.player.Player;
 import gamestates.BattleState;
-import org.newdawn.slick.Color;
-import org.newdawn.slick.GameContainer;
-import org.newdawn.slick.Graphics;
-import org.newdawn.slick.SlickException;
-import org.newdawn.slick.SpriteSheet;
+import org.newdawn.slick.*;
 import org.newdawn.slick.geom.Rectangle;
 import org.newdawn.slick.geom.RoundedRectangle;
 import util.DrawUtilities;
@@ -53,13 +49,13 @@ public class Enemy<T extends Enemy<?>> extends Unit<T> {
         this.critRate = 0.05;
         this.critDamage = 50;
         moveDuration = 100;
-        this.width = 80;
-        this.height = 256;
+        this.width = 118;
+        this.height = 205;
         this.position = new Coordinate(x, y);
-        this.hitBox = new Rectangle(x,y, this.width, this.height-200);
+        this.hitBox = new Rectangle(x,y, this.width, this.height/3);
         this.xSpeed = 10;
         this.ySpeed = 10;
-        this.sheet = new SpriteSheet("res/experimentalEnemy.png", 256, 512);
+        this.sheet = new SpriteSheet(new Image("res/animations/character/goblin.png"), (int)width, (int)height, 0 ,8);
         this.sprite = sheet.getSprite(0, 0);
         this.level = 1;
         this.timer = 0;
@@ -69,7 +65,7 @@ public class Enemy<T extends Enemy<?>> extends Unit<T> {
     }
 
     public void render(Graphics g, float plrX, float plrY)  {
-        g.drawImage(sprite, -plrX - position.getX(), -plrY/2 - position.getY());
+        g.drawImage(sprite, -plrX - position.getX() + width, -plrY/2 - position.getY() + height);
 
         hitBox.setX(-plrX - position.getX() + width);
         hitBox.setY((-plrY/2) + this.getHeight()*1.6f);

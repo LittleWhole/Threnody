@@ -19,7 +19,7 @@ public class SonicSlash extends Arte<Player> {
         arteType = ArteType.STRIKE;
         cost = 1;
         castDuration = 74;
-        this.card = new Image("res/martialCard.png");
+        this.card = new Image("res/beta/martialCard.png");
         this.aniSheet = new SpriteSheet("res/animations/combat/sonic_slash.png",200,200);
     }
 

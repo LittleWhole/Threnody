@@ -20,6 +20,8 @@ import util.DrawUtilities;
 public class TitleScreen extends ThrenodyGameState {
     private int id;
     public Background background;
+
+    private Image title;
     private Button bNEW_GAME;
     private Button bCONTINUE;
     private Button bLOAD_GAME;
@@ -37,6 +39,7 @@ public class TitleScreen extends ThrenodyGameState {
 
     public void init(GameContainer gc, StateBasedGame sbg) throws SlickException
     {
+        title = new Image("res/ui/start/logo.png");
         this.sbg = sbg;
         background = Main.loading.background;
     }
@@ -62,7 +65,7 @@ public class TitleScreen extends ThrenodyGameState {
         g.setFont(Main.font);
         background.renderPre(g, 1f);
 
-        DrawUtilities.drawImageCentered(g, new Image("/res/logo.png"), Main.getScreenWidth() / 2, Main.getScreenHeight() / 3);
+        DrawUtilities.drawImageCentered(g, title, Main.getScreenWidth() / 2, Main.getScreenHeight() / 3);
         DrawUtilities.drawStringCentered(g, "Version " + Constants.VERSION, Main.getScreenWidth() / 2, Main.getScreenHeight() / 3 - 200);
         g.setBackground(new Color((int) (167 * 1f), (int) (231 * 1f), (int) (255 * 1f)));
 

@@ -18,7 +18,7 @@ public class DragonFang extends Arte<Player> {
         name = "Dragon Fang";
         arteType = ArteType.STRIKE;
         castDuration = 74;
-        this.card = new Image("res/martialCard.png");
+        this.card = new Image("res/beta/martialCard.png");
     }
 
     @Override

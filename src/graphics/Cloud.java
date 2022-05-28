@@ -28,7 +28,7 @@ public class Cloud {
     }
 
     public void renderPre(Graphics g, float alpha) throws SlickException {
-        Image sprite = new Image("res/cloud.png").getScaledCopy(size, size / 3);
+        Image sprite = new Image("res/background/cloud.png").getScaledCopy(size, size / 3);
         sprite.setImageColor(1, 1, 1, 1 * alpha);
         g.drawImage(sprite, x, y);
     }

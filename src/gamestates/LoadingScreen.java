@@ -65,7 +65,7 @@ public class LoadingScreen extends ThrenodyGameState {
         this.loadingList = LoadingList.get();
         background = new Background();
         music = new Sound("res/audio/music/01.ogg");
-        logo = new Image("res/logo.png");
+        logo = new Image("res/ui/start/logo.png");
     }
 
     @Override // Begin file loading upon entering the gamestate

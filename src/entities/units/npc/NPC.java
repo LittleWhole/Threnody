@@ -23,13 +23,13 @@ public class NPC<T extends NPC<?>> extends Unit<T> {
 
     protected EnemyStates combatState;
     public NPC(float x, float y) throws SlickException {//later change parameters to also change size, level, speed, and sprite
-        this.width = 80;
-        this.height = 256;
+        this.width = 104;
+        this.height = 216;
         this.position = new Coordinate(x, y);
-        this.hitBox = new Rectangle(x,y, this.width, this.height-200);
+        this.hitBox = new Rectangle(x,y, this.width, this.height/3);
         this.xSpeed = 10;
         this.ySpeed = 10;
-        this.sheet = new SpriteSheet("res/experimentalEnemy.png", 256, 512);
+        this.sheet = new SpriteSheet(new Image("res/animations/character/player.png"), (int)width, (int)height, 0, 8);
         this.sprite = sheet.getSprite(0, 0);
         this.level = 1;
         this.timer = interactLength;
@@ -37,7 +37,7 @@ public class NPC<T extends NPC<?>> extends Unit<T> {
 
     public void render(GameContainer gc, float plrX, float plrY)  {
         timer++;
-        gc.getGraphics().drawImage(sprite, -plrX - position.getX(), -plrY/2 - position.getY());
+        gc.getGraphics().drawImage(sprite, -plrX - position.getX() + width, -plrY/2 - position.getY() + height);
         gc.getGraphics().setColor(new Color(255, 0,0,0.5f));
         hitBox.setX(-plrX - position.getX() + width);
         hitBox.setY((-plrY/2) + this.getHeight()*1.6f);

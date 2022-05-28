@@ -214,7 +214,6 @@ public class Game extends ThrenodyGameState {
         // Initialize the Player
         plr.setPosition(plrPosition);
         plr.resetHitbox();
-        //plr = new Player(plrPosition);
         //plrTeam.add(plr);
         System.out.println("[VERBOSE] Player initialized");
         enemy = new Enemy(10, 0);

@@ -29,7 +29,7 @@ public class IntroCredit extends ThrenodyGameState {
     public void init(GameContainer gc, StateBasedGame sbg) throws SlickException
     {
         gc.setShowFPS(false);
-        logo = new Image("res/seahazestudios.png").getScaledCopy(700, 700);
+        logo = new Image("res/ui/start/seahazestudios.png").getScaledCopy(700, 700);
         this.sbg = sbg;
     }
 

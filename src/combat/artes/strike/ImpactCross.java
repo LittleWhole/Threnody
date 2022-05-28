@@ -18,7 +18,7 @@ public class ImpactCross extends Arte<Player> {
         name = "Impact Cross";
         arteType = ArteType.STRIKE;
         castDuration = 74;
-        this.card = new Image("res/martialCard.png");
+        this.card = new Image("res/beta/martialCard.png");
     }
 
     @Override
