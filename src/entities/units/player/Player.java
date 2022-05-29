@@ -102,7 +102,7 @@ public final class Player<T extends Player<?>> extends Unit<T> {
     public void move(Unit target, GameContainer gc, Graphics g) throws InterruptedException {
         for(int i = 0; i < arteHand.size(); i++) {
             var cardX = (Main.getScreenWidth()/7)*(i+1);
-            var cardY = Main.getScreenHeight() - 300;
+            var cardY = Main.getScreenHeight() - 200;
             if (onCard(gc.getInput(), i)) arteHand.get(i).getCard().getScaledCopy(1.3f).drawCentered(cardX, cardY);
             else arteHand.get(i).getCard().drawCentered(cardX, cardY);
             g.setColor(Color.white);
@@ -186,7 +186,7 @@ public final class Player<T extends Player<?>> extends Unit<T> {
             var mouseX = input.getMouseX();
             var mouseY = input.getMouseY();
             var cardX = (Main.getScreenWidth() / 7) * (i + 1);
-            var cardY = Main.getScreenHeight() - 300;
+            var cardY = Main.getScreenHeight() - 200;
             return ((mouseX > cardX - card.getWidth() / 2 && mouseX < cardX + card.getWidth() / 2) &&
                     (mouseY > cardY - card.getHeight() / 2 && mouseY < cardY + card.getHeight() / 2));
         } catch (IndexOutOfBoundsException ignored) {}

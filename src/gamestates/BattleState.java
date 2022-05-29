@@ -55,13 +55,13 @@ public class BattleState extends ThrenodyGameState {
 
     public void render(GameContainer gc, StateBasedGame sbg, Graphics g) throws SlickException {
         g.setFont(gc.getDefaultFont());
-        battlefield.render(1000, -200);
+        battlefield.render(1000, -600);
         for(Player p : plrs) {
             p.battleRender(g, 0,0);
 
         }
-        for(Enemy e : enemies) {
-            e.render(g, 0,0);
+        for(int i = enemies.size() - 1; i >= 0; i--) {
+            enemies.get(i).render(g, 0,0);
         }
         try {
             result = combat.combat(g, gc);
@@ -118,13 +118,25 @@ public class BattleState extends ThrenodyGameState {
         time = 0;
         for(int i = 0; i < plrs.size(); i++)   {
             //plrs.get(i).setPosition( -200 + i*200, i*1000);
-            plrs.get(i).setPosition( -900, -400);
+            plrs.get(i).setPosition( -680, -460);
             plrs.get(i).setDirection(Direction.NORTH, Direction.EAST);
             plrs.get(i).startBattle();
         }
         for(int i = 0; i < enemies.size(); i++)   {
+
+            switch(i)   {
+                case 0 ->   {
+                    enemies.get(i).setPosition( -1075 ,  0);
+                }
+                case 1  ->  {
+                    enemies.get(i).setPosition( -1075,  150);
+                }
+                case 2 ->   {
+                    enemies.get(i).setPosition( -1250 ,  0);
+                }
+            }
             //enemies.get(i).setPosition( i * 200,  i * 200);
-            enemies.get(i).setPosition( -1000 - (i*100),  0 - (i*50));
+
             enemies.get(i).setDirection(Direction.SOUTH, Direction.WEST);
         }
 

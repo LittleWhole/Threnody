@@ -185,11 +185,17 @@ public class Game extends ThrenodyGameState {
     }
 
     public void enter(GameContainer gc, StateBasedGame sbg) throws SlickException {
+
         if(firstTime)   {
             init(gc, sbg);
             firstTime = false;
+            time = battleCooldown;
+            enemyTeam.add(new Enemy(0,0));
+            enemyTeam.add(new Enemy(0,0));
             return;
+
         }
+        time = 0;
         System.out.println("Entering game");
         plr.gainExp(BattleState.expGain);
         Main.stats.gainGold(BattleState.currencyGain);
@@ -218,6 +224,8 @@ public class Game extends ThrenodyGameState {
         System.out.println("[VERBOSE] Player initialized");
         enemy = new Enemy(10, 0);
         enemyTeam.add(enemy);
+        enemyTeam.add(new Enemy(0,0));
+        enemyTeam.add(new Enemy(0,0));
         // Initialize Managers
         keyDown = new KeyManager(gc.getInput(), this);
         System.out.println("[VERBOSE] KeyManager initialized");
@@ -232,6 +240,7 @@ public class Game extends ThrenodyGameState {
         // This code happens when you leave a gameState.
         BattleState.plrs = plrTeam;
         BattleState.enemies = enemyTeam;
+
     }
 
     public void keyPressed(int key, char c) {

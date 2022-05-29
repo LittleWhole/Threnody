@@ -1,14 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <map version="1.5" tiledversion="1.7.2" orientation="isometric" renderorder="right-down" width="20" height="20" tilewidth="256" tileheight="128" infinite="0" nextlayerid="5" nextobjectid="1">
  <tileset firstgid="1" source="experiment.tsx"/>
+ <tileset firstgid="241" source="bababooie.tsx"/>
  <layer id="1" name="Tile Layer 1" width="20" height="20">
   <data encoding="base64" compression="gzip">
-   H4sIAAAAAAAACuNkYGDgHMWjeBSP4lE8iknEABOrrJlABgAA
+   H4sIAAAAAAAACn2UQQ4EIQgE+f+HRd3DziaSVGpxDkRFaKAVVkSsR/YjefZ1njivcy7ZR376cXRDWKnzBK6xV6Mf0tWa8knF7vArNuvbiruxZoPHPfHoF8q1hHzwnlxO4fktMvr6bcvamBvtijOut3chT+aSPsRiDsToanOelJQ9uc+LPXmY8c+L/68x3nyo/5x6PxebbLCcW+mI1WHyfbh33RRi3f5Gx4nx3/gi312feba4l52Te6fDM3b3P3zv/NwLfrMUXheH3HV21Fcc+/j/u8cSYo48r81vzWTmNSCeI1txuplZvnX/BUxZ7ZBABgAA
   </data>
  </layer>
  <layer id="2" name="Tile Layer 2" width="20" height="20">
   <data encoding="base64" compression="gzip">
-   H4sIAAAAAAAACmNgGAWDHRylo3mcJJrFSYQeYtQgq20kQg2xZhGjllQ/j4JRMAogAABIjVrcQAYAAA==
+   H4sIAAAAAAAACmNgGPrgCwV6PxMpRow5f4GYkZECx9AB/ERiczKi0tQA1DRrOIPPDNjTGQeZ4YfLPEoALcxEB1/oYMcooB0AABKDw/FABgAA
   </data>
  </layer>
 </map>
