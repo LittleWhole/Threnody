@@ -10,9 +10,8 @@ import org.newdawn.slick.Graphics;
 import entities.units.player.PlayerState;
 import util.DrawUtilities;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.stream.Collectors;
+import java.util.*;
+import java.util.concurrent.ConcurrentLinkedQueue;
 
 public final class CombatManager {
 
@@ -21,6 +20,9 @@ public final class CombatManager {
     private int round;
     private int plrTurn;
     private int enemyTurn;
+
+    private Iterator selectedItr;
+
     public enum CombatState { WIN, LOSE, ADVANCE, HALT }
     public CombatManager(List<Player> plrs, List<Enemy> enemies)  {
         this.players = plrs;
@@ -38,6 +40,8 @@ public final class CombatManager {
     public CombatState combat(Graphics g, GameContainer gc) throws InterruptedException {
         boolean plrsAlive = true;
         boolean enemiesAlive = true;
+        Stack<Arte> stack = new Stack<>();
+        Queue<Arte> reversed =  new ConcurrentLinkedQueue<>();
         if(plrTurn < players.size()) {
             if (enemies.size() == 0) {
                 return CombatState.WIN;
@@ -45,12 +49,35 @@ public final class CombatManager {
             if(players.get(plrTurn).getState() == PlayerState.SELECTING) {
                 players.get(plrTurn).move(enemies.get(0), gc, g);
                 g.drawString("SELECTING", 100, 0);
+                /*
                 try { g.drawString("Cards selected: " + players.get(plrTurn).getArteQueue().stream().map(a -> ((Arte) a).getName())
                         .collect(Collectors.joining(", ")), 500, 500); } catch (Exception ignored) {};
+                */
+
+
+                selectedItr = players.get(plrTurn).getArteQueue().iterator();
+                int i = 0;
+                while(selectedItr.hasNext())    {
+                    DrawUtilities.drawImageCentered(g, ((Arte)selectedItr.next()).getCard(), 300 - i*5, 300 - i*5);
+                    i++;
+                }
             }
             if(players.get(plrTurn).getState() == PlayerState.CASTING)   {
                 players.get(plrTurn).attack(enemies.get(0), gc);
                 g.drawString("CASTING", 100, 0);
+
+                for(Object a: players.get(plrTurn).getArteQueue())    {
+                    stack.add((Arte) a);
+                }
+                for(int i = stack.size() - 1; i > -1 ; i--)   {
+                    reversed.add(stack.get(i));
+                }
+                selectedItr = reversed.iterator();
+                int i = 0;
+                while(selectedItr.hasNext())    {
+                    DrawUtilities.drawImageCentered(g, ((Arte)selectedItr.next()).getCard(), 300 - i*5, 300 - i*5);
+                    i++;
+                }
             }
             if((players.get(plrTurn)).getState() == PlayerState.DONE) {
                 updateTeams(enemies);
