@@ -42,6 +42,9 @@ public abstract class Arte<T extends Unit> {
 
     protected ElementType element;
 
+    protected enum AnimationType { OWNER, TARGET, REVERSE_TARGET };
+    protected AnimationType aniType;
+
     protected Arte(T owner) throws SlickException {
         assert character != null;
         this.owner = owner;
@@ -126,7 +129,36 @@ public abstract class Arte<T extends Unit> {
     public boolean finished()   {
         return (timer >= castDuration);
     }
-    public abstract void animation(Unit target, Graphics g);
+
+    public void animation(Unit target, Graphics g) {
+        switch (aniType) {
+            case OWNER -> animationOwner(g);
+            case TARGET -> animationTarget(target, g);
+            case REVERSE_TARGET -> animationReverseTarget(target, g);
+            default -> animationOwner(g);
+        }
+    }
+    public void animationOwner(Graphics g) {
+        if (!finished()) {
+            this.aniFrame = aniSheet.getSprite(timer, 0);
+            g.drawImage(aniFrame, -owner.getPosition().getX() - (owner.getWidth()/2), owner.getY() + owner.getHeight()*3.5f);
+        }
+    }
+
+    public void animationTarget(Unit target, Graphics g) {
+        if(!finished()) {
+            this.aniFrame = aniSheet.getSprite(timer, 0);
+            if (this.owner instanceof Player) g.drawImage(aniFrame, -target.getPosition().getX(), -target.getY() + target.getHeight());
+            else g.drawImage(aniFrame.getFlippedCopy(true, false), -target.getPosition().getX(), -target.getY() + target.getHeight());
+        }
+    }
+
+    public void animationReverseTarget(Unit target, Graphics g) {
+        if(!finished()) {
+            this.aniFrame = aniSheet.getSprite(timer, 0);
+            g.drawImage(aniFrame.getFlippedCopy(true, false), -target.getPosition().getX(), -target.getY() + target.getHeight());
+        }
+    }
 
     public abstract void activation(Unit u);
 

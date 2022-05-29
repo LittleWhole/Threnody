@@ -4,6 +4,7 @@ import combat.artes.Arte;
 import combat.artes.elemental.AquaLimit;
 import combat.artes.elemental.DualTheSol;
 import combat.artes.elemental.RendingGale;
+import combat.artes.mystic.DivineConqueror;
 import combat.artes.strike.DragonFang;
 import combat.artes.strike.ImpactCross;
 import combat.artes.strike.SonicSlash;
@@ -11,6 +12,7 @@ import combat.artes.mystic.Expiation;
 import combat.artes.mystic.InnumerableWounds;
 import combat.artes.mystic.TrillionDrive;
 import combat.artes.support.Heal;
+import combat.artes.support.Mana;
 import core.Constants;
 import core.Main;
 import entities.core.Coordinate;
@@ -70,12 +72,14 @@ public final class Player<T extends Player<?>> extends Unit<T> {
         this.clickArteQueue = new ConcurrentLinkedQueue<>();
         for(int i = 0; i < 20; i++) {
             arteDeck.add(new SonicSlash(this));
-            arteDeck.add(new DragonFang(this));
+            //arteDeck.add(new DragonFang(this));
             arteDeck.add(new Heal(this));
-            arteDeck.add(new ImpactCross(this));
+            arteDeck.add(new Mana(this));
+            //arteDeck.add(new ImpactCross(this));
             arteDeck.add(new RendingGale(this));
             arteDeck.add(new AquaLimit(this));
-            arteDeck.add(new DualTheSol(this));
+            arteDeck.add(new DivineConqueror(this));
+            //arteDeck.add(new DualTheSol(this));
         }
         this.hitBox = new Rectangle((Main.getScreenWidth()/2) - this.getWidth()/2, (Main.getScreenHeight()/2) + this.height*0.6f, this.width, this.height/2);
     }

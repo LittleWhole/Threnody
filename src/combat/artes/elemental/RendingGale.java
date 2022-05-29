@@ -6,10 +6,7 @@ import combat.artes.ElementType;
 import entities.units.Unit;
 import entities.units.player.Player;
 import gamestates.BattleState;
-import org.newdawn.slick.GameContainer;
-import org.newdawn.slick.Graphics;
-import org.newdawn.slick.Image;
-import org.newdawn.slick.SlickException;
+import org.newdawn.slick.*;
 import playerdata.characters.PlayableCharacter;
 
 public class RendingGale extends Arte<Player> {
@@ -19,14 +16,11 @@ public class RendingGale extends Arte<Player> {
         super(owner);
         name = "Rending Gale";
         arteType = ArteType.ELEMENTAL;
+        aniType = AnimationType.TARGET;
         element = ElementType.WIND;
-        castDuration = 74;
+        castDuration = 64;
         //this.card = new Image("res/beta/elementalCard.png");
-    }
-
-    @Override
-    public void animation(Unit target, Graphics g) {
-
+        this.aniSheet = new SpriteSheet("res/animations/combat/rending_gale.png",200, 200);
     }
 
     @Override

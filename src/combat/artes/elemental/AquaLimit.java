@@ -15,25 +15,11 @@ public class AquaLimit extends Arte<Player> {
         super(owner);
         name = "Aqua Limit";
         arteType = ArteType.ELEMENTAL;
+        aniType = AnimationType.TARGET;
         element = ElementType.WATER;
         castDuration = 61;
         //this.card = new Image("res/beta/elementalCard.png");
         this.aniSheet = new SpriteSheet("res/animations/combat/aqua_limit.png",200, 200);
-    }
-
-    /*@Override
-    public void use(Unit target, GameContainer gc) {
-        castTimestamp = BattleState.time;
-        animation(target, gc.getGraphics());
-        activation(target);
-    }*/
-
-    @Override
-    public void animation(Unit target, Graphics g) {
-        if(!finished()) {
-            this.aniFrame = aniSheet.getSprite(timer, 0);
-            g.drawImage(aniFrame,-target.getPosition().getX(), -target.getY() + target.getHeight());
-        }
     }
 
     @Override
