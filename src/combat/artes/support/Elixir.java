@@ -20,5 +20,10 @@ public class Elixir extends Arte<Player> {
     }
 
     @Override
-    public void activation(Unit target) { owner.regenerate(healingValue); owner.generateMana(manaValue); }
+    public void activation(Unit target) {
+        if (timer == 105) {
+            owner.regenerate(healingValue);
+            owner.generateMana(manaValue);
+        }
+    }
 }
