@@ -149,10 +149,6 @@ public abstract class Unit<T extends Unit<?>> extends Entity {
         return attack * (1 + eAffinity.get(element)/100) * (1 + (Math.random() <= critRate ? critDamage : 0));
     }
 
-    public Queue<Arte<? extends Unit>> getArteQueue() {
-        return arteQueue;
-    }
-
     @Override
     public String toString() {
         return "Unit{" +

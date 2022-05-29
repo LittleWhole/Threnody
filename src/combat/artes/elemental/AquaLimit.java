@@ -19,7 +19,7 @@ public class AquaLimit extends Arte<Player> {
         element = ElementType.WATER;
         castDuration = 61;
         //this.card = new Image("res/beta/elementalCard.png");
-        this.aniSheet = new SpriteSheet("res/animations/combat/aqua_limit.png",200, 200);
+        this.aniSheet = new SpriteSheet("res/animations/combat/AquaLimit.png",200, 200);
     }
 
     @Override

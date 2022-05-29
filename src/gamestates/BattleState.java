@@ -116,13 +116,11 @@ public class BattleState extends ThrenodyGameState {
 
     public void enter(GameContainer gc, StateBasedGame sbg) throws SlickException {
         time = 0;
-        // This code happens when you enter a gameState.
         for(int i = 0; i < plrs.size(); i++)   {
             //plrs.get(i).setPosition( -200 + i*200, i*1000);
             plrs.get(i).setPosition( -900, -400);
-            plrs.get(i);
             plrs.get(i).setDirection(Direction.NORTH, Direction.EAST);
-            ((Player)(plrs.get(i))).startBattle();
+            plrs.get(i).startBattle();
         }
         for(int i = 0; i < enemies.size(); i++)   {
             //enemies.get(i).setPosition( i * 200,  i * 200);

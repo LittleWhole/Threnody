@@ -21,6 +21,8 @@ public abstract class Arte<T extends Unit> {
     protected long castTimestamp; // The exact timestamp when the Arte started casting
     protected int castDuration; // The amount of time casting takes
     protected int timer;
+    protected int spritesheetX;
+    protected int spritesheetY;
     protected int cost;
 
     public SpriteSheet getAniSheet() {
@@ -49,9 +51,15 @@ public abstract class Arte<T extends Unit> {
         assert character != null;
         this.owner = owner;
         timer = 0;
+        spritesheetX = 0;
+        spritesheetY = 0;
         this.castTimestamp = -1;
         try {
             this.card = new Image("res/ui/cards/" + this.getClass().getPackageName().substring(13) + "/" + this.getClass().getSimpleName() + ".png");
+        } catch (RuntimeException ignored) {}
+        try {
+            this.aniSheet = new SpriteSheet("res/animations/combat/" + this.getClass().getSimpleName() + ".png", 200, 200);
+            this.castDuration = aniSheet.getHorizontalCount() * aniSheet.getVerticalCount();
         } catch (RuntimeException ignored) {}
     }
 
@@ -110,6 +118,11 @@ public abstract class Arte<T extends Unit> {
             DrawUtilities.drawStringCentered(gc.getGraphics(), String.valueOf(timer), 100, 0);
         }
         timer++;
+        spritesheetX++;
+        if (spritesheetX >= aniSheet.getHorizontalCount()) {
+            spritesheetX = 0;
+            spritesheetY++;
+        }
     };
 
     /*public void render(Unit target, Graphics g) {
@@ -140,14 +153,14 @@ public abstract class Arte<T extends Unit> {
     }
     public void animationOwner(Graphics g) {
         if (!finished()) {
-            this.aniFrame = aniSheet.getSprite(timer, 0);
+            this.aniFrame = aniSheet.getSprite(spritesheetX, spritesheetY);
             g.drawImage(aniFrame, -owner.getPosition().getX() - (owner.getWidth()/2), owner.getY() + owner.getHeight()*3.5f);
         }
     }
 
     public void animationTarget(Unit target, Graphics g) {
         if(!finished()) {
-            this.aniFrame = aniSheet.getSprite(timer, 0);
+            this.aniFrame = aniSheet.getSprite(spritesheetX, spritesheetY);
             if (this.owner instanceof Player) g.drawImage(aniFrame, -target.getPosition().getX(), -target.getY() + target.getHeight());
             else g.drawImage(aniFrame.getFlippedCopy(true, false), -target.getPosition().getX(), -target.getY() + target.getHeight());
         }
@@ -155,7 +168,7 @@ public abstract class Arte<T extends Unit> {
 
     public void animationReverseTarget(Unit target, Graphics g) {
         if(!finished()) {
-            this.aniFrame = aniSheet.getSprite(timer, 0);
+            this.aniFrame = aniSheet.getSprite(spritesheetX, spritesheetY);
             g.drawImage(aniFrame.getFlippedCopy(true, false), -target.getPosition().getX(), -target.getY() + target.getHeight());
         }
     }
@@ -168,5 +181,12 @@ public abstract class Arte<T extends Unit> {
 
     public ArteType getArteType() {
         return arteType;
+    }
+
+    public void reset() throws SlickException {
+        timer = 0;
+        spritesheetX = 0;
+        spritesheetY = 0;
+        this.castTimestamp = -1;
     }
 }

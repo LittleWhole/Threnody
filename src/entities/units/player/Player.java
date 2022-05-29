@@ -11,6 +11,7 @@ import combat.artes.strike.SonicSlash;
 import combat.artes.mystic.Expiation;
 import combat.artes.mystic.InnumerableWounds;
 import combat.artes.mystic.TrillionDrive;
+import combat.artes.support.Elixir;
 import combat.artes.support.Heal;
 import combat.artes.support.Mana;
 import core.Constants;
@@ -74,8 +75,8 @@ public final class Player<T extends Player<?>> extends Unit<T> {
         for(int i = 0; i < 20; i++) {
             arteDeck.add(new ImpactCross(this));
             //arteDeck.add(new DragonFang(this));
-            arteDeck.add(new Heal(this));
-            arteDeck.add(new Mana(this));
+            arteDeck.add(new Elixir(this));
+            arteDeck.add(new DragonFang(this));
             arteDeck.add(new RendingGale(this));
             arteDeck.add(new AquaLimit(this));
             //arteDeck.add(new DivineConqueror(this));
@@ -196,6 +197,7 @@ public final class Player<T extends Player<?>> extends Unit<T> {
         Arte<? super Player> selected = null;
         try {
             selected = arteHand.get(i);
+            selected.reset();
             arteHand.remove(i);
         } catch (IndexOutOfBoundsException ignored) {}
         finally {
@@ -272,6 +274,10 @@ public final class Player<T extends Player<?>> extends Unit<T> {
 
     public List<Arte<? super Player>> getArteHand() {
         return arteHand;
+    }
+
+    public Queue<Arte<? super Player>> getArteQueue() {
+        return arteQueue;
     }
 
     public Queue<Arte<? super Player>> getClickArteQueue() {
