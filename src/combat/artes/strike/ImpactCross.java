@@ -16,7 +16,7 @@ public class ImpactCross extends Arte<Player> {
         arteType = ArteType.STRIKE;
         aniType = AnimationType.TARGET;
         castDuration = 64;
-        this.aniSheet = new SpriteSheet("res/animations/combat/impact_cross.png",200, 200);
+        this.aniSheet = new SpriteSheet("res/animations/combat/ImpactCross.png",200, 200);
     }
 
     @Override

@@ -20,7 +20,7 @@ public class RendingGale extends Arte<Player> {
         element = ElementType.WIND;
         castDuration = 64;
         //this.card = new Image("res/beta/elementalCard.png");
-        this.aniSheet = new SpriteSheet("res/animations/combat/rending_gale.png",200, 200);
+        this.aniSheet = new SpriteSheet("res/animations/combat/RendingGale.png",200, 200);
     }
 
     @Override

@@ -18,7 +18,7 @@ public class Heal extends Arte<Unit> {
         aniType = AnimationType.OWNER;
         cost = 1;
         castDuration = 60;
-        this.aniSheet = new SpriteSheet("res/animations/combat/heal.png",200, 200);
+        this.aniSheet = new SpriteSheet("res/animations/combat/Heal.png",200, 200);
     }
 
     /*@Override

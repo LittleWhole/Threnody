@@ -53,6 +53,10 @@ public abstract class Arte<T extends Unit> {
         try {
             this.card = new Image("res/ui/cards/" + this.getClass().getPackageName().substring(13) + "/" + this.getClass().getSimpleName() + ".png");
         } catch (RuntimeException ignored) {}
+        try {
+            this.aniSheet = new SpriteSheet("res/animations/combat/" + this.getClass().getSimpleName() + ".png", 200, 200);
+            this.castDuration = aniSheet.getHorizontalCount();
+        } catch (RuntimeException ignored) {}
     }
 
     /*   if (!using) {
