@@ -3,7 +3,9 @@ package managers;
 import entities.units.Direction;
 import entities.units.Unit;
 
-public class AnimationManager {
+public final class AnimationManager {
+
+    private AnimationManager() { throw new IllegalStateException("Utility class"); }
 
     public static void animationSelect(Unit u ) {
         //some terribly structured code my monkey brain cant do any better

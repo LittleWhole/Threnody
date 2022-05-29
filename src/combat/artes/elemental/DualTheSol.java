@@ -18,7 +18,6 @@ public class DualTheSol extends Arte<Player> {
         aniType = AnimationType.TARGET;
         element = ElementType.LIGHT;
         castDuration = 70;
-        //this.card = new Image("res/beta/elementalCard.png");
         this.aniSheet = new SpriteSheet("res/animations/combat/dual_the_sol.png",200, 200);
     }
 

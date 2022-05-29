@@ -6,10 +6,7 @@ import combat.artes.ElementType;
 import entities.units.Unit;
 import entities.units.player.Player;
 import gamestates.BattleState;
-import org.newdawn.slick.GameContainer;
-import org.newdawn.slick.Graphics;
-import org.newdawn.slick.Image;
-import org.newdawn.slick.SlickException;
+import org.newdawn.slick.*;
 
 public class ImpactCross extends Arte<Player> {
 
@@ -17,13 +14,9 @@ public class ImpactCross extends Arte<Player> {
         super(owner);
         name = "Impact Cross";
         arteType = ArteType.STRIKE;
-        castDuration = 74;
-        //this.card = new Image("res/beta/martialCard.png");
-    }
-
-    @Override
-    public void animation(Unit target, Graphics g) {
-
+        aniType = AnimationType.TARGET;
+        castDuration = 64;
+        this.aniSheet = new SpriteSheet("res/animations/combat/impact_cross.png",200, 200);
     }
 
     @Override

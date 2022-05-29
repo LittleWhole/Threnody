@@ -71,11 +71,10 @@ public final class Player<T extends Player<?>> extends Unit<T> {
         this.arteQueue = new ConcurrentLinkedQueue<>();
         this.clickArteQueue = new ConcurrentLinkedQueue<>();
         for(int i = 0; i < 20; i++) {
-            arteDeck.add(new SonicSlash(this));
+            arteDeck.add(new ImpactCross(this));
             //arteDeck.add(new DragonFang(this));
             arteDeck.add(new Heal(this));
             arteDeck.add(new Mana(this));
-            //arteDeck.add(new ImpactCross(this));
             arteDeck.add(new RendingGale(this));
             arteDeck.add(new AquaLimit(this));
             //arteDeck.add(new DivineConqueror(this));
@@ -94,6 +93,8 @@ public final class Player<T extends Player<?>> extends Unit<T> {
         queue = 5;
         this.arteHand = new ArrayList<>(arteDeck.subList(0,6));
         this.arteQueue = new ConcurrentLinkedQueue<>();
+        this.clickArteQueue = new ConcurrentLinkedQueue<>();
+        move = null;
     }
 
     public void move(Unit target, GameContainer gc, Graphics g) throws InterruptedException {

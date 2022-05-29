@@ -21,8 +21,7 @@ public class TwinWhip extends Arte<Player> {
         arteType = ArteType.STRIKE;
         cost = 1;
         castDuration = 74;
-        //this.card = new Image("res/beta/martialCard.png");
-        //this.aniSheet = new SpriteSheet("res/animations/combat/sonic_slash.png",200,200);
+        //this.aniSheet = new SpriteSheet("res/animations/combat/twin_whip.png",200,200);
     }
 
     @Override

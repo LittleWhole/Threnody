@@ -11,15 +11,15 @@ import util.DrawUtilities;
 
 import java.util.List;
 
-public class CombatManager {
+public final class CombatManager {
 
     private volatile List<Player> players;
     private volatile List<Enemy> enemies;
     private int round;
     private int plrTurn;
     private int enemyTurn;
+    public enum CombatState { WIN, LOSE, ADVANCE, HALT }
     public CombatManager(List<Player> plrs, List<Enemy> enemies)  {
-
         this.players = plrs;
         this.enemies = enemies;
         round = 1;
@@ -28,20 +28,16 @@ public class CombatManager {
     public void roundStart() {
         plrTurn = 0;
         enemyTurn = 0;
-        for(int i = 0; i < players.size(); i++) {
-            (players.get(i)).setState(PlayerState.SELECTING);
-        }
-        for(int i = 0; i < enemies.size(); i++) {
-            (enemies.get(i)).setCombatState(EnemyStates.CHOOSING);
-        }
+        players.forEach(p -> p.setState(PlayerState.SELECTING));
+        enemies.forEach(e -> e.setCombatState(EnemyStates.CHOOSING));
     }
 
-    public char combat(Graphics g, GameContainer gc) throws InterruptedException {
+    public CombatState combat(Graphics g, GameContainer gc) throws InterruptedException {
         boolean plrsAlive = true;
         boolean enemiesAlive = true;
         if(plrTurn < players.size()) {
             if (enemies.size() == 0) {
-                return 'w';
+                return CombatState.WIN;
             }
             if(players.get(plrTurn).getState() == PlayerState.SELECTING) {
                 players.get(plrTurn).move(enemies.get(0), gc, g);
@@ -54,14 +50,14 @@ public class CombatManager {
             if((players.get(plrTurn)).getState() == PlayerState.DONE) {
                 updateTeams(enemies);
                 if (enemies.size() == 0) {
-                    return 'w';
+                    return CombatState.WIN;
                 }
                 plrTurn++;
             }
         }
         else if(plrTurn >= players.size() && enemyTurn < enemies.size())   {
             if (players.size() == 0) {
-                return 'l';
+                return CombatState.LOSE;
             }
             if((enemies.get(enemyTurn-(players.size()-1))).getCombatState() == EnemyStates.CHOOSING)  {
                 (enemies.get(enemyTurn-(players.size()-1))).battleSelect();
@@ -73,7 +69,7 @@ public class CombatManager {
             if((enemies.get(enemyTurn-(players.size()-1))).getCombatState() == EnemyStates.DONE) {
                 updateTeams(players);
                 if (players.size() == 0) {
-                    return 'l';
+                    return CombatState.LOSE;
                 }
                 enemyTurn++;
             }
@@ -83,10 +79,10 @@ public class CombatManager {
             updateTeams(players);
             round++;
             roundStart();
-            return 'a';
+            return CombatState.ADVANCE;
         }
 
-        return 'h';
+        return CombatState.HALT;
     }
 
     public int getRound()  {

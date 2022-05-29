@@ -29,7 +29,7 @@ public class BattleState extends ThrenodyGameState {
     public static List<Enemy> enemies;
     private GameMap battlefield;
     private CombatManager combat;
-    private char result;
+    private CombatManager.CombatState result;
     private int resultDuration;
     public static int time;
     public static int expGain;
@@ -70,29 +70,31 @@ public class BattleState extends ThrenodyGameState {
         }
 
         switch (result) {
-            case 'w':
+            case WIN -> {
                 time++;
                 expGain = 10;
                 currencyGain = 10;
-                if(time/2 > Math.max(expGain, currencyGain)) g.setColor(Color.red);
+                if (time / 2 > Math.max(expGain, currencyGain)) g.setColor(Color.red);
                 else g.setColor(Color.white);
-                DrawUtilities.drawStringCentered(g,"EXP GAINED:" + (Math.min(time / 2, expGain)),Main.getScreenWidth()/2, Main.getScreenHeight()/2 - 100 );
-                DrawUtilities.drawStringCentered(g,"MONEY GAINED:" + (Math.min(time / 2, currencyGain)),Main.getScreenWidth()/2, Main.getScreenHeight()/2 + 100 );
+                DrawUtilities.drawStringCentered(g, "EXP GAINED:" + (Math.min(time / 2, expGain)), Main.getScreenWidth() / 2, Main.getScreenHeight() / 2 - 100);
+                DrawUtilities.drawStringCentered(g, "MONEY GAINED:" + (Math.min(time / 2, currencyGain)), Main.getScreenWidth() / 2, Main.getScreenHeight() / 2 + 100);
                 //plrs.forEach(p -> p.getArteQueue().clear());
                 if (time > resultDuration) {
                     sbg.enterState(Main.GAME_ID);
                 }
-                break;
-            case 'l':
+            }
+            case LOSE -> {
                 time++;
-                g.setColor(new Color(0,0,0, Math.min(time, 255)));
-                g.fillRect(0,0,Main.getScreenWidth(), Main.getScreenHeight());
+                g.setColor(new Color(0, 0, 0, Math.min(time, 255)));
+                g.fillRect(0, 0, Main.getScreenWidth(), Main.getScreenHeight());
                 g.setColor(Color.red);
-                DrawUtilities.drawStringCentered(g,"YOU DIED", Main.RESOLUTION_X/2, Main.RESOLUTION_Y/2);
+                DrawUtilities.drawStringCentered(g, "YOU DIED", Main.RESOLUTION_X / 2, Main.RESOLUTION_Y / 2);
                 if (time > resultDuration) {
                     sbg.enterState(Main.TITLE_ID);
                 }
-                break;
+            }
+            case ADVANCE -> {}
+            case HALT -> {}
         }
         damageNumbers.forEach(n -> {
             n.update(gc);
