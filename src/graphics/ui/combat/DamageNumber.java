@@ -1,5 +1,6 @@
 package graphics.ui.combat;
 
+import core.Fonts;
 import core.Main;
 import graphics.ui.Displayable;
 import graphics.ui.Updatable;
@@ -18,7 +19,8 @@ public class DamageNumber implements Updatable {
     private TrueTypeFont fontOutline;
     private Color color;
     private Color outlineColor;
-    private int lifetime;
+    private int lifetime, fontSize;
+
 
     public DamageNumber(int value, float x, float y) {
         this.value = value;
@@ -29,6 +31,7 @@ public class DamageNumber implements Updatable {
         this.color = Color.white;
         this.outlineColor = Color.black;
         this.lifetime = 120;
+        this.fontSize = 40;
     }
     public DamageNumber(int value, float x, float y, Color c) {
         this.value = value;
@@ -39,6 +42,7 @@ public class DamageNumber implements Updatable {
         this.color = c;
         this.outlineColor = Color.black;
         this.lifetime = 120;
+        this.fontSize = 40;
     }
 
     @Override
@@ -52,6 +56,15 @@ public class DamageNumber implements Updatable {
 
     @Override
     public void update(GameContainer gc) {
+        if (lifetime > 100) {
+            font = Main.fonts.VariableWidth.plainFont(fontSize);
+            fontOutline = Main.fonts.VariableWidth.boldFont(fontSize);
+            fontSize++;
+        } else if (lifetime < 60) {
+            font = Main.fonts.VariableWidth.plainFont(fontSize);
+            fontOutline = Main.fonts.VariableWidth.boldFont(fontSize);
+            fontSize--;
+        }
         this.color = new Color(color.getRed(), color.getGreen(), color.getBlue(), (255 / 60) * lifetime);
         this.outlineColor = new Color(outlineColor.getRed(), outlineColor.getGreen(), outlineColor.getBlue(), (255 / 60) * lifetime);
         lifetime--;

@@ -21,6 +21,7 @@ import entities.units.npc.NPC;
 import entities.units.Unit;
 import gamestates.Game;
 import managers.AnimationManager;
+import managers.CombatManager;
 import org.newdawn.slick.*;
 import org.newdawn.slick.geom.Rectangle;
 import org.newdawn.slick.geom.RoundedRectangle;
