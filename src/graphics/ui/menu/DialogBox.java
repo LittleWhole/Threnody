@@ -85,7 +85,7 @@ public class DialogBox extends Menu implements UserInterfaceable {
         DrawUtilities.drawStringCentered(g, title, fonts.get("title"), x, y - height / 2 + 40);
         for (var i = 0; i < bodyLines.size(); i++) {
             DrawUtilities.drawStringCentered(g, bodyLines.get(i), fonts.get("body"), x, y/* + (height / bodyLines.size() * (i + 1))*/);
-        };
+        }
         for (var i = 0; i < buttons.size(); i++) {
             buttons.get(i).setX(x / buttons.size() * (i + 1));
             buttons.get(i).setY(y + height / 2 - 40);

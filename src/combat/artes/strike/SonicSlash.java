@@ -20,18 +20,7 @@ public class SonicSlash extends Arte<Player> {
         aniType = AnimationType.TARGET;
         cost = 1;
         castDuration = 74;
-        //this.card = new Image("res/beta/martialCard.png");
-        this.aniSheet = new SpriteSheet("res/animations/combat/SonicSlash.png",200,200);
     }
-
-    /*@Override
-    public void use(Unit target, GameContainer gc) {
-        timer = 0;
-        activation(target);
-        animation(target, gc.getGraphics());
-    }*/
-
-
 
     @Override
     public void activation(Unit target) {

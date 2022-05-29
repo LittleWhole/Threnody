@@ -64,9 +64,7 @@ public class Button implements UserInterfaceable {
 
     public boolean onButton(int mouseX, int mouseY) {
         if(x - width / 2 < mouseX && mouseX < x + width / 2) {
-            if(y - height / 2 < mouseY && mouseY < y + height / 2) {
-                return true;
-            }
+            return y - height / 2 < mouseY && mouseY < y + height / 2;
         }
         return false;
     }

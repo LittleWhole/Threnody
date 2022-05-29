@@ -22,7 +22,7 @@ public abstract class Menu implements UserInterfaceable {
         this.x = Main.RESOLUTION_X / 2;
         this.y = Main.RESOLUTION_Y / 2;
         this.initializeFonts();
-    };
+    }
 
     protected Menu(int x, int y, int width, int height) {
         this.width = width;
@@ -30,7 +30,7 @@ public abstract class Menu implements UserInterfaceable {
         this.x = x;
         this.y = y;
         this.initializeFonts();
-    };
+    }
 
     @Override
     public void render(Graphics g, int mouseX, int mouseY) {
@@ -38,7 +38,7 @@ public abstract class Menu implements UserInterfaceable {
         g.setColor(new Color(0, 0, 0, 170));
         DrawUtilities.fillShapeCentered(g, new RoundedRectangle(0, 0, width, height, RoundedRectangle.ALL), x, y);
         this.subrender(g);
-    };
+    }
 
     @Override
     public void update(GameContainer gc) { }

@@ -7,8 +7,9 @@ import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
 
 public class Cloud {
-    private int size;
-    private int x, y;
+    private final int size;
+    private int x;
+    private final int y;
 
     public Cloud() {
         this.size = (int) (Math.random() * 500) + 100;

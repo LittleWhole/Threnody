@@ -4,16 +4,9 @@ import combat.artes.Arte;
 import combat.artes.elemental.AquaLimit;
 import combat.artes.elemental.DualTheSol;
 import combat.artes.elemental.RendingGale;
-import combat.artes.mystic.DivineConqueror;
 import combat.artes.strike.DragonFang;
 import combat.artes.strike.ImpactCross;
-import combat.artes.strike.SonicSlash;
-import combat.artes.mystic.Expiation;
-import combat.artes.mystic.InnumerableWounds;
-import combat.artes.mystic.TrillionDrive;
 import combat.artes.support.Elixir;
-import combat.artes.support.Heal;
-import combat.artes.support.Mana;
 import core.Constants;
 import core.Main;
 import entities.core.Coordinate;
@@ -22,7 +15,6 @@ import entities.units.npc.NPC;
 import entities.units.Unit;
 import gamestates.Game;
 import managers.AnimationManager;
-import managers.CombatManager;
 import org.newdawn.slick.*;
 import org.newdawn.slick.geom.Rectangle;
 import org.newdawn.slick.geom.RoundedRectangle;
@@ -49,13 +41,13 @@ public final class Player<T extends Player<?>> extends Unit<T> {
     final public static float PLAYER_X_SPAWN = (float) Main.RESOLUTION_X / 2 / Constants.ImageConstants.PIXELS_PER_UNIT;
     final public static float PLAYER_Y_SPAWN = (float) Main.RESOLUTION_Y / 2 / Constants.ImageConstants.PIXELS_PER_UNIT;
 
-    private List<Arte<? super Player>> arteDeck;
-    private List<Arte<? super Player>> arteHand;
-    private Queue<Arte<? super Player>> arteQueue;
-    private Queue<Arte<? super Player>> clickArteQueue;
-    private Arte<? super Player> move;
+    private final List<Arte<? extends Unit>> arteDeck;
+    private List<Arte<? extends Unit>> arteHand;
+    private Queue<Arte<? extends Unit>> arteQueue;
+    private Queue<Arte<? extends Unit>> clickArteQueue;
+    private Arte<? extends Unit> move;
     private int queue;
-    private PlayableCharacter character;
+    private final PlayableCharacter character;
     // Abbreviations: LVL, EXP, HP, ATK, DEF, CR, CD, EATK, EDEF, AFF
 
     public Player(Coordinate pos) throws SlickException {
@@ -126,7 +118,7 @@ public final class Player<T extends Player<?>> extends Unit<T> {
             this.state = PlayerState.DONE;
             return;
         }
-        Arte<? super Player> arte = arteQueue.element();
+        Arte<? extends Unit> arte = arteQueue.element();
         arte.use(target, gc);
         if (arte.finished()) {
             arteQueue.remove(arte);
@@ -157,7 +149,7 @@ public final class Player<T extends Player<?>> extends Unit<T> {
         }
     }
 
-    public Arte<? super Player> cardSelect(Input input) {
+    public Arte<? extends Unit> cardSelect(Input input) {
         Arte<Player> selected = null;
         if(queue >= arteDeck.size()) {
             this.health = 0;
@@ -193,8 +185,8 @@ public final class Player<T extends Player<?>> extends Unit<T> {
         return false;
     }
 
-    public Arte<? super Player> selection(int i) {
-        Arte<? super Player> selected = null;
+    public Arte<? extends Unit> selection(int i) {
+        Arte<? extends Unit> selected = null;
         try {
             selected = arteHand.get(i);
             selected.reset();
@@ -268,19 +260,20 @@ public final class Player<T extends Player<?>> extends Unit<T> {
         return character;
     }
 
-    public void setMove(Arte<? super Player> move) {
+    public T setMove(Arte<? extends Unit> move) {
         this.move = move;
+        return (T) this;
     }
 
-    public List<Arte<? super Player>> getArteHand() {
+    public List<Arte<? extends Unit>> getArteHand() {
         return arteHand;
     }
 
-    public Queue<Arte<? super Player>> getArteQueue() {
+    public Queue<Arte<? extends Unit>> getArteQueue() {
         return arteQueue;
     }
 
-    public Queue<Arte<? super Player>> getClickArteQueue() {
+    public Queue<Arte<? extends Unit>> getClickArteQueue() {
         return clickArteQueue;
     }
 

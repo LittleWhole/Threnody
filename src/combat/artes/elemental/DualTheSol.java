@@ -17,13 +17,13 @@ public class DualTheSol extends Arte<Player> {
         arteType = ArteType.ELEMENTAL;
         aniType = AnimationType.TARGET;
         element = ElementType.LIGHT;
+        cost = 5;
         castDuration = 70;
-        this.aniSheet = new SpriteSheet("res/animations/combat/DualTheSol.png",200, 200);
     }
 
     @Override
     public void activation(Unit target) {
-        if (timer == 24) target.takeDamage((int) (owner.calculateDamage(element) * 1.2), element);
-        if (timer == 34 || timer == 44 || timer == 54 || timer == 64) target.takeDamage((int) (owner.calculateDamage(ElementType.FIRE) * 0.1), ElementType.FIRE);
+        if (timer == 24) target.takeDamage((int) (owner.calculateDamage(element) * 2.2), element);
+        if (timer == 34 || timer == 44 || timer == 54 || timer == 64) target.takeDamage((int) (owner.calculateDamage(ElementType.FIRE) * 0.3), ElementType.FIRE);
     }
 }

@@ -15,8 +15,8 @@ import java.util.ArrayList;
 public final class DisplayManager {
 	private Graphics graphics;
 
-	private Coordinate center; // The entity the camera will be rendered around
-	private Game game; // The game (so we can reference it)
+	private final Coordinate center; // The entity the camera will be rendered around
+	private final Game game; // The game (so we can reference it)
 	
 	public DisplayManager(Game g, Coordinate center, Graphics graphics) {
 		this.game = g;

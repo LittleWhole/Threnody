@@ -12,26 +12,14 @@ import playerdata.characters.PlayableCharacter;
 
 public class Catalysis extends Arte<Player> {
 
-    public static final String name = "Heal";
-    public static final Class<? extends PlayableCharacter> character = Phaedra.class;
-    public static final ArteType type = ArteType.SUPPORT;
     private final int affinity = 20;
 
     public Catalysis(Player owner) throws SlickException {
         super(owner);
+        name = "Catalysis";
+        arteType = ArteType.SUPPORT;
+        aniType = AnimationType.OWNER;
         cost = 1;
-    }
-
-    @Override
-    public void use(Unit target, GameContainer gc) {
-        castTimestamp = gc.getTime();
-        animation(target, gc.getGraphics());
-        activation(target);
-    }
-
-    @Override
-    public void animation(Unit target, Graphics g) {
-
     }
 
     @Override

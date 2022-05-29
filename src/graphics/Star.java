@@ -4,8 +4,9 @@ import core.Main;
 import org.newdawn.slick.Graphics;
 
 public class Star {
-    private int size;
-    private int x,y;
+    private final int size;
+    private final int x;
+    private final int y;
 
     public Star() {
         this.size = (int) (Math.random() * 5) + 2;

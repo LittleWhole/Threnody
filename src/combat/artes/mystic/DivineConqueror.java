@@ -15,6 +15,7 @@ public class DivineConqueror extends MysticArte<Player> {
         super(owner);
         name = "Divine Conqueror";
         arteType = ArteType.MYSTIC;
+        cost = 9;
     }
 
     @Override

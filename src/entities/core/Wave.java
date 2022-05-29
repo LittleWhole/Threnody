@@ -8,10 +8,10 @@ import java.util.Objects;
 
 public class Wave {
 
-    private ArrayList<HashMap<Unit, Integer>> ledger;
-    private int delay;
-    private int spread;
-    private int duration;
+    private final ArrayList<HashMap<Unit, Integer>> ledger;
+    private final int delay;
+    private final int spread;
+    private final int duration;
 
     public Wave(ArrayList<HashMap<Unit, Integer>> ledger, int delay, int spread, int duration) {
         this.ledger = ledger;

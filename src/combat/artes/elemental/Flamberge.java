@@ -16,17 +16,9 @@ public class Flamberge extends Arte<Player> {
         name = "Flamberge";
         arteType = ArteType.ELEMENTAL;
         element = ElementType.FIRE;
+        cost = 5;
         castDuration = 61;
-        //this.card = new Image("res/beta/elementalCard.png");
-        //this.aniSheet = new SpriteSheet("res/animations/combat/AquaLimit.png",200, 200);
     }
-
-    /*@Override
-    public void use(Unit target, GameContainer gc) {
-        castTimestamp = BattleState.time;
-        animation(target, gc.getGraphics());
-        activation(target);
-    }*/
 
     @Override
     public void animation(Unit target, Graphics g) {
@@ -38,6 +30,6 @@ public class Flamberge extends Arte<Player> {
 
     @Override
     public void activation(Unit target) {
-        if (timer == 20) target.takeDamage((int) (owner.calculateDamage(ElementType.FIRE) * 1.2), ElementType.FIRE);
+        if (timer == 20) target.takeDamage((int) (owner.calculateDamage(ElementType.FIRE) * 2.2), ElementType.FIRE);
     }
 }

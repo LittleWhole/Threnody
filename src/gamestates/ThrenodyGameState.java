@@ -33,8 +33,8 @@ public abstract class ThrenodyGameState extends BasicGameState {
             file.getParentFile().mkdirs();
 
             try {
-                Image target = new Image(Main.game.getGc().getWidth(), Main.game.getGc().getHeight());
-                Main.game.getGc().getGraphics().copyArea(target, 0, 0);
+                Image target = new Image(Game.getGc().getWidth(), Game.getGc().getHeight());
+                Game.getGc().getGraphics().copyArea(target, 0, 0);
                 ImageOut.write(target, filename);
                 target.destroy();
             } catch (SlickException e) {

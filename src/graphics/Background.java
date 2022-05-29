@@ -4,7 +4,7 @@ import org.newdawn.slick.Graphics;
 import org.newdawn.slick.SlickException;
 
 public class Background {
-    private Cloud[] clouds;
+    private final Cloud[] clouds;
 
     public Background() {
         clouds = new Cloud[7];
