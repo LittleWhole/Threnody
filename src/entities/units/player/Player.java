@@ -78,8 +78,8 @@ public final class Player<T extends Player<?>> extends Unit<T> {
             //arteDeck.add(new ImpactCross(this));
             arteDeck.add(new RendingGale(this));
             arteDeck.add(new AquaLimit(this));
-            arteDeck.add(new DivineConqueror(this));
-            //arteDeck.add(new DualTheSol(this));
+            //arteDeck.add(new DivineConqueror(this));
+            arteDeck.add(new DualTheSol(this));
         }
         this.hitBox = new Rectangle((Main.getScreenWidth()/2) - this.getWidth()/2, (Main.getScreenHeight()/2) + this.height*0.6f, this.width, this.height/2);
     }
