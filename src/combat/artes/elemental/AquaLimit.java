@@ -6,10 +6,7 @@ import combat.artes.ElementType;
 import entities.units.Unit;
 import entities.units.player.Player;
 import gamestates.BattleState;
-import org.newdawn.slick.GameContainer;
-import org.newdawn.slick.Graphics;
-import org.newdawn.slick.Image;
-import org.newdawn.slick.SlickException;
+import org.newdawn.slick.*;
 import playerdata.characters.PlayableCharacter;
 
 public class AquaLimit extends Arte<Player> {
@@ -19,8 +16,9 @@ public class AquaLimit extends Arte<Player> {
         name = "Aqua Limit";
         arteType = ArteType.ELEMENTAL;
         element = ElementType.WATER;
-        castDuration = 74;
+        castDuration = 61;
         //this.card = new Image("res/beta/elementalCard.png");
+        this.aniSheet = new SpriteSheet("res/animations/combat/aqua_limit.png",200, 200);
     }
 
     /*@Override
@@ -32,7 +30,10 @@ public class AquaLimit extends Arte<Player> {
 
     @Override
     public void animation(Unit target, Graphics g) {
-
+        if(!finished()) {
+            this.aniFrame = aniSheet.getSprite(timer, 0);
+            g.drawImage(aniFrame,-target.getPosition().getX(), -target.getY() + target.getHeight());
+        }
     }
 
     @Override

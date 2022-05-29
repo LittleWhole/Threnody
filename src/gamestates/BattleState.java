@@ -55,7 +55,6 @@ public class BattleState extends ThrenodyGameState {
 
     public void render(GameContainer gc, StateBasedGame sbg, Graphics g) throws SlickException {
         g.setFont(gc.getDefaultFont());
-        //super.render(gc, sbg, g);
         battlefield.render(1000, -200);
         for(Player p : plrs) {
             p.battleRender(g, 0,0);
@@ -106,6 +105,7 @@ public class BattleState extends ThrenodyGameState {
             }
             g.drawString("" + combat.getRound(), 0, 0);
         }
+        super.render(gc, sbg, g);
     }
 
     public void update(GameContainer gc, StateBasedGame sbg, int delta) throws SlickException {
