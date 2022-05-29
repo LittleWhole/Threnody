@@ -5,7 +5,7 @@ import inventory.Inventory;
 import java.io.Serializable;
 
 public class PlayerInventory extends PlayerData implements Serializable {
-    private Inventory itemInventory;
+    private final Inventory itemInventory;
     private Inventory cardInventory;
 
     public PlayerInventory() {

@@ -77,7 +77,7 @@ public class Game extends ThrenodyGameState {
         overworld = new GameMap("res/tilemap/overworld.tmx");
         background = new Background();
         gc.setShowFPS(true);
-        this.gc = gc;
+        Game.gc = gc;
         plrPosition = new Coordinate(0,0);
         enemyTeam = new ArrayList<>();
         plrTeam = new ArrayList<>();
@@ -98,8 +98,7 @@ public class Game extends ThrenodyGameState {
         ));
 
         // Initialize the Player
-        plr = new Player(plrPosition);
-        plr.setAttack(20);
+        plr = (Player) new Player(plrPosition).setAttack(10);
         plrTeam.add(plr);
         System.out.println("[VERBOSE] Player initialized");
         enemy = new Enemy(10, 0);

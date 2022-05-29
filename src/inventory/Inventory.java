@@ -7,7 +7,7 @@ import java.util.ArrayList;
 
 public class Inventory implements Serializable {
 
-    private ArrayList<ItemStack> content;
+    private final ArrayList<ItemStack> content;
     private int size;
 
     public Inventory(int size) {

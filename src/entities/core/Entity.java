@@ -128,14 +128,14 @@ public abstract class Entity {
 		this.position.updatePosition(dx, dy);
 		this.dy = 0;
 		this.dx = 0;
-	};
+	}
 
-	protected void checkCollisions() {
+    protected void checkCollisions() {
 		checkEntityCollisions(); // Entity Collisions
 		checkScreenCollisions(); // Screen Collisions
-	};
+	}
 
-	// Check collision with the edge of the screen
+    // Check collision with the edge of the screen
 	protected void checkScreenCollisions() {
 		// Check left/right borders
 		if (position.x - width / 2 < 0 || Main.RESOLUTION_X / Constants.ImageConstants.PIXELS_PER_UNIT < position.x + width / 2) {
@@ -170,9 +170,7 @@ public abstract class Entity {
 	}
 	// Determines if two entities are on the same team
 	private boolean sameTeam(Entity e) {
-		if(team == Team.NEUTRAL || team != e.team) {
-			return false;
-		} else return true;
+        return team != Team.NEUTRAL && team == e.team;
 	}
 
 	// Unique collision method that can be overwritten in extensions of this class

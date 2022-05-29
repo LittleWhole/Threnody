@@ -12,9 +12,9 @@ import org.newdawn.slick.font.effects.OutlineEffect;
 import util.DrawUtilities;
 
 public class DamageNumber implements Updatable {
-    private int value;
-    private float x;
-    private float y;
+    private final int value;
+    private final float x;
+    private final float y;
     private TrueTypeFont font;
     private TrueTypeFont fontOutline;
     private Color color;

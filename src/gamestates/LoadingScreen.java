@@ -27,7 +27,7 @@ public class LoadingScreen extends ThrenodyGameState {
     private Sound music;
     private Image logo;
 
-    private int id;
+    private final int id;
 
     private int totalTasks;
     private int tasksDone;

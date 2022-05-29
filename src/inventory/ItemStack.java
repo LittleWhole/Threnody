@@ -4,8 +4,8 @@ import java.io.Serializable;
 import java.util.Objects;
 
 public class ItemStack implements Cloneable, Serializable {
-    private Material type;
-    private int amount;
+    private final Material type;
+    private final int amount;
     private byte data;
 
     public ItemStack(Material type) {

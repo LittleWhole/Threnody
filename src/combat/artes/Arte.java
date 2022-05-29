@@ -44,7 +44,8 @@ public abstract class Arte<T extends Unit> {
 
     protected ElementType element;
 
-    protected enum AnimationType { OWNER, TARGET, REVERSE_TARGET };
+    protected enum AnimationType { OWNER, TARGET, REVERSE_TARGET }
+
     protected AnimationType aniType;
 
     protected Arte(T owner) throws SlickException {
@@ -123,7 +124,7 @@ public abstract class Arte<T extends Unit> {
             spritesheetX = 0;
             spritesheetY++;
         }
-    };
+    }
 
     /*public void render(Unit target, Graphics g) {
 

@@ -38,6 +38,6 @@ public class Flamberge extends Arte<Player> {
 
     @Override
     public void activation(Unit target) {
-        if (timer == 20) target.takeDamage((int) (owner.calculateDamage(ElementType.FIRE) * 1.2), ElementType.FIRE);
+        if (timer == 20) target.takeDamage((int) (owner.calculateDamage(ElementType.FIRE) * 2.2), ElementType.FIRE);
     }
 }

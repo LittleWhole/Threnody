@@ -14,7 +14,7 @@ public class NPC<T extends NPC<?>> extends Unit<T> {
     public void setCombatState(EnemyStates combatState) {
         this.combatState = combatState;
     }
-    private int interactLength = 120;
+    private final int interactLength = 120;
     private int timer;
     private boolean isInteracting;
     public EnemyStates getCombatState() {

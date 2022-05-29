@@ -8,7 +8,7 @@ import entities.units.player.PlayerState;
 
 import java.io.Serializable;
 
-public abstract strictfp sealed class PlayableCharacter extends PlayerData implements Serializable permits Sigur, Phaedra {
+public abstract sealed class PlayableCharacter extends PlayerData implements Serializable permits Sigur, Phaedra {
 
     // PlayableCharacter is a data class. It will only be used to store characters' playerdata and will only be instantiated once per character.
     protected int level, exp, maxExp;

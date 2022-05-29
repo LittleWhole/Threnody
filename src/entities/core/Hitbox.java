@@ -7,7 +7,7 @@ import org.newdawn.slick.Graphics;
 
 // The hitbox of the entity, basically
 public class Hitbox {
-	private Entity entity;
+	private final Entity entity;
 
 	private float width;
 	private float height;
@@ -127,10 +127,9 @@ public class Hitbox {
 				Vector.project(v8, axes1[1]),
 				Vector.project(v7, axes1[1])
 				) .isIn(-1, 1);
-		if(!b4) return false; // Short circuiting
-		
-		return true; // If all booleans are true, the two rectangles will collide
-	}
+        return b4; // Short circuiting
+// If all booleans are true, the two rectangles will collide
+    }
 	
 	// Helper method 
 	private Vector relToCenter(Vector v1, float x, float y) {

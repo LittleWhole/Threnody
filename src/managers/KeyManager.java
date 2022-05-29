@@ -16,9 +16,9 @@ public final class KeyManager implements Predicate<Integer> {
 
 	private KeyManager() { throw new IllegalStateException("Utility class"); }
 
-	private Player player;
-	private Input input;
-	private GameMap map;
+	private final Player player;
+	private final Input input;
+	private final GameMap map;
 	
 	public KeyManager(Input input, Game game) {
 		this.input = input;

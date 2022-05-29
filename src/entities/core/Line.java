@@ -18,9 +18,6 @@ public class Line {
 			return true;
 		} else if(a1 < xRight && xRight < a2) {
 			return true;
-		} else if(xLeft < a1 && xRight > a2) {
-			return true;
-		}
-		else return false;
+		} else return xLeft < a1 && xRight > a2;
 	}
 }

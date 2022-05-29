@@ -9,7 +9,7 @@ import org.newdawn.slick.state.StateBasedGame;
 
 public class IntroCredit extends ThrenodyGameState {
 
-    private int id;
+    private final int id;
     private Image logo;
     private StateBasedGame sbg;
 

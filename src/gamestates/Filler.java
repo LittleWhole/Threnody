@@ -10,7 +10,7 @@ import org.newdawn.slick.state.transition.FadeInTransition;
 import org.newdawn.slick.state.transition.FadeOutTransition;
 
 public class Filler extends ThrenodyGameState {
-    private int id;
+    private final int id;
     private StateBasedGame sbg;
     private int counter = 0;
 

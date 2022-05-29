@@ -18,7 +18,7 @@ import graphics.ui.Button;
 import util.DrawUtilities;
 
 public class TitleScreen extends ThrenodyGameState {
-    private int id;
+    private final int id;
     public Background background;
 
     private Image title;

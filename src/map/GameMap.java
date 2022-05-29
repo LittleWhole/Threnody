@@ -13,8 +13,8 @@ public class GameMap extends TiledMap {
 
     private int tileId;
     private int layerIndex;
-    private boolean solids[][];
-    private Polygon hitboxes[][];
+    private final boolean[][] solids;
+    private final Polygon[][] hitboxes;
 
     public GameMap(String ref) throws SlickException {
         super(ref, true);

@@ -15,8 +15,8 @@ import java.util.concurrent.ConcurrentLinkedQueue;
 
 public final class CombatManager {
 
-    private volatile List<Player> players;
-    private volatile List<Enemy> enemies;
+    private final List<Player> players;
+    private final List<Enemy> enemies;
     private int round;
     private int plrTurn;
     private int enemyTurn;
