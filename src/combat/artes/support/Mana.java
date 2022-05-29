@@ -7,30 +7,20 @@ import entities.units.player.Player;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.SlickException;
+import org.newdawn.slick.SpriteSheet;
 import playerdata.characters.PlayableCharacter;
 
 public class Mana extends Arte<Player> {
-
-    public static final String name = "Fortification";
-    public static final ArteType type = ArteType.SUPPORT;
     private final int healingValue = 10;
 
     public Mana(Player owner) throws SlickException {
         super(owner);
+        name = "Mana";
+        arteType = ArteType.SUPPORT;
+        aniType = AnimationType.OWNER;
         cost = 0;
-        castDuration = 100;
-    }
-
-    @Override
-    public void use(Unit target, GameContainer gc) {
-        castTimestamp = gc.getTime();
-        animation(target, gc.getGraphics());
-        activation(target);
-    }
-
-    @Override
-    public void animation(Unit target, Graphics g) {
-
+        castDuration = 75;
+        this.aniSheet = new SpriteSheet("res/animations/combat/mana.png",200, 200);
     }
 
     @Override

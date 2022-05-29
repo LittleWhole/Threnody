@@ -6,10 +6,7 @@ import combat.artes.ElementType;
 import entities.units.Unit;
 import entities.units.player.Player;
 import gamestates.BattleState;
-import org.newdawn.slick.GameContainer;
-import org.newdawn.slick.Graphics;
-import org.newdawn.slick.Image;
-import org.newdawn.slick.SlickException;
+import org.newdawn.slick.*;
 import playerdata.characters.PlayableCharacter;
 
 public class DualTheSol extends Arte<Player> {
@@ -18,18 +15,16 @@ public class DualTheSol extends Arte<Player> {
         super(owner);
         name = "Dual the Sol";
         arteType = ArteType.ELEMENTAL;
+        aniType = AnimationType.TARGET;
         element = ElementType.LIGHT;
-        castDuration = 74;
+        castDuration = 70;
         //this.card = new Image("res/beta/elementalCard.png");
-    }
-
-    @Override
-    public void animation(Unit target, Graphics g) {
-
+        this.aniSheet = new SpriteSheet("res/animations/combat/dual_the_sol.png",200, 200);
     }
 
     @Override
     public void activation(Unit target) {
-        if (timer == 40) target.takeDamage((int) (owner.calculateDamage(element) * 1.5), element);
+        if (timer == 24) target.takeDamage((int) (owner.calculateDamage(element) * 1.2), element);
+        if (timer == 34 || timer == 44 || timer == 54 || timer == 64) target.takeDamage((int) (owner.calculateDamage(ElementType.FIRE) * 0.1), ElementType.FIRE);
     }
 }

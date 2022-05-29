@@ -22,6 +22,8 @@ import static core.Constants.CombatConstants.*;
 @SuppressWarnings({"unchecked"})
 public abstract class Unit<T extends Unit<?>> extends Entity {
 
+    protected final Random R = new Random();
+
     // Abbreviations: LVL, EXP, HP, ATK, DEF, CR, CD, EATK, EDEF, AFF
     protected int level;
     protected int health;
@@ -111,7 +113,7 @@ public abstract class Unit<T extends Unit<?>> extends Entity {
         if (element == PHYSICAL) damage = (amount * DEFENSE_MULTIPLIER)/(DEFENSE_MULTIPLIER + defense);
         else damage = (amount * DEFENSE_MULTIPLIER)/(DEFENSE_MULTIPLIER + (defense * EDEF_DEF_DIVISOR) + eDefense);
         //if(amount>=health) BattleState.damageNumbers.add(new DamageNumber(amount, hitBox.getCenterX(), hitBox.getCenterY(), element.color));
-        /*else*/ BattleState.damageNumbers.add(new DamageNumber((int) Math.round(damage), hitBox.getCenterX(), hitBox.getCenterY(), element.color));
+        /*else*/ BattleState.damageNumbers.add(new DamageNumber((int) Math.round(damage), hitBox.getCenterX() + R.nextInt(-50, 51), hitBox.getCenterY() + R.nextInt(-50, 51), element.color));
         health -= (int) Math.round(damage);
         return (T) this;
     }
