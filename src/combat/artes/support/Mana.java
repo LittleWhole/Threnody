@@ -6,6 +6,7 @@ import entities.units.Unit;
 import entities.units.player.Player;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
+import org.newdawn.slick.SlickException;
 import playerdata.characters.PlayableCharacter;
 
 public class Mana extends Arte<Player> {
@@ -14,7 +15,7 @@ public class Mana extends Arte<Player> {
     public static final ArteType type = ArteType.SUPPORT;
     private final int healingValue = 10;
 
-    public Mana(Player owner) {
+    public Mana(Player owner) throws SlickException {
         super(owner);
         cost = 0;
         castDuration = 100;

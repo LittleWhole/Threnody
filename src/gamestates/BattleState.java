@@ -153,7 +153,7 @@ public class BattleState extends ThrenodyGameState {
 
     public void mousePressed(int button, int x, int y) {
         for (var i = 0; i < 6; i++) {
-            if (plrs.get(0).onCard(gc.getInput(), i)) plrs.get(0).setMove(plrs.get(0).selection(i));
+            if (plrs.get(0).onCard(gc.getInput(), i)) plrs.get(0).getClickArteQueue().offer(plrs.get(0).selection(i));
         }
     }
 

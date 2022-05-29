@@ -6,6 +6,7 @@ import entities.units.Unit;
 import entities.units.player.Player;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
+import org.newdawn.slick.SlickException;
 import playerdata.characters.Phaedra;
 import playerdata.characters.PlayableCharacter;
 
@@ -16,7 +17,7 @@ public class Catalysis extends Arte<Player> {
     public static final ArteType type = ArteType.SUPPORT;
     private final int affinity = 20;
 
-    public Catalysis(Player owner) {
+    public Catalysis(Player owner) throws SlickException {
         super(owner);
         cost = 1;
     }

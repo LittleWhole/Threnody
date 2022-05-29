@@ -21,7 +21,7 @@ public class RendingGale extends Arte<Player> {
         arteType = ArteType.ELEMENTAL;
         element = ElementType.WIND;
         castDuration = 74;
-        this.card = new Image("res/beta/elementalCard.png");
+        //this.card = new Image("res/beta/elementalCard.png");
     }
 
     @Override

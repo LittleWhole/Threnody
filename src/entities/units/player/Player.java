@@ -48,6 +48,7 @@ public final class Player<T extends Player<?>> extends Unit<T> {
     private List<Arte<? super Player>> arteDeck;
     private List<Arte<? super Player>> arteHand;
     private Queue<Arte<? super Player>> arteQueue;
+    private Queue<Arte<? super Player>> clickArteQueue;
     private Arte<? super Player> move;
     private int queue;
     private PlayableCharacter character;
@@ -66,6 +67,7 @@ public final class Player<T extends Player<?>> extends Unit<T> {
         this.character = new Sigur();
         this.arteDeck = new ArrayList<>();
         this.arteQueue = new ConcurrentLinkedQueue<>();
+        this.clickArteQueue = new ConcurrentLinkedQueue<>();
         for(int i = 0; i < 20; i++) {
             arteDeck.add(new SonicSlash(this));
             arteDeck.add(new DragonFang(this));
@@ -97,11 +99,16 @@ public final class Player<T extends Player<?>> extends Unit<T> {
             if (onCard(gc.getInput(), i)) arteHand.get(i).getCard().getScaledCopy(1.3f).drawCentered(cardX, cardY);
             else arteHand.get(i).getCard().drawCentered(cardX, cardY);
             g.setColor(Color.white);
-            DrawUtilities.drawStringCentered(g, arteHand.get(i).getName(), Main.font, (Main.getScreenWidth()/7)*(i+1), Main.getScreenHeight()-300);
-            DrawUtilities.drawStringCentered(g, arteHand.get(i).getArteType().name, Main.font, (Main.getScreenWidth()/7)*(i+1), Main.getScreenHeight()-400);
+//            DrawUtilities.drawStringCentered(g, arteHand.get(i).getName(), Main.font, (Main.getScreenWidth()/7)*(i+1), Main.getScreenHeight()-300);
+//            DrawUtilities.drawStringCentered(g, arteHand.get(i).getArteType().name, Main.font, (Main.getScreenWidth()/7)*(i+1), Main.getScreenHeight()-400);
         }
-        move = cardSelect(gc.getInput());
-        if (move != null) arteQueue.add(move);
+        if (!clickArteQueue.isEmpty()) {
+            arteQueue.addAll(clickArteQueue);
+            clickArteQueue.clear();
+        } else {
+            move = cardSelect(gc.getInput());
+            if (move != null) arteQueue.add(move);
+        }
         /*if(move != null) {
             move.use(target, gc);
         }*/
@@ -259,6 +266,10 @@ public final class Player<T extends Player<?>> extends Unit<T> {
 
     public List<Arte<? super Player>> getArteHand() {
         return arteHand;
+    }
+
+    public Queue<Arte<? super Player>> getClickArteQueue() {
+        return clickArteQueue;
     }
 
     @Override

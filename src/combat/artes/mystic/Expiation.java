@@ -17,7 +17,7 @@ public class Expiation extends MysticArte<Player> {
         super(owner);
         name = "Expiation";
         arteType = ArteType.MYSTIC;
-        this.card = new Image("res/beta/mysticCard.png");
+        //this.card = new Image("res/beta/mysticCard.png");
     }
 
     @Override

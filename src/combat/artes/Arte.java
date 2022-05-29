@@ -42,11 +42,14 @@ public abstract class Arte<T extends Unit> {
 
     protected ElementType element;
 
-    protected Arte(T owner) {
+    protected Arte(T owner) throws SlickException {
         assert character != null;
         this.owner = owner;
         timer = 0;
         this.castTimestamp = -1;
+        try {
+            this.card = new Image("res/ui/cards/" + this.getClass().getPackageName().substring(13) + "/" + this.getClass().getSimpleName() + ".png");
+        } catch (RuntimeException ignored) {}
     }
 
     /*   if (!using) {

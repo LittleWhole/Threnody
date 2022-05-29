@@ -20,7 +20,7 @@ public class DualTheSol extends Arte<Player> {
         arteType = ArteType.ELEMENTAL;
         element = ElementType.LIGHT;
         castDuration = 74;
-        this.card = new Image("res/beta/elementalCard.png");
+        //this.card = new Image("res/beta/elementalCard.png");
     }
 
     @Override
