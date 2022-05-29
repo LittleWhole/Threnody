@@ -81,7 +81,7 @@ public final class Player<T extends Player<?>> extends Unit<T> {
     }
 
     public void resetHitbox()   {
-        this.hitBox = new Rectangle((Main.getScreenWidth()/2) - this.getWidth()/2, (Main.getScreenHeight()/2) + this.height+0.6f, this.width, this.height/2);
+        this.hitBox = new Rectangle((Main.getScreenWidth()/2) - this.getWidth()/2, (Main.getScreenHeight()/2) + this.height*.06f, this.width, this.height/2);
     }
 
     public void startBattle()   {
