@@ -17,7 +17,7 @@ public class InnumerableWounds extends MysticArte<Player> {
         super(owner);
         name = "Innumerable Wounds";
         arteType = ArteType.MYSTIC;
-        //this.card = new Image("res/beta/mysticCard.png");
+        cost = 8;
     }
 
     @Override

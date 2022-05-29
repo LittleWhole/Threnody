@@ -20,7 +20,6 @@ public class Mana extends Arte<Player> {
         aniType = AnimationType.OWNER;
         cost = 0;
         castDuration = 75;
-        this.aniSheet = new SpriteSheet("res/animations/combat/Mana.png",200, 200);
     }
 
     @Override

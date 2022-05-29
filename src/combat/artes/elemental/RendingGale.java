@@ -18,9 +18,8 @@ public class RendingGale extends Arte<Player> {
         arteType = ArteType.ELEMENTAL;
         aniType = AnimationType.TARGET;
         element = ElementType.WIND;
+        cost = 5;
         castDuration = 64;
-        //this.card = new Image("res/beta/elementalCard.png");
-        this.aniSheet = new SpriteSheet("res/animations/combat/RendingGale.png",200, 200);
     }
 
     @Override

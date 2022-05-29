@@ -15,6 +15,7 @@ public class GardenOfInnocence extends MysticArte<Player> {
         super(owner);
         name = "Garden of Innocence";
         arteType = ArteType.MYSTIC;
+        cost = 7;
     }
 
     @Override

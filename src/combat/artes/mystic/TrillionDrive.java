@@ -17,7 +17,7 @@ public class TrillionDrive extends MysticArte<Player> {
         super(owner);
         name = "Trillion Drive";
         arteType = ArteType.MYSTIC;
-        //this.card = new Image("res/beta/mysticCard.png");
+        cost = 9;
     }
 
     @Override

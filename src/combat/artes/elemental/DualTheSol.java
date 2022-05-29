@@ -17,8 +17,8 @@ public class DualTheSol extends Arte<Player> {
         arteType = ArteType.ELEMENTAL;
         aniType = AnimationType.TARGET;
         element = ElementType.LIGHT;
+        cost = 5;
         castDuration = 70;
-        this.aniSheet = new SpriteSheet("res/animations/combat/DualTheSol.png",200, 200);
     }
 
     @Override
