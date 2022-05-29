@@ -182,4 +182,11 @@ public abstract class Arte<T extends Unit> {
     public ArteType getArteType() {
         return arteType;
     }
+
+    public void reset() throws SlickException {
+        timer = 0;
+        spritesheetX = 0;
+        spritesheetY = 0;
+        this.castTimestamp = -1;
+    }
 }

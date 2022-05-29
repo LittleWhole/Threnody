@@ -1,5 +1,6 @@
 package managers;
 
+import combat.artes.Arte;
 import entities.units.enemy.Enemy;
 import entities.units.Unit;
 import entities.units.enemy.EnemyStates;
@@ -9,7 +10,9 @@ import org.newdawn.slick.Graphics;
 import entities.units.player.PlayerState;
 import util.DrawUtilities;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public final class CombatManager {
 
@@ -42,6 +45,8 @@ public final class CombatManager {
             if(players.get(plrTurn).getState() == PlayerState.SELECTING) {
                 players.get(plrTurn).move(enemies.get(0), gc, g);
                 g.drawString("SELECTING", 100, 0);
+                try { g.drawString("Cards selected: " + players.get(plrTurn).getArteQueue().stream().map(a -> ((Arte) a).getName())
+                        .collect(Collectors.joining(", ")), 500, 500); } catch (Exception ignored) {};
             }
             if(players.get(plrTurn).getState() == PlayerState.CASTING)   {
                 players.get(plrTurn).attack(enemies.get(0), gc);

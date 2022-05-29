@@ -76,7 +76,7 @@ public final class Player<T extends Player<?>> extends Unit<T> {
             arteDeck.add(new ImpactCross(this));
             //arteDeck.add(new DragonFang(this));
             arteDeck.add(new Elixir(this));
-            arteDeck.add(new Mana(this));
+            arteDeck.add(new DragonFang(this));
             arteDeck.add(new RendingGale(this));
             arteDeck.add(new AquaLimit(this));
             //arteDeck.add(new DivineConqueror(this));
@@ -197,6 +197,7 @@ public final class Player<T extends Player<?>> extends Unit<T> {
         Arte<? super Player> selected = null;
         try {
             selected = arteHand.get(i);
+            selected.reset();
             arteHand.remove(i);
         } catch (IndexOutOfBoundsException ignored) {}
         finally {
@@ -273,6 +274,10 @@ public final class Player<T extends Player<?>> extends Unit<T> {
 
     public List<Arte<? super Player>> getArteHand() {
         return arteHand;
+    }
+
+    public Queue<Arte<? super Player>> getArteQueue() {
+        return arteQueue;
     }
 
     public Queue<Arte<? super Player>> getClickArteQueue() {
