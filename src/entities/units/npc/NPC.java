@@ -40,7 +40,7 @@ public class NPC<T extends NPC<?>> extends Unit<T> {
         gc.getGraphics().drawImage(sprite, -plrX - position.getX() + width, -plrY/2 - position.getY() + height);
         gc.getGraphics().setColor(new Color(255, 0,0,0.5f));
         hitBox.setX(-plrX - position.getX() + width);
-        hitBox.setY((-plrY/2) + this.getHeight()*1.6f);
+        hitBox.setY((-plrY/2) - position.getY() + this.getHeight()*1.6f);
 
         if(timer < interactLength) {
             DrawUtilities.drawStringCentered(gc.getGraphics(),"Hello!!", -plrX - position.getX(),-plrY/2 + this.getHeight());
