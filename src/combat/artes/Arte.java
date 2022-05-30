@@ -85,6 +85,10 @@ public abstract class Arte<T extends Unit> {
         }
     }*/
     public void use(Unit target, GameContainer gc) {
+        if (timer == 0) {
+            owner.generateMana(-cost);
+            owner.setQueuedManaRemoval(owner.getQueuedManaRemoval() - cost);
+        }
         if (!finished()) {
             activation(target);
             if (timer < 60) {
@@ -182,6 +186,10 @@ public abstract class Arte<T extends Unit> {
 
     public ArteType getArteType() {
         return arteType;
+    }
+
+    public int getCost() {
+        return cost;
     }
 
     public void reset() throws SlickException {

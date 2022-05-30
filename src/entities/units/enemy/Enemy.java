@@ -8,6 +8,7 @@ import entities.core.Team;
 import entities.units.Unit;
 import entities.units.player.Player;
 import gamestates.BattleState;
+import managers.ImageManager;
 import org.newdawn.slick.*;
 import org.newdawn.slick.geom.Rectangle;
 import org.newdawn.slick.geom.RoundedRectangle;
@@ -69,11 +70,9 @@ public class Enemy<T extends Enemy<?>> extends Unit<T> {
 
         hitBox.setX(-plrX - position.getX() + width);
         hitBox.setY((-plrY/2) -position.getY() + this.getHeight()*1.6f);
-        var rect = new RoundedRectangle(hitBox.getX(), hitBox.getY(), 50, 50, RoundedRectangle.ALL);
-        g.setColor(Color.red);
-        g.fill(rect);
+        ImageManager.getImage("health").drawCentered(hitBox.getX() + hitBox.getWidth() / 2, hitBox.getY() - this.getHeight() / 2 - 15);
         g.setColor(Color.white);
-        DrawUtilities.drawStringCentered(g, String.valueOf(health), rect);
+        DrawUtilities.drawStringCentered(g, String.valueOf(health), hitBox.getX() + hitBox.getWidth() / 2, hitBox.getY() - this.getHeight() / 2 - 15);
     }
 
     public void overworldUpdate()    {

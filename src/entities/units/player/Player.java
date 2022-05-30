@@ -6,7 +6,10 @@ import combat.artes.elemental.DualTheSol;
 import combat.artes.elemental.RendingGale;
 import combat.artes.strike.DragonFang;
 import combat.artes.strike.ImpactCross;
+import combat.artes.strike.SonicSlash;
 import combat.artes.support.Elixir;
+import combat.artes.support.Heal;
+import combat.artes.support.Mana;
 import core.Constants;
 import core.Main;
 import entities.core.Coordinate;
@@ -15,6 +18,7 @@ import entities.units.npc.NPC;
 import entities.units.Unit;
 import gamestates.Game;
 import managers.AnimationManager;
+import managers.ImageManager;
 import org.newdawn.slick.*;
 import org.newdawn.slick.geom.Rectangle;
 import org.newdawn.slick.geom.RoundedRectangle;
@@ -22,6 +26,7 @@ import org.newdawn.slick.state.StateBasedGame;
 import playerdata.characters.PlayableCharacter;
 import playerdata.characters.Sigur;
 import util.DrawUtilities;
+import util.ThrenodyException;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -30,7 +35,6 @@ import java.util.concurrent.ConcurrentLinkedQueue;
 
 @SuppressWarnings({"unchecked"})
 public final class Player<T extends Player<?>> extends Unit<T> {
-    private int mana;
     public PlayerState getState() {
         return state;
     }
@@ -53,6 +57,8 @@ public final class Player<T extends Player<?>> extends Unit<T> {
     public Player(Coordinate pos) throws SlickException {
         super();
         this.health = 100;
+        this.mana = 3;
+        this.turnMana = 3;
         this.width = 104;
         this.height = 216;
         this.position = pos;
@@ -73,6 +79,9 @@ public final class Player<T extends Player<?>> extends Unit<T> {
             arteDeck.add(new AquaLimit(this));
             //arteDeck.add(new DivineConqueror(this));
             arteDeck.add(new DualTheSol(this));
+            arteDeck.add(new Heal(this));
+            arteDeck.add(new Mana(this));
+            arteDeck.add(new SonicSlash(this));
         }
         this.hitBox = new Rectangle((Main.getScreenWidth()/2) - this.getWidth()/2, (Main.getScreenHeight()/2) + this.height*0.6f, this.width, this.height/2);
     }
@@ -189,9 +198,11 @@ public final class Player<T extends Player<?>> extends Unit<T> {
         Arte<? extends Unit> selected = null;
         try {
             selected = arteHand.get(i);
+            if (selected.getCost() > mana - queuedManaRemoval) throw new ThrenodyException("Insufficient mana");
             selected.reset();
+            queuedManaRemoval += selected.getCost();
             arteHand.remove(i);
-        } catch (IndexOutOfBoundsException ignored) {}
+        } catch (IndexOutOfBoundsException | ThrenodyException ignored) { selected = null; }
         finally {
             this.state = PlayerState.SELECTING;
             return selected;
@@ -219,11 +230,9 @@ public final class Player<T extends Player<?>> extends Unit<T> {
         g.setColor(new Color(255, 0,0,0.5f));
         hitBox.setX(plrX - position.getX() + width/2);
         hitBox.setY((-plrY/2) -position.getY() + this.getHeight()*1.6f);
-        var rect = new RoundedRectangle(hitBox.getX(), hitBox.getY(), 50, 50, RoundedRectangle.ALL);
-        g.setColor(Color.red);
-        g.fill(rect);
+        ImageManager.getImage("health").drawCentered(hitBox.getX() + hitBox.getWidth() / 2, hitBox.getY() - this.getHeight() - 30);
         g.setColor(Color.white);
-        DrawUtilities.drawStringCentered(g, String.valueOf(health), rect);
+        DrawUtilities.drawStringCentered(g, String.valueOf(health), hitBox.getX() + hitBox.getWidth() / 2, hitBox.getY() - this.getHeight() - 30);
     }
 
     public void addToDeck(Arte<Player> a)   {
