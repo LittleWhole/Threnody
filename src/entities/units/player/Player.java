@@ -223,11 +223,12 @@ public final class Player<T extends Player<?>> extends Unit<T> {
     public void battleRender(Graphics g, float plrX, float plrY)  {
         g.drawImage(sprite, -plrX - position.getX(), -plrY/2 - position.getY());
         g.setColor(new Color(255, 0,0,0.5f));
-        hitBox.setX(plrX - position.getX() + width/2);
-        hitBox.setY((-plrY/2)  + this.getHeight()*1.6f);
-        ImageManager.getImage("health").drawCentered(hitBox.getX() + hitBox.getWidth() / 2, hitBox.getY() - this.getHeight() - 30);
+
+        hitBox.setX(-plrX - position.getX() + width/3);
+        hitBox.setY((-plrY/2) - position.getY() + height/4);
+        ImageManager.getImage("health").drawCentered(hitBox.getX() + hitBox.getWidth() / 3.5f, hitBox.getY() - this.getHeight() / 2 + 15);
         g.setColor(Color.white);
-        DrawUtilities.drawStringCentered(g, String.valueOf(health), hitBox.getX() + hitBox.getWidth() / 2, hitBox.getY() - this.getHeight() - 30);
+        DrawUtilities.drawStringCentered(g, String.valueOf(health), hitBox.getX() + hitBox.getWidth() / 3.5f, hitBox.getY() - this.getHeight() / 2 + 15);
     }
 
     public void addToDeck(Arte<Player> a)   {
