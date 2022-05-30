@@ -8,8 +8,8 @@ import org.newdawn.slick.Graphics;
 import org.newdawn.slick.SlickException;
 import playerdata.characters.PlayableCharacter;
 
+@SuppressWarnings({"rawtypes"})
 public class Fortification extends Arte<Unit> {
-
     private final int healingValue = 10;
 
     public Fortification(Unit owner) throws SlickException {

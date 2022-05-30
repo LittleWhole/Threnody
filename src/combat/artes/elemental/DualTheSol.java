@@ -9,6 +9,7 @@ import gamestates.BattleState;
 import org.newdawn.slick.*;
 import playerdata.characters.PlayableCharacter;
 
+@SuppressWarnings({"rawtypes"})
 public class DualTheSol extends Arte<Player> {
 
     public DualTheSol(Player owner) throws SlickException {

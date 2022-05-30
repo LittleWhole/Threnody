@@ -9,8 +9,8 @@ import org.newdawn.slick.*;
 import playerdata.characters.PlayableCharacter;
 import playerdata.characters.Sigur;
 
+@SuppressWarnings({"rawtypes"})
 public class SonicSlash extends Arte<Player> {
-
     public static final Class<? extends PlayableCharacter> character = Sigur.class;
 
     public SonicSlash(Player owner) throws SlickException {

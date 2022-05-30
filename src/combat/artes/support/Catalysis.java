@@ -10,8 +10,8 @@ import org.newdawn.slick.SlickException;
 import playerdata.characters.Phaedra;
 import playerdata.characters.PlayableCharacter;
 
+@SuppressWarnings({"rawtypes"})
 public class Catalysis extends Arte<Player> {
-
     private final int affinity = 20;
 
     public Catalysis(Player owner) throws SlickException {

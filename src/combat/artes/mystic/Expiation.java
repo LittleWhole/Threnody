@@ -11,8 +11,8 @@ import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
 import playerdata.characters.PlayableCharacter;
 
+@SuppressWarnings({"rawtypes"})
 public class Expiation extends MysticArte<Player> {
-
     public Expiation(Player owner) throws SlickException {
         super(owner);
         name = "Expiation";

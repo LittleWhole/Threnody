@@ -3,11 +3,9 @@ package managers;
 import combat.artes.Arte;
 import entities.units.enemy.Enemy;
 import entities.units.Unit;
-import entities.units.enemy.EnemyStates;
 import entities.units.player.Player;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
-import entities.units.player.PlayerState;
 import util.DrawUtilities;
 
 import java.util.*;
@@ -33,8 +31,13 @@ public final class CombatManager {
     public void roundStart() {
         plrTurn = 0;
         enemyTurn = 0;
-        players.forEach(p -> p.setState(PlayerState.SELECTING));
-        enemies.forEach(e -> e.setCombatState(EnemyStates.CHOOSING));
+        players.forEach(p -> {
+            p.setState(Player.PlayerState.SELECTING);
+            p.setMana(p.getTurnMana() + p.getManaAdd());
+            p.setManaAdd(0);
+            p.setQueuedManaRemoval(0);
+        });
+        enemies.forEach(e -> e.setCombatState(Enemy.EnemyState.CHOOSING));
     }
 
     public CombatState combat(Graphics g, GameContainer gc) throws InterruptedException {
@@ -46,7 +49,7 @@ public final class CombatManager {
             if (enemies.size() == 0) {
                 return CombatState.WIN;
             }
-            if(players.get(plrTurn).getState() == PlayerState.SELECTING) {
+            if(players.get(plrTurn).getState() == Player.PlayerState.SELECTING) {
                 players.get(plrTurn).move(enemies.get(0), gc, g);
                 g.drawString("SELECTING", 100, 0);
                 /*
@@ -62,7 +65,7 @@ public final class CombatManager {
                     i++;
                 }
             }
-            if(players.get(plrTurn).getState() == PlayerState.CASTING)   {
+            if(players.get(plrTurn).getState() == Player.PlayerState.CASTING)   {
                 players.get(plrTurn).attack(enemies.get(0), gc);
                 g.drawString("CASTING", 100, 0);
 
@@ -79,7 +82,7 @@ public final class CombatManager {
                     i++;
                 }
             }
-            if((players.get(plrTurn)).getState() == PlayerState.DONE) {
+            if((players.get(plrTurn)).getState() == Player.PlayerState.DONE) {
                 updateTeams(enemies);
                 if (enemies.size() == 0) {
                     return CombatState.WIN;
@@ -91,14 +94,14 @@ public final class CombatManager {
             if (players.size() == 0) {
                 return CombatState.LOSE;
             }
-            if((enemies.get(enemyTurn-(players.size()-1))).getCombatState() == EnemyStates.CHOOSING)  {
+            if((enemies.get(enemyTurn-(players.size()-1))).getCombatState() == Enemy.EnemyState.CHOOSING)  {
                 (enemies.get(enemyTurn-(players.size()-1))).battleSelect();
             }
-            if((enemies.get(enemyTurn-(players.size()-1))).getCombatState() == EnemyStates.MOVING)  {
+            if((enemies.get(enemyTurn-(players.size()-1))).getCombatState() == Enemy.EnemyState.MOVING)  {
                 (enemies.get(enemyTurn-(players.size()-1))).battleMove(players.get(0), gc);
                 DrawUtilities.drawStringCentered(g, "MOVING", 800, 100);
             }
-            if((enemies.get(enemyTurn-(players.size()-1))).getCombatState() == EnemyStates.DONE) {
+            if((enemies.get(enemyTurn-(players.size()-1))).getCombatState() == Enemy.EnemyState.DONE) {
                 updateTeams(players);
                 if (players.size() == 0) {
                     return CombatState.LOSE;
@@ -121,11 +124,8 @@ public final class CombatManager {
         return round;
     }
 
-    private void updateTeams (List<? extends Unit> units)    {
+    private void updateTeams(List<? extends Unit> units)    {
         for(int i = 0; i < units.size();i++)  {
-            units.get(i).setMana(units.get(i).getTurnMana() + units.get(i).getManaAdd());
-            units.get(i).setManaAdd(0);
-            units.get(i).setQueuedManaRemoval(0);
             if(units.get(i).getHealth() <= 0) {
                 units.remove(i);
             }

@@ -9,6 +9,7 @@ import gamestates.BattleState;
 import org.newdawn.slick.*;
 import playerdata.characters.PlayableCharacter;
 
+@SuppressWarnings({"rawtypes"})
 public class AquaLimit extends Arte<Player> {
 
     public AquaLimit(Player owner) throws SlickException {

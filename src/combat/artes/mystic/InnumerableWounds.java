@@ -11,6 +11,7 @@ import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
 import playerdata.characters.PlayableCharacter;
 
+@SuppressWarnings({"rawtypes"})
 public class InnumerableWounds extends MysticArte<Player> {
 
     public InnumerableWounds(Player owner) throws SlickException {

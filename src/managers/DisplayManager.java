@@ -3,14 +3,8 @@ package managers;
 import core.Constants;
 import core.Main;
 import entities.core.Coordinate;
-import entities.core.Entity;
-import entities.units.player.PlayerOld;
 import gamestates.Game;
-import graphics.Background;
-import org.newdawn.slick.Color;
 import org.newdawn.slick.Graphics;
-
-import java.util.ArrayList;
 
 public final class DisplayManager {
 	private Graphics graphics;

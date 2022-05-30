@@ -2,7 +2,7 @@ package entities.units.npc;
 
 import entities.core.Coordinate;
 import entities.units.Unit;
-import entities.units.enemy.EnemyStates;
+import entities.units.enemy.Enemy;
 import org.newdawn.slick.*;
 import org.newdawn.slick.geom.Rectangle;
 import util.DrawUtilities;
@@ -11,17 +11,17 @@ import util.DrawUtilities;
 public class NPC<T extends NPC<?>> extends Unit<T> {
 
 
-    public void setCombatState(EnemyStates combatState) {
+    public void setCombatState(Enemy.EnemyState combatState) {
         this.combatState = combatState;
     }
     private final int interactLength = 120;
     private int timer;
     private boolean isInteracting;
-    public EnemyStates getCombatState() {
+    public Enemy.EnemyState getCombatState() {
         return combatState;
     }
 
-    protected EnemyStates combatState;
+    protected Enemy.EnemyState combatState;
     public NPC(float x, float y) throws SlickException {//later change parameters to also change size, level, speed, and sprite
         this.width = 104;
         this.height = 216;

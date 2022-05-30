@@ -9,8 +9,8 @@ import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.SlickException;
 
+@SuppressWarnings({"rawtypes"})
 public class GardenOfInnocence extends MysticArte<Player> {
-
     public GardenOfInnocence(Player owner) throws SlickException {
         super(owner);
         name = "Garden of Innocence";

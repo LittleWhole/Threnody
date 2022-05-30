@@ -4,7 +4,6 @@ import core.Constants;
 import entities.units.player.Player;
 import org.newdawn.slick.Image;
 import playerdata.PlayerData;
-import entities.units.player.PlayerState;
 
 import java.io.Serializable;
 

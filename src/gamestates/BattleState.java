@@ -1,29 +1,23 @@
 package gamestates;
 
-import combat.artes.Arte;
-import core.Fonts;
 import core.Main;
+import entities.core.Coordinate;
 import entities.units.Direction;
-import entities.units.Unit;
 import entities.units.enemy.Enemy;
 import entities.units.player.Player;
-import entities.units.player.PlayerState;
 import graphics.ui.combat.DamageNumber;
 import managers.CombatManager;
 import managers.ImageManager;
 import map.GameMap;
 import org.newdawn.slick.*;
-import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
 import util.DrawUtilities;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Queue;
-import java.util.Random;
 import java.util.concurrent.ConcurrentLinkedQueue;
-import java.util.stream.Collectors;
 
+@SuppressWarnings({"division"})
 public class BattleState extends ThrenodyGameState {
     private final int id;
     private GameContainer gc;
@@ -55,6 +49,7 @@ public class BattleState extends ThrenodyGameState {
         resultDuration = 255;
     }
 
+    @Override
     public void render(GameContainer gc, StateBasedGame sbg, Graphics g) throws SlickException {
         g.setFont(gc.getDefaultFont());
         battlefield.render(1000, -600);
@@ -104,44 +99,41 @@ public class BattleState extends ThrenodyGameState {
             if (n.isExpired()) damageNumbers.remove(n);
         });
         if(Main.debug)  {
-            for(Player p : plrs) {
-                DrawUtilities.drawStringCentered(g, String.valueOf(p.getHealth()), 100, 100);
-            }
+            plrs.forEach(p -> DrawUtilities.drawStringCentered(g, String.valueOf(p.getHealth()), 100, 100));
             g.drawString("" + combat.getRound(), 0, 0);
         }
         super.render(gc, sbg, g);
         Image mana = ImageManager.getImage("mana").getScaledCopy(2f);
         mana.drawCentered(Main.RESOLUTION_X / 17, Main.RESOLUTION_Y / 20 * 17);
         DrawUtilities.drawStringCentered(g, String.valueOf(plrs.get(turn()).getMana()), Main.fonts.VariableWidth.B60, Main.RESOLUTION_X / 17, Main.RESOLUTION_Y / 20 * 17 + 15);
+        if (plrs.get(turn()).getQueuedManaRemoval() > 0) {
+            g.setColor(Color.red);
+            DrawUtilities.drawStringCentered(g, String.valueOf(-plrs.get(turn()).getQueuedManaRemoval()), Main.fonts.VariableWidth.B60, Main.RESOLUTION_X / 17, Main.RESOLUTION_Y / 20 * 17 + 70);
+            g.setColor(Color.white);
+        }
     }
 
     public void update(GameContainer gc, StateBasedGame sbg, int delta) throws SlickException {
         // This is where you put your game's logic that executes each frame that isn't about drawing
     }
 
+    @Override
     public void enter(GameContainer gc, StateBasedGame sbg) throws SlickException {
         time = 0;
-        for(int i = 0; i < plrs.size(); i++)   {
+        for (int i = 0; i < plrs.size(); i++)   {
             //plrs.get(i).setPosition( -200 + i*200, i*1000);
             plrs.get(i).setPosition( -680, -460);
             plrs.get(i).setDirection(Direction.NORTH, Direction.EAST);
             plrs.get(i).startBattle();
         }
-        for(int i = 0; i < enemies.size(); i++)   {
-
-            switch(i)   {
-                case 0 ->   {
-                    enemies.get(i).setPosition( -1075 ,  0);
-                }
-                case 1  ->  {
-                    enemies.get(i).setPosition( -1075,  150);
-                }
-                case 2 ->   {
-                    enemies.get(i).setPosition( -1250 ,  0);
-                }
-            }
+        for (int i = 0; i < enemies.size(); i++)   {
+            enemies.get(i).setPosition(switch (i) {
+                case 0 ->  new Coordinate(-1075 , 0);
+                case 1 -> new Coordinate(-1075, 150);
+                case 2 -> new Coordinate( -1250 , 0);
+                default -> throw new IllegalStateException("Unexpected value: " + i);
+            });
             //enemies.get(i).setPosition( i * 200,  i * 200);
-
             enemies.get(i).setDirection(Direction.SOUTH, Direction.WEST);
         }
 
@@ -157,6 +149,7 @@ public class BattleState extends ThrenodyGameState {
 //        }
     }
 
+    @Override
     public void leave(GameContainer gc, StateBasedGame sbg) {
         // This code happens when you leave a gameState.
     }
@@ -165,16 +158,17 @@ public class BattleState extends ThrenodyGameState {
     @Override
     public void keyPressed(int key, char c) {
         super.keyPressed(key, c);
-        if (key == Input.KEY_ENTER) plrs.forEach(p -> p.setState(PlayerState.CASTING));
+        if (key == Input.KEY_ENTER) plrs.forEach(p -> p.setState(Player.PlayerState.CASTING));
     }
 
+    @Override
     public void mousePressed(int button, int x, int y) {
         try { for (var i = 0; i < 6; i++) if (plrs.get(turn()).onCard(gc.getInput(), i)) plrs.get(turn()).getClickArteQueue().offer(plrs.get(turn()).selection(i)); }
         catch (NullPointerException ignored) {};
     }
 
     public int turn() {
-        return combat.getPlrTurn() > plrs.size() - 1 ? plrs.size() -1 : combat.getPlrTurn();
+        return Math.min(combat.getPlrTurn(), plrs.size() - 1);
     }
 
 

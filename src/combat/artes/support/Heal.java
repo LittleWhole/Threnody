@@ -5,8 +5,8 @@ import combat.artes.ArteType;
 import entities.units.Unit;
 import org.newdawn.slick.*;
 
+@SuppressWarnings({"rawtypes"})
 public class Heal extends Arte<Unit> {
-
     public Heal(Unit owner) throws SlickException {
         super(owner);
         name = "Heal";

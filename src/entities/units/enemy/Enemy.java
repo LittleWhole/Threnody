@@ -6,12 +6,9 @@ import core.Main;
 import entities.core.Coordinate;
 import entities.core.Team;
 import entities.units.Unit;
-import entities.units.player.Player;
-import gamestates.BattleState;
 import managers.ImageManager;
 import org.newdawn.slick.*;
 import org.newdawn.slick.geom.Rectangle;
-import org.newdawn.slick.geom.RoundedRectangle;
 import util.DrawUtilities;
 
 import java.util.List;
@@ -22,7 +19,14 @@ import java.util.ArrayList;
 
 @SuppressWarnings({"unchecked"})
 public class Enemy<T extends Enemy<?>> extends Unit<T> {
-    protected EnemyStates turn;
+    public enum EnemyState {
+        //specific moves//
+        ATTACK, CHARGE, SPECIAL, IDLE,//specific moves it can make
+        //combat system states//
+        CHOOSING, MOVING, DONE
+    }
+
+    protected EnemyState turn;
     protected ArrayList<Enemy> enemyTeam;
     protected int moveDuration;
     protected long moveTimeStamp;
@@ -33,15 +37,15 @@ public class Enemy<T extends Enemy<?>> extends Unit<T> {
     protected Queue<Arte<? super Enemy>> arteQueue;
     protected Arte<? super Enemy> move;
 
-    public void setCombatState(EnemyStates combatState) {
+    public void setCombatState(EnemyState combatState) {
         this.combatState = combatState;
     }
 
-    public EnemyStates getCombatState() {
+    public EnemyState getCombatState() {
         return combatState;
     }
 
-    protected EnemyStates combatState;
+    protected EnemyState combatState;
     public Enemy(float x, float y) throws SlickException {//later change parameters to also change size, level, speed, and sprite
         super();
         this.health = 100;
@@ -60,7 +64,7 @@ public class Enemy<T extends Enemy<?>> extends Unit<T> {
         this.sprite = sheet.getSprite(0, 0);
         this.level = 1;
         this.timer = 0;
-        turn = EnemyStates.IDLE;
+        turn = EnemyState.IDLE;
         this.team = Team.ENEMY;
         this.arteQueue = new ConcurrentLinkedQueue<>();
     }
@@ -80,11 +84,11 @@ public class Enemy<T extends Enemy<?>> extends Unit<T> {
     }
 
     public void battleSelect()  {
-        if(turn != EnemyStates.CHARGE && turn != EnemyStates.SPECIAL)  {
+        if(turn != EnemyState.CHARGE && turn != EnemyState.SPECIAL)  {
             this.turn = decideState();
         }
         timer = 0;
-        this.combatState = EnemyStates.MOVING;
+        this.combatState = EnemyState.MOVING;
     }
 
     public void battleMove(Unit target, GameContainer gc)    {
@@ -94,7 +98,7 @@ public class Enemy<T extends Enemy<?>> extends Unit<T> {
         animation();
 
         if(timer==moveDuration) {
-            this.combatState = EnemyStates.DONE;
+            this.combatState = EnemyState.DONE;
             this.sprite = sheet.getSprite(0,0);
             action(target);
         }
@@ -112,7 +116,7 @@ public class Enemy<T extends Enemy<?>> extends Unit<T> {
                 target.takeDamage(this.attack, ElementType.PHYSICAL);
             }
             case CHARGE -> {
-                this.turn = EnemyStates.SPECIAL;
+                this.turn = EnemyState.SPECIAL;
             }
             case SPECIAL -> {
                 target.takeDamage(this.attack*3, ElementType.PHYSICAL);
@@ -120,11 +124,11 @@ public class Enemy<T extends Enemy<?>> extends Unit<T> {
         }
     }
 
-    private EnemyStates decideState()  {
+    private EnemyState decideState()  {
         switch((int)(Math.random()*4)) {
-            case 0 -> { return EnemyStates.IDLE; }
-            case 1 -> { return EnemyStates.CHARGE; }
-            default -> { return EnemyStates.ATTACK; }
+            case 0 -> { return EnemyState.IDLE; }
+            case 1 -> { return EnemyState.CHARGE; }
+            default -> { return EnemyState.ATTACK; }
         }
     }
 

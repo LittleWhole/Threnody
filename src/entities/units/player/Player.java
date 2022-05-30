@@ -21,7 +21,6 @@ import managers.AnimationManager;
 import managers.ImageManager;
 import org.newdawn.slick.*;
 import org.newdawn.slick.geom.Rectangle;
-import org.newdawn.slick.geom.RoundedRectangle;
 import org.newdawn.slick.state.StateBasedGame;
 import playerdata.characters.PlayableCharacter;
 import playerdata.characters.Sigur;
@@ -35,15 +34,11 @@ import java.util.concurrent.ConcurrentLinkedQueue;
 
 @SuppressWarnings({"unchecked"})
 public final class Player<T extends Player<?>> extends Unit<T> {
+    public enum PlayerState { SELECTING, CASTING, DONE }
     public PlayerState getState() {
         return state;
     }
-
-    //private final float XSPEED_MAX = 5;
-    //private final float YSPEED_MAX = 5;
     private PlayerState state;
-    final public static float PLAYER_X_SPAWN = (float) Main.RESOLUTION_X / 2 / Constants.ImageConstants.PIXELS_PER_UNIT;
-    final public static float PLAYER_Y_SPAWN = (float) Main.RESOLUTION_Y / 2 / Constants.ImageConstants.PIXELS_PER_UNIT;
 
     private final List<Arte<? extends Unit>> arteDeck;
     private List<Arte<? extends Unit>> arteHand;

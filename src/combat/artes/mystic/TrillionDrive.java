@@ -11,8 +11,8 @@ import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
 import playerdata.characters.PlayableCharacter;
 
+@SuppressWarnings({"rawtypes"})
 public class TrillionDrive extends MysticArte<Player> {
-
     public TrillionDrive(Player owner) throws SlickException {
         super(owner);
         name = "Trillion Drive";

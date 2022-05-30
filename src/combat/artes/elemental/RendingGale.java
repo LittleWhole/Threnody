@@ -9,6 +9,7 @@ import gamestates.BattleState;
 import org.newdawn.slick.*;
 import playerdata.characters.PlayableCharacter;
 
+@SuppressWarnings({"rawtypes"})
 public class RendingGale extends Arte<Player> {
 
 

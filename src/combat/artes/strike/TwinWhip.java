@@ -11,8 +11,8 @@ import org.newdawn.slick.SpriteSheet;
 import playerdata.characters.PlayableCharacter;
 import playerdata.characters.Sigur;
 
+@SuppressWarnings({"rawtypes"})
 public class TwinWhip extends Arte<Player> {
-
     public static final Class<? extends PlayableCharacter> character = Sigur.class;
 
     public TwinWhip(Player owner) throws SlickException {

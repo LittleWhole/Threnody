@@ -9,6 +9,7 @@ import org.newdawn.slick.Graphics;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.SpriteSheet;
 
+@SuppressWarnings({"rawtypes"})
 public class Flamberge extends Arte<Player> {
 
     public Flamberge(Player owner) throws SlickException {

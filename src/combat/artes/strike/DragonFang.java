@@ -11,8 +11,8 @@ import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
 
+@SuppressWarnings({"rawtypes"})
 public class DragonFang extends Arte<Player> {
-
     public DragonFang(Player owner) throws SlickException {
         super(owner);
         name = "Dragon Fang";

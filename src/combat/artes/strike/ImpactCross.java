@@ -8,8 +8,8 @@ import entities.units.player.Player;
 import gamestates.BattleState;
 import org.newdawn.slick.*;
 
+@SuppressWarnings({"rawtypes"})
 public class ImpactCross extends Arte<Player> {
-
     public ImpactCross(Player owner) throws SlickException {
         super(owner);
         name = "Impact Cross";

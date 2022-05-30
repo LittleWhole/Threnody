@@ -11,6 +11,7 @@ import org.newdawn.slick.*;
 import playerdata.characters.PlayableCharacter;
 import util.DrawUtilities;
 
+@SuppressWarnings({"rawtypes"})
 public abstract class Arte<T extends Unit> {
 
     protected Class<? extends PlayableCharacter> character; // The character that can use the Arte
