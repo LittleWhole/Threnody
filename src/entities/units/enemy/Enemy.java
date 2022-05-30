@@ -49,7 +49,7 @@ public class Enemy<T extends Enemy<?>> extends Unit<T> {
     public Enemy(float x, float y) throws SlickException {//later change parameters to also change size, level, speed, and sprite
         super();
         this.health = 100;
-        this.attack = 20;
+        this.attack = 5;
         this.defense = 10;
         this.critRate = 0.05;
         this.critDamage = 50;

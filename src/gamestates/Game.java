@@ -4,6 +4,7 @@ import core.Main;
 import entities.core.Coordinate;
 import entities.core.Entity;
 import entities.core.EntityType;
+import entities.units.enemy.Goblin;
 import entities.units.npc.NPC;
 import entities.units.Unit;
 import entities.units.enemy.Enemy;
@@ -221,10 +222,10 @@ public class Game extends ThrenodyGameState {
         plr.resetHitbox();
         //plrTeam.add(plr);
         System.out.println("[VERBOSE] Player initialized");
-        enemy = new Enemy(10, 0);
+        enemy = new Goblin(10, 0);
         enemyTeam.add(enemy);
-        enemyTeam.add(new Enemy(0,0));
-        enemyTeam.add(new Enemy(0,0));
+        enemyTeam.add(new Goblin(0,0));
+        enemyTeam.add(new Goblin(0,0));
         // Initialize Managers
         keyDown = new KeyManager(gc.getInput(), this);
         System.out.println("[VERBOSE] KeyManager initialized");

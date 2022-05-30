@@ -36,6 +36,7 @@ public final class CombatManager {
             p.setMana(p.getTurnMana() + p.getManaAdd());
             p.setManaAdd(0);
             p.setQueuedManaRemoval(0);
+            p.setQueuedManaExtra(0);
         });
         enemies.forEach(e -> e.setCombatState(Enemy.EnemyState.CHOOSING));
     }

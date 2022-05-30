@@ -24,8 +24,8 @@ public class DualTheSol extends Arte<Player> {
 
     @Override
     public void activation(Unit target) {
-        if (timer == 24) target.takeDamage((int) (owner.calculateDamage(element) * 2.2), element);
-        if (timer == 34 || timer == 44 || timer == 54 || timer == 64) target.takeDamage((int) (owner.calculateDamage(ElementType.FIRE) * 0.3), ElementType.FIRE);
+        if (timer == 24) target.takeDamage((int) (owner.calculateDamage(element) * 1.8), element);
+        if (timer == 34 || timer == 44 || timer == 54 || timer == 64) target.takeDamage((int) (owner.calculateDamage(ElementType.FIRE) * 0.2), ElementType.FIRE);
     }
 
     @Override
