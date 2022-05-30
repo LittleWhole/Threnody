@@ -18,7 +18,7 @@ public class DragonFang extends Arte<Player> {
         name = "Dragon Fang";
         arteType = ArteType.STRIKE;
         aniType = AnimationType.TARGET;
-        cost = 2;
+        cost = 1;
     }
 
     @Override

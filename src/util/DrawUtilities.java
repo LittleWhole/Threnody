@@ -74,6 +74,17 @@ public final class DrawUtilities {
                 (r.getY() + r.getHeight() / 2) - (height / 2));
     }
 
+    public static void drawStringCentered(Graphics g, String string, Image image) {
+        org.newdawn.slick.Font font = defaultFont;
+        int width = font.getWidth(string);
+        int height = font.getHeight(string);
+        Rectangle r = createRectangleCentered(image.getCenterOfRotationX(), image.getCenterOfRotationY(), width, height);
+
+        g.drawString(string, (r.getX() + r.getWidth() / 2) - (width / 2),
+                (r.getY() + r.getHeight() / 2) - (height / 2));
+    }
+
+
     public static void drawStringCentered(Graphics g, String string, org.newdawn.slick.Font font, float x, float y) {
         org.newdawn.slick.Font prevFont = g.getFont();
         int width = font.getWidth(string);

@@ -45,11 +45,18 @@ public abstract class Unit<T extends Unit<?>> extends Entity {
     protected Direction nsDir;
     protected Direction ewDir;
     protected int mana;
+    protected int turnMana;
+    protected int manaAdd;
+    protected int queuedManaExtra;
+    protected int queuedManaRemoval;
 
     public Unit() {
         super();
         this.type = EntityType.UNIT;
         this.mana = 1;
+        this.turnMana = 1;
+        this.queuedManaRemoval = 0;
+        this.manaAdd = 0;
         this.level = 1;
         this.health = 1;
         this.attack = 1;
@@ -257,6 +264,33 @@ public abstract class Unit<T extends Unit<?>> extends Entity {
 
     public T setMove(Arte<? extends Unit> move) {
         this.move = move;
+        return (T) this;
+    }
+
+    public int getTurnMana() {
+        return turnMana;
+    }
+
+    public T setTurnMana(int turnMana) {
+        this.turnMana = turnMana;
+        return (T) this;
+    }
+
+    public int getManaAdd() {
+        return manaAdd;
+    }
+
+    public T setManaAdd(int manaAdd) {
+        this.manaAdd = manaAdd;
+        return (T) this;
+    }
+
+    public int getQueuedManaRemoval() {
+        return queuedManaRemoval;
+    }
+
+    public T setQueuedManaRemoval(int queuedManaRemoval) {
+        this.queuedManaRemoval = queuedManaRemoval;
         return (T) this;
     }
 

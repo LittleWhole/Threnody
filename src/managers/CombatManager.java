@@ -123,10 +123,17 @@ public final class CombatManager {
 
     private void updateTeams (List<? extends Unit> units)    {
         for(int i = 0; i < units.size();i++)  {
+            units.get(i).setMana(units.get(i).getTurnMana() + units.get(i).getManaAdd());
+            units.get(i).setManaAdd(0);
+            units.get(i).setQueuedManaRemoval(0);
             if(units.get(i).getHealth() <= 0) {
                 units.remove(i);
             }
         }
+//        units.forEach(u -> {
+//            u.setMana(u.getTurnMana() + u.getManaAdd());
+//            if (u.getHealth() <= 0) units.remove(u);
+//        });
     }
 
     public List<Player> getPlayers() {

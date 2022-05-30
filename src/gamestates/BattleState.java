@@ -1,6 +1,7 @@
 package gamestates;
 
 import combat.artes.Arte;
+import core.Fonts;
 import core.Main;
 import entities.units.Direction;
 import entities.units.Unit;
@@ -9,6 +10,7 @@ import entities.units.player.Player;
 import entities.units.player.PlayerState;
 import graphics.ui.combat.DamageNumber;
 import managers.CombatManager;
+import managers.ImageManager;
 import map.GameMap;
 import org.newdawn.slick.*;
 import org.newdawn.slick.state.BasicGameState;
@@ -108,6 +110,9 @@ public class BattleState extends ThrenodyGameState {
             g.drawString("" + combat.getRound(), 0, 0);
         }
         super.render(gc, sbg, g);
+        Image mana = ImageManager.getImage("mana").getScaledCopy(2f);
+        mana.drawCentered(Main.RESOLUTION_X / 17, Main.RESOLUTION_Y / 20 * 17);
+        DrawUtilities.drawStringCentered(g, String.valueOf(plrs.get(turn()).getMana()), Main.fonts.VariableWidth.B60, Main.RESOLUTION_X / 17, Main.RESOLUTION_Y / 20 * 17 + 15);
     }
 
     public void update(GameContainer gc, StateBasedGame sbg, int delta) throws SlickException {
@@ -164,9 +169,12 @@ public class BattleState extends ThrenodyGameState {
     }
 
     public void mousePressed(int button, int x, int y) {
-        for (var i = 0; i < 6; i++) {
-            if (plrs.get(0).onCard(gc.getInput(), i)) plrs.get(0).getClickArteQueue().offer(plrs.get(0).selection(i));
-        }
+        try { for (var i = 0; i < 6; i++) if (plrs.get(turn()).onCard(gc.getInput(), i)) plrs.get(turn()).getClickArteQueue().offer(plrs.get(turn()).selection(i)); }
+        catch (NullPointerException ignored) {};
+    }
+
+    public int turn() {
+        return combat.getPlrTurn() > plrs.size() - 1 ? plrs.size() -1 : combat.getPlrTurn();
     }
 
 
