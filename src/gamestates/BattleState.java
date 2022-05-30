@@ -53,18 +53,17 @@ public class BattleState extends ThrenodyGameState {
     public void render(GameContainer gc, StateBasedGame sbg, Graphics g) throws SlickException {
         g.setFont(gc.getDefaultFont());
         battlefield.render(1000, -600);
-        for(Player p : plrs) {
-            p.battleRender(g, 0,0);
 
-        }
-        for(int i = enemies.size() - 1; i >= 0; i--) {
+        plrs.forEach(p -> p.battleRender(g, 0,0));
+        for (int i = enemies.size() - 1; i >= 0; i--) {
             enemies.get(i).render(g, 0,0);
         }
-        try {
-            result = combat.combat(g, gc);
-        } catch (InterruptedException | IndexOutOfBoundsException e) {
-            e.printStackTrace();
-        }
+
+        // Render the UI
+        try { renderUI(g); } catch (IndexOutOfBoundsException ignored) {}
+
+        try { result = combat.combat(g, gc); }
+        catch (InterruptedException | IndexOutOfBoundsException e) { e.printStackTrace(); }
 
         switch (result) {
             case WIN -> {
@@ -103,12 +102,20 @@ public class BattleState extends ThrenodyGameState {
             g.drawString("" + combat.getRound(), 0, 0);
         }
         super.render(gc, sbg, g);
+    }
+
+    private void renderUI(Graphics g) {
         Image mana = ImageManager.getImage("mana").getScaledCopy(2f);
         mana.drawCentered(Main.RESOLUTION_X / 17, Main.RESOLUTION_Y / 20 * 17);
         DrawUtilities.drawStringCentered(g, String.valueOf(plrs.get(turn()).getMana()), Main.fonts.VariableWidth.B60, Main.RESOLUTION_X / 17, Main.RESOLUTION_Y / 20 * 17 + 15);
+        if (plrs.get(turn()).getQueuedManaExtra() > 0) {
+            g.setColor(Color.green);
+            DrawUtilities.drawStringCentered(g, "+" + plrs.get(turn()).getQueuedManaExtra(), Main.fonts.VariableWidth.B60, Main.RESOLUTION_X / 17, Main.RESOLUTION_Y / 20 * 17 - 55);
+            g.setColor(Color.white);
+        }
         if (plrs.get(turn()).getQueuedManaRemoval() > 0) {
             g.setColor(Color.red);
-            DrawUtilities.drawStringCentered(g, String.valueOf(-plrs.get(turn()).getQueuedManaRemoval()), Main.fonts.VariableWidth.B60, Main.RESOLUTION_X / 17, Main.RESOLUTION_Y / 20 * 17 + 70);
+            DrawUtilities.drawStringCentered(g, "-" + plrs.get(turn()).getQueuedManaRemoval(), Main.fonts.VariableWidth.B60, Main.RESOLUTION_X / 17, Main.RESOLUTION_Y / 20 * 17 + 70);
             g.setColor(Color.white);
         }
         if (plrs.get(turn()).getManaAdd() > 0) {
@@ -169,7 +176,7 @@ public class BattleState extends ThrenodyGameState {
     @Override
     public void mousePressed(int button, int x, int y) {
         try { for (var i = 0; i < 6; i++) if (plrs.get(turn()).onCard(gc.getInput(), i)) plrs.get(turn()).getClickArteQueue().offer(plrs.get(turn()).selection(i)); }
-        catch (NullPointerException ignored) {};
+        catch (IndexOutOfBoundsException | NullPointerException ignored) {};
     }
 
     public int turn() {

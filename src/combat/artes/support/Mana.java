@@ -12,7 +12,7 @@ import playerdata.characters.PlayableCharacter;
 
 @SuppressWarnings({"rawtypes"})
 public class Mana extends Arte<Player> {
-    private final int healingValue = 10;
+    private final int manaValue = 2;
 
     public Mana(Player owner) throws SlickException {
         super(owner);
@@ -20,21 +20,18 @@ public class Mana extends Arte<Player> {
         arteType = ArteType.SUPPORT;
         aniType = AnimationType.OWNER;
         cost = 0;
-        castDuration = 75;
     }
 
     @Override
-    public void activation(Unit target) {
-        target.generateMana(healingValue);
-    }
+    public void activation(Unit target) {}
 
     @Override
     public void queue() {
-
+        owner.addQueuedManaExtra(manaValue);
     }
 
     @Override
     public void unqueue() {
-
+        owner.addQueuedManaExtra(-manaValue);
     }
 }

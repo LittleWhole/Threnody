@@ -56,6 +56,7 @@ public abstract class Unit<T extends Unit<?>> extends Entity {
         this.mana = 1;
         this.turnMana = 1;
         this.queuedManaRemoval = 0;
+        this.queuedManaExtra = 0;
         this.manaAdd = 0;
         this.level = 1;
         this.health = 1;
@@ -285,12 +286,36 @@ public abstract class Unit<T extends Unit<?>> extends Entity {
         return (T) this;
     }
 
+    public T addManaAdd(int amt) {
+        this.manaAdd += amt;
+        return (T) this;
+    }
+
     public int getQueuedManaRemoval() {
         return queuedManaRemoval;
     }
 
     public T setQueuedManaRemoval(int queuedManaRemoval) {
         this.queuedManaRemoval = queuedManaRemoval;
+        return (T) this;
+    }
+
+    public T addQueuedManaRemoval(int amt) {
+        this.queuedManaRemoval += amt;
+        return (T) this;
+    }
+
+    public int getQueuedManaExtra() {
+        return queuedManaExtra;
+    }
+
+    public T setQueuedManaExtra(int queuedManaExtra) {
+        this.queuedManaExtra = queuedManaExtra;
+        return (T) this;
+    }
+
+    public T addQueuedManaExtra(int amt) {
+        this.queuedManaExtra += amt;
         return (T) this;
     }
 

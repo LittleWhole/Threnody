@@ -29,11 +29,11 @@ public class Elixir extends Arte<Player> {
 
     @Override
     public void queue() {
-        owner.setManaAdd(owner.getManaAdd() + 1);
+        owner.addManaAdd(manaValue);
     }
 
     @Override
     public void unqueue() {
-        owner.setManaAdd(owner.getManaAdd() - 1);
+        owner.addManaAdd(-manaValue);
     }
 }
