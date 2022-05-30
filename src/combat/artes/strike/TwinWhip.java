@@ -28,4 +28,14 @@ public class TwinWhip extends Arte<Player> {
         if (timer == 40) target.takeDamage((int) (owner.calculateDamage(ElementType.PHYSICAL) * 0.5), ElementType.PHYSICAL);
         if (timer == 60) target.takeDamage((int) (owner.calculateDamage(ElementType.PHYSICAL) * 0.5), ElementType.PHYSICAL);
     }
+
+    @Override
+    public void queue() {
+
+    }
+
+    @Override
+    public void unqueue() {
+
+    }
 }

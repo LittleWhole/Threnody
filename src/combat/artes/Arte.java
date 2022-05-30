@@ -179,7 +179,15 @@ public abstract class Arte<T extends Unit> {
         }
     }
 
+    /* The actual effects of the arte, independent of the animation when the arte is used. */
     public abstract void activation(Unit u);
+
+    /* The code called when the card is initially queued. */
+    public abstract void queue();
+
+    /* The code called when the card is unqueued.
+    This method should *always* reverse all effects of queue() when called. */
+    public abstract void unqueue();
 
     public String getName() {
         return name;

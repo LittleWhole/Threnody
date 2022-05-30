@@ -196,6 +196,7 @@ public final class Player<T extends Player<?>> extends Unit<T> {
             if (selected.getCost() > mana - queuedManaRemoval) throw new ThrenodyException("Insufficient mana");
             selected.reset();
             queuedManaRemoval += selected.getCost();
+            selected.queue();
             arteHand.remove(i);
         } catch (IndexOutOfBoundsException | ThrenodyException ignored) { selected = null; }
         finally {

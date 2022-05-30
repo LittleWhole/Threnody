@@ -23,4 +23,14 @@ public class ImpactCross extends Arte<Player> {
     public void activation(Unit target) {
         if (timer == 40) target.takeDamage((int) (owner.calculateDamage(ElementType.PHYSICAL) * 1.1), ElementType.PHYSICAL);
     }
+
+    @Override
+    public void queue() {
+
+    }
+
+    @Override
+    public void unqueue() {
+
+    }
 }

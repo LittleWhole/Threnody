@@ -24,7 +24,16 @@ public class Elixir extends Arte<Player> {
     public void activation(Unit target) {
         if (timer == 105) {
             owner.regenerate(healingValue);
-            owner.setManaAdd(owner.getManaAdd() + 1);
         }
+    }
+
+    @Override
+    public void queue() {
+        owner.setManaAdd(owner.getManaAdd() + 1);
+    }
+
+    @Override
+    public void unqueue() {
+        owner.setManaAdd(owner.getManaAdd() - 1);
     }
 }

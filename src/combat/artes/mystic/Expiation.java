@@ -21,19 +21,17 @@ public class Expiation extends MysticArte<Player> {
     }
 
     @Override
-    public void use(Unit target, GameContainer gc) {
-        castTimestamp = BattleState.time;
-        animation(target, gc.getGraphics());
-        activation(target);
-    }
-
-    @Override
-    public void animation(Unit target, Graphics g) {
-
-    }
-
-    @Override
     public void activation(Unit target) {
+
+    }
+
+    @Override
+    public void queue() {
+
+    }
+
+    @Override
+    public void unqueue() {
 
     }
 }

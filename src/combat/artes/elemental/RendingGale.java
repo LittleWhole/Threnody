@@ -27,4 +27,14 @@ public class RendingGale extends Arte<Player> {
     public void activation(Unit target) {
         if (timer == 40) target.takeDamage((int) (owner.calculateDamage(element) * 1.8), element);
     }
+
+    @Override
+    public void queue() {
+
+    }
+
+    @Override
+    public void unqueue() {
+
+    }
 }

@@ -26,4 +26,14 @@ public class Catalysis extends Arte<Player> {
     public void activation(Unit target) {
         target.regenerate(owner.getAttack());
     }
+
+    @Override
+    public void queue() {
+
+    }
+
+    @Override
+    public void unqueue() {
+
+    }
 }

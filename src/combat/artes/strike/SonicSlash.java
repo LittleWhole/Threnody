@@ -26,4 +26,14 @@ public class SonicSlash extends Arte<Player> {
     public void activation(Unit target) {
         if (timer == 40) target.takeDamage((int) (owner.calculateDamage(ElementType.PHYSICAL) * 0.9), ElementType.PHYSICAL);
     }
+
+    @Override
+    public void queue() {
+
+    }
+
+    @Override
+    public void unqueue() {
+
+    }
 }

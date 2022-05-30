@@ -111,6 +111,11 @@ public class BattleState extends ThrenodyGameState {
             DrawUtilities.drawStringCentered(g, String.valueOf(-plrs.get(turn()).getQueuedManaRemoval()), Main.fonts.VariableWidth.B60, Main.RESOLUTION_X / 17, Main.RESOLUTION_Y / 20 * 17 + 70);
             g.setColor(Color.white);
         }
+        if (plrs.get(turn()).getManaAdd() > 0) {
+            g.setColor(Color.green);
+            DrawUtilities.drawStringCentered(g, "Next turn: +" + plrs.get(turn()).getManaAdd(), Main.fonts.VariableWidth.P20, Main.RESOLUTION_X / 17, Main.RESOLUTION_Y / 20 * 17 + 100);
+            g.setColor(Color.white);
+        }
     }
 
     public void update(GameContainer gc, StateBasedGame sbg, int delta) throws SlickException {

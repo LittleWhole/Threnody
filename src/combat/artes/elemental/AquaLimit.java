@@ -26,4 +26,14 @@ public class AquaLimit extends Arte<Player> {
     public void activation(Unit target) {
         if (timer == 20) target.takeDamage((int) (owner.calculateDamage(ElementType.WATER) * 2), ElementType.WATER);
     }
+
+    @Override
+    public void queue() {
+
+    }
+
+    @Override
+    public void unqueue() {
+
+    }
 }

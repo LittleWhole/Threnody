@@ -24,4 +24,14 @@ public class Fortification extends Arte<Unit> {
     public void activation(Unit target) {
         target.setHealth(target.getHealth() + this.healingValue);
     }
+
+    @Override
+    public void queue() {
+
+    }
+
+    @Override
+    public void unqueue() {
+
+    }
 }

@@ -27,4 +27,14 @@ public class Mana extends Arte<Player> {
     public void activation(Unit target) {
         target.generateMana(healingValue);
     }
+
+    @Override
+    public void queue() {
+
+    }
+
+    @Override
+    public void unqueue() {
+
+    }
 }

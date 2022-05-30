@@ -22,15 +22,17 @@ public class Flamberge extends Arte<Player> {
     }
 
     @Override
-    public void animation(Unit target, Graphics g) {
-//        if(!finished()) {
-//            this.aniFrame = aniSheet.getSprite(timer, 0);
-//            g.drawImage(aniFrame,-target.getPosition().getX(), -target.getY() + target.getHeight());
-//        }
+    public void activation(Unit target) {
+        if (timer == 20) target.takeDamage((int) (owner.calculateDamage(ElementType.FIRE) * 2.2), ElementType.FIRE);
     }
 
     @Override
-    public void activation(Unit target) {
-        if (timer == 20) target.takeDamage((int) (owner.calculateDamage(ElementType.FIRE) * 2.2), ElementType.FIRE);
+    public void queue() {
+
+    }
+
+    @Override
+    public void unqueue() {
+
     }
 }

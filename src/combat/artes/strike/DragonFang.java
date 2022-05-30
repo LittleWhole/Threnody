@@ -25,4 +25,14 @@ public class DragonFang extends Arte<Player> {
     public void activation(Unit target) {
         if (timer == 50) target.takeDamage((int) (owner.calculateDamage(ElementType.PHYSICAL) * 1.15), ElementType.PHYSICAL);
     }
+
+    @Override
+    public void queue() {
+
+    }
+
+    @Override
+    public void unqueue() {
+
+    }
 }
