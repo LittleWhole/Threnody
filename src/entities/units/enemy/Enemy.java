@@ -68,7 +68,7 @@ public class Enemy<T extends Enemy<?>> extends Unit<T> {
         g.drawImage(sprite, -plrX - position.getX() + width, -plrY/2 - position.getY() + height);
 
         hitBox.setX(-plrX - position.getX() + width);
-        hitBox.setY((-plrY/2) + this.getHeight()*1.6f);
+        hitBox.setY((-plrY/2) -position.getY() + this.getHeight()*1.6f);
         var rect = new RoundedRectangle(hitBox.getX(), hitBox.getY(), 50, 50, RoundedRectangle.ALL);
         g.setColor(Color.red);
         g.fill(rect);
