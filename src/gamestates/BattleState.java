@@ -13,6 +13,7 @@ import org.newdawn.slick.*;
 import org.newdawn.slick.state.StateBasedGame;
 import util.DrawUtilities;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Queue;
 import java.util.concurrent.ConcurrentLinkedQueue;
@@ -150,6 +151,7 @@ public class BattleState extends ThrenodyGameState {
         }
 
         combat = new CombatManager(plrs, enemies);
+        plrs.forEach(p -> Collections.shuffle(p.getArteDeck()));
         combat.roundStart();
         gc.getGraphics().setFont(new TrueTypeFont(new java.awt.Font("Bahnschrift", java.awt.Font.PLAIN, 20), true));
         gc.getGraphics().setBackground(new Color(100, 100, 100));
