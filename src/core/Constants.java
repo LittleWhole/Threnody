@@ -9,6 +9,10 @@ public final class Constants {
         public static final int MAX_EXP(int level) { return (int) (555 * Math.log(level + 2)); }
     }
 
+    public static final class ScalingConstants  {
+
+    }
+
     public static final class MovementConstants {
         public static final float DRAG = 0.05f;
         public static final float RESTITUTION_COEFFICIENT = 0.75f;

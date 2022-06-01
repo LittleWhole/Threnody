@@ -68,6 +68,8 @@ public final class CombatManager {
                 var mouseX = gc.getInput().getMouseX();
                 var mouseY = gc.getInput().getMouseY();
                 int i = 0;
+                while(selectedItr.hasNext())    {
+                    DrawUtilities.drawImageCentered(g, ((Arte)selectedItr.next()).getCard(), 300 - i*10, 300 - i*20);
                 while(selectedItr.hasNext()) {
                     var arte = (Arte<?>) selectedItr.next();
                     var card = arte.getCard();
@@ -105,7 +107,7 @@ public final class CombatManager {
                 selectedItr = reversed.iterator();
                 int i = 0;
                 while(selectedItr.hasNext())    {
-                    DrawUtilities.drawImageCentered(g, ((Arte)selectedItr.next()).getCard(), 300 - i*5, 300 - i*5);
+                    DrawUtilities.drawImageCentered(g, ((Arte)selectedItr.next()).getCard(), 300 - i*10, 300 - i*20);
                     i++;
                 }
             }
