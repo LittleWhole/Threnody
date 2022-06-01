@@ -1,11 +1,13 @@
 package managers;
 
 import combat.artes.Arte;
+import core.Main;
 import entities.units.enemy.Enemy;
 import entities.units.Unit;
 import entities.units.player.Player;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
+import org.newdawn.slick.SlickException;
 import util.DrawUtilities;
 
 import java.util.*;
@@ -41,7 +43,7 @@ public final class CombatManager {
         enemies.forEach(e -> e.setCombatState(Enemy.EnemyState.CHOOSING));
     }
 
-    public CombatState combat(Graphics g, GameContainer gc) throws InterruptedException {
+    public CombatState combat(Graphics g, GameContainer gc) throws InterruptedException, SlickException {
         boolean plrsAlive = true;
         boolean enemiesAlive = true;
         Stack<Arte> stack = new Stack<>();
@@ -51,7 +53,7 @@ public final class CombatManager {
                 return CombatState.WIN;
             }
             if(players.get(plrTurn).getState() == Player.PlayerState.SELECTING) {
-                players.get(plrTurn).move(enemies.get(0), gc, g);
+                players.get(plrTurn).move(gc, g);
                 g.drawString("SELECTING", 100, 0);
                 /*
                 try { g.drawString("Cards selected: " + players.get(plrTurn).getArteQueue().stream().map(a -> ((Arte) a).getName())
@@ -60,9 +62,27 @@ public final class CombatManager {
 
 
                 selectedItr = players.get(plrTurn).getArteQueue().iterator();
+                var mouseX = gc.getInput().getMouseX();
+                var mouseY = gc.getInput().getMouseY();
                 int i = 0;
                 while(selectedItr.hasNext())    {
                     DrawUtilities.drawImageCentered(g, ((Arte)selectedItr.next()).getCard(), 300 - i*10, 300 - i*20);
+                while(selectedItr.hasNext()) {
+                    var arte = (Arte<?>) selectedItr.next();
+                    var card = arte.getCard();
+                    var cardX = 300 - i*5;
+                    var cardY = 300 - i*5;
+                    if ((mouseX > cardX - card.getWidth() / 2 && mouseX < cardX + card.getWidth() / 2) &&
+                            (mouseY > cardY - card.getHeight() / 2 && mouseY < cardY + card.getHeight() / 2)) {
+                        card.getScaledCopy(1.3f).drawCentered(300 - i*5, 300 - i*5);
+                        if (gc.getInput().isMousePressed(0)) {
+                            arte.unqueue();
+                            arte.reset();
+                            players.get(plrTurn).getArteQueue().remove(arte);
+                            players.get(plrTurn).getArteHand().add(arte);
+                        }
+                    }
+                    else card.drawCentered(300 - i*5, 300 - i*5);
                     i++;
                 }
             }

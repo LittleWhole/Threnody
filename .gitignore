@@ -1,4 +1,4 @@
-/bin/
-/out/
-/screenshots/
-/.idea/sonarlint/
+/bin/*
+/out/*
+/screenshots/*
+/.idea/sonarlint/*
