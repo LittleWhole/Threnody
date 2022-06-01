@@ -18,6 +18,7 @@ import java.util.concurrent.ConcurrentLinkedQueue;
 
 public final class CombatManager {
 
+    private final int queueOffset = 70;
     private final List<Player> players;
     private final List<Enemy> enemies;
     private int round;
@@ -26,8 +27,9 @@ public final class CombatManager {
 
     private Iterator selectedItr;
 
-    public enum CombatState { WIN, LOSE, ADVANCE, HALT }
-    public CombatManager(List<Player> plrs, List<Enemy> enemies)  {
+    public enum CombatState {WIN, LOSE, ADVANCE, HALT}
+
+    public CombatManager(List<Player> plrs, List<Enemy> enemies) {
         this.players = plrs;
         this.enemies = enemies;
         round = 1;
@@ -50,12 +52,12 @@ public final class CombatManager {
         boolean plrsAlive = true;
         boolean enemiesAlive = true;
         Stack<Arte> stack = new Stack<>();
-        Queue<Arte> reversed =  new ConcurrentLinkedQueue<>();
-        if(plrTurn < players.size()) {
+        Queue<Arte> reversed = new ConcurrentLinkedQueue<>();
+        if (plrTurn < players.size()) {
             if (enemies.size() == 0) {
                 return CombatState.WIN;
             }
-            if(players.get(plrTurn).getState() == Player.PlayerState.SELECTING) {
+            if (players.get(plrTurn).getState() == Player.PlayerState.SELECTING) {
                 players.get(plrTurn).move(gc, g);
                 g.drawString("SELECTING", 100, 0);
                 /*
@@ -68,116 +70,114 @@ public final class CombatManager {
                 var mouseX = gc.getInput().getMouseX();
                 var mouseY = gc.getInput().getMouseY();
                 int i = 0;
-                while(selectedItr.hasNext())    {
-                    DrawUtilities.drawImageCentered(g, ((Arte)selectedItr.next()).getCard(), 300 - i*10, 300 - i*20);
-                while(selectedItr.hasNext()) {
-                    var arte = (Arte<?>) selectedItr.next();
-                    var card = arte.getCard();
-                    var cardX = 300 - i*5;
-                    var cardY = 300 - i*5;
-                    if ((mouseX > cardX - card.getWidth() / 2 && mouseX < cardX + card.getWidth() / 2) &&
-                            (mouseY > cardY - card.getHeight() / 2 && mouseY < cardY + card.getHeight() / 2)) {
-                        card.getScaledCopy(1.3f).drawCentered(300 - i*5, 300 - i*5);
-                        if (gc.getInput().isMousePressed(0)) {
-                            if (arte instanceof Mana &&
-                                    players.get(plrTurn).getQueuedManaRemoval() > players.get(plrTurn).getMana() + players.get(plrTurn).getQueuedManaExtra() - 2) {
-                                Main.menus.add(new DialogBox(700, 400, "Cannot unqueue", "Mana can't be unqueued as the queued\ncards exceed the mana capacity.\nPlease unqueue other cards to unqueue Mana.", new CloseButton("Got it")));
-                            } else {
-                                arte.unqueue();
-                                players.get(plrTurn).addQueuedManaRemoval(-arte.getCost());
-                                players.get(plrTurn).getArteQueue().remove(arte);
-                                players.get(plrTurn).getArteHand().add(arte);
+                //while (selectedItr.hasNext()) {
+                    //DrawUtilities.drawImageCentered(g, ((Arte) selectedItr.next()).getCard(), 300 , 300 - i*queueOffset);
+                    while (selectedItr.hasNext()) {
+                        var arte = (Arte<?>) selectedItr.next();
+                        var card = arte.getCard();
+                        var cardX = 300;
+                        var cardY = 300 + i * queueOffset;
+                        if ((mouseX > cardX - card.getWidth() / 2 && mouseX < cardX + card.getWidth() / 2) &&
+                                (mouseY > cardY - card.getHeight() / 2 && mouseY < cardY + card.getHeight() / 2 - (selectedItr.hasNext()?card.getHeight()-queueOffset:0))) {
+                            card.getScaledCopy(1.3f).drawCentered(300, 300 + i * queueOffset);
+                            if (gc.getInput().isMousePressed(0)) {
+                                if (arte instanceof Mana &&
+                                        players.get(plrTurn).getQueuedManaRemoval() > players.get(plrTurn).getMana() + players.get(plrTurn).getQueuedManaExtra() - 2) {
+                                    Main.menus.add(new DialogBox(700, 400, "Cannot unqueue", "Mana can't be unqueued as the queued\ncards exceed the mana capacity.\nPlease unqueue other cards to unqueue Mana.", new CloseButton("Got it")));
+                                } else {
+                                    arte.unqueue();
+                                    players.get(plrTurn).addQueuedManaRemoval(-arte.getCost());
+                                    players.get(plrTurn).getArteQueue().remove(arte);
+                                    players.get(plrTurn).getArteHand().add(arte);
+                                }
                             }
-                        }
+                        } else card.drawCentered(300, 300 + i * queueOffset);
+                        i++;
                     }
-                    else card.drawCentered(300 - i*5, 300 - i*5);
-                    i++;
-                }
+                //}
             }
-            if(players.get(plrTurn).getState() == Player.PlayerState.CASTING)   {
-                players.get(plrTurn).attack(enemies.get(0), gc);
-                g.drawString("CASTING", 100, 0);
+                if (players.get(plrTurn).getState() == Player.PlayerState.CASTING) {
+                    players.get(plrTurn).attack(enemies.get(0), gc);
+                    g.drawString("CASTING", 100, 0);
 
-                for(Object a: players.get(plrTurn).getArteQueue())    {
-                    stack.add((Arte) a);
+                    for (Object a : players.get(plrTurn).getArteQueue()) {
+                        stack.add((Arte) a);
+                    }
+                    for (int i = stack.size() - 1; i > -1; i--) {
+                        reversed.add(stack.get(i));
+                    }
+                    selectedItr = reversed.iterator();
+                    int i = 0;
+                    while (selectedItr.hasNext()) {
+                        DrawUtilities.drawImageCentered(g, ((Arte) selectedItr.next()).getCard(), 300, 300 + i * queueOffset);
+                        i++;
+                    }
                 }
-                for(int i = stack.size() - 1; i > -1 ; i--)   {
-                    reversed.add(stack.get(i));
+                if ((players.get(plrTurn)).getState() == Player.PlayerState.DONE) {
+                    updateTeams(enemies);
+                    if (enemies.size() == 0) {
+                        return CombatState.WIN;
+                    }
+                    plrTurn++;
                 }
-                selectedItr = reversed.iterator();
-                int i = 0;
-                while(selectedItr.hasNext())    {
-                    DrawUtilities.drawImageCentered(g, ((Arte)selectedItr.next()).getCard(), 300 - i*10, 300 - i*20);
-                    i++;
-                }
-            }
-            if((players.get(plrTurn)).getState() == Player.PlayerState.DONE) {
-                updateTeams(enemies);
-                if (enemies.size() == 0) {
-                    return CombatState.WIN;
-                }
-                plrTurn++;
-            }
-        }
-        else if(plrTurn >= players.size() && enemyTurn < enemies.size())   {
-            if (players.size() == 0) {
-                return CombatState.LOSE;
-            }
-            if((enemies.get(enemyTurn-(players.size()-1))).getCombatState() == Enemy.EnemyState.CHOOSING)  {
-                (enemies.get(enemyTurn-(players.size()-1))).battleSelect();
-            }
-            if((enemies.get(enemyTurn-(players.size()-1))).getCombatState() == Enemy.EnemyState.MOVING)  {
-                (enemies.get(enemyTurn-(players.size()-1))).battleMove(players.get(0), gc);
-                DrawUtilities.drawStringCentered(g, "MOVING", 800, 100);
-            }
-            if((enemies.get(enemyTurn-(players.size()-1))).getCombatState() == Enemy.EnemyState.DONE) {
-                updateTeams(players);
+            } else if (plrTurn >= players.size() && enemyTurn < enemies.size()) {
                 if (players.size() == 0) {
                     return CombatState.LOSE;
                 }
-                enemyTurn++;
+                if ((enemies.get(enemyTurn - (players.size() - 1))).getCombatState() == Enemy.EnemyState.CHOOSING) {
+                    (enemies.get(enemyTurn - (players.size() - 1))).battleSelect();
+                }
+                if ((enemies.get(enemyTurn - (players.size() - 1))).getCombatState() == Enemy.EnemyState.MOVING) {
+                    (enemies.get(enemyTurn - (players.size() - 1))).battleMove(players.get(0), gc);
+                    DrawUtilities.drawStringCentered(g, "MOVING", 800, 100);
+                }
+                if ((enemies.get(enemyTurn - (players.size() - 1))).getCombatState() == Enemy.EnemyState.DONE) {
+                    updateTeams(players);
+                    if (players.size() == 0) {
+                        return CombatState.LOSE;
+                    }
+                    enemyTurn++;
+                }
+            } else {
+                updateTeams(enemies);
+                updateTeams(players);
+                round++;
+                roundStart();
+                return CombatState.ADVANCE;
             }
-        }
-        else    {
-            updateTeams(enemies);
-            updateTeams(players);
-            round++;
-            roundStart();
-            return CombatState.ADVANCE;
+
+            return CombatState.HALT;
         }
 
-        return CombatState.HALT;
-    }
+        public int getRound() {
+            return round;
+        }
 
-    public int getRound()  {
-        return round;
-    }
-
-    private void updateTeams(List<? extends Unit> units)    {
-        for(int i = 0; i < units.size();i++)  {
-            if(units.get(i).getHealth() <= 0) {
-                units.remove(i);
+        private void updateTeams(List < ? extends Unit > units){
+            for (int i = 0; i < units.size(); i++) {
+                if (units.get(i).getHealth() <= 0) {
+                    units.remove(i);
+                }
             }
-        }
 //        units.forEach(u -> {
 //            u.setMana(u.getTurnMana() + u.getManaAdd());
 //            if (u.getHealth() <= 0) units.remove(u);
 //        });
-    }
+        }
 
-    public List<Player> getPlayers() {
-        return players;
-    }
+        public List<Player> getPlayers() {
+            return players;
+        }
 
-    public List<Enemy> getEnemies() {
-        return enemies;
-    }
+        public List<Enemy> getEnemies() {
+            return enemies;
+        }
 
-    public int getPlrTurn() {
-        return plrTurn;
-    }
-    public int getEnemyTurn()   {
-        return enemyTurn;
-    }
+        public int getPlrTurn() {
+            return plrTurn;
+        }
+        public int getEnemyTurn() {
+            return enemyTurn;
+        }
 
-}
+    }

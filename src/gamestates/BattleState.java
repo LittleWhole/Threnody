@@ -143,7 +143,7 @@ public class BattleState extends ThrenodyGameState {
             enemies.get(i).setPosition(switch (i) {
                 case 0 ->  new Coordinate(-1075 , 0);
                 case 1 -> new Coordinate(-1075, 150);
-                case 2 -> new Coordinate( -1300 , 0);
+                case 2 -> new Coordinate( -1325 , 0);
                 default -> throw new IllegalStateException("Unexpected value: " + i);
             });
             //enemies.get(i).setPosition( i * 200,  i * 200);
