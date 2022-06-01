@@ -89,7 +89,7 @@ public class Main extends StateBasedGame {
 
             appgc.setDisplayMode(getScreenWidth(), getScreenHeight(), false);
             appgc.setTargetFrameRate(FRAMES_PER_SECOND);
-            appgc.setVSync(true);
+            appgc.setVSync(false);
             appgc.start();
         } catch (SlickException e) {
             e.printStackTrace();

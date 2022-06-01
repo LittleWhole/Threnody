@@ -11,7 +11,7 @@ public class Inventory implements Serializable {
     private int size;
 
     public Inventory(int size) {
-        size = this.size;
+        this.size = size;
         content = new ArrayList<>();
         content.ensureCapacity(size);
         for (int i = 0; i < size; i++) content.set(i, new ItemStack(Material.NONE));

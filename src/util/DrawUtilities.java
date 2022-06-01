@@ -1,12 +1,10 @@
 package util;
 
-import org.newdawn.slick.Font;
-import org.newdawn.slick.Graphics;
-import org.newdawn.slick.Image;
-import org.newdawn.slick.TrueTypeFont;
+import org.newdawn.slick.*;
 import org.newdawn.slick.geom.Rectangle;
 import org.newdawn.slick.geom.RoundedRectangle;
 import org.newdawn.slick.geom.Shape;
+import org.newdawn.slick.util.FontUtils;
 
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
@@ -96,6 +94,18 @@ public final class DrawUtilities {
                 (r.getY() + r.getHeight() / 2) - (height / 2));
         g.setFont(prevFont);
     }
+
+//    public static void drawStringCenteredByFont(Graphics g, String string, TrueTypeFont font, Color color, float x, float y) {
+//        org.newdawn.slick.Font prevFont = g.getFont();
+//        int width = font.getWidth(string);
+//        int height = font.getHeight(string);
+//        Rectangle r = createRectangleCentered(x, y, width, height);
+//
+//        g.setFont(font);
+//        font.drawString(string, color, (r.getX() + r.getWidth() / 2) - (width / 2),
+//                (r.getY() + r.getHeight() / 2) - (height / 2), FontUtils.Alignment.CENTER);
+//        g.setFont(prevFont);
+//    }
 
     public static void drawStringCentered(Graphics g, String string, Rectangle r) {
         org.newdawn.slick.Font font = defaultFont;

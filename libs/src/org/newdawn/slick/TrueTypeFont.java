@@ -14,6 +14,7 @@ import org.newdawn.slick.opengl.Texture;
 import org.newdawn.slick.opengl.renderer.Renderer;
 import org.newdawn.slick.opengl.renderer.SGL;
 import org.newdawn.slick.util.BufferedImageUtil;
+import org.newdawn.slick.util.FontUtils;
 
 /**
  * A TrueType font implementation for Slick
@@ -386,6 +387,93 @@ public class TrueTypeFont implements org.newdawn.slick.Font {
 							intObject.storedY + intObject.height);
 				}
 				totalwidth += intObject.width;
+			}
+		}
+
+		GL.glEnd();
+	}
+
+	public void drawString(String whatchars,
+						   org.newdawn.slick.Color color, int startIndex, int endIndex, int align) {
+		color.bind();
+		fontTexture.bind();
+
+		IntObject intObject = null;
+		int charCurrent, totalwidth = 0, i = startIndex, d;
+		float startY = 0;
+
+		GL.glBegin(SGL.GL_QUADS);
+
+		switch (align) {
+			case FontUtils.Alignment.RIGHT: {
+				d = -1;
+				while (i < endIndex) {
+					if (whatchars.charAt(i) == '\n') startY += fontHeight;
+					i++;
+				}
+				break;
+			}
+			case FontUtils.Alignment.CENTER: {
+				for (int l = startIndex; l <= endIndex; l++) {
+					charCurrent = whatchars.charAt(l);
+					if (charCurrent == '\n') break;
+					if (charCurrent < 256) {
+						intObject = charArray[charCurrent];
+					} else {
+						intObject = (IntObject)customChars.get( new Character( (char) charCurrent ) );
+					}
+					totalwidth += intObject.width;
+				}
+				totalwidth /= -2;
+			}
+			case FontUtils.Alignment.LEFT:
+			default: {
+				d = 1;
+				break;
+			}
+		}
+		//int totalwidth = 0;
+		//for (int i = 0; i < whatchars.length(); i++) {
+		while (i >= startIndex && i <= endIndex) {
+
+			charCurrent = whatchars.charAt(i);
+			if (charCurrent < 256) {
+				intObject = charArray[charCurrent];
+			} else {
+				intObject = (IntObject)customChars.get( new Character( (char) charCurrent ) );
+			}
+
+			if( intObject != null ) {
+				if (d < 0) totalwidth += intObject.width * d;
+				if (charCurrent == '\n') {
+					startY += fontHeight * d;
+					totalwidth = 0;
+					if (align == FontUtils.Alignment.CENTER) {
+						for (int l = i+1; l <= endIndex; l++) {
+							charCurrent = whatchars.charAt(l);
+							if (charCurrent == '\n') break;
+							if (charCurrent < 256) {
+								intObject = charArray[charCurrent];
+							} else {
+								intObject = (IntObject)customChars.get( new Character( (char) charCurrent ) );
+							}
+							totalwidth += intObject.width;
+						}
+						totalwidth /= -2;
+					}
+					//if center get next lines total width/2;
+				}
+				else {
+					drawQuad(totalwidth, startY,
+							totalwidth + intObject.width,
+							startY + intObject.height, intObject.storedX,
+							intObject.storedY, intObject.storedX + intObject.width,
+							intObject.storedY + intObject.height);
+					if (d > 0) totalwidth += intObject.width * d ;
+				}
+
+				i += d;
+
 			}
 		}
 
