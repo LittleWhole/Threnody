@@ -10,7 +10,6 @@ import combat.artes.strike.SonicSlash;
 import combat.artes.support.Elixir;
 import combat.artes.support.Heal;
 import combat.artes.support.Mana;
-import core.Constants;
 import core.Main;
 import entities.core.Coordinate;
 import entities.units.Direction;
@@ -28,6 +27,7 @@ import util.DrawUtilities;
 import util.ThrenodyException;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Queue;
 import java.util.concurrent.ConcurrentLinkedQueue;
@@ -65,7 +65,7 @@ public final class Player<T extends Player<?>> extends Unit<T> {
         this.arteDeck = new ArrayList<>();
         this.arteQueue = new ConcurrentLinkedQueue<>();
         this.clickArteQueue = new ConcurrentLinkedQueue<>();
-        for(int i = 0; i < 20; i++) {
+        for (int i = 0; i < 20; i++) {
             arteDeck.add(new ImpactCross(this));
             //arteDeck.add(new DragonFang(this));
             arteDeck.add(new Elixir(this));
@@ -89,22 +89,22 @@ public final class Player<T extends Player<?>> extends Unit<T> {
         AnimationManager.animationSelect(this);
         AnimationManager.animationCycle(this);
         queue = 5;
+        Collections.shuffle(arteDeck);
         this.arteHand = new ArrayList<>(arteDeck.subList(0,6));
         this.arteQueue = new ConcurrentLinkedQueue<>();
         this.clickArteQueue = new ConcurrentLinkedQueue<>();
         move = null;
     }
 
-    public void move(Unit target, GameContainer gc, Graphics g) throws InterruptedException {
-        for(int i = 0; i < arteHand.size(); i++) {
+    public void move(GameContainer gc, Graphics g) throws InterruptedException {
+        for (int i = 0; i < arteHand.size(); i++) {
             var cardX = (Main.getScreenWidth()/7)*(i+1);
             var cardY = Main.getScreenHeight() - 200;
             if (onCard(gc.getInput(), i)) arteHand.get(i).getCard().getScaledCopy(1.3f).drawCentered(cardX, cardY);
             else arteHand.get(i).getCard().drawCentered(cardX, cardY);
             g.setColor(Color.white);
-//            DrawUtilities.drawStringCentered(g, arteHand.get(i).getName(), Main.font, (Main.getScreenWidth()/7)*(i+1), Main.getScreenHeight()-300);
-//            DrawUtilities.drawStringCentered(g, arteHand.get(i).getArteType().name, Main.font, (Main.getScreenWidth()/7)*(i+1), Main.getScreenHeight()-400);
         }
+
         if (!clickArteQueue.isEmpty()) {
             arteQueue.addAll(clickArteQueue);
             clickArteQueue.clear();
@@ -112,9 +112,6 @@ public final class Player<T extends Player<?>> extends Unit<T> {
             move = cardSelect(gc.getInput());
             if (move != null) arteQueue.add(move);
         }
-        /*if(move != null) {
-            move.use(target, gc);
-        }*/
     }
 
     public void attack(Unit target, GameContainer gc)   {
@@ -122,6 +119,7 @@ public final class Player<T extends Player<?>> extends Unit<T> {
             this.state = PlayerState.DONE;
             return;
         }
+
         Arte<? extends Unit> arte = arteQueue.element();
         arte.use(target, gc);
         if (arte.finished()) {
@@ -155,7 +153,7 @@ public final class Player<T extends Player<?>> extends Unit<T> {
 
     public Arte<? extends Unit> cardSelect(Input input) {
         Arte<Player> selected = null;
-        if(queue >= arteDeck.size()) {
+        if (queue >= arteDeck.size()) {
             this.health = 0;
             return selected;
         }
@@ -217,9 +215,9 @@ public final class Player<T extends Player<?>> extends Unit<T> {
         g.draw(this.hitBox);
     }
 
+    @Override
     protected void drawSprite(Graphics g) { // Draw the entity sprite
         DrawUtilities.drawImageCentered(g,this.sprite, (Main.getScreenWidth()/2), (Main.getScreenHeight()/2) + 128);
-
     }
     public void battleRender(Graphics g, float plrX, float plrY)  {
         g.drawImage(sprite, -plrX - position.getX(), -plrY/2 - position.getY());
@@ -258,9 +256,6 @@ public final class Player<T extends Player<?>> extends Unit<T> {
         this.mana = mana;
         return (T) this;
     }
-
-
-
 
     public PlayableCharacter getCharacter() {
         return character;

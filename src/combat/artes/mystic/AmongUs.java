@@ -20,7 +20,7 @@ public class AmongUs extends MysticArte<Player> {
         super(owner);
         name = "Among Us";
         arteType = ArteType.MYSTIC;
-        this.card = new Image("res/mysticCard.png");
+        this.card = new Image("res/beta/amogus.png");
     }
 
     @Override
