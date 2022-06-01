@@ -18,7 +18,7 @@ import java.util.concurrent.ConcurrentLinkedQueue;
 
 public final class CombatManager {
 
-    private final int queueOffset = 70;
+    private final int queueOffset = 80;
     private final List<Player> players;
     private final List<Enemy> enemies;
     private int round;
