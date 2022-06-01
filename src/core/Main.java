@@ -21,7 +21,7 @@ import java.util.concurrent.ConcurrentMap;
 public class Main extends StateBasedGame {
     public static int RESOLUTION_X = 1920;
     public static int RESOLUTION_Y = 1080;
-    public static final int FRAMES_PER_SECOND = 120;
+    public static final int FRAMES_PER_SECOND = 60;
     public static TrueTypeFont font;
     public static Fonts fonts;
     public static final Object LOCK = new Object();
