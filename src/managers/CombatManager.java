@@ -4,7 +4,6 @@ import combat.artes.Arte;
 import combat.artes.support.Mana;
 import core.Main;
 import entities.units.enemy.Enemy;
-import entities.units.Unit;
 import entities.units.player.Player;
 import graphics.ui.menu.CloseButton;
 import graphics.ui.menu.DialogBox;
@@ -83,7 +82,7 @@ public final class CombatManager {
                                     players.get(plrTurn).getQueuedManaRemoval() > players.get(plrTurn).getMana() + players.get(plrTurn).getQueuedManaExtra() - 2) {
                                 Main.menus.add(new DialogBox(700, 400, "Cannot unqueue", "Mana can't be unqueued as the queued\ncards exceed the mana capacity.\nPlease unqueue other cards to unqueue Mana.", new CloseButton("Got it")));
                             } else {
-                                arte.unqueue();
+                                arte.dequeue();
                                 players.get(plrTurn).addQueuedManaRemoval(-arte.getCost());
                                 players.get(plrTurn).getArteQueue().remove(arte);
                                 players.get(plrTurn).getArteHand().add(arte);

@@ -29,7 +29,7 @@ public class GardenOfInnocence extends MysticArte<Player> {
     }
 
     @Override
-    public void unqueue() {
+    public void dequeue() {
 
     }
 }

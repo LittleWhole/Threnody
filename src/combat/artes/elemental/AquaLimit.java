@@ -33,7 +33,7 @@ public class AquaLimit extends Arte<Player> {
     }
 
     @Override
-    public void unqueue() {
+    public void dequeue() {
 
     }
 }

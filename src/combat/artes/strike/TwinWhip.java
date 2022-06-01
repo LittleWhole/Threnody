@@ -35,7 +35,7 @@ public class TwinWhip extends Arte<Player> {
     }
 
     @Override
-    public void unqueue() {
+    public void dequeue() {
 
     }
 }

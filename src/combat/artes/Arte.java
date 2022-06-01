@@ -4,9 +4,6 @@ import core.Main;
 import entities.units.Unit;
 import entities.units.enemy.Enemy;
 import entities.units.player.Player;
-import gamestates.BattleState;
-import gamestates.Game;
-import graphics.ui.combat.DamageNumber;
 import org.newdawn.slick.*;
 import playerdata.characters.PlayableCharacter;
 import util.DrawUtilities;
@@ -185,9 +182,9 @@ public abstract class Arte<T extends Unit> {
     /* The code called when the card is initially queued. */
     public abstract void queue();
 
-    /* The code called when the card is unqueued.
+    /* The code called when the card is dequeued.
     This method should *always* reverse all effects of queue() when called. */
-    public abstract void unqueue();
+    public abstract void dequeue();
 
     public String getName() {
         return name;

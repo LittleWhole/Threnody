@@ -26,7 +26,7 @@ public class Heal extends Arte<Unit> {
     }
 
     @Override
-    public void unqueue() {
+    public void dequeue() {
 
     }
 }

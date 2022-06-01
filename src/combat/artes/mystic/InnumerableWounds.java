@@ -32,7 +32,7 @@ public class InnumerableWounds extends MysticArte<Player> {
     }
 
     @Override
-    public void unqueue() {
+    public void dequeue() {
 
     }
 }

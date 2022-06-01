@@ -34,7 +34,7 @@ public class DualTheSol extends Arte<Player> {
     }
 
     @Override
-    public void unqueue() {
+    public void dequeue() {
 
     }
 }

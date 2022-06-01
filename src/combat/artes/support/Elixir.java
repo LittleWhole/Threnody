@@ -33,7 +33,7 @@ public class Elixir extends Arte<Player> {
     }
 
     @Override
-    public void unqueue() {
+    public void dequeue() {
         owner.addManaAdd(-manaValue);
     }
 }
