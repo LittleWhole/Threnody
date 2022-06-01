@@ -62,7 +62,7 @@ public final class CombatManager {
                 selectedItr = players.get(plrTurn).getArteQueue().iterator();
                 int i = 0;
                 while(selectedItr.hasNext())    {
-                    DrawUtilities.drawImageCentered(g, ((Arte)selectedItr.next()).getCard(), 300 - i*5, 300 - i*5);
+                    DrawUtilities.drawImageCentered(g, ((Arte)selectedItr.next()).getCard(), 300 - i*10, 300 - i*20);
                     i++;
                 }
             }
@@ -79,7 +79,7 @@ public final class CombatManager {
                 selectedItr = reversed.iterator();
                 int i = 0;
                 while(selectedItr.hasNext())    {
-                    DrawUtilities.drawImageCentered(g, ((Arte)selectedItr.next()).getCard(), 300 - i*5, 300 - i*5);
+                    DrawUtilities.drawImageCentered(g, ((Arte)selectedItr.next()).getCard(), 300 - i*10, 300 - i*20);
                     i++;
                 }
             }
