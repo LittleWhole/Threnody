@@ -83,7 +83,7 @@ public final class CombatManager {
                             if (gc.getInput().isMousePressed(0)) {
                                 if (arte instanceof Mana &&
                                         players.get(plrTurn).getQueuedManaRemoval() > players.get(plrTurn).getMana() + players.get(plrTurn).getQueuedManaExtra() - 2) {
-                                    Main.menus.add(new DialogBox(700, 400, "Cannot unqueue", "Mana can't be unqueued as the queued\ncards exceed the mana capacity.\nPlease unqueue other cards to unqueue Mana.", new CloseButton("Got it")));
+                                    Main.menus.add(new DialogBox(700, 400, "Cannot dequeue", "Mana can't be dequeued as the remaining\nqueued cards would exceed the mana capacity.\nPlease dequeue other cards to dequeue Mana.", new CloseButton("Got it")));
                                 } else {
                                     arte.dequeue();
                                     players.get(plrTurn).addQueuedManaRemoval(-arte.getCost());
@@ -97,6 +97,8 @@ public final class CombatManager {
                 //}
             }
                 if (players.get(plrTurn).getState() == Player.PlayerState.CASTING) {
+                    players.get(plrTurn).generateMana(players.get(plrTurn).getQueuedManaExtra());
+                    players.get(plrTurn).setQueuedManaExtra(0);
                     players.get(plrTurn).attack(enemies.get(0), gc);
                     g.drawString("CASTING", 100, 0);
 

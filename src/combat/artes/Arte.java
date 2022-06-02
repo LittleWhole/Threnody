@@ -4,6 +4,7 @@ import core.Main;
 import entities.units.Unit;
 import entities.units.enemy.Enemy;
 import entities.units.player.Player;
+import managers.ImageManager;
 import org.newdawn.slick.*;
 import playerdata.characters.PlayableCharacter;
 import util.DrawUtilities;
@@ -55,6 +56,7 @@ public abstract class Arte<T extends Unit> {
         this.castTimestamp = -1;
         try {
             this.card = new Image("res/ui/cards/" + this.getClass().getPackageName().substring(13) + "/" + this.getClass().getSimpleName() + ".png");
+            //ImageManager.getImage("res/ui/cards/" + this.getClass().getPackageName().substring(13) + "/" + this.getClass().getSimpleName());
         } catch (RuntimeException ignored) {}
         try {
             this.aniSheet = new SpriteSheet("res/animations/combat/" + this.getClass().getSimpleName() + ".png", 200, 200);
@@ -94,7 +96,7 @@ public abstract class Arte<T extends Unit> {
                 else if (timer < 40) gc.getGraphics().setColor(new Color(221, 201, 85));
                 else gc.getGraphics().setColor(new Color(221, 201, 85, (255 / 20) * (60 - timer)));
 
-                gc.getGraphics().fill(DrawUtilities.createRectangleCentered(Main.RESOLUTION_X / 2 + timer, 100, 400, 80));
+                gc.getGraphics().fill(DrawUtilities.createRectangleCentered(Main.RESOLUTION_X / 2, 100, 400, 80));
 
 
                 if (target instanceof Enemy) {
@@ -107,7 +109,7 @@ public abstract class Arte<T extends Unit> {
                     else gc.getGraphics().setColor(new Color(142, 27, 35, (255 / 20) * (60 - timer)));
                 }
 
-                var rect = DrawUtilities.createRectangleCentered(Main.RESOLUTION_X / 2 + timer, 100, 400, 60);
+                var rect = DrawUtilities.createRectangleCentered(Main.RESOLUTION_X / 2, 100, 400, 60);
                 gc.getGraphics().fill(rect);
 
                 if (timer < 30) gc.getGraphics().setColor(new Color(255, 255, 255, (255 / 20) * timer));
@@ -115,7 +117,9 @@ public abstract class Arte<T extends Unit> {
                 else gc.getGraphics().setColor(new Color(255, 255, 255, (255 / 20) * (60 - timer)));
 
 
+                gc.getGraphics().setFont(Main.fonts.VariableWidth.P40);
                 DrawUtilities.drawStringCentered(gc.getGraphics(), this.name, rect);
+                gc.getGraphics().setFont(Main.font);
             }
             animation(target, gc.getGraphics());
             DrawUtilities.drawStringCentered(gc.getGraphics(), String.valueOf(timer), 100, 0);

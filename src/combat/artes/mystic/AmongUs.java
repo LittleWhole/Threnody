@@ -20,14 +20,6 @@ public class AmongUs extends MysticArte<Player> {
         super(owner);
         name = "Among Us";
         arteType = ArteType.MYSTIC;
-        //this.card = new Image("res/beta/AmongUs.png");
-    }
-
-    @Override
-    public void use(Unit target, GameContainer gc) {
-        castTimestamp = BattleState.time;
-        animation(target, gc.getGraphics());
-        activation(target);
     }
 
     @Override
