@@ -6,7 +6,7 @@ import playerdata.characters.PlayableCharacter;
 
 public abstract class MysticArte<T extends Unit> extends Arte<T> {
 
-    public MysticArte(T owner) throws SlickException {
+    protected MysticArte(T owner) throws SlickException {
         super(owner);
     }
 

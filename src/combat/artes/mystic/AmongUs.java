@@ -20,6 +20,9 @@ public class AmongUs extends MysticArte<Player> {
         super(owner);
         name = "Among Us";
         arteType = ArteType.MYSTIC;
+        aniType = AnimationType.TARGET;
+        cost = 0;
+        castDuration = 60;
     }
 
     @Override

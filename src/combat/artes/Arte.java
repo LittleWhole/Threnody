@@ -118,7 +118,7 @@ public abstract class Arte<T extends Unit> {
 
 
                 gc.getGraphics().setFont(Main.fonts.VariableWidth.P40);
-                DrawUtilities.drawStringCentered(gc.getGraphics(), this.name, rect);
+                DrawUtilities.drawStringCentered(gc.getGraphics(), this.name, Main.fonts.VariableWidth.P40, rect);
                 gc.getGraphics().setFont(Main.font);
             }
             animation(target, gc.getGraphics());
@@ -126,7 +126,7 @@ public abstract class Arte<T extends Unit> {
         }
         timer++;
         spritesheetX++;
-        if (spritesheetX >= aniSheet.getHorizontalCount()) {
+        if (aniSheet != null && spritesheetX >= aniSheet.getHorizontalCount()) {
             spritesheetX = 0;
             spritesheetY++;
         }
