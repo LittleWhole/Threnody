@@ -38,8 +38,8 @@ public class Game extends ThrenodyGameState {
 
     EnumMap<EntityType, ArrayList<Entity>> newEntities; // Add new entities to the game
 
-    public ArrayList<Player> plrTeam;
-    public ArrayList<Enemy> enemyTeam;
+    public static ArrayList<Player> plrTeam;
+    public static ArrayList<Enemy> enemyTeam;
 
     // Managers
     private KeyManager keyDown; // Key Manager
@@ -82,7 +82,6 @@ public class Game extends ThrenodyGameState {
         plrPosition = new Coordinate(0,0);
         enemyTeam = new ArrayList<>();
         plrTeam = new ArrayList<>();
-        enemy = new Enemy(10, 0);
         npc = new NPC(200,0);
         battleCooldown = 200;
         dialog = new DialogBox(700, 400, "Notice", "This is a test dialog box!!!!!", new Button("Got it", () -> dialog.close()));
@@ -102,8 +101,7 @@ public class Game extends ThrenodyGameState {
         plr = (Player) new Player(plrPosition).setAttack(20);
         plrTeam.add(plr);
         System.out.println("[VERBOSE] Player initialized");
-        enemy = new Enemy(10, 0);
-        enemyTeam.add(enemy);
+        enemy = new Goblin(10, 0);
         // Initialize Managers
         keyDown = new KeyManager(gc.getInput(), this);
         System.out.println("[VERBOSE] KeyManager initialized");
@@ -190,8 +188,6 @@ public class Game extends ThrenodyGameState {
             init(gc, sbg);
             firstTime = false;
             time = battleCooldown;
-            enemyTeam.add(new Enemy(0,0));
-            enemyTeam.add(new Enemy(0,0));
             return;
 
         }
@@ -222,10 +218,7 @@ public class Game extends ThrenodyGameState {
         plr.resetHitbox();
         //plrTeam.add(plr);
         System.out.println("[VERBOSE] Player initialized");
-        enemy = new Goblin(10, 0);
-        enemyTeam.add(enemy);
-        enemyTeam.add(new Goblin(0,0));
-        enemyTeam.add(new Goblin(0,0));
+        //enemy = new Goblin(10, 0);
         // Initialize Managers
         keyDown = new KeyManager(gc.getInput(), this);
         System.out.println("[VERBOSE] KeyManager initialized");

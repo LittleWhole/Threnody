@@ -11,6 +11,7 @@ import org.newdawn.slick.*;
 import org.newdawn.slick.geom.Rectangle;
 import util.DrawUtilities;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.Queue;
 import java.util.concurrent.ConcurrentLinkedQueue;
@@ -27,6 +28,15 @@ public class Enemy<T extends Enemy<?>> extends Unit<T> {
     }
 
     protected EnemyState turn;
+
+    public ArrayList<Enemy> getEnemyTeam() {
+        return enemyTeam;
+    }
+
+    public void setEnemyTeam(ArrayList<Enemy> enemyTeam) {
+        this.enemyTeam = enemyTeam;
+    }
+
     protected ArrayList<Enemy> enemyTeam;
     protected int moveDuration;
     protected long moveTimeStamp;
@@ -64,6 +74,59 @@ public class Enemy<T extends Enemy<?>> extends Unit<T> {
         this.sprite = sheet.getSprite(0, 0);
         this.level = 1;
         this.timer = 0;
+        turn = EnemyState.IDLE;
+        this.team = Team.ENEMY;
+        this.arteQueue = new ConcurrentLinkedQueue<>();
+        this.enemyTeam = new ArrayList<Enemy>();
+        for(int i = 0 ; i <= (int) (Math.random()*4);i++)   {
+            enemyTeam.add(this);
+        }
+    }
+    public Enemy(float x, float y, int level) throws SlickException {//later change parameters to also change size, level, speed, and sprite
+        super();
+        this.health = 100;
+        this.attack = 5;
+        this.defense = 10;
+        this.critRate = 0.05;
+        this.critDamage = 50;
+        moveDuration = 100;
+        this.width = 118;
+        this.height = 205;
+        this.position = new Coordinate(x, y);
+        this.hitBox = new Rectangle(x,y, this.width, this.height/3);
+        this.xSpeed = 10;
+        this.ySpeed = 10;
+        this.sheet = new SpriteSheet(new Image("res/animations/character/goblin.png"), (int)width, (int)height, 0 ,8);
+        this.sprite = sheet.getSprite(0, 0);
+        this.level = level;
+        this.timer = 0;
+        turn = EnemyState.IDLE;
+        this.team = Team.ENEMY;
+        this.enemyTeam = new ArrayList<Enemy>();
+        for(int i = 0 ; i <= (int) (Math.random()*4);i++)   {
+            enemyTeam.add(this);
+        }
+        this.arteQueue = new ConcurrentLinkedQueue<>();
+    }
+    public Enemy(float x, float y, ArrayList<Enemy> enemies) throws SlickException {//later change parameters to also change size, level, speed, and sprite
+        super();
+        this.health = 100;
+        this.attack = 5;
+        this.defense = 10;
+        this.critRate = 0.05;
+        this.critDamage = 50;
+        moveDuration = 100;
+        this.width = 118;
+        this.height = 205;
+        this.position = new Coordinate(x, y);
+        this.hitBox = new Rectangle(x,y, this.width, this.height/3);
+        this.xSpeed = 10;
+        this.ySpeed = 10;
+        this.sheet = new SpriteSheet(new Image("res/animations/character/goblin.png"), (int)width, (int)height, 0 ,8);
+        this.sprite = sheet.getSprite(0, 0);
+        this.level = 1;
+        this.timer = 0;
+        this.enemyTeam = enemies;
         turn = EnemyState.IDLE;
         this.team = Team.ENEMY;
         this.arteQueue = new ConcurrentLinkedQueue<>();

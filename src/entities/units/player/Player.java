@@ -14,8 +14,10 @@ import combat.artes.support.Mana;
 import core.Main;
 import entities.core.Coordinate;
 import entities.units.Direction;
+import entities.units.enemy.Enemy;
 import entities.units.npc.NPC;
 import entities.units.Unit;
+import gamestates.BattleState;
 import gamestates.Game;
 import managers.AnimationManager;
 import managers.ImageManager;
@@ -27,10 +29,7 @@ import playerdata.characters.Sigur;
 import util.DrawUtilities;
 import util.ThrenodyException;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Queue;
+import java.util.*;
 import java.util.concurrent.ConcurrentLinkedQueue;
 
 @SuppressWarnings({"unchecked"})
@@ -143,7 +142,11 @@ public final class Player<T extends Player<?>> extends Unit<T> {
         this.dx = 0;
         this.dy = 0;
         if(getHitBox().intersects(u.getHitBox()) && Game.time >= Game.battleCooldown) {
-            sbg.enterState(Main.BATTLE_ID);
+            if(u instanceof Enemy<?>)   {
+                Game.enemyTeam.addAll(((Enemy<?>) u).getEnemyTeam());
+                sbg.enterState(Main.BATTLE_ID);
+            }
+
         }
     }
 
