@@ -31,7 +31,7 @@ public class Mana extends Arte<Player> {
     }
 
     @Override
-    public void unqueue() {
+    public void dequeue() {
         owner.addQueuedManaExtra(-manaValue);
     }
 }

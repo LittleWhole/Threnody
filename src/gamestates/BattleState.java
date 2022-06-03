@@ -108,10 +108,10 @@ public class BattleState extends ThrenodyGameState {
     private void renderUI(Graphics g) {
         Image mana = ImageManager.getImage("mana").getScaledCopy(2f);
         mana.drawCentered(Main.RESOLUTION_X / 17, Main.RESOLUTION_Y / 20 * 17);
-        DrawUtilities.drawStringCentered(g, String.valueOf(plrs.get(turn()).getMana()), Main.fonts.VariableWidth.B60, Main.RESOLUTION_X / 17, Main.RESOLUTION_Y / 20 * 17 + 15);
+        DrawUtilities.drawStringCentered(g, String.valueOf(plrs.get(turn()).getMana() + plrs.get(turn()).getQueuedManaExtra()), Main.fonts.VariableWidth.B60, Main.RESOLUTION_X / 17, Main.RESOLUTION_Y / 20 * 17 + 15);
         if (plrs.get(turn()).getQueuedManaExtra() > 0) {
             g.setColor(Color.green);
-            DrawUtilities.drawStringCentered(g, "+" + plrs.get(turn()).getQueuedManaExtra(), Main.fonts.VariableWidth.B60, Main.RESOLUTION_X / 17, Main.RESOLUTION_Y / 20 * 17 - 55);
+            DrawUtilities.drawStringCentered(g, "+" + plrs.get(turn()).getQueuedManaExtra(), Main.fonts.VariableWidth.P40, Main.RESOLUTION_X / 17, Main.RESOLUTION_Y / 20 * 17 - 55);
             g.setColor(Color.white);
         }
         if (plrs.get(turn()).getQueuedManaRemoval() > 0) {

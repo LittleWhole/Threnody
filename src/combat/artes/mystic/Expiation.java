@@ -31,7 +31,7 @@ public class Expiation extends MysticArte<Player> {
     }
 
     @Override
-    public void unqueue() {
+    public void dequeue() {
 
     }
 }

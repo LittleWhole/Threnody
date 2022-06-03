@@ -7,8 +7,10 @@ import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.TrueTypeFont;
+import org.newdawn.slick.geom.RoundedRectangle;
 import util.DrawUtilities;
 import util.StringUtilities;
+import util.ThrenodyFont;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -61,8 +63,8 @@ public class DialogBox extends Menu implements UserInterfaceable {
     @Override
     public void initializeFonts() {
         this.fonts = new HashMap<>();
-        fonts.put("title", new TrueTypeFont(new java.awt.Font("Bahnschrift", java.awt.Font.PLAIN, 50), true));
-        fonts.put("body", new TrueTypeFont(new java.awt.Font("Bahnschrift", java.awt.Font.PLAIN, 30), true));
+        fonts.put("title", new ThrenodyFont(new java.awt.Font("Bahnschrift", java.awt.Font.PLAIN, 50), true));
+        fonts.put("body", new ThrenodyFont(new java.awt.Font("Bahnschrift", java.awt.Font.PLAIN, 30), true));
     }
 
     public void formatBody() {
@@ -84,7 +86,9 @@ public class DialogBox extends Menu implements UserInterfaceable {
         g.setColor(Color.white);
         DrawUtilities.drawStringCentered(g, title, fonts.get("title"), x, y - height / 2 + 40);
         for (var i = 0; i < bodyLines.size(); i++) {
-            DrawUtilities.drawStringCentered(g, bodyLines.get(i), fonts.get("body"), x, y/* + (height / bodyLines.size() * (i + 1))*/);
+            //DrawUtilities.drawStringCenteredByFont(g, bodyLines.get(i), (ThrenodyFont) fonts.get("body"), Color.white, x, y/* + (height / bodyLines.size() * (i + 1))*/);
+            ((ThrenodyFont) fonts.get("body")).drawString(x,
+                    y - fonts.get("body").getHeight(bodyLines.get(i)), bodyLines.get(i), Color.white, ThrenodyFont.ALIGN_CENTER);
         }
         for (var i = 0; i < buttons.size(); i++) {
             buttons.get(i).setX(x / buttons.size() * (i + 1));

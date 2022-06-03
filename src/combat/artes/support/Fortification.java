@@ -31,7 +31,7 @@ public class Fortification extends Arte<Unit> {
     }
 
     @Override
-    public void unqueue() {
+    public void dequeue() {
 
     }
 }

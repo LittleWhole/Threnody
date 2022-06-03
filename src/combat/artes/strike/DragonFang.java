@@ -32,7 +32,7 @@ public class DragonFang extends Arte<Player> {
     }
 
     @Override
-    public void unqueue() {
+    public void dequeue() {
 
     }
 }

@@ -33,7 +33,7 @@ public class Catalysis extends Arte<Player> {
     }
 
     @Override
-    public void unqueue() {
+    public void dequeue() {
 
     }
 }

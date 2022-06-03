@@ -95,17 +95,25 @@ public final class DrawUtilities {
         g.setFont(prevFont);
     }
 
-//    public static void drawStringCenteredByFont(Graphics g, String string, TrueTypeFont font, Color color, float x, float y) {
-//        org.newdawn.slick.Font prevFont = g.getFont();
-//        int width = font.getWidth(string);
-//        int height = font.getHeight(string);
-//        Rectangle r = createRectangleCentered(x, y, width, height);
-//
-//        g.setFont(font);
-//        font.drawString(string, color, (r.getX() + r.getWidth() / 2) - (width / 2),
-//                (r.getY() + r.getHeight() / 2) - (height / 2), FontUtils.Alignment.CENTER);
-//        g.setFont(prevFont);
-//    }
+    public static void drawStringCenteredByFont(Graphics g, String string, ThrenodyFont font, Color color, float x, float y) {
+        org.newdawn.slick.Font prevFont = g.getFont();
+        int width = font.getWidth(string);
+        int height = font.getHeight(string);
+        Rectangle r = createRectangleCentered(x, y, width, height);
+
+        g.setFont(font);
+        font.drawString((r.getX() + r.getWidth() / 2) - (width / 2),
+                (r.getY() + r.getHeight() / 2) - (height / 2), string, color, ThrenodyFont.ALIGN_CENTER);
+        g.setFont(prevFont);
+    }
+
+    public static void drawStringCenteredByFont(Graphics g, String string, ThrenodyFont font, Color color, Rectangle r) {
+        int width = font.getWidth(string);
+        int height = font.getHeight(string);
+
+        font.drawString((r.getX() + r.getWidth() / 2) - (width / 2),
+                (r.getY() + r.getHeight() / 2) - (height / 2), string, color, ThrenodyFont.ALIGN_CENTER);
+    }
 
     public static void drawStringCentered(Graphics g, String string, Rectangle r) {
         org.newdawn.slick.Font font = defaultFont;
