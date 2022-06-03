@@ -43,7 +43,7 @@ public abstract class ThrenodyGameState extends BasicGameState {
 
             Main.menus.add(new DialogBox(700, 400, "Screenshot", "Screenshot saved in screenshots/ folder.", new CloseButton("Got it")));
         }
-        if(key == Input.KEY_F2) {
+        if(key == Input.KEY_F3) {
             Main.debug = !Main.debug;
         }
     }

@@ -13,6 +13,7 @@ import combat.artes.support.Heal;
 import combat.artes.support.Mana;
 import core.Main;
 import entities.core.Coordinate;
+import entities.core.Entity;
 import entities.units.Direction;
 import entities.units.enemy.Enemy;
 import entities.units.npc.NPC;
@@ -225,14 +226,14 @@ public final class Player<T extends Player<?>> extends Unit<T> {
         DrawUtilities.drawImageCentered(g,this.sprite, (Main.getScreenWidth()/2), (Main.getScreenHeight()/2) + 128);
     }
     public void battleRender(Graphics g, float plrX, float plrY)  {
-        g.drawImage(sprite, -plrX - position.getX(), -plrY/2 - position.getY());
+        entityRender(g, plrX,plrY);
         g.setColor(new Color(255, 0,0,0.5f));
 
-        hitBox.setX(-plrX - position.getX() + width/3);
-        hitBox.setY((-plrY/2) - position.getY() + height/4);
-        ImageManager.getImage("health").drawCentered(hitBox.getX() + hitBox.getWidth() / 3.5f, hitBox.getY() - this.getHeight() / 2 + 15);
+        hitBox.setX(getRenderX(plrX) + width/3);
+        hitBox.setY(getRenderY(plrY) + height/4);
+        ImageManager.getImage("health").drawCentered(hitBox.getX() + hitBox.getWidth() / 3.5f, hitBox.getY() - this.getHeight() / 2 + 30);
         g.setColor(Color.white);
-        DrawUtilities.drawStringCentered(g, String.valueOf(health), hitBox.getX() + hitBox.getWidth() / 3.5f, hitBox.getY() - this.getHeight() / 2 + 15);
+        DrawUtilities.drawStringCentered(g, String.valueOf(health), hitBox.getX() + hitBox.getWidth() / 3.5f, hitBox.getY() - this.getHeight() / 2 + 30);
     }
 
     public void addToDeck(Arte<Player> a)   {

@@ -135,7 +135,7 @@ public class BattleState extends ThrenodyGameState {
         time = 0;
         for (int i = 0; i < plrs.size(); i++)   {
             //plrs.get(i).setPosition( -200 + i*200, i*1000);
-            plrs.get(i).setPosition( -680, -460);
+            plrs.get(i).setPosition( -580, -260);
             plrs.get(i).setDirection(Direction.NORTH, Direction.EAST);
             plrs.get(i).startBattle();
         }
@@ -172,6 +172,7 @@ public class BattleState extends ThrenodyGameState {
     public void keyPressed(int key, char c) {
         super.keyPressed(key, c);
         if (key == Input.KEY_ENTER) plrs.forEach(p -> p.setState(Player.PlayerState.CASTING));
+        if(key == Input.KEY_F3) Main.debug = !Main.debug;
     }
 
     @Override
