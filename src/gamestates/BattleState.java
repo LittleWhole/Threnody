@@ -9,10 +9,12 @@ import graphics.ui.combat.DamageNumber;
 import managers.CombatManager;
 import managers.ImageManager;
 import map.GameMap;
+import org.checkerframework.checker.units.qual.A;
 import org.newdawn.slick.*;
 import org.newdawn.slick.state.StateBasedGame;
 import util.DrawUtilities;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Queue;
@@ -164,6 +166,8 @@ public class BattleState extends ThrenodyGameState {
 
     @Override
     public void leave(GameContainer gc, StateBasedGame sbg) {
+        plrs = new ArrayList<>();
+        enemies = new ArrayList<>();
         // This code happens when you leave a gameState.
     }
 

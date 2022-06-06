@@ -161,7 +161,7 @@ public abstract class Arte<T extends Unit> {
     public void animationOwner(Graphics g) {
         if (!finished()) {
             this.aniFrame = aniSheet.getSprite(spritesheetX, spritesheetY);
-            g.drawImage(aniFrame, -owner.getPosition().getX() - (owner.getWidth()/2), owner.getY() + owner.getHeight()*4.3f);
+            g.drawImage(aniFrame, -owner.getPosition().getX() + (owner.getWidth()/2) + 5, owner.getPosition().getY()/2 + owner.getHeight()*2.75f);
         }
     }
 

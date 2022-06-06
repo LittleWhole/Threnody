@@ -16,6 +16,7 @@ import managers.DisplayManager;
 import managers.KeyManager;
 import managers.SoundManager;
 import map.GameMap;
+import org.checkerframework.checker.units.qual.A;
 import org.newdawn.slick.*;
 import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
@@ -233,6 +234,7 @@ public class Game extends ThrenodyGameState {
         // This code happens when you leave a gameState.
         BattleState.plrs = plrTeam;
         BattleState.enemies = enemyTeam;
+        enemyTeam = new ArrayList<>();
 
     }
 
