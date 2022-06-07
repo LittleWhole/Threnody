@@ -1,5 +1,6 @@
 package gamestates;
 
+import combat.artes.mystic.AmongUs;
 import core.Main;
 import entities.core.Coordinate;
 import entities.units.Direction;
@@ -8,15 +9,19 @@ import entities.units.player.Player;
 import graphics.ui.combat.DamageNumber;
 import managers.CombatManager;
 import managers.ImageManager;
+import managers.KeyManager;
 import map.GameMap;
 import org.newdawn.slick.*;
 import org.newdawn.slick.state.StateBasedGame;
 import util.DrawUtilities;
 
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.Queue;
 import java.util.concurrent.ConcurrentLinkedQueue;
+
+import static org.newdawn.slick.Input.*;
 
 @SuppressWarnings({"division"})
 public class BattleState extends ThrenodyGameState {
@@ -27,6 +32,7 @@ public class BattleState extends ThrenodyGameState {
     private GameMap battlefield;
     private CombatManager combat;
     private CombatManager.CombatState result;
+    private KeyManager km;
     private int resultDuration;
     public static int time;
     public static int expGain;
@@ -48,6 +54,7 @@ public class BattleState extends ThrenodyGameState {
         currencyGain = 0;
         this.gc = gc;
         resultDuration = 255;
+        km = new KeyManager(gc.getInput(), Main.game);
     }
 
     @Override
@@ -105,7 +112,7 @@ public class BattleState extends ThrenodyGameState {
         super.render(gc, sbg, g);
     }
 
-    private void renderUI(Graphics g) {
+    private void renderUI(Graphics g) throws SlickException {
         Image mana = ImageManager.getImage("mana").getScaledCopy(2f);
         mana.drawCentered(Main.RESOLUTION_X / 17, Main.RESOLUTION_Y / 20 * 17);
         DrawUtilities.drawStringCentered(g, String.valueOf(plrs.get(turn()).getMana() + plrs.get(turn()).getQueuedManaExtra()), Main.fonts.VariableWidth.B60, Main.RESOLUTION_X / 17, Main.RESOLUTION_Y / 20 * 17 + 15);
@@ -124,10 +131,13 @@ public class BattleState extends ThrenodyGameState {
             DrawUtilities.drawStringCentered(g, "Next turn: +" + plrs.get(turn()).getManaAdd(), Main.fonts.VariableWidth.P20, Main.RESOLUTION_X / 17, Main.RESOLUTION_Y / 20 * 17 + 100);
             g.setColor(Color.white);
         }
+        if (km.amogus(KeyManager.AMOGUS_LIST.stream().filter(km).toList())) {
+            plrs.get(turn()).amogus();
+        }
     }
 
     public void update(GameContainer gc, StateBasedGame sbg, int delta) throws SlickException {
-        // This is where you put your game's logic that executes each frame that isn't about drawing
+        // This is where you put your game's logic that executes each frame that isn't about drawin
     }
 
     @Override
