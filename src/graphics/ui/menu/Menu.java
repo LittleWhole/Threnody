@@ -9,8 +9,25 @@ import util.DrawUtilities;
 import java.util.Map;
 
 public abstract class Menu implements UserInterfaceable {
+    public int getWidth() {
+        return width;
+    }
+
     protected final int width;
     protected final int height;
+
+    public int getHeight() {
+        return height;
+    }
+
+    public int getX() {
+        return x;
+    }
+
+    public int getY() {
+        return y;
+    }
+
     protected final int x;
     protected final int y;
     protected boolean show = true;

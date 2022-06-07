@@ -11,12 +11,12 @@ import managers.CombatManager;
 import managers.ImageManager;
 import managers.KeyManager;
 import map.GameMap;
+import org.checkerframework.checker.units.qual.A;
 import org.newdawn.slick.*;
 import org.newdawn.slick.state.StateBasedGame;
 import util.DrawUtilities;
 
-import java.util.Arrays;
-import java.util.Collections;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Queue;
 import java.util.concurrent.ConcurrentLinkedQueue;
@@ -145,7 +145,7 @@ public class BattleState extends ThrenodyGameState {
         time = 0;
         for (int i = 0; i < plrs.size(); i++)   {
             //plrs.get(i).setPosition( -200 + i*200, i*1000);
-            plrs.get(i).setPosition( -680, -460);
+            plrs.get(i).setPosition( -580, -260);
             plrs.get(i).setDirection(Direction.NORTH, Direction.EAST);
             plrs.get(i).startBattle();
         }
@@ -174,6 +174,8 @@ public class BattleState extends ThrenodyGameState {
 
     @Override
     public void leave(GameContainer gc, StateBasedGame sbg) {
+        plrs = new ArrayList<>();
+        enemies = new ArrayList<>();
         // This code happens when you leave a gameState.
     }
 
@@ -182,6 +184,7 @@ public class BattleState extends ThrenodyGameState {
     public void keyPressed(int key, char c) {
         super.keyPressed(key, c);
         if (key == Input.KEY_ENTER) plrs.forEach(p -> p.setState(Player.PlayerState.CASTING));
+        if(key == Input.KEY_F3) Main.debug = !Main.debug;
     }
 
     @Override

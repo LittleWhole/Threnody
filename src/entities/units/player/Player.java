@@ -13,6 +13,7 @@ import combat.artes.support.Heal;
 import combat.artes.support.Mana;
 import core.Main;
 import entities.core.Coordinate;
+import entities.core.Entity;
 import entities.units.Direction;
 import entities.units.enemy.Enemy;
 import entities.units.npc.NPC;
@@ -154,6 +155,11 @@ public final class Player<T extends Player<?>> extends Unit<T> {
             u.interact();
         }
     }
+    public void exit(NPC u) {
+        if(getHitBox().intersects(u.getHitBox()))   {
+            u.exit();
+        }
+    }
 
     public Arte<? extends Unit> cardSelect(Input input) {
         Arte<Player> selected = null;
@@ -221,17 +227,17 @@ public final class Player<T extends Player<?>> extends Unit<T> {
 
     @Override
     protected void drawSprite(Graphics g) { // Draw the entity sprite
-        DrawUtilities.drawImageCentered(g,this.sprite, (Main.getScreenWidth()/2), (Main.getScreenHeight()/2) + 128);
+        DrawUtilities.drawImageCentered(g,this.sprite, getRenderX(), getRenderY());
     }
     public void battleRender(Graphics g, float plrX, float plrY)  {
-        g.drawImage(sprite, -plrX - position.getX(), -plrY/2 - position.getY());
+        entityRender(g, plrX,plrY);
         g.setColor(new Color(255, 0,0,0.5f));
 
-        hitBox.setX(-plrX - position.getX() + width/3);
-        hitBox.setY((-plrY/2) - position.getY() + height/4);
-        ImageManager.getImage("health").drawCentered(hitBox.getX() + hitBox.getWidth() / 3.5f, hitBox.getY() - this.getHeight() / 2 + 15);
+        hitBox.setX(getRenderX(plrX) + width/3);
+        hitBox.setY(getRenderY(plrY) + height/4);
+        ImageManager.getImage("health").drawCentered(hitBox.getX() + hitBox.getWidth() / 3.5f, hitBox.getY() - this.getHeight() / 2 + 30);
         g.setColor(Color.white);
-        DrawUtilities.drawStringCentered(g, String.valueOf(health), hitBox.getX() + hitBox.getWidth() / 3.5f, hitBox.getY() - this.getHeight() / 2 + 15);
+        DrawUtilities.drawStringCentered(g, String.valueOf(health), hitBox.getX() + hitBox.getWidth() / 3.5f, hitBox.getY() - this.getHeight() / 2 + 30);
     }
 
     public void addToDeck(Arte<Player> a)   {
@@ -311,5 +317,11 @@ public final class Player<T extends Player<?>> extends Unit<T> {
                 ", queue=" + queue +
                 ", character=" + character +
                 '}';
+    }
+    public float getRenderX()   {
+        return (Main.getScreenWidth()/2);
+    }
+    public float getRenderY()   {
+        return (Main.getScreenHeight()/2) + 128;
     }
 }

@@ -79,6 +79,11 @@ public abstract class Entity {
 	public float getX() { return position.getX(); }
 	public float getY() { return position.getY(); }
 
+	public float getRenderX(float plrX)	{return -plrX - position.getX() + width;}
+	public float getRenderY(float plrY)	{return -plrY/2 - position.getY() + height;}
+
+	public void entityRender(Graphics g, float plrX, float plrY)	{g.drawImage(sprite, getRenderX(plrX), getRenderY(plrY));}
+
 	public float getMagSpeed() { return (float) Math.sqrt(xSpeed * xSpeed + ySpeed * ySpeed); }
 	public float getSpeedX() { return xSpeed; }
 	public float getSpeedY() { return ySpeed; }

@@ -4,6 +4,7 @@ import combat.artes.Arte;
 import combat.artes.ElementType;
 import core.Main;
 import entities.core.Coordinate;
+import entities.core.Entity;
 import entities.core.Team;
 import entities.units.Unit;
 import managers.ImageManager;
@@ -133,9 +134,9 @@ public class Enemy<T extends Enemy<?>> extends Unit<T> {
     }
 
     public void render(Graphics g, float plrX, float plrY)  {
-        g.drawImage(sprite, -plrX - position.getX() + width, -plrY/2 - position.getY() + height);
+        entityRender(g, plrX,plrY);
 
-        hitBox.setX(-plrX - position.getX() + width);
+        hitBox.setX( getRenderX(plrX));
         hitBox.setY((-plrY/2) -position.getY() + this.getHeight()*1.6f);
         ImageManager.getImage("health").drawCentered(hitBox.getX() + hitBox.getWidth() / 2, hitBox.getY() - this.getHeight() / 2 - 15);
         g.setColor(Color.white);

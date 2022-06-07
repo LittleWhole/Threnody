@@ -59,7 +59,7 @@ public final class CombatManager {
             }
             if (players.get(plrTurn).getState() == Player.PlayerState.SELECTING) {
                 players.get(plrTurn).move(gc, g);
-                g.drawString("SELECTING", 100, 0);
+                //g.drawString("SELECTING", 100, 0);
                 /*
                 try { g.drawString("Cards selected: " + players.get(plrTurn).getArteQueue().stream().map(a -> ((Arte) a).getName())
                         .collect(Collectors.joining(", ")), 500, 500); } catch (Exception ignored) {};
@@ -100,7 +100,7 @@ public final class CombatManager {
                     players.get(plrTurn).generateMana(players.get(plrTurn).getQueuedManaExtra());
                     players.get(plrTurn).setQueuedManaExtra(0);
                     players.get(plrTurn).attack(enemies.get(0), gc);
-                    g.drawString("CASTING", 100, 0);
+                    //g.drawString("CASTING", 100, 0);
 
                     for (Object a : players.get(plrTurn).getArteQueue()) {
                         stack.add((Arte) a);
@@ -131,7 +131,7 @@ public final class CombatManager {
                 }
                 if ((enemies.get(enemyTurn - (players.size() - 1))).getCombatState() == Enemy.EnemyState.MOVING) {
                     (enemies.get(enemyTurn - (players.size() - 1))).battleMove(players.get(0), gc);
-                    DrawUtilities.drawStringCentered(g, "MOVING", 800, 100);
+                    //DrawUtilities.drawStringCentered(g, "MOVING", 800, 100);
                 }
                 if ((enemies.get(enemyTurn - (players.size() - 1))).getCombatState() == Enemy.EnemyState.DONE) {
                     updateTeams(players);
@@ -147,7 +147,14 @@ public final class CombatManager {
                 roundStart();
                 return CombatState.ADVANCE;
             }
-
+            if(Main.debug)  {
+                for(Player p: players)  {
+                    DrawUtilities.drawStringCentered(g, p.getState().toString(), p.getRenderX(0)-p.getWidth(),p.getRenderY(0) - 10);
+                }
+                for (Enemy e: enemies)  {
+                    DrawUtilities.drawStringCentered(g, e.getCombatState().toString(), e.getRenderX(0)-e.getWidth(),e.getRenderY(0) - 10);
+                }
+            }
             return CombatState.HALT;
         }
 

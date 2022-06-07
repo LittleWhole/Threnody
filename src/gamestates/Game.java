@@ -5,6 +5,7 @@ import entities.core.Coordinate;
 import entities.core.Entity;
 import entities.core.EntityType;
 import entities.units.enemy.Goblin;
+import entities.units.npc.Carder;
 import entities.units.npc.NPC;
 import entities.units.Unit;
 import entities.units.enemy.Enemy;
@@ -16,6 +17,7 @@ import managers.DisplayManager;
 import managers.KeyManager;
 import managers.SoundManager;
 import map.GameMap;
+import org.checkerframework.checker.units.qual.A;
 import org.newdawn.slick.*;
 import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
@@ -47,7 +49,7 @@ public class Game extends ThrenodyGameState {
     public static Coordinate plrPosition;
     private Player plr;
     private Enemy enemy;
-    private NPC npc;
+    private Carder npc;
     public GameMap overworld;
     public Background background;
     public DialogBox dialog;
@@ -82,7 +84,7 @@ public class Game extends ThrenodyGameState {
         plrPosition = new Coordinate(0,0);
         enemyTeam = new ArrayList<>();
         plrTeam = new ArrayList<>();
-        npc = new NPC(200,0);
+        npc = new Carder(200,0);
         battleCooldown = 200;
         dialog = new DialogBox(700, 400, "Notice", "This is a test dialog box!!!!!", new Button("Got it", () -> dialog.close()));
         // Initialize Both Entity Maps
@@ -110,6 +112,8 @@ public class Game extends ThrenodyGameState {
 
         // Play BGM
         SoundManager.playBackgroundMusic("02");
+
+        overworld.generateHitboxes();
     }
 
 
@@ -121,7 +125,16 @@ public class Game extends ThrenodyGameState {
 
         //overworld.render(plr);
 
-        overworld.render((int)(((plr.getX()*-1)+(Main.getScreenWidth()/2)) - (plr.getWidth()/2)) /*-32*/,(int)(((plr.getY()*-0.5)-(Main.getScreenHeight()*2)-plr.getHeight()*1.5f)/*-132*/));
+        overworld.render((int)(((plr.getX()*-1)+(Main.getScreenWidth()/2)) - (plr.getWidth()/2)) /*-32*/,(int)(((plr.getY()*-0.5)-(Main.getScreenHeight()*2)-plr.getHeight()*1.5f)/*-132*/), 0);
+        if(overworld.playerBehindTile(plr)) {
+            plr.render(g);
+            overworld.render((int)(((plr.getX()*-1)+(Main.getScreenWidth()/2)) - (plr.getWidth()/2)) /*-32*/,(int)(((plr.getY()*-0.5)-(Main.getScreenHeight()*2)-plr.getHeight()*1.5f)/*-132*/), 1);
+
+        }
+        else {
+            overworld.render((int)(((plr.getX()*-1)+(Main.getScreenWidth()/2)) - (plr.getWidth()/2)) /*-32*/,(int)(((plr.getY()*-0.5)-(Main.getScreenHeight()*2)-plr.getHeight()*1.5f)/*-132*/), 1);
+            plr.render(g);
+        }
         //overworld.render((int)plr.getX(), (int)plr.getY());
 
         //overworld.render((int) plr.getX()/2+20, (int) plr.getY()/2-20);
@@ -129,7 +142,7 @@ public class Game extends ThrenodyGameState {
 
         enemy.render(g, plr.getX(), plr.getY());
         npc.render(gc, plrPosition.getX(), plrPosition.getY());
-        plr.render(g);
+
         g.drawString("Coords: " + plr.getPosition().toString(), 100, 200);
         DrawUtilities.drawStringCentered(g,"Level: " + Main.stats.level, 100, 50);
         DrawUtilities.drawStringCentered(g, "Exp: " + Main.stats.exp + "/" + Main.stats.maxExp, 100, 100);
@@ -216,6 +229,7 @@ public class Game extends ThrenodyGameState {
         // Initialize the Player
         plr.setPosition(plrPosition);
         plr.resetHitbox();
+        overworld.generateHitboxes();
         //plrTeam.add(plr);
         System.out.println("[VERBOSE] Player initialized");
         //enemy = new Goblin(10, 0);
@@ -233,6 +247,7 @@ public class Game extends ThrenodyGameState {
         // This code happens when you leave a gameState.
         BattleState.plrs = plrTeam;
         BattleState.enemies = enemyTeam;
+        enemyTeam = new ArrayList<>();
 
     }
 
@@ -240,6 +255,7 @@ public class Game extends ThrenodyGameState {
         super.keyPressed(key, c);
         if(key == Input.KEY_F3) Main.debug = !Main.debug;
         if(key == Input.KEY_E) plr.interact(npc);
+        if(key == Input.KEY_ESCAPE) plr.exit(npc);
     }
 
 
@@ -268,4 +284,6 @@ public class Game extends ThrenodyGameState {
     public GameMap getOverworld() {
         return overworld;
     }
+
+
 }
