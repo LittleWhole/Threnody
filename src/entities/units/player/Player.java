@@ -117,15 +117,14 @@ public final class Player<T extends Player<?>> extends Unit<T> {
     }
 
     public void attack(Unit target, GameContainer gc)   {
-        if (arteQueue.isEmpty()) {
+        Arte<? extends Unit> arte = arteQueue.peek();
+        if (arte == null) {
             this.state = PlayerState.DONE;
             return;
         }
-
-        Arte<? extends Unit> arte = arteQueue.element();
         arte.use(target, gc);
         if (arte.finished()) {
-            arteQueue.remove(arte);
+            arteQueue.poll();
             arteHand.add(arteDeck.get(queue));
             queue++;
         }
@@ -287,6 +286,23 @@ public final class Player<T extends Player<?>> extends Unit<T> {
 
     public Queue<Arte<? extends Unit>> getClickArteQueue() {
         return clickArteQueue;
+    }
+
+    public void amogus() throws SlickException {
+        this.arteHand.set(0, new AmongUs(this));
+        this.arteHand.set(1, new AmongUs(this));
+        this.arteHand.set(2, new AmongUs(this));
+        this.arteHand.set(3, new AmongUs(this));
+        this.arteHand.set(4, new AmongUs(this));
+        this.arteHand.set(5, new AmongUs(this));
+        arteDeck.clear();
+        for (int i = 0; i < 20; i++) {
+            arteDeck.add(new AmongUs(this));
+            arteDeck.add(new AmongUs(this));
+            arteDeck.add(new AmongUs(this));
+            arteDeck.add(new AmongUs(this));
+            arteDeck.add(new AmongUs(this));
+        }
     }
 
     @Override
