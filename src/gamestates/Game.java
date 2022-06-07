@@ -112,6 +112,8 @@ public class Game extends ThrenodyGameState {
 
         // Play BGM
         SoundManager.playBackgroundMusic("02");
+
+        overworld.generateHitboxes();
     }
 
 
@@ -123,7 +125,16 @@ public class Game extends ThrenodyGameState {
 
         //overworld.render(plr);
 
-        overworld.render((int)(((plr.getX()*-1)+(Main.getScreenWidth()/2)) - (plr.getWidth()/2)) /*-32*/,(int)(((plr.getY()*-0.5)-(Main.getScreenHeight()*2)-plr.getHeight()*1.5f)/*-132*/));
+        overworld.render((int)(((plr.getX()*-1)+(Main.getScreenWidth()/2)) - (plr.getWidth()/2)) /*-32*/,(int)(((plr.getY()*-0.5)-(Main.getScreenHeight()*2)-plr.getHeight()*1.5f)/*-132*/), 0);
+        if(overworld.playerBehindTile(plr)) {
+            plr.render(g);
+            overworld.render((int)(((plr.getX()*-1)+(Main.getScreenWidth()/2)) - (plr.getWidth()/2)) /*-32*/,(int)(((plr.getY()*-0.5)-(Main.getScreenHeight()*2)-plr.getHeight()*1.5f)/*-132*/), 1);
+
+        }
+        else {
+            overworld.render((int)(((plr.getX()*-1)+(Main.getScreenWidth()/2)) - (plr.getWidth()/2)) /*-32*/,(int)(((plr.getY()*-0.5)-(Main.getScreenHeight()*2)-plr.getHeight()*1.5f)/*-132*/), 1);
+            plr.render(g);
+        }
         //overworld.render((int)plr.getX(), (int)plr.getY());
 
         //overworld.render((int) plr.getX()/2+20, (int) plr.getY()/2-20);
@@ -131,7 +142,7 @@ public class Game extends ThrenodyGameState {
 
         enemy.render(g, plr.getX(), plr.getY());
         npc.render(gc, plrPosition.getX(), plrPosition.getY());
-        plr.render(g);
+
         g.drawString("Coords: " + plr.getPosition().toString(), 100, 200);
         DrawUtilities.drawStringCentered(g,"Level: " + Main.stats.level, 100, 50);
         DrawUtilities.drawStringCentered(g, "Exp: " + Main.stats.exp + "/" + Main.stats.maxExp, 100, 100);
@@ -218,6 +229,7 @@ public class Game extends ThrenodyGameState {
         // Initialize the Player
         plr.setPosition(plrPosition);
         plr.resetHitbox();
+        overworld.generateHitboxes();
         //plrTeam.add(plr);
         System.out.println("[VERBOSE] Player initialized");
         //enemy = new Goblin(10, 0);
@@ -272,4 +284,6 @@ public class Game extends ThrenodyGameState {
     public GameMap getOverworld() {
         return overworld;
     }
+
+
 }

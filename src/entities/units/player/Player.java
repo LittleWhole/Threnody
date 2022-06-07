@@ -228,7 +228,7 @@ public final class Player<T extends Player<?>> extends Unit<T> {
 
     @Override
     protected void drawSprite(Graphics g) { // Draw the entity sprite
-        DrawUtilities.drawImageCentered(g,this.sprite, (Main.getScreenWidth()/2), (Main.getScreenHeight()/2) + 128);
+        DrawUtilities.drawImageCentered(g,this.sprite, getRenderX(), getRenderY());
     }
     public void battleRender(Graphics g, float plrX, float plrY)  {
         entityRender(g, plrX,plrY);
@@ -301,5 +301,11 @@ public final class Player<T extends Player<?>> extends Unit<T> {
                 ", queue=" + queue +
                 ", character=" + character +
                 '}';
+    }
+    public float getRenderX()   {
+        return (Main.getScreenWidth()/2);
+    }
+    public float getRenderY()   {
+        return (Main.getScreenHeight()/2) + 128;
     }
 }
