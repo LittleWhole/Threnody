@@ -59,17 +59,17 @@ public class GameMap extends TiledMap {
 
 
     public void render(Player plr) {
-        super.render((int) (-plr.getX()),(int)(-plr.getY()), 7);
-        super.render((int) (-plr.getX()),(int)(-plr.getY()), 2);
+        super.render((int) (-plr.getX()),(int)(-plr.getY()), 0);
+        super.render((int) (-plr.getX()),(int)(-plr.getY()), 1);
         //for (int i = 0; i < super.getLayerCount(); i++) super.render((int) (-plr.getX()),(int)(-plr.getY()), i);
     }
 
-    public boolean playerBehindTile(Player plr) {
+    public boolean playerBehindTile(Player plr) {//shoddy way to render player behind tiles but idc abt improving
         for(Polygon[] hboxes:hitboxes) {
             for(Polygon hbox : hboxes)  {
                 if(hbox != null) {
-                    if ((plr.getRenderX() + plr.getWidth() / 2 > hbox.getX() && plr.getRenderX() - plr.getWidth() / 2 < hbox.getX() + hbox.getWidth()) &&
-                            (plr.getHeight() / 2 + plr.getRenderY() < hbox.getY() && plr.getRenderY() - plr.getHeight() / 2 > hbox.getY() - hbox.getHeight() * 2)) {
+                    if ((plr.getRenderX() + plr.getWidth() > hbox.getX() && plr.getRenderX() - plr.getWidth() < hbox.getX() + hbox.getWidth()) &&
+                            (plr.getHeight()/2 + plr.getRenderY() < hbox.getY() && plr.getRenderY() - plr.getHeight() > hbox.getY() - hbox.getHeight() * 4)) {
                         return true;
                     }
                 }

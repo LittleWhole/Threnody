@@ -253,7 +253,7 @@ public class Game extends ThrenodyGameState {
 
     public void keyPressed(int key, char c) {
         super.keyPressed(key, c);
-        if(key == Input.KEY_F3) Main.debug = !Main.debug;
+        //if(key == Input.KEY_F3) Main.debug = !Main.debug;
         if(key == Input.KEY_E) plr.interact(npc);
         if(key == Input.KEY_ESCAPE) plr.exit(npc);
     }
