@@ -26,9 +26,10 @@ public final class DrawUtilities {
         return new Rectangle(x - width / 2, y - height / 2, width, height);
     }
 
-    public static void centerShape(Shape shape, float x, float y) {
+    public static Shape centerShape(Shape shape, float x, float y) {
         shape.setCenterX(x);
         shape.setCenterY(y);
+        return shape;
     }
 
     public static Shape createShapeCentered(Class<? extends Shape> clazz, float x, float y, BiBundle... params) {

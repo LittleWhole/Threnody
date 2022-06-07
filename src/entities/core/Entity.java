@@ -126,18 +126,10 @@ public abstract class Entity {
 
 	// Update Method: Update Physics Variables
 	public void update() {
-		// Collision checking
-		checkCollisions();
-
 		// Update the position of the entity
 		this.position.updatePosition(dx, dy);
 		this.dy = 0;
 		this.dx = 0;
-	}
-
-    protected void checkCollisions() {
-		checkEntityCollisions(); // Entity Collisions
-		checkScreenCollisions(); // Screen Collisions
 	}
 
     // Check collision with the edge of the screen
@@ -160,19 +152,6 @@ public abstract class Entity {
 
 	protected void screenCollision() {}
 
-	// Check collisions with other units
-	protected void checkEntityCollisions() {
-		ArrayList<Entity> units = game.getEntitiesOf(EntityType.UNIT);
-
-		for (Entity e: units) {
-			if(this.equals(e)) continue;
-			else if(!sameTeam(e) && hitBox.intersects(e.getHitBox())) {
-				collide(e);
-				unitCollision((Unit) e);
-				break; // Not sure if I should break or not, testing
-			}
-		}
-	}
 	// Determines if two entities are on the same team
 	private boolean sameTeam(Entity e) {
         return team != Team.NEUTRAL && team == e.team;

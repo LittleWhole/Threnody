@@ -19,13 +19,15 @@ import managers.SoundManager;
 import map.GameMap;
 import org.checkerframework.checker.units.qual.A;
 import org.newdawn.slick.*;
+import org.newdawn.slick.geom.Rectangle;
+import org.newdawn.slick.geom.RoundedRectangle;
 import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
 import util.DrawUtilities;
 
-import java.util.ArrayList;
-import java.util.EnumMap;
-import java.util.Map;
+import java.lang.reflect.InvocationTargetException;
+import java.util.*;
+import java.util.concurrent.ConcurrentLinkedQueue;
 import java.util.function.Predicate;
 
 public class Game extends ThrenodyGameState {
@@ -36,16 +38,17 @@ public class Game extends ThrenodyGameState {
     public static int time;
     public static long battleTimeStamp;
     public static int battleCooldown;
-    EnumMap<EntityType, ArrayList<Entity>> entities; // All Entities in the Game
-
-    EnumMap<EntityType, ArrayList<Entity>> newEntities; // Add new entities to the game
 
     public static ArrayList<Player> plrTeam;
     public static ArrayList<Enemy> enemyTeam;
 
+    private Queue<NPC> npcs;
+    private Queue<Player> plrs;
+    private Queue<Enemy> enemies;
+
     // Managers
     private KeyManager keyDown; // Key Manager
-    public DisplayManager displayManager; // Display Manager 
+    public DisplayManager displayManager; // Display Manager
     public static Coordinate plrPosition;
     private Player plr;
     private Enemy enemy;
@@ -53,9 +56,6 @@ public class Game extends ThrenodyGameState {
     public GameMap overworld;
     public Background background;
     public DialogBox dialog;
-
-    public Map<EntityType, ArrayList<Entity>> getEntities() { return entities; }
-    public ArrayList<Entity> getEntitiesOf(EntityType type) { return entities.get(type); }
     public static GameContainer getGc() { return gc; }
 
     public void keyInput() { KeyManager.KEY_DOWN_LIST.stream().filter(keyDown).forEach(keyDown::keyDown); }
@@ -79,25 +79,18 @@ public class Game extends ThrenodyGameState {
         firstTime = true;
         overworld = new GameMap("res/tilemap/overworld.tmx");
         background = new Background();
+        plrs = new ConcurrentLinkedQueue<>();
+        npcs = new ConcurrentLinkedQueue<>();
+        enemies = new ConcurrentLinkedQueue<>();
         gc.setShowFPS(true);
         Game.gc = gc;
         plrPosition = new Coordinate(0,0);
         enemyTeam = new ArrayList<>();
         plrTeam = new ArrayList<>();
-        npc = new Carder(200,0);
+        npcs.add(new Carder(200, 0));
         battleCooldown = 200;
         dialog = new DialogBox(700, 400, "Notice", "This is a test dialog box!!!!!", new Button("Got it", () -> dialog.close()));
         // Initialize Both Entity Maps
-        entities = new EnumMap<>(Map.of(
-                EntityType.UNIT, new ArrayList<>(),
-                EntityType.PROJECTILE, new ArrayList<>(),
-                EntityType.INTERACTABLE, new ArrayList<>()
-        ));
-        newEntities = new EnumMap<>(Map.of(
-                EntityType.UNIT, new ArrayList<>(),
-                EntityType.PROJECTILE, new ArrayList<>(),
-                EntityType.INTERACTABLE, new ArrayList<>()
-        ));
 
         // Initialize the Player
         plr = (Player) new Player(plrPosition).setAttack(20);
@@ -141,7 +134,6 @@ public class Game extends ThrenodyGameState {
         //overworld.render(0, 0, (int) plr.getX() / 100 - 20, (int) plr.getY() / 100 + 20, (int) plr.getX() / 100, (int) plr.getY() / 100);
 
         enemy.render(g, plr.getX(), plr.getY());
-        npc.render(gc, plrPosition.getX(), plrPosition.getY());
 
         g.drawString("Coords: " + plr.getPosition().toString(), 100, 200);
         DrawUtilities.drawStringCentered(g,"Level: " + Main.stats.level, 100, 50);
@@ -150,10 +142,25 @@ public class Game extends ThrenodyGameState {
         if(Main.debug)  {
             plr.drawHitBox(g);
             enemy.drawHitBox(g);
-            npc.drawHitBox(g);
             overworld.drawDebugRects(g);
         }
-
+        npcs.forEach(u -> {
+            if (Main.debug) u.drawHitBox(g);
+            u.render(gc, plrPosition.getX(), plrPosition.getY());
+            if (plr.getHitBox().intersects(u.getHitBox()) && !u.isInteracting()) {
+                var shape = new RoundedRectangle(u.getRenderX(plr.getPosition().getX()) + 50, u.getRenderY(plr.getPosition().getY()), 200, 50, RoundedRectangle.TOP_LEFT | RoundedRectangle.BOTTOM_LEFT);
+                var keyShape = new RoundedRectangle(u.getRenderX(plr.getPosition().getX()) + 55, u.getRenderY(plr.getPosition().getY()) + 5, 40, 40, RoundedRectangle.ALL);
+                keyShape.setCornerRadius(7);
+                g.setColor(Color.gray);
+                g.fill(shape);
+                g.setColor(Color.white);
+                g.fill(keyShape);
+                g.setColor(Color.black);
+                DrawUtilities.drawStringCentered(g, "F", keyShape);
+                g.setColor(Color.white);
+                DrawUtilities.drawStringCentered(g, "Open Shop", shape.getX() + 95, shape.getCenterY());
+            }
+        });
         dialog.render(g, gc.getInput().getMouseX(), gc.getInput().getMouseY());
         super.render(gc, sbg, g);
     }
@@ -175,21 +182,6 @@ public class Game extends ThrenodyGameState {
         // Update Player
         plr.update(sbg, enemy, this);
         enemy.overworldUpdate();
-
-        // Update all entities, and remove those marked for removal
-        Predicate<Entity> filter = Entity::isMarked;
-        for(ArrayList<Entity> list : entities.values()){
-            for(Entity e : list) e.update();
-            list.removeIf(filter);
-        }
-
-        // Add new entities
-        for (EntityType type : newEntities.keySet()) {
-            for (Entity e : newEntities.get(type)) {
-                entities.get(type).add(e);
-            }
-            newEntities.get(type).clear();
-        }
 
         dialog.update(gc);
 
@@ -214,17 +206,6 @@ public class Game extends ThrenodyGameState {
         //enemy = new Enemy(10,0);
         //plr.setPosition(0,0);
         //plrTeam.add(plr);
-        // Initialize Both Entity Maps
-        entities = new EnumMap<>(Map.of(
-                EntityType.UNIT, new ArrayList<>(),
-                EntityType.PROJECTILE, new ArrayList<>(),
-                EntityType.INTERACTABLE, new ArrayList<>()
-        ));
-        newEntities = new EnumMap<>(Map.of(
-                EntityType.UNIT, new ArrayList<>(),
-                EntityType.PROJECTILE, new ArrayList<>(),
-                EntityType.INTERACTABLE, new ArrayList<>()
-        ));
 
         // Initialize the Player
         plr.setPosition(plrPosition);
@@ -254,8 +235,10 @@ public class Game extends ThrenodyGameState {
     public void keyPressed(int key, char c) {
         super.keyPressed(key, c);
         //if(key == Input.KEY_F3) Main.debug = !Main.debug;
-        if(key == Input.KEY_E) plr.interact(npc);
-        if(key == Input.KEY_ESCAPE) plr.exit(npc);
+        npcs.forEach(u -> {
+            if(key == Input.KEY_F) plr.interact(u);
+            if(key == Input.KEY_ESCAPE) plr.exit(u);
+        });
     }
 
 

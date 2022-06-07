@@ -48,12 +48,17 @@ public abstract class Arte<T extends Unit> {
     protected AnimationType aniType;
 
     protected Arte(T owner) throws SlickException {
+        this();
         assert character != null;
         this.owner = owner;
         timer = 0;
         spritesheetX = 0;
         spritesheetY = 0;
         this.castTimestamp = -1;
+    }
+
+    /* Skeleton constructor for assets. */
+    protected Arte() throws SlickException {
         try {
             this.card = new Image("res/ui/cards/" + this.getClass().getPackageName().substring(13) + "/" + this.getClass().getSimpleName() + ".png");
             //ImageManager.getImage("res/ui/cards/" + this.getClass().getPackageName().substring(13) + "/" + this.getClass().getSimpleName());

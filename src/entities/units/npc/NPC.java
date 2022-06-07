@@ -7,6 +7,8 @@ import org.newdawn.slick.*;
 import org.newdawn.slick.geom.Rectangle;
 import util.DrawUtilities;
 
+import java.util.function.Predicate;
+
 @SuppressWarnings({"unchecked"})
 public class NPC<T extends NPC<?>> extends Unit<T> {
 
@@ -22,11 +24,12 @@ public class NPC<T extends NPC<?>> extends Unit<T> {
     }
 
     protected Enemy.EnemyState combatState;
+
     public NPC(float x, float y) throws SlickException {//later change parameters to also change size, level, speed, and sprite
         this.width = 104;
         this.height = 216;
         this.position = new Coordinate(x, y);
-        this.hitBox = new Rectangle(x,y, this.width, this.height/3);
+        this.hitBox = new Rectangle(x - width/2, y, this.width * 2, this.height/3 * 2);
         this.xSpeed = 10;
         this.ySpeed = 10;
         this.sheet = new SpriteSheet(new Image("res/animations/character/player.png"), (int)width, (int)height, 0, 8);
@@ -53,10 +56,12 @@ public class NPC<T extends NPC<?>> extends Unit<T> {
 
     public void interact()    {
         timer = 0;
+        isInteracting = true;
     }
 
     public void exit()  {
         //stopping interaction
+        isInteracting = false;
     }
 
     public void animation() {
@@ -67,6 +72,9 @@ public class NPC<T extends NPC<?>> extends Unit<T> {
         g.fill(hitBox);
     }
 
+    public boolean isInteracting() {
+        return isInteracting;
+    }
 
     public NPC getNPC() {
         return this;
