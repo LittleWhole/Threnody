@@ -5,6 +5,7 @@ import entities.core.Coordinate;
 import entities.core.Entity;
 import entities.core.EntityType;
 import entities.units.enemy.Goblin;
+import entities.units.npc.Carder;
 import entities.units.npc.NPC;
 import entities.units.Unit;
 import entities.units.enemy.Enemy;
@@ -48,7 +49,7 @@ public class Game extends ThrenodyGameState {
     public static Coordinate plrPosition;
     private Player plr;
     private Enemy enemy;
-    private NPC npc;
+    private Carder npc;
     public GameMap overworld;
     public Background background;
     public DialogBox dialog;
@@ -83,7 +84,7 @@ public class Game extends ThrenodyGameState {
         plrPosition = new Coordinate(0,0);
         enemyTeam = new ArrayList<>();
         plrTeam = new ArrayList<>();
-        npc = new NPC(200,0);
+        npc = new Carder(200,0);
         battleCooldown = 200;
         dialog = new DialogBox(700, 400, "Notice", "This is a test dialog box!!!!!", new Button("Got it", () -> dialog.close()));
         // Initialize Both Entity Maps
@@ -242,6 +243,7 @@ public class Game extends ThrenodyGameState {
         super.keyPressed(key, c);
         if(key == Input.KEY_F3) Main.debug = !Main.debug;
         if(key == Input.KEY_E) plr.interact(npc);
+        if(key == Input.KEY_ESCAPE) plr.exit(npc);
     }
 
 

@@ -156,6 +156,11 @@ public final class Player<T extends Player<?>> extends Unit<T> {
             u.interact();
         }
     }
+    public void exit(NPC u) {
+        if(getHitBox().intersects(u.getHitBox()))   {
+            u.exit();
+        }
+    }
 
     public Arte<? extends Unit> cardSelect(Input input) {
         Arte<Player> selected = null;

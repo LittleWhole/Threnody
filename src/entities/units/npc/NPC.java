@@ -37,20 +37,27 @@ public class NPC<T extends NPC<?>> extends Unit<T> {
 
     public void render(GameContainer gc, float plrX, float plrY)  {
         timer++;
-        gc.getGraphics().drawImage(sprite, -plrX - position.getX() + width, -plrY/2 - position.getY() + height);
-        gc.getGraphics().setColor(new Color(255, 0,0,0.5f));
-        hitBox.setX(-plrX - position.getX() + width);
-        hitBox.setY((-plrY/2) - position.getY() + this.getHeight()*1.6f);
+        renderSprite(gc, plrX, plrY);
 
         if(timer < interactLength) {
             DrawUtilities.drawStringCentered(gc.getGraphics(),"Hello!!", -plrX - position.getX(),-plrY/2 + this.getHeight());
         }
     }
 
+    public void renderSprite(GameContainer gc, float plrX, float plrY)  {
+        gc.getGraphics().drawImage(sprite, -plrX - position.getX() + width, -plrY/2 - position.getY() + height);
+        gc.getGraphics().setColor(new Color(255, 0,0,0.5f));
+        hitBox.setX(-plrX - position.getX() + width);
+        hitBox.setY((-plrY/2) - position.getY() + this.getHeight()*1.6f);
+    }
+
     public void interact()    {
         timer = 0;
     }
 
+    public void exit()  {
+        //stopping interaction
+    }
 
     public void animation() {
 
