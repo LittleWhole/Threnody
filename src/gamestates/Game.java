@@ -235,6 +235,7 @@ public class Game extends ThrenodyGameState {
         plr.setPosition(plrPosition);
         plr.resetHitbox();
         overworld.generateHitboxes();
+        overworld.updateHitboxes(-plrPosition.getX(), -plrPosition.getY()/2);
         //plrTeam.add(plr);
         System.out.println("[VERBOSE] Player initialized");
         //enemy = new Goblin(10, 0);
