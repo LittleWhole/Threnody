@@ -17,4 +17,14 @@ public class Goblin<T extends Goblin<?>> extends Enemy<T> {
         super(x, y, enemies);
         this.attack = 9;
     }
+
+    @Override
+    public void resetTeam() {
+        try {
+            enemyTeam = new ArrayList<Enemy>(Arrays.asList(new Goblin(0, 0, new ArrayList<>()), new Goblin(0, 0, new ArrayList<>()), new Goblin(0, 0, new ArrayList<>())));
+        }
+        catch (SlickException e)    {
+
+        }
+    }
 }

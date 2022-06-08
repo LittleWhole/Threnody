@@ -29,7 +29,7 @@ public class NPC<T extends NPC<?>> extends Unit<T> {
         this.width = 104;
         this.height = 216;
         this.position = new Coordinate(x, y);
-        this.hitBox = new Rectangle(x - width/2, y, this.width * 2, this.height/3 * 2);
+        this.hitBox = new Rectangle(position.getX(), position.getY(), this.width * 2, this.height/3 * 2);
         this.xSpeed = 10;
         this.ySpeed = 10;
         this.sheet = new SpriteSheet(new Image("res/animations/character/player.png"), (int)width, (int)height, 0, 8);
@@ -50,7 +50,7 @@ public class NPC<T extends NPC<?>> extends Unit<T> {
     public void renderSprite(GameContainer gc, float plrX, float plrY)  {
         gc.getGraphics().drawImage(sprite, -plrX - position.getX() + width, -plrY/2 - position.getY() + height);
         gc.getGraphics().setColor(new Color(255, 0,0,0.5f));
-        hitBox.setX(-plrX - position.getX() + width);
+        hitBox.setX(-plrX - position.getX() + width/2);
         hitBox.setY((-plrY/2) - position.getY() + this.getHeight()*1.6f);
     }
 

@@ -64,7 +64,7 @@ public class BattleState extends ThrenodyGameState {
 
         plrs.forEach(p -> p.battleRender(g, 0,0));
         for (int i = enemies.size() - 1; i >= 0; i--) {
-            enemies.get(i).render(g, 0,0);
+            enemies.get(i).battleRender(g, 0,0);
         }
 
         // Render the UI
@@ -84,6 +84,7 @@ public class BattleState extends ThrenodyGameState {
                 DrawUtilities.drawStringCentered(g, "MONEY GAINED:" + (Math.min(time / 2, currencyGain)), Main.getScreenWidth() / 2, Main.getScreenHeight() / 2 + 100);
                 //plrs.forEach(p -> p.getArteQueue().clear());
                 if (time > resultDuration) {
+
                     sbg.enterState(Main.GAME_ID);
                 }
             }
@@ -184,7 +185,6 @@ public class BattleState extends ThrenodyGameState {
     public void keyPressed(int key, char c) {
         super.keyPressed(key, c);
         if (key == Input.KEY_ENTER) plrs.forEach(p -> p.setState(Player.PlayerState.CASTING));
-        if(key == Input.KEY_F3) Main.debug = !Main.debug;
     }
 
     @Override

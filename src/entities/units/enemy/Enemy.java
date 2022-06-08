@@ -48,6 +48,7 @@ public class Enemy<T extends Enemy<?>> extends Unit<T> {
     protected Queue<Arte<? super Enemy>> arteQueue;
     protected Arte<? super Enemy> move;
 
+    protected int dead;
     public void setCombatState(EnemyState combatState) {
         this.combatState = combatState;
     }
@@ -59,6 +60,7 @@ public class Enemy<T extends Enemy<?>> extends Unit<T> {
     protected EnemyState combatState;
     public Enemy(float x, float y) throws SlickException {//later change parameters to also change size, level, speed, and sprite
         super();
+        this.dead = 0;
         this.health = 100;
         this.attack = 5;
         this.defense = 10;
@@ -134,17 +136,27 @@ public class Enemy<T extends Enemy<?>> extends Unit<T> {
     }
 
     public void render(Graphics g, float plrX, float plrY)  {
-        entityRender(g, plrX,plrY);
+        if(!isDead()) entityRender(g, plrX,plrY);
 
         hitBox.setX( getRenderX(plrX));
         hitBox.setY((-plrY/2) -position.getY() + this.getHeight()*1.6f);
+
+
+    }
+    public void battleRender(Graphics g, float plrX, float plrY) {
+        if (!isDead()) entityRender(g, plrX, plrY);
+
+        hitBox.setX(getRenderX(plrX));
+        hitBox.setY((-plrY / 2) - position.getY() + this.getHeight() * 1.6f);
         ImageManager.getImage("health").drawCentered(hitBox.getX() + hitBox.getWidth() / 2, hitBox.getY() - this.getHeight() / 2 - 15);
         g.setColor(Color.white);
         DrawUtilities.drawStringCentered(g, String.valueOf(health), hitBox.getX() + hitBox.getWidth() / 2, hitBox.getY() - this.getHeight() / 2 - 15);
     }
 
     public void overworldUpdate()    {
-
+        if(isDead())   {
+           dead--;
+        }
     }
 
     public void battleSelect()  {
@@ -199,6 +211,19 @@ public class Enemy<T extends Enemy<?>> extends Unit<T> {
     public void drawHitBox(Graphics g)  {
         g.setColor(new Color(255, 0,0,0.5f));
         g.fill(hitBox);
+    }
+
+    public boolean isDead() {
+        return dead > 0;
+    }
+
+    public void kill()  {
+        this.dead = 300;
+        resetTeam();
+    }
+
+    public void resetTeam() {
+
     }
 
     public Enemy getEnemy() {

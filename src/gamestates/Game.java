@@ -44,7 +44,7 @@ public class Game extends ThrenodyGameState {
 
     private Queue<NPC> npcs;
     private Queue<Player> plrs;
-    private Queue<Enemy> enemies;
+    private ArrayList<Enemy> enemies;
 
     // Managers
     private KeyManager keyDown; // Key Manager
@@ -53,6 +53,7 @@ public class Game extends ThrenodyGameState {
     private Player plr;
     private Enemy enemy;
     private Carder npc;
+    private int enemyEncounterIndex;
     public GameMap overworld;
     public Background background;
     public DialogBox dialog;
@@ -81,13 +82,14 @@ public class Game extends ThrenodyGameState {
         background = new Background();
         plrs = new ConcurrentLinkedQueue<>();
         npcs = new ConcurrentLinkedQueue<>();
-        enemies = new ConcurrentLinkedQueue<>();
+        enemies = new ArrayList<>();
         gc.setShowFPS(true);
         Game.gc = gc;
         plrPosition = new Coordinate(0,0);
         enemyTeam = new ArrayList<>();
         plrTeam = new ArrayList<>();
         npcs.add(new Carder(200, 0));
+        enemies.add(new Goblin(-200,0));
         battleCooldown = 200;
         dialog = new DialogBox(700, 400, "Notice", "This is a test dialog box!!!!!", new Button("Got it", () -> dialog.close()));
         // Initialize Both Entity Maps
@@ -133,8 +135,11 @@ public class Game extends ThrenodyGameState {
         //overworld.render((int) plr.getX()/2+20, (int) plr.getY()/2-20);
         //overworld.render(0, 0, (int) plr.getX() / 100 - 20, (int) plr.getY() / 100 + 20, (int) plr.getX() / 100, (int) plr.getY() / 100);
 
-        enemy.render(g, plr.getX(), plr.getY());
+        //enemy.render(g, plr.getX(), plr.getY());
+        enemies.forEach(u -> {
+           u.render(g, plr.getX(), plr.getY());
 
+        });
         g.drawString("Coords: " + plr.getPosition().toString(), 100, 200);
         DrawUtilities.drawStringCentered(g,"Level: " + Main.stats.level, 100, 50);
         DrawUtilities.drawStringCentered(g, "Exp: " + Main.stats.exp + "/" + Main.stats.maxExp, 100, 100);
@@ -180,8 +185,20 @@ public class Game extends ThrenodyGameState {
         background.update();
 
         // Update Player
-        plr.update(sbg, enemy, this);
-        enemy.overworldUpdate();
+        enemies.forEach(u -> {
+            u.overworldUpdate();
+            try {
+                if(plr.encounteringEnemy(sbg, u, this)) {
+                    enemyEncounterIndex = enemies.indexOf(u);
+                }
+                plr.update(sbg, u, this);
+
+            } catch (SlickException e) {
+                throw new RuntimeException(e);
+            }
+        });
+        //plr.update(sbg, enemy, this);
+        //enemy.overworldUpdate();
 
         dialog.update(gc);
 
@@ -198,6 +215,9 @@ public class Game extends ThrenodyGameState {
         }
         time = 0;
         System.out.println("Entering game");
+        if(BattleState.expGain > 0) {
+            enemies.get(enemyEncounterIndex).kill();
+        }
         plr.gainExp(BattleState.expGain);
         Main.stats.gainGold(BattleState.currencyGain);
         // Reset time
@@ -245,9 +265,7 @@ public class Game extends ThrenodyGameState {
 
 
     public void mousePressed(int button, int x, int y) {
-        if (button == 0) {
-            System.out.println("You left clicked at " + x + ", " + y);
-        }
+
     }
 
 

@@ -141,13 +141,27 @@ public final class Player<T extends Player<?>> extends Unit<T> {
         this.position.updatePosition(dx,dy);
         this.dx = 0;
         this.dy = 0;
-        if(getHitBox().intersects(u.getHitBox()) && Game.time >= Game.battleCooldown) {
+        if(encounteringEnemy(sbg, u, g))    {
+            Game.enemyTeam.addAll(((Enemy<?>) u).getEnemyTeam());
+            sbg.enterState(Main.BATTLE_ID);
+        }
+        /*if(getHitBox().intersects(u.getHitBox()) && Game.time >= Game.battleCooldown) {
             if(u instanceof Enemy<?>)   {
                 Game.enemyTeam.addAll(((Enemy<?>) u).getEnemyTeam());
                 sbg.enterState(Main.BATTLE_ID);
             }
 
+        }*/
+    }
+
+    public boolean encounteringEnemy(StateBasedGame sbg, Unit u, Game g)    {
+        if(getHitBox().intersects(u.getHitBox()) && Game.time >= Game.battleCooldown) {
+            if(u instanceof Enemy<?> && !((Enemy)u).isDead())   {
+                return true;
+            }
+
         }
+        return false;
     }
 
     public void interact(NPC u)    {
