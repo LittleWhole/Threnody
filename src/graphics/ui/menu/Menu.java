@@ -54,6 +54,8 @@ public abstract class Menu implements UserInterfaceable {
         if (!show) return;
         g.setColor(new Color(0, 0, 0, 170));
         DrawUtilities.fillShapeCentered(g, new RoundedRectangle(0, 0, width, height, RoundedRectangle.ALL), x, y);
+        g.setColor(new Color(219, 202, 106));
+        DrawUtilities.drawShapeCentered(g, new RoundedRectangle(0, 0, width, height, RoundedRectangle.ALL), x, y);
         this.subrender(g);
     }
 

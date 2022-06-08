@@ -2,6 +2,7 @@ package graphics.ui;
 
 import gamestates.Game;
 import gamestates.TitleScreen;
+import graphics.ui.menu.Menu;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.TrueTypeFont;
@@ -14,7 +15,7 @@ public class Button implements UserInterfaceable {
     protected float x, y, width, height;
     protected String text;
     protected Commandable command;
-    protected UserInterfaceable parent;
+    protected Menu parent;
 
     public Button(String text) {
         this.x = 0;
@@ -39,6 +40,15 @@ public class Button implements UserInterfaceable {
         this.width = width;
         this.height = height;
         this.text = text;
+    }
+
+    public Button(float x, float y, String text, Commandable command) {
+        this.x = x;
+        this.y = y;
+        this.width = new TrueTypeFont(new java.awt.Font("Bahnschrift", java.awt.Font.PLAIN, 50), true).getWidth(text);
+        this.height = new TrueTypeFont(new java.awt.Font("Bahnschrift", java.awt.Font.PLAIN, 50), true).getHeight(text);
+        this.text = text;
+        this.command = command;
     }
 
     public Button(float x, float y, float width, float height, String text) {
@@ -93,7 +103,7 @@ public class Button implements UserInterfaceable {
         return command;
     }
 
-    public UserInterfaceable getParent() {
+    public Menu getParent() {
         return parent;
     }
 
@@ -127,7 +137,7 @@ public class Button implements UserInterfaceable {
         return this;
     }
 
-    public Button setParent(UserInterfaceable parent) {
+    public Button setParent(Menu parent) {
         this.parent = parent;
         return this;
     }

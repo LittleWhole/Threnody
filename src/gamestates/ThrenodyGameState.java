@@ -4,6 +4,7 @@ import core.Main;
 import graphics.ui.Button;
 import graphics.ui.menu.CloseButton;
 import graphics.ui.menu.DialogBox;
+import graphics.ui.menu.PauseMenu;
 import org.newdawn.slick.*;
 import org.newdawn.slick.imageout.ImageOut;
 import org.newdawn.slick.state.BasicGameState;
@@ -43,8 +44,12 @@ public abstract class ThrenodyGameState extends BasicGameState {
 
             Main.menus.add(new DialogBox(700, 400, "Screenshot", "Screenshot saved in screenshots/ folder.", new CloseButton("Got it")));
         }
-        if(key == Input.KEY_F3) {
+        if (key == Input.KEY_F3) {
             Main.debug = !Main.debug;
+        }
+        if (key == Input.KEY_ESCAPE && !Main.paused) {
+            Main.menus.add(new PauseMenu());
+            Main.paused = true;
         }
     }
 }

@@ -47,6 +47,8 @@ public class TitleScreen extends ThrenodyGameState {
     @Override
     public void enter(GameContainer gc, StateBasedGame sbg) throws SlickException {
         font = new TrueTypeFont(new java.awt.Font("Bahnschrift", java.awt.Font.PLAIN, 50), true);
+        Main.menus.clear();
+        Main.paused = false;
         gc.getGraphics().setFont(font);
         bNEW_GAME = new Button(Main.getScreenWidth() / 2, Main.getScreenHeight() / 2 + 100, gc.getGraphics().getFont().getWidth("New Game"), gc.getGraphics().getFont().getHeight("New Game"), "New Game");
         bCONTINUE = new Button(Main.getScreenWidth() / 2, Main.getScreenHeight() / 2 + 200, gc.getGraphics().getFont().getWidth("Continue"), gc.getGraphics().getFont().getHeight("Continue"), "Continue");
@@ -84,7 +86,7 @@ public class TitleScreen extends ThrenodyGameState {
             sbg.enterState(Main.GAME_ID, new FadeOutTransition(), new FadeInTransition());
         }
         if (bCONTINUE.onButton(x, y)) {
-            Main.menus.add(new DialogBox(700, 400, "Sorry!", "Savegame loading is currently still WIP!", new CloseButton("Got it")));
+            Main.continueGame();
         }
         if (bLOAD_GAME.onButton(x, y)) {
             Main.menus.add(new DialogBox(700, 400, "Sorry!", "Savegame loading is currently still WIP!", new CloseButton("Got it")));

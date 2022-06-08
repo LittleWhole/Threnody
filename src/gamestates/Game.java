@@ -33,6 +33,7 @@ import java.util.function.Predicate;
 public class Game extends ThrenodyGameState {
 
     private static GameContainer gc;
+    private StateBasedGame sbg;
     private final int id;
     public static boolean firstTime;
     public static int time;
@@ -58,6 +59,7 @@ public class Game extends ThrenodyGameState {
     public Background background;
     public DialogBox dialog;
     public static GameContainer getGc() { return gc; }
+    public StateBasedGame getSbg() { return sbg; }
 
     public void keyInput() { KeyManager.KEY_DOWN_LIST.stream().filter(keyDown).forEach(keyDown::keyDown); }
 
@@ -75,7 +77,7 @@ public class Game extends ThrenodyGameState {
     }
 
 
-    public void init(GameContainer gc, StateBasedGame sbg) throws SlickException {
+    public synchronized void init(GameContainer gc, StateBasedGame sbg) throws SlickException {
         // This code happens when you enter a game state for the *first time.*
         firstTime = true;
         overworld = new GameMap("res/tilemap/overworld.tmx");
@@ -85,6 +87,7 @@ public class Game extends ThrenodyGameState {
         enemies = new ArrayList<>();
         gc.setShowFPS(true);
         Game.gc = gc;
+        this.sbg = sbg;
         plrPosition = new Coordinate(0,0);
         enemyTeam = new ArrayList<>();
         plrTeam = new ArrayList<>();
@@ -171,7 +174,7 @@ public class Game extends ThrenodyGameState {
         super.render(gc, sbg, g);
     }
 
-    public void update(GameContainer gc, StateBasedGame sbg, int delta) throws SlickException {
+    public synchronized void update(GameContainer gc, StateBasedGame sbg, int delta) throws SlickException {
 
         // Increment timer
         time++;
@@ -205,7 +208,7 @@ public class Game extends ThrenodyGameState {
 
     }
 
-    public void enter(GameContainer gc, StateBasedGame sbg) throws SlickException {
+    public synchronized void enter(GameContainer gc, StateBasedGame sbg) throws SlickException {
 
         if(firstTime)   {
             init(gc, sbg);
@@ -245,7 +248,7 @@ public class Game extends ThrenodyGameState {
         SoundManager.playBackgroundMusic("02");
     }
 
-    public void leave(GameContainer gc, StateBasedGame sbg) {
+    public synchronized void leave(GameContainer gc, StateBasedGame sbg) {
         // This code happens when you leave a gameState.
         BattleState.plrs = plrTeam;
         BattleState.enemies = enemyTeam;
@@ -264,8 +267,7 @@ public class Game extends ThrenodyGameState {
     }
 
 
-
-
+    @Override
     public void mousePressed(int button, int x, int y) {
 
     }

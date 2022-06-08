@@ -31,6 +31,7 @@ public class IntroCredit extends ThrenodyGameState {
         gc.setShowFPS(false);
         logo = new Image("res/ui/start/seahazestudios.png").getScaledCopy(700, 700);
         this.sbg = sbg;
+        Main.sbg = sbg;
     }
 
     @Override // Begin file loading upon entering the gamestate

@@ -2,6 +2,7 @@ package graphics.ui;
 
 import gamestates.Game;
 import gamestates.TitleScreen;
+import graphics.ui.menu.Menu;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.TrueTypeFont;
@@ -79,7 +80,7 @@ public class PaddedButton extends Button implements UserInterfaceable {
         return command;
     }
 
-    public UserInterfaceable getParent() {
+    public Menu getParent() {
         return parent;
     }
 
@@ -121,7 +122,7 @@ public class PaddedButton extends Button implements UserInterfaceable {
         return this;
     }
 
-    public PaddedButton setParent(UserInterfaceable parent) {
+    public PaddedButton setParent(Menu parent) {
         this.parent = parent;
         return this;
     }

@@ -51,7 +51,7 @@ public class DialogBox extends Menu implements UserInterfaceable {
     public void initializeButtons(Button... buttons) {
         for (Button b : buttons) {
             b.setParent(this);
-            if (b instanceof CloseButton) b.setCommand(this::remove);
+            if (b instanceof CloseButton cb) cb.setCommand(() -> { cb.getParent().remove(); cb.getSecondCommand().command(); });
         }
         this.buttons = List.of(buttons);
     }
