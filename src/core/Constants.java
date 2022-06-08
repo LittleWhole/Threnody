@@ -2,7 +2,7 @@ package core;
 
 public final class Constants {
 
-    public static final String VERSION = "Alpha v0.5.0";
+    public static final String VERSION = "Release 1.0.0";
 
     public static final class LevelingConstants {
         public static final int MAX_LEVEL = 100;

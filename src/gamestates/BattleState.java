@@ -171,6 +171,9 @@ public class BattleState extends ThrenodyGameState {
 //        for (var i = 0; i < 100; i++) {
 //            damageNumbers.add(new DamageNumber(temp.nextInt(0, 3000), temp.nextInt(0, 1920), temp.nextInt(0, 1080)));
 //        }
+        plrs.forEach(p ->{
+            p.renderStats(gc);
+        });
     }
 
     @Override
@@ -185,6 +188,7 @@ public class BattleState extends ThrenodyGameState {
     public void keyPressed(int key, char c) {
         super.keyPressed(key, c);
         if (key == Input.KEY_ENTER) plrs.forEach(p -> p.setState(Player.PlayerState.CASTING));
+        if(key == Input.KEY_TAB) plrs.forEach(Player::showStats);
     }
 
     @Override

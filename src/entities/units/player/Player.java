@@ -20,6 +20,8 @@ import entities.units.npc.NPC;
 import entities.units.Unit;
 import gamestates.BattleState;
 import gamestates.Game;
+import graphics.ui.menu.InventoryMenu;
+import graphics.ui.menu.Menu;
 import managers.AnimationManager;
 import managers.ImageManager;
 import org.newdawn.slick.*;
@@ -40,6 +42,10 @@ public final class Player<T extends Player<?>> extends Unit<T> {
         return state;
     }
     private PlayerState state;
+
+    private boolean displayStats;
+
+    private Menu stats;
 
     private final List<Arte<? extends Unit>> arteDeck;
     private List<Arte<? extends Unit>> arteHand;
@@ -81,6 +87,29 @@ public final class Player<T extends Player<?>> extends Unit<T> {
             arteDeck.add(new SonicSlash(this));
         }
         this.hitBox = new Rectangle((Main.getScreenWidth()/2) - this.getWidth()/2, (Main.getScreenHeight()/2) + this.height*0.85f, this.width, this.height/4);
+        this.displayStats = false;
+        stats = new Menu(Main.getScreenWidth()-175, Main.getScreenHeight()-225, 300, 400) {
+            @Override
+            protected void subrender(Graphics g) {
+                g.setColor(Color.white);
+                g.drawString("STATS", stats.getX() - stats.getWidth()/2 + 50, stats.getY()- stats.getHeight()/2 + 50);
+                g.setColor(Color.yellow);
+                g.drawString("Level: " + Main.stats.level, stats.getX() - stats.getWidth()/2 + 50, stats.getY()- stats.getHeight()/2 + 100);
+                g.drawString("Exp: " + Main.stats.exp + "/" + Main.stats.maxExp, stats.getX()- stats.getWidth()/2 + 50, stats.getY()- stats.getHeight()/2 + 150);
+                g.drawString("Gold: " + Main.stats.gold, stats.getX() - stats.getWidth()/2 + 50, stats.getY()- stats.getHeight()/2 + 200);
+                g.setColor(Color.green);
+                g.drawString("Health - " + health, stats.getX()- stats.getWidth()/2 + 50, stats.getY()- stats.getHeight()/2 + 250);
+                g.setColor(Color.gray);
+                g.drawString("Defense - " + defense, stats.getX()- stats.getWidth()/2 + 50, stats.getY()- stats.getHeight()/2 + 300);
+                g.setColor(Color.red);
+                g.drawString("Atk - " + attack, stats.getX()- stats.getWidth()/2 + 50, stats.getY()- stats.getHeight()/2 + 350);
+            }
+
+            @Override
+            protected void initializeFonts() {
+
+            }
+        };
     }
 
     public void resetHitbox()   {
@@ -227,6 +256,14 @@ public final class Player<T extends Player<?>> extends Unit<T> {
         }
     }
 
+    public void showStats() {
+        displayStats = !displayStats;
+    }
+
+    public boolean isDisplayStats() {
+        return displayStats;
+    }
+
     public void setState(PlayerState s) {
         this.state = s;
     }
@@ -252,6 +289,10 @@ public final class Player<T extends Player<?>> extends Unit<T> {
         ImageManager.getImage("health").drawCentered(hitBox.getX() + hitBox.getWidth() / 3.5f, hitBox.getY() - this.getHeight() / 2 + 30);
         g.setColor(Color.white);
         DrawUtilities.drawStringCentered(g, String.valueOf(health), hitBox.getX() + hitBox.getWidth() / 3.5f, hitBox.getY() - this.getHeight() / 2 + 30);
+    }
+
+    public void renderStats(GameContainer gc)   {
+        if(isDisplayStats()) stats.render(gc.getGraphics(), gc.getInput().getMouseX(), gc.getInput().getMouseY());
     }
 
     public void addToDeck(Arte<Player> a)   {

@@ -26,7 +26,18 @@ public class Carder extends NPC {
         stock.put(new Card(SonicSlash.class), 20);
         stock.put(new Card(SonicSlash.class), 20);
         stock.put(new Card(SonicSlash.class), 20);
-        storeMenu = new Menu(500, 900) {
+        stock.put(new Card(SonicSlash.class), 20);
+        stock.put(new Card(SonicSlash.class), 20);
+        stock.put(new Card(SonicSlash.class), 20);
+        stock.put(new Card(SonicSlash.class), 20);
+        stock.put(new Card(SonicSlash.class), 20);
+        stock.put(new Card(SonicSlash.class), 20);
+        stock.put(new Card(SonicSlash.class), 20);
+        stock.put(new Card(SonicSlash.class), 20);
+        stock.put(new Card(SonicSlash.class), 20);
+        stock.put(new Card(SonicSlash.class), 20);
+        stock.put(new Card(SonicSlash.class), 20);
+        storeMenu = new Menu(1200, 1000) {
             @Override
             protected void subrender(Graphics g) {
                 int col = 0;
@@ -35,8 +46,8 @@ public class Carder extends NPC {
                     Card product = entry.getKey();
                     int price = entry.getValue();
                     if(product.getArte() != null) {
-                        product.getSprite().drawCentered(storeMenu.getX() + 10 + (product.getSprite().getWidth() / 2) + col * 200,
-                                storeMenu.getY() + 10 + (product.getSprite().getHeight() / 2) + row * 300);
+                        product.getSprite().drawCentered(storeMenu.getX()- storeMenu.getWidth()/2 + 75 + (product.getSprite().getWidth() / 2) + col * 210,
+                                storeMenu.getY() - storeMenu.getHeight()/2 + 75 + (product.getSprite().getHeight() / 2) + row * 300);
                         col++;
                         if (col % 5 == 0) {
                             row++;
@@ -56,7 +67,7 @@ public class Carder extends NPC {
 
     }
 
-    public void render(GameContainer gc, float plrX, float plrY)    {
+    public void render(GameContainer gc, float plrX, float plrY)    {//add title later
         renderSprite(gc, plrX, plrY);
         if(isInteracting()) {
             updateMenu(gc.getInput());

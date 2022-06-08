@@ -166,6 +166,7 @@ public class Game extends ThrenodyGameState {
                 DrawUtilities.drawStringCentered(g, "Open Shop", shape.getX() + 95, shape.getCenterY());
             }
         });
+        plr.renderStats(gc);
         dialog.render(g, gc.getInput().getMouseX(), gc.getInput().getMouseY());
         super.render(gc, sbg, g);
     }
@@ -259,6 +260,7 @@ public class Game extends ThrenodyGameState {
             if(key == Input.KEY_F) plr.interact(u);
             if(key == Input.KEY_ESCAPE) plr.exit(u);
         });
+        if(key == Input.KEY_TAB) plr.showStats();
     }
 
 
