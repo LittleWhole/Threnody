@@ -19,6 +19,7 @@ import entities.units.enemy.Enemy;
 import entities.units.npc.NPC;
 import entities.units.Unit;
 import gamestates.Game;
+import graphics.ui.Button;
 import graphics.ui.menu.InventoryMenu;
 import graphics.ui.menu.Menu;
 import managers.AnimationManager;
@@ -53,6 +54,8 @@ public final class Player<T extends Player<?>> extends Unit<T> {
     private Queue<Arte<? extends Unit>> clickArteQueue;
     private ArrayList<InventoryMenu> cardInventory;
     private Arte<? extends Unit> move;
+
+    private int inventoryIndex;
     private int queue;
     private final PlayableCharacter character;
     // Abbreviations: LVL, EXP, HP, ATK, DEF, CR, CD, EATK, EDEF, AFF
@@ -92,7 +95,9 @@ public final class Player<T extends Player<?>> extends Unit<T> {
         this.hitBox = new Rectangle((Main.getScreenWidth()/2) - this.getWidth()/2, (Main.getScreenHeight()/2) + this.height*0.85f, this.width, this.height/4);
         this.displayStats = false;
         this.displayInventory = false;
+        this.inventoryIndex = 0;
         stats = new Menu(Main.getScreenWidth()-175, Main.getScreenHeight()-225, 300, 400) {
+
             @Override
             protected void subrender(Graphics g) {
                 g.setColor(Color.white);
@@ -175,6 +180,7 @@ public final class Player<T extends Player<?>> extends Unit<T> {
 
         return new InventoryMenu(1100, 1000, temp, 5);
     }
+
 
     public void update(StateBasedGame sbg, Unit u, Game g) throws SlickException {
         ewDir = (dx>0?Direction.EAST:dx<0?Direction.WEST:Direction.NONE);
@@ -312,12 +318,38 @@ public final class Player<T extends Player<?>> extends Unit<T> {
         if(isDisplayStats()) stats.render(gc.getGraphics(), gc.getInput().getMouseX(), gc.getInput().getMouseY());
     }
     public void renderInventory(GameContainer gc)   {
-        if(displayInventory) cardInventory.get(0).render(gc.getGraphics(), gc.getInput().getMouseX(), gc.getInput().getMouseY());
+        if(displayInventory) {
+
+            cardInventory.get(inventoryIndex).render(gc.getGraphics(), gc.getInput().getMouseX(), gc.getInput().getMouseY());
+            if(inventoryIndex > 0)  {
+                cardInventory.get(inventoryIndex).renderPrevious = true;
+                cardInventory.get(inventoryIndex).renderPrevious(gc);
+            }
+            else {
+                cardInventory.get(inventoryIndex).renderPrevious = false;
+            }
+            if(inventoryIndex < cardInventory.size()-1)   {
+                cardInventory.get(inventoryIndex).renderNext = true;
+                cardInventory.get(inventoryIndex).renderNext(gc);
+            }
+            else {
+                cardInventory.get(inventoryIndex).renderNext = false;
+            }
+
+            if(gc.getInput().isMousePressed(0)) {
+                if(cardInventory.get(inventoryIndex).renderPrevious)    {
+                    if(cardInventory.get(inventoryIndex).getPrevious().onButton(gc.getInput().getMouseX(), gc.getInput().getMouseY())) inventoryIndex--;
+                }
+                if(cardInventory.get(inventoryIndex).renderNext)    {
+                    if(cardInventory.get(inventoryIndex).getNext().onButton(gc.getInput().getMouseX(), gc.getInput().getMouseY())) inventoryIndex++;
+                }
+            }
+        }
     }
 
     public void addToDeck(Arte<Player> a)   {
         this.arteDeck.add(a);
-        if(this.cardInventory.get(cardInventory.size()-1).getInventory().size() >= 20) cardInventory.add(addInventory(new ArrayList<>()));
+        if(this.cardInventory.get(cardInventory.size()-1).getInventory().size() >= 15) cardInventory.add(addInventory(new ArrayList<>()));
         this.cardInventory.get(cardInventory.size()-1).addToInv(new Card(a.getClass()));
     }
 

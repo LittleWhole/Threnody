@@ -1,5 +1,7 @@
 package entities.units.enemy;
 
+import combat.artes.ElementType;
+import entities.units.Unit;
 import org.checkerframework.checker.units.qual.A;
 import org.lwjgl.opengl.SGISGenerateMipmap;
 import org.newdawn.slick.SlickException;
@@ -25,6 +27,17 @@ public class Goblin<T extends Goblin<?>> extends Enemy<T> {
         }
         catch (SlickException e)    {
 
+        }
+    }
+
+    public void action(Unit target) {
+        switch (turn) {
+            case IDLE -> {
+                break;
+            }
+            case ATTACK -> {
+                target.takeDamage(this.attack, ElementType.PHYSICAL);
+            }
         }
     }
 }

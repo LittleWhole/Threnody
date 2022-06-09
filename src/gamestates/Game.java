@@ -5,6 +5,7 @@ import entities.core.Coordinate;
 import entities.core.Entity;
 import entities.core.EntityType;
 import entities.units.enemy.Goblin;
+import entities.units.enemy.GoblinBoss;
 import entities.units.npc.Carder;
 import entities.units.npc.NPC;
 import entities.units.Unit;
@@ -90,11 +91,13 @@ public class Game extends ThrenodyGameState {
         gc.setShowFPS(true);
         Game.gc = gc;
         this.sbg = sbg;
-        plrPosition = new Coordinate(0,0);
+        plrPosition = new Coordinate(-3000,2500);
         enemyTeam = new ArrayList<>();
         plrTeam = new ArrayList<>();
         npcs.add(new Carder(200, 0));
         enemies.add(new Goblin(-200,0));
+        enemies.add(new Goblin(1000, -1000, new ArrayList<>(Arrays.asList(new Goblin(0, 0, new ArrayList<>())))));
+        enemies.add(new GoblinBoss(-600,1320));
         battleCooldown = 200;
         dialog = new DialogBox(700, 400, "Notice", "This is a test dialog box!!!!!", new Button("Got it", () -> dialog.close()));
         // Initialize Both Entity Maps
@@ -115,6 +118,7 @@ public class Game extends ThrenodyGameState {
         SoundManager.playBackgroundMusic("02");
 
         overworld.generateHitboxes();
+        overworld.updateHitboxes(-plr.getPosition().getX(), -plr.getPosition().getY()/2);
     }
 
 
@@ -214,8 +218,12 @@ public class Game extends ThrenodyGameState {
 
         dialog.update(gc);
         if(Main.debug)  {
-            if(gainExp.onButton(gc.getInput().getMouseX(), gc.getInput().getMouseY())) gainExp.getCommand().command();
-            if(gainGold.onButton(gc.getInput().getMouseX(), gc.getInput().getMouseY())) gainGold.getCommand().command();
+            if(gc.getInput().isMouseButtonDown(0)) {
+                if (gainExp.onButton(gc.getInput().getMouseX(), gc.getInput().getMouseY()))
+                    gainExp.getCommand().command();
+                if (gainGold.onButton(gc.getInput().getMouseX(), gc.getInput().getMouseY()))
+                    gainGold.getCommand().command();
+            }
         }
 
     }
