@@ -5,10 +5,7 @@ import combat.artes.MysticArte;
 import entities.units.Unit;
 import entities.units.player.Player;
 import gamestates.BattleState;
-import org.newdawn.slick.GameContainer;
-import org.newdawn.slick.Graphics;
-import org.newdawn.slick.Image;
-import org.newdawn.slick.SlickException;
+import org.newdawn.slick.*;
 import playerdata.characters.PlayableCharacter;
 
 @SuppressWarnings({"rawtypes"})
@@ -16,6 +13,7 @@ public class Expiation extends MysticArte<Player> {
     public Expiation(Player owner) throws SlickException {
         super(owner);
         name = "Expiation";
+        aniSheet = new SpriteSheet("res/animations/combat/Expiation.png", 200, 200);
         arteType = ArteType.MYSTIC;
         cost = 7;
     }
