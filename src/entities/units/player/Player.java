@@ -1,6 +1,7 @@
 package entities.units.player;
 
 import combat.artes.Arte;
+import combat.artes.Card;
 import combat.artes.elemental.AquaLimit;
 import combat.artes.elemental.DualTheSol;
 import combat.artes.elemental.RendingGale;
@@ -13,12 +14,10 @@ import combat.artes.support.Heal;
 import combat.artes.support.Mana;
 import core.Main;
 import entities.core.Coordinate;
-import entities.core.Entity;
 import entities.units.Direction;
 import entities.units.enemy.Enemy;
 import entities.units.npc.NPC;
 import entities.units.Unit;
-import gamestates.BattleState;
 import gamestates.Game;
 import graphics.ui.menu.InventoryMenu;
 import graphics.ui.menu.Menu;
@@ -44,6 +43,7 @@ public final class Player<T extends Player<?>> extends Unit<T> {
     private PlayerState state;
 
     private boolean displayStats;
+    private boolean displayInventory;
 
     private Menu stats;
 
@@ -51,6 +51,7 @@ public final class Player<T extends Player<?>> extends Unit<T> {
     private List<Arte<? extends Unit>> arteHand;
     private Queue<Arte<? extends Unit>> arteQueue;
     private Queue<Arte<? extends Unit>> clickArteQueue;
+    private ArrayList<InventoryMenu> cardInventory;
     private Arte<? extends Unit> move;
     private int queue;
     private final PlayableCharacter character;
@@ -72,7 +73,7 @@ public final class Player<T extends Player<?>> extends Unit<T> {
         this.arteDeck = new ArrayList<>();
         this.arteQueue = new ConcurrentLinkedQueue<>();
         this.clickArteQueue = new ConcurrentLinkedQueue<>();
-        for (int i = 0; i < 20; i++) {
+        for (int i = 0; i < 1; i++) {
             arteDeck.add(new ImpactCross(this));
             arteDeck.add(new AmongUs(this));
             //arteDeck.add(new DragonFang(this));
@@ -86,8 +87,11 @@ public final class Player<T extends Player<?>> extends Unit<T> {
             arteDeck.add(new Mana(this));
             arteDeck.add(new SonicSlash(this));
         }
+        cardInventory = new ArrayList<>();
+        cardInventory.add(addInventory(arteDeck.subList(0,arteDeck.size()>15?15:arteDeck.size())));
         this.hitBox = new Rectangle((Main.getScreenWidth()/2) - this.getWidth()/2, (Main.getScreenHeight()/2) + this.height*0.85f, this.width, this.height/4);
         this.displayStats = false;
+        this.displayInventory = false;
         stats = new Menu(Main.getScreenWidth()-175, Main.getScreenHeight()-225, 300, 400) {
             @Override
             protected void subrender(Graphics g) {
@@ -157,6 +161,19 @@ public final class Player<T extends Player<?>> extends Unit<T> {
             arteHand.add(arteDeck.get(queue));
             queue++;
         }
+    }
+
+    public void showInventory()    {
+        displayInventory = !displayInventory;
+    }
+
+    private InventoryMenu addInventory(List<Arte<? extends Unit>> c)  {
+        ArrayList<Card> temp = new ArrayList<>();
+        c.forEach(a ->{
+            temp.add(new Card(a.getClass()));
+        });
+
+        return new InventoryMenu(1100, 1000, temp, 5);
     }
 
     public void update(StateBasedGame sbg, Unit u, Game g) throws SlickException {
@@ -294,9 +311,14 @@ public final class Player<T extends Player<?>> extends Unit<T> {
     public void renderStats(GameContainer gc)   {
         if(isDisplayStats()) stats.render(gc.getGraphics(), gc.getInput().getMouseX(), gc.getInput().getMouseY());
     }
+    public void renderInventory(GameContainer gc)   {
+        if(displayInventory) cardInventory.get(0).render(gc.getGraphics(), gc.getInput().getMouseX(), gc.getInput().getMouseY());
+    }
 
     public void addToDeck(Arte<Player> a)   {
         this.arteDeck.add(a);
+        if(this.cardInventory.get(cardInventory.size()-1).getInventory().size() >= 20) cardInventory.add(addInventory(new ArrayList<>()));
+        this.cardInventory.get(cardInventory.size()-1).addToInv(new Card(a.getClass()));
     }
 
     public T gainExp(int amount) {

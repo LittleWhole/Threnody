@@ -3,6 +3,7 @@ package entities.units.npc;
 import entities.core.Coordinate;
 import entities.units.Unit;
 import entities.units.enemy.Enemy;
+import entities.units.player.Player;
 import org.newdawn.slick.*;
 import org.newdawn.slick.geom.Rectangle;
 import util.DrawUtilities;
@@ -38,7 +39,7 @@ public class NPC<T extends NPC<?>> extends Unit<T> {
         this.timer = interactLength;
     }
 
-    public void render(GameContainer gc, float plrX, float plrY)  {
+    public void render(GameContainer gc, float plrX, float plrY, Player player)  {
         timer++;
         renderSprite(gc, plrX, plrY);
 

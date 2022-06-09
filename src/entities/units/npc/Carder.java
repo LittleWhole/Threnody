@@ -20,6 +20,9 @@ import java.util.Map;
 
 public class Carder extends NPC {
     private Map<Card, Integer> stock;
+    public Map<Card, Integer> getStock()    {
+        return stock;
+    }
     private Menu storeMenu;
     private boolean displayMenu;
     public Carder(float x, float y) throws SlickException {
@@ -43,21 +46,7 @@ public class Carder extends NPC {
         storeMenu = new Menu(1200, 1000) {
             @Override
             protected void subrender(Graphics g) {
-                int col = 0;
-                int row = 0;
-                for(Map.Entry<Card, Integer> entry: stock.entrySet())  {
-                    Card product = entry.getKey();
-                    int price = entry.getValue();
-                    if(product.getArte() != null) {
-                        product.getSprite().drawCentered(storeMenu.getX()- storeMenu.getWidth()/2 + 75 + (product.getSprite().getWidth() / 2) + col * 210,
-                                storeMenu.getY() - storeMenu.getHeight()/2 + 75 + (product.getSprite().getHeight() / 2) + row * 300);
-                        col++;
-                        if (col % 5 == 0) {
-                            row++;
-                            col = 0;
-                        }
-                    }
-                }
+
             }
 
             @Override
@@ -70,17 +59,48 @@ public class Carder extends NPC {
 
     }
 
-    public void render(GameContainer gc, float plrX, float plrY)    {//add title later
+    public void render(GameContainer gc, float plrX, float plrY, Player p)    {//add title later
         renderSprite(gc, plrX, plrY);
         if(isInteracting()) {
-            updateMenu(gc.getInput());
             storeMenu.render(gc.getGraphics(), gc.getInput().getMouseX(), gc.getInput().getMouseY());
+            int col = 0;
+            int row = 0;
+            int cardX;
+            int cardY;
+            for(Map.Entry<Card, Integer> entry: stock.entrySet())  {
+                Card product = entry.getKey();
+                int price = entry.getValue();
+                cardX = storeMenu.getX()- storeMenu.getWidth()/2 + 75 + (product.getSprite().getWidth() / 2) + col * 210;
+                cardY =storeMenu.getY() - storeMenu.getHeight()/2 + 75 + (product.getSprite().getHeight() / 2) + row * 300;
+                if(product.getArte() != null) {
+                    if ((gc.getInput().getMouseX() > cardX - product.getSprite().getWidth()/ 2 && gc.getInput().getMouseX() < cardX + product.getSprite().getWidth() / 2) &&
+                            (gc.getInput().getMouseY() > cardY - product.getSprite().getHeight() / 2 && gc.getInput().getMouseY() < cardY + product.getSprite().getHeight() / 2)) {
+                        product.getSprite().getScaledCopy(1.3f).drawCentered(cardX + product.getSprite().getWidth()/2, cardY + product.getSprite().getHeight()/2);
+                        if (gc.getInput().isMousePressed(0)) {
+                            try {
+                                buy(p, product);
+                            } catch (NoSuchMethodException e) {
+                                throw new RuntimeException(e);
+                            } catch (InvocationTargetException e) {
+                                throw new RuntimeException(e);
+                            } catch (InstantiationException e) {
+                                throw new RuntimeException(e);
+                            } catch (IllegalAccessException e) {
+                                throw new RuntimeException(e);
+                            }
+                        }
+                    } else product.getSprite().drawCentered(cardX, cardY);
+                    col++;
+                    if (col % 5 == 0) {
+                        row++;
+                        col = 0;
+                    }
+                }
+            }
         }
     }
 
-    private void updateMenu(Input input)   {
-        //later add mouseclick shit
-    }
+
 
     public void buy(Player p, Card card) throws NoSuchMethodException, InvocationTargetException, InstantiationException, IllegalAccessException {
         if(Main.stats.gold >= stock.get(card))  {

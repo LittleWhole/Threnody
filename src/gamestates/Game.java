@@ -51,6 +51,8 @@ public class Game extends ThrenodyGameState {
     private KeyManager keyDown; // Key Manager
     public DisplayManager displayManager; // Display Manager
     public static Coordinate plrPosition;
+    private Button gainGold;
+    private Button gainExp;
     private Player plr;
     private Enemy enemy;
     private Carder npc;
@@ -107,7 +109,8 @@ public class Game extends ThrenodyGameState {
         System.out.println("[VERBOSE] KeyManager initialized");
         displayManager = new DisplayManager(this, plr.getPosition(), gc.getGraphics());
         System.out.println("[VERBOSE] DisplayManager initialized");
-
+        gainExp = new Button(Main.getScreenWidth()-300, 200, "Exp add", () -> Main.stats.gainExp(1000));
+        gainGold = new Button(Main.getScreenWidth()-600, 200, "Gold add", () -> Main.stats.gainGold(1000));
         // Play BGM
         SoundManager.playBackgroundMusic("02");
 
@@ -154,7 +157,7 @@ public class Game extends ThrenodyGameState {
         }
         npcs.forEach(u -> {
             if (Main.debug) u.drawHitBox(g);
-            u.render(gc, plrPosition.getX(), plrPosition.getY());
+            u.render(gc, plrPosition.getX(), plrPosition.getY(), plr);
             if (plr.getHitBox().intersects(u.getHitBox()) && !u.isInteracting()) {
                 var shape = new RoundedRectangle(u.getRenderX(plr.getPosition().getX()) + 50, u.getRenderY(plr.getPosition().getY()), 200, 50, RoundedRectangle.TOP_LEFT | RoundedRectangle.BOTTOM_LEFT);
                 var keyShape = new RoundedRectangle(u.getRenderX(plr.getPosition().getX()) + 55, u.getRenderY(plr.getPosition().getY()) + 5, 40, 40, RoundedRectangle.ALL);
@@ -170,7 +173,12 @@ public class Game extends ThrenodyGameState {
             }
         });
         plr.renderStats(gc);
+        plr.renderInventory(gc);
         dialog.render(g, gc.getInput().getMouseX(), gc.getInput().getMouseY());
+        if(Main.debug)  {
+            gainExp.render(g, gc.getInput().getMouseX(), gc.getInput().getMouseY());
+            gainGold.render(g, gc.getInput().getMouseX(), gc.getInput().getMouseY());
+        }
         super.render(gc, sbg, g);
     }
 
@@ -205,6 +213,10 @@ public class Game extends ThrenodyGameState {
         //enemy.overworldUpdate();
 
         dialog.update(gc);
+        if(Main.debug)  {
+            if(gainExp.onButton(gc.getInput().getMouseX(), gc.getInput().getMouseY())) gainExp.getCommand().command();
+            if(gainGold.onButton(gc.getInput().getMouseX(), gc.getInput().getMouseY())) gainGold.getCommand().command();
+        }
 
     }
 
@@ -262,9 +274,10 @@ public class Game extends ThrenodyGameState {
         //if(key == Input.KEY_F3) Main.debug = !Main.debug;
         npcs.forEach(u -> {
             if(key == Input.KEY_F) plr.interact(u);
-            if(key == Input.KEY_ESCAPE) plr.exit(u);
+            if(key == Input.KEY_ENTER) plr.exit(u);
         });
         if(key == Input.KEY_TAB) plr.showStats();
+        if(key == Input.KEY_E) plr.showInventory();
     }
 
 

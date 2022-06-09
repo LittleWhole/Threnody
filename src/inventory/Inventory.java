@@ -10,6 +10,7 @@ public class Inventory implements Serializable {
     private final ArrayList<ItemStack> content;
     private int size;
 
+
     public Inventory(int size) {
         this.size = size;
         content = new ArrayList<>();
