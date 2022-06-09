@@ -189,6 +189,10 @@ public class Main extends StateBasedGame {
         System.exit(0);
     }
 
+    public static synchronized void cheat() {
+        addMenu(new DialogBox(1000, 600, "Enable Cheat Mode?", "Are you sure you want to enable Cheat Mode?\nThis mode gives you access to every card and makes\nall cards cost 0 Mana to cast.\nOnly use for testing/to experience all combat.", new CloseButton("Got it")));
+    }
+
     public static synchronized void addDisplayable(Displayable displayable) {
         displayables.add(displayable);
     }

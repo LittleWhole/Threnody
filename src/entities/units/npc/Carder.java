@@ -2,7 +2,18 @@ package entities.units.npc;
 
 import combat.artes.Arte;
 import combat.artes.Card;
+import combat.artes.elemental.AquaLimit;
+import combat.artes.elemental.DualTheSol;
+import combat.artes.elemental.Flamberge;
+import combat.artes.elemental.RendingGale;
+import combat.artes.mystic.*;
+import combat.artes.strike.DragonFang;
+import combat.artes.strike.ImpactCross;
 import combat.artes.strike.SonicSlash;
+import combat.artes.strike.TwinWhip;
+import combat.artes.support.Elixir;
+import combat.artes.support.Fortification;
+import combat.artes.support.Heal;
 import combat.artes.support.Mana;
 import core.Main;
 import entities.units.player.Player;
@@ -29,20 +40,22 @@ public class Carder extends NPC {
         super(x, y);
         stock = new HashMap<Card, Integer>();
         stock.put(new Card(SonicSlash.class), 20);
-        stock.put(new Card(SonicSlash.class), 20);
-        stock.put(new Card(SonicSlash.class), 20);
-        stock.put(new Card(SonicSlash.class), 20);
-        stock.put(new Card(SonicSlash.class), 20);
-        stock.put(new Card(SonicSlash.class), 20);
-        stock.put(new Card(SonicSlash.class), 20);
-        stock.put(new Card(SonicSlash.class), 20);
-        stock.put(new Card(SonicSlash.class), 20);
-        stock.put(new Card(SonicSlash.class), 20);
-        stock.put(new Card(SonicSlash.class), 20);
-        stock.put(new Card(SonicSlash.class), 20);
-        stock.put(new Card(SonicSlash.class), 20);
-        stock.put(new Card(SonicSlash.class), 20);
-        stock.put(new Card(SonicSlash.class), 20);
+        stock.put(new Card(DragonFang.class), 20);
+        stock.put(new Card(ImpactCross.class), 20);
+        stock.put(new Card(TwinWhip.class), 20);
+        stock.put(new Card(AquaLimit.class), 20);
+        stock.put(new Card(DualTheSol.class), 20);
+        stock.put(new Card(RendingGale.class), 20);
+        stock.put(new Card(Flamberge.class), 20);
+        stock.put(new Card(Heal.class), 20);
+        stock.put(new Card(Mana.class), 20);
+        stock.put(new Card(Fortification.class), 20);
+        stock.put(new Card(Elixir.class), 20);
+        stock.put(new Card(Expiation.class), 20);
+        stock.put(new Card(InnumerableWounds.class), 20);
+        stock.put(new Card(TrillionDrive.class), 20);
+        stock.put(new Card(GardenOfInnocence.class), 20);
+        stock.put(new Card(DivineConqueror.class), 20);
         storeMenu = new Menu(1200, 1000) {
             @Override
             protected void subrender(Graphics g) {

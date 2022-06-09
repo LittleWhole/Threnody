@@ -147,6 +147,12 @@ public abstract class Unit<T extends Unit<?>> extends Entity {
         this.health += amount;
     }
 
+    public T addDefense(int amount) {
+        this.defense += amount;
+        BattleState.damageNumbers.add(new DamageNumber(amount, hitBox.getCenterX(), hitBox.getCenterY(), new Color(100, 100, 100)).setOutlineColor(Color.white));
+        return (T) this;
+    }
+
     public int getAttack() {
         return attack;
     }

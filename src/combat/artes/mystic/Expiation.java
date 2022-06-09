@@ -15,6 +15,7 @@ public class Expiation extends MysticArte<Player> {
         name = "Expiation";
         aniSheet = new SpriteSheet("res/animations/combat/Expiation.png", 200, 200);
         arteType = ArteType.MYSTIC;
+        aniType = AnimationType.TARGET;
         cost = 7;
     }
 
