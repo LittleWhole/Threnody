@@ -39,23 +39,23 @@ public class Carder extends NPC {
     public Carder(float x, float y) throws SlickException {
         super(x, y);
         stock = new HashMap<Card, Integer>();
-        stock.put(new Card(SonicSlash.class), 20);
-        stock.put(new Card(DragonFang.class), 20);
-        stock.put(new Card(ImpactCross.class), 20);
-        stock.put(new Card(TwinWhip.class), 20);
-        stock.put(new Card(AquaLimit.class), 20);
-        stock.put(new Card(DualTheSol.class), 20);
-        stock.put(new Card(RendingGale.class), 20);
-        stock.put(new Card(Flamberge.class), 20);
-        stock.put(new Card(Heal.class), 20);
-        stock.put(new Card(Mana.class), 20);
-        stock.put(new Card(Fortification.class), 20);
-        stock.put(new Card(Elixir.class), 20);
-        stock.put(new Card(Expiation.class), 20);
-        stock.put(new Card(InnumerableWounds.class), 20);
-        stock.put(new Card(TrillionDrive.class), 20);
-        stock.put(new Card(GardenOfInnocence.class), 20);
-        stock.put(new Card(DivineConqueror.class), 20);
+        stock.put(new Card(SonicSlash.class), 10);
+        stock.put(new Card(DragonFang.class), 30);
+        stock.put(new Card(ImpactCross.class), 40);
+        //stock.put(new Card(TwinWhip.class), 20);
+        stock.put(new Card(AquaLimit.class), 100);
+        stock.put(new Card(DualTheSol.class), 200);
+        stock.put(new Card(RendingGale.class), 90);
+        //stock.put(new Card(Flamberge.class), 20);
+        stock.put(new Card(Heal.class), 50);
+        stock.put(new Card(Mana.class), 30);
+        //stock.put(new Card(Fortification.class), 20);
+        stock.put(new Card(Elixir.class), 70);
+        stock.put(new Card(Expiation.class), 500);
+        //stock.put(new Card(InnumerableWounds.class), 20);
+        //stock.put(new Card(TrillionDrive.class), 20);
+        //stock.put(new Card(GardenOfInnocence.class), 20);
+        //stock.put(new Card(DivineConqueror.class), 20);
         storeMenu = new Menu(1200, 1000) {
             @Override
             protected void subrender(Graphics g) {

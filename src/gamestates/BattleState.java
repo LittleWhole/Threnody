@@ -1,19 +1,26 @@
 package gamestates;
 
 import combat.artes.mystic.AmongUs;
+import core.Fonts;
 import core.Main;
 import entities.core.Coordinate;
 import entities.units.Direction;
 import entities.units.enemy.Enemy;
+import entities.units.enemy.Goblin;
+import entities.units.enemy.GoblinBoss;
 import entities.units.player.Player;
 import graphics.ui.combat.DamageNumber;
+import graphics.ui.menu.Menu;
 import managers.CombatManager;
 import managers.ImageManager;
 import managers.KeyManager;
+import managers.SoundManager;
 import map.GameMap;
 import org.checkerframework.checker.units.qual.A;
 import org.newdawn.slick.*;
+import org.newdawn.slick.geom.RoundedRectangle;
 import org.newdawn.slick.state.StateBasedGame;
+import playerdata.PlayerStats;
 import util.DrawUtilities;
 
 import java.util.ArrayList;
@@ -38,6 +45,8 @@ public class BattleState extends ThrenodyGameState {
     public static int expGain;
     public static int currencyGain;
 
+    private Sound bg;
+
     public static Queue<DamageNumber> damageNumbers;
 
     public BattleState(int id) throws SlickException {
@@ -55,6 +64,7 @@ public class BattleState extends ThrenodyGameState {
         this.gc = gc;
         resultDuration = 255;
         km = new KeyManager(gc.getInput(), Main.game);
+        bg = new Sound("res/audio/music/battle.wav");
     }
 
     @Override
@@ -76,8 +86,9 @@ public class BattleState extends ThrenodyGameState {
         switch (result) {
             case WIN -> {
                 time++;
-                expGain = 10;
-                currencyGain = 10;
+                g.setColor(new Color(0,0,0,170));
+
+                DrawUtilities.fillShapeCentered(g, new RoundedRectangle(Main.getScreenWidth()/2f, Main.getScreenHeight()/2f, 1000, 500, 50), Main.getScreenWidth()/2, Main.getScreenHeight()/2);
                 if (time / 2 > Math.max(expGain, currencyGain)) g.setColor(Color.red);
                 else g.setColor(Color.white);
                 DrawUtilities.drawStringCentered(g, "EXP GAINED:" + (Math.min(time / 2, expGain)), Main.getScreenWidth() / 2, Main.getScreenHeight() / 2 - 100);
@@ -90,10 +101,16 @@ public class BattleState extends ThrenodyGameState {
             }
             case LOSE -> {
                 time++;
+                expGain = 0;
+                currencyGain = 0;
+                g.setColor(Color.black)
+                ;DrawUtilities.fillShapeCentered(g, new RoundedRectangle(Main.getScreenWidth()/2f, Main.getScreenHeight()/2f, 500, 250, 50), Main.getScreenWidth()/2, Main.getScreenHeight()/2);
                 g.setColor(new Color(0, 0, 0, Math.min(time, 255)));
                 g.fillRect(0, 0, Main.getScreenWidth(), Main.getScreenHeight());
                 g.setColor(Color.red);
                 DrawUtilities.drawStringCentered(g, "YOU DIED", Main.RESOLUTION_X / 2, Main.RESOLUTION_Y / 2);
+                Main.stats = new PlayerStats();
+                SoundManager.overrideBackgroundMusic(LoadingScreen.music);
                 if (time > resultDuration) {
                     sbg.enterState(Main.TITLE_ID);
                 }
@@ -160,10 +177,20 @@ public class BattleState extends ThrenodyGameState {
             //enemies.get(i).setPosition( i * 200,  i * 200);
             enemies.get(i).setDirection(Direction.SOUTH, Direction.WEST);
         }
+        enemies.forEach(e ->    {
+            if(e instanceof GoblinBoss)  {
+                expGain+=100*e.getLevel();
+                currencyGain+=75*e.getLevel();
+            }
+            if(e instanceof Goblin<?>)  {
+                expGain+=25*e.getLevel();
+                currencyGain+=20*e.getLevel();
+            }
+        });
 
         combat = new CombatManager(plrs, enemies);
         combat.roundStart();
-        gc.getGraphics().setFont(new TrueTypeFont(new java.awt.Font("Bahnschrift", java.awt.Font.PLAIN, 20), true));
+        gc.setDefaultFont(new TrueTypeFont(new java.awt.Font("Bahnschrift", java.awt.Font.PLAIN, 20), true));
         gc.getGraphics().setBackground(new Color(100, 100, 100));
 
 //        var temp = new Random();
@@ -174,6 +201,7 @@ public class BattleState extends ThrenodyGameState {
         plrs.forEach(p ->{
             p.renderStats(gc);
         });
+        SoundManager.overrideBackgroundMusic(bg);
     }
 
     @Override

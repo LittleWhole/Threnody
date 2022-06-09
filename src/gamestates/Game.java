@@ -61,6 +61,7 @@ public class Game extends ThrenodyGameState {
     public GameMap overworld;
     public Background background;
     public DialogBox dialog;
+    private Sound bg = new Sound("res/audio/music/overworld.wav");
     public static GameContainer getGc() { return gc; }
     public StateBasedGame getSbg() { return sbg; }
 
@@ -121,7 +122,8 @@ public class Game extends ThrenodyGameState {
         });
         gainGold = new Button(Main.getScreenWidth()-600, 200, "Gold add", () -> Main.stats.gainGold(1000));
         // Play BGM
-        SoundManager.playBackgroundMusic("02");
+
+        SoundManager.overrideBackgroundMusic(bg);
 
         overworld.generateHitboxes();
         overworld.updateHitboxes(-plr.getPosition().getX(), -plr.getPosition().getY()/2);
@@ -272,7 +274,7 @@ public class Game extends ThrenodyGameState {
         System.out.println("[VERBOSE] DisplayManager initialized");
 
         // Play BGM
-        SoundManager.playBackgroundMusic("02");
+        SoundManager.overrideBackgroundMusic(bg);
     }
 
     public synchronized void leave(GameContainer gc, StateBasedGame sbg) {

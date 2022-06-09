@@ -87,11 +87,11 @@ public class Enemy<T extends Enemy<?>> extends Unit<T> {
     }
     public Enemy(float x, float y, int level) throws SlickException {//later change parameters to also change size, level, speed, and sprite
         super();
-        this.health = 100;
-        this.attack = 5;
-        this.defense = 10;
-        this.critRate = 0.05;
-        this.critDamage = 50;
+        this.health = 25*(level);
+        this.attack = 10*(level);
+        this.defense = 5*(level);
+        this.critRate = 0.05*(level);
+        this.critDamage = 10*(level);
         moveDuration = 100;
         this.width = 118;
         this.height = 205;
@@ -113,11 +113,11 @@ public class Enemy<T extends Enemy<?>> extends Unit<T> {
     }
     public Enemy(float x, float y, ArrayList<Enemy> enemies) throws SlickException {//later change parameters to also change size, level, speed, and sprite
         super();
-        this.health = 100;
-        this.attack = 5;
-        this.defense = 10;
+        this.health = 25;
+        this.attack = 10;
+        this.defense = 5;
         this.critRate = 0.05;
-        this.critDamage = 50;
+        this.critDamage = 10;
         moveDuration = 100;
         this.width = 118;
         this.height = 205;

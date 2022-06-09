@@ -65,7 +65,9 @@ public final class Player<T extends Player<?>> extends Unit<T> {
 
     public Player(Coordinate pos) throws SlickException {
         super();
-        this.health = 100;
+        this.level = 1;
+
+
         this.mana = 3;
         this.turnMana = 3;
         this.width = 104;
@@ -76,24 +78,29 @@ public final class Player<T extends Player<?>> extends Unit<T> {
         this.sheet = new SpriteSheet(new Image("res/animations/character/player.png"), (int)width, (int)height, 8, 8);
         this.sprite = sheet.getSprite(0,0);
         this.character = new Sigur();
+        this.health = character.getAttack();
+        this.attack = character.getAttack();
         this.arteDeck = new ArrayList<>();
         this.arteQueue = new ConcurrentLinkedQueue<>();
         this.clickArteQueue = new ConcurrentLinkedQueue<>();
-        for (int i = 0; i < 1; i++) {
-            arteDeck.add(new ImpactCross(this));
+        for (int i = 0; i < 2; i++) {
+            //arteDeck.add(new ImpactCross(this));
             //arteDeck.add(new AmongUs(this));
-            arteDeck.add(new Expiation(this));
-            arteDeck.add(new Expiation(this));
-            arteDeck.add(new Expiation(this));
-            arteDeck.add(new Expiation(this));
+            //arteDeck.add(new Expiation(this));
+            //arteDeck.add(new Expiation(this));
+            //arteDeck.add(new Expiation(this));
+            //arteDeck.add(new Expiation(this));
             arteDeck.add(new Elixir(this));
             arteDeck.add(new DragonFang(this));
-            arteDeck.add(new RendingGale(this));
+            //arteDeck.add(new RendingGale(this));
             arteDeck.add(new AquaLimit(this));
             //arteDeck.add(new DivineConqueror(this));
-            arteDeck.add(new DualTheSol(this));
+            //arteDeck.add(new DualTheSol(this));
             arteDeck.add(new Heal(this));
             arteDeck.add(new Mana(this));
+            arteDeck.add(new Mana(this));
+            arteDeck.add(new SonicSlash(this));
+            arteDeck.add(new SonicSlash(this));
             arteDeck.add(new SonicSlash(this));
         }
         lvl10reward = false;
@@ -137,7 +144,7 @@ public final class Player<T extends Player<?>> extends Unit<T> {
         AnimationManager.animationCycle(this);
         queue = 5;
         Collections.shuffle(arteDeck);
-        this.arteHand = new ArrayList<>(arteDeck.subList(0,6));
+        this.arteHand = new ArrayList<>(arteDeck.subList(0,arteDeck.size() >=6?6:arteDeck.size()));
         this.arteQueue = new ConcurrentLinkedQueue<>();
         this.clickArteQueue = new ConcurrentLinkedQueue<>();
         move = null;
@@ -365,6 +372,8 @@ public final class Player<T extends Player<?>> extends Unit<T> {
         if(Main.stats.level  == 10 & !lvl10reward)  {
             lvl10reward = false;
             this.addToDeck(new Expiation(this));
+            this.mana = 5;
+            this.turnMana = 5;
         }
         this.health = character.getHealth();
         this.defense = character.getDefense();
