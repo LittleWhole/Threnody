@@ -103,8 +103,8 @@ public class BattleState extends ThrenodyGameState {
                 time++;
                 expGain = 0;
                 currencyGain = 0;
-                g.setColor(Color.black)
-                ;DrawUtilities.fillShapeCentered(g, new RoundedRectangle(Main.getScreenWidth()/2f, Main.getScreenHeight()/2f, 500, 250, 50), Main.getScreenWidth()/2, Main.getScreenHeight()/2);
+                g.setColor(Color.black);
+                DrawUtilities.fillShapeCentered(g, new RoundedRectangle(Main.getScreenWidth()/2f, Main.getScreenHeight()/2f, 500, 250, 50), Main.getScreenWidth()/2, Main.getScreenHeight()/2);
                 g.setColor(new Color(0, 0, 0, Math.min(time, 255)));
                 g.fillRect(0, 0, Main.getScreenWidth(), Main.getScreenHeight());
                 g.setColor(Color.red);

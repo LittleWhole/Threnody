@@ -97,7 +97,9 @@ public class Game extends ThrenodyGameState {
         plrTeam = new ArrayList<>();
         npcs.add(new Carder(1700, 0));
         enemies.add(new Goblin(-200,0));
+        enemies.get(enemies.size()-1).setEnemyTeamLevels(5,10);
         enemies.add(new Goblin(1000, -1000, new ArrayList<>(Arrays.asList(new Goblin(0, 0, new ArrayList<>())))));
+        enemies.get(enemies.size()-1).setEnemyTeamLevels(1,1);
         enemies.add(new GoblinBoss(-600,1320));
         battleCooldown = 200;
         dialog = new DialogBox(700, 400, "Notice", "This is a test dialog box!!!!!", new Button("Got it", () -> dialog.close()));

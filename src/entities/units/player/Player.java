@@ -66,8 +66,6 @@ public final class Player<T extends Player<?>> extends Unit<T> {
     public Player(Coordinate pos) throws SlickException {
         super();
         this.level = 1;
-
-
         this.mana = 3;
         this.turnMana = 3;
         this.width = 104;
@@ -78,7 +76,7 @@ public final class Player<T extends Player<?>> extends Unit<T> {
         this.sheet = new SpriteSheet(new Image("res/animations/character/player.png"), (int)width, (int)height, 8, 8);
         this.sprite = sheet.getSprite(0,0);
         this.character = new Sigur();
-        this.health = character.getAttack();
+        this.health = character.getHealth();
         this.attack = character.getAttack();
         this.arteDeck = new ArrayList<>();
         this.arteQueue = new ConcurrentLinkedQueue<>();
