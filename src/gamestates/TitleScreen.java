@@ -89,7 +89,7 @@ public class TitleScreen extends ThrenodyGameState {
             Main.continueGame();
         }
         if (bLOAD_GAME.onButton(x, y)) {
-            Main.menus.add(new DialogBox(700, 400, "Sorry!", "Savegame loading is currently still WIP!", new CloseButton("Got it")));
+            Main.openLoadSaveMenu();
         }
     }
 }

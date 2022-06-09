@@ -5,6 +5,7 @@ import graphics.ui.Button;
 import graphics.ui.Displayable;
 import graphics.ui.menu.CloseButton;
 import graphics.ui.menu.DialogBox;
+import graphics.ui.menu.LoadGameMenu;
 import graphics.ui.menu.Menu;
 import org.newdawn.slick.AppGameContainer;
 import org.newdawn.slick.GameContainer;
@@ -177,6 +178,17 @@ public class Main extends StateBasedGame {
         }
         directories.sort(Collections.reverseOrder());
         load(directories.get(0));
+    }
+
+    public static synchronized void openLoadSaveMenu() {
+        File file = new File("saves");
+        List<String> directories = Arrays.asList(Objects.requireNonNull(file.list((current, name) -> new File(current, name).isDirectory())));
+        if (directories.isEmpty()) {
+            System.out.println("No saves found");
+            return;
+        }
+        directories.sort(Collections.reverseOrder());
+        addMenu(new LoadGameMenu(directories));
     }
 
     public static synchronized void newGame() {
