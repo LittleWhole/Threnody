@@ -95,13 +95,13 @@ public abstract sealed class PlayableCharacter extends PlayerData implements Ser
     protected void levelUp(){
         Main.stats.level++;
         this.level++;
-        this.health+=50;
-        this.attack+=10;
-        this.defense+=10;
-        this.critDamage+=10;
-        this.critRate+=.05;
-        this.eDefense +=3;
-        this.eAttack+=5;
+        this.health+=20;
+        this.attack+=3;
+        this.defense+=2;
+        this.critDamage+=2;
+        this.critRate+=1;
+        this.eDefense +=1;
+        this.eAttack+=2;
     }
 
 

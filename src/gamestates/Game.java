@@ -94,7 +94,7 @@ public class Game extends ThrenodyGameState {
         plrPosition = new Coordinate(-3000,2500);
         enemyTeam = new ArrayList<>();
         plrTeam = new ArrayList<>();
-        npcs.add(new Carder(200, 0));
+        npcs.add(new Carder(1700, 0));
         enemies.add(new Goblin(-200,0));
         enemies.add(new Goblin(1000, -1000, new ArrayList<>(Arrays.asList(new Goblin(0, 0, new ArrayList<>())))));
         enemies.add(new GoblinBoss(-600,1320));
@@ -112,7 +112,13 @@ public class Game extends ThrenodyGameState {
         System.out.println("[VERBOSE] KeyManager initialized");
         displayManager = new DisplayManager(this, plr.getPosition(), gc.getGraphics());
         System.out.println("[VERBOSE] DisplayManager initialized");
-        gainExp = new Button(Main.getScreenWidth()-300, 200, "Exp add", () -> plr.gainExp(1000));
+        gainExp = new Button(Main.getScreenWidth()-300, 200, "Exp add", () -> {
+            try {
+                plr.gainExp(1000);
+            } catch (SlickException e) {
+                throw new RuntimeException(e);
+            }
+        });
         gainGold = new Button(Main.getScreenWidth()-600, 200, "Gold add", () -> Main.stats.gainGold(1000));
         // Play BGM
         SoundManager.playBackgroundMusic("02");

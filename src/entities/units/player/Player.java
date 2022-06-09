@@ -6,6 +6,7 @@ import combat.artes.elemental.AquaLimit;
 import combat.artes.elemental.DualTheSol;
 import combat.artes.elemental.RendingGale;
 import combat.artes.mystic.AmongUs;
+import combat.artes.mystic.Expiation;
 import combat.artes.strike.DragonFang;
 import combat.artes.strike.ImpactCross;
 import combat.artes.strike.SonicSlash;
@@ -42,6 +43,8 @@ public final class Player<T extends Player<?>> extends Unit<T> {
         return state;
     }
     private PlayerState state;
+
+    private boolean lvl10reward;
 
     private boolean displayStats;
     private boolean displayInventory;
@@ -90,6 +93,7 @@ public final class Player<T extends Player<?>> extends Unit<T> {
             arteDeck.add(new Mana(this));
             arteDeck.add(new SonicSlash(this));
         }
+        lvl10reward = false;
         cardInventory = new ArrayList<>();
         cardInventory.add(addInventory(arteDeck.subList(0,arteDeck.size()>15?15:arteDeck.size())));
         this.hitBox = new Rectangle((Main.getScreenWidth()/2) - this.getWidth()/2, (Main.getScreenHeight()/2) + this.height*0.85f, this.width, this.height/4);
@@ -353,8 +357,12 @@ public final class Player<T extends Player<?>> extends Unit<T> {
         this.cardInventory.get(cardInventory.size()-1).addToInv(new Card(a.getClass()));
     }
 
-    public T gainExp(int amount) {
+    public T gainExp(int amount) throws SlickException {
         this.character.gainExp(amount);
+        if(Main.stats.level  == 10 & !lvl10reward)  {
+            lvl10reward = false;
+            this.addToDeck(new Expiation(this));
+        }
         this.health = character.getHealth();
         this.defense = character.getDefense();
         this.eDefense = character.geteDefense();
