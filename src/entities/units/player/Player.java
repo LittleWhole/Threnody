@@ -6,6 +6,7 @@ import combat.artes.elemental.AquaLimit;
 import combat.artes.elemental.DualTheSol;
 import combat.artes.elemental.RendingGale;
 import combat.artes.mystic.AmongUs;
+import combat.artes.mystic.Expiation;
 import combat.artes.strike.DragonFang;
 import combat.artes.strike.ImpactCross;
 import combat.artes.strike.SonicSlash;
@@ -78,8 +79,11 @@ public final class Player<T extends Player<?>> extends Unit<T> {
         this.clickArteQueue = new ConcurrentLinkedQueue<>();
         for (int i = 0; i < 1; i++) {
             arteDeck.add(new ImpactCross(this));
-            arteDeck.add(new AmongUs(this));
-            //arteDeck.add(new DragonFang(this));
+            //arteDeck.add(new AmongUs(this));
+            arteDeck.add(new Expiation(this));
+            arteDeck.add(new Expiation(this));
+            arteDeck.add(new Expiation(this));
+            arteDeck.add(new Expiation(this));
             arteDeck.add(new Elixir(this));
             arteDeck.add(new DragonFang(this));
             arteDeck.add(new RendingGale(this));
