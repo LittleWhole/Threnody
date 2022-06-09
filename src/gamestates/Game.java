@@ -112,7 +112,7 @@ public class Game extends ThrenodyGameState {
         System.out.println("[VERBOSE] KeyManager initialized");
         displayManager = new DisplayManager(this, plr.getPosition(), gc.getGraphics());
         System.out.println("[VERBOSE] DisplayManager initialized");
-        gainExp = new Button(Main.getScreenWidth()-300, 200, "Exp add", () -> Main.stats.gainExp(1000));
+        gainExp = new Button(Main.getScreenWidth()-300, 200, "Exp add", () -> plr.gainExp(1000));
         gainGold = new Button(Main.getScreenWidth()-600, 200, "Gold add", () -> Main.stats.gainGold(1000));
         // Play BGM
         SoundManager.playBackgroundMusic("02");

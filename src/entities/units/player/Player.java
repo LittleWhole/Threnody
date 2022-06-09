@@ -107,11 +107,11 @@ public final class Player<T extends Player<?>> extends Unit<T> {
                 g.drawString("Exp: " + Main.stats.exp + "/" + Main.stats.maxExp, stats.getX()- stats.getWidth()/2 + 50, stats.getY()- stats.getHeight()/2 + 150);
                 g.drawString("Gold: " + Main.stats.gold, stats.getX() - stats.getWidth()/2 + 50, stats.getY()- stats.getHeight()/2 + 200);
                 g.setColor(Color.green);
-                g.drawString("Health - " + health, stats.getX()- stats.getWidth()/2 + 50, stats.getY()- stats.getHeight()/2 + 250);
+                g.drawString("Health - " + character.getHealth(), stats.getX()- stats.getWidth()/2 + 50, stats.getY()- stats.getHeight()/2 + 250);
                 g.setColor(Color.gray);
-                g.drawString("Defense - " + defense, stats.getX()- stats.getWidth()/2 + 50, stats.getY()- stats.getHeight()/2 + 300);
+                g.drawString("Defense - " + character.getDefense(), stats.getX()- stats.getWidth()/2 + 50, stats.getY()- stats.getHeight()/2 + 300);
                 g.setColor(Color.red);
-                g.drawString("Atk - " + attack, stats.getX()- stats.getWidth()/2 + 50, stats.getY()- stats.getHeight()/2 + 350);
+                g.drawString("Atk - " + character.getAttack(), stats.getX()- stats.getWidth()/2 + 50, stats.getY()- stats.getHeight()/2 + 350);
             }
 
             @Override
@@ -355,8 +355,18 @@ public final class Player<T extends Player<?>> extends Unit<T> {
 
     public T gainExp(int amount) {
         this.character.gainExp(amount);
+        this.health = character.getHealth();
+        this.defense = character.getDefense();
+        this.eDefense = character.geteDefense();
+        this.attack = character.getAttack();
+        this.eAttack = character.geteAttack();
+        this.critDamage = character.getCritDamage();
+        this.critRate = character.getCritRate();
+
         return (T) this;
     }
+
+
 
     public int getExp() {
         return character.getExp();
