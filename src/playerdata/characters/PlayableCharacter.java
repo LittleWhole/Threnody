@@ -1,6 +1,7 @@
 package playerdata.characters;
 
 import core.Constants;
+import core.Main;
 import entities.units.player.Player;
 import org.newdawn.slick.Image;
 import playerdata.PlayerData;
@@ -13,6 +14,35 @@ public abstract sealed class PlayableCharacter extends PlayerData implements Ser
     protected int level, exp, maxExp;
 
     protected int health;
+
+    public int getMaxExp() {
+        return maxExp;
+    }
+
+    public int getHealth() {
+        return health;
+    }
+
+    public int getDefense() {
+        return defense;
+    }
+
+    public int getCritRate() {
+        return critRate;
+    }
+
+    public int getCritDamage() {
+        return critDamage;
+    }
+
+    public int geteAttack() {
+        return eAttack;
+    }
+
+    public int geteDefense() {
+        return eDefense;
+    }
+
     protected int attack;
     protected int defense;
     protected int critRate;
@@ -47,13 +77,33 @@ public abstract sealed class PlayableCharacter extends PlayerData implements Ser
         // Default character constructor
         this.level = level;
         this.exp = exp;
-         this.maxExp = Constants.LevelingConstants.MAX_EXP(level);
+        this.maxExp = Constants.LevelingConstants.MAX_EXP(level);
     }
 
     public void gainExp(int amount)   {
-        this.exp+= amount;
+        Main.stats.exp += amount;
+        while(Main.stats.exp >= Main.stats.maxExp) {
+            System.out.println("LEVEL UP!");
+            levelUp();
+            Main.stats.exp -=this.maxExp;
+            //this.exp-=this.maxExp;
+            Main.stats.maxExp = Constants.LevelingConstants.MAX_EXP(this.level);
+        }
 
     }
+
+    protected void levelUp(){
+        Main.stats.level++;
+        this.level++;
+        this.health+=20;
+        this.attack+=3;
+        this.defense+=2;
+        this.critDamage+=2;
+        this.critRate+=1;
+        this.eDefense +=1;
+        this.eAttack+=2;
+    }
+
 
 
 

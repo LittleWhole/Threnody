@@ -1,5 +1,6 @@
 package graphics.ui;
 
+import core.Main;
 import gamestates.Game;
 import gamestates.TitleScreen;
 import graphics.ui.menu.Menu;
@@ -28,8 +29,8 @@ public class Button implements UserInterfaceable {
     public Button(String text, Commandable command) {
         this.x = 0;
         this.y = 0;
-        this.width = new TrueTypeFont(new java.awt.Font("Bahnschrift", java.awt.Font.PLAIN, 50), true).getWidth(text);
-        this.height = new TrueTypeFont(new java.awt.Font("Bahnschrift", java.awt.Font.PLAIN, 50), true).getHeight(text);
+        this.width = Main.fonts.VariableWidth.P50.getWidth(text);
+        this.height = Main.fonts.VariableWidth.P50.getHeight(text);
         this.text = text;
         this.command = command;
     }
@@ -45,8 +46,8 @@ public class Button implements UserInterfaceable {
     public Button(float x, float y, String text, Commandable command) {
         this.x = x;
         this.y = y;
-        this.width = new TrueTypeFont(new java.awt.Font("Bahnschrift", java.awt.Font.PLAIN, 50), true).getWidth(text);
-        this.height = new TrueTypeFont(new java.awt.Font("Bahnschrift", java.awt.Font.PLAIN, 50), true).getHeight(text);
+        this.width = Main.fonts.VariableWidth.P50.getWidth(text);
+        this.height = Main.fonts.VariableWidth.P50.getHeight(text);
         this.text = text;
         this.command = command;
     }
@@ -63,7 +64,7 @@ public class Button implements UserInterfaceable {
     public void render(Graphics g, int mouseX, int mouseY) {
         if (onButton(mouseX, mouseY)) {
             g.setColor(new Color(247, 168, 74));
-            DrawUtilities.drawStringCentered(g, "> " + text + " <", new TrueTypeFont(new java.awt.Font("Bahnschrift", java.awt.Font.PLAIN, 53), true), x, y);
+            DrawUtilities.drawStringCentered(g, "> " + text + " <", Main.fonts.VariableWidth.P53, x, y);
         }
         else {
             g.setColor(Color.white);

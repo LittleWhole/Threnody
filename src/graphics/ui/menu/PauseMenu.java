@@ -23,8 +23,9 @@ public class PauseMenu extends Menu implements UserInterfaceable {
         super(Main.RESOLUTION_X / 2, Main.RESOLUTION_Y / 2, 700, 400);
         this.buttons = new ArrayList<>();
             buttons.add(new Button(x, y - 20, "Resume", () -> { this.remove(); Main.paused = false; }));
-            buttons.add(new Button(x, y + 30,"Save", () -> Main.save()));
-            buttons.add(new Button(x, y + 80,"Quit", () -> Main.game.getSbg().enterState(Main.TITLE_ID, new FadeOutTransition(), new FadeInTransition())));
+            buttons.add(new Button(x, y + 40,"Save", Main::save));
+            buttons.add(new Button(x, y + 100,"Quit", () -> Main.game.getSbg().enterState(Main.TITLE_ID, new FadeOutTransition(), new FadeInTransition())));
+            buttons.add(new Button(x, y + 160,"Activate Cheat Mode", Main::cheat));
     }
 
     @Override
@@ -34,6 +35,7 @@ public class PauseMenu extends Menu implements UserInterfaceable {
         buttons.get(0).render(g, Game.getGc().getInput().getMouseX(), Game.getGc().getInput().getMouseY());
         buttons.get(1).render(g, Game.getGc().getInput().getMouseX(), Game.getGc().getInput().getMouseY());
         buttons.get(2).render(g, Game.getGc().getInput().getMouseX(), Game.getGc().getInput().getMouseY());
+        buttons.get(3).render(g, Game.getGc().getInput().getMouseX(), Game.getGc().getInput().getMouseY());
     }
 
     @Override

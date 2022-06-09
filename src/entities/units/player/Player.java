@@ -6,6 +6,7 @@ import combat.artes.elemental.AquaLimit;
 import combat.artes.elemental.DualTheSol;
 import combat.artes.elemental.RendingGale;
 import combat.artes.mystic.AmongUs;
+import combat.artes.mystic.Expiation;
 import combat.artes.strike.DragonFang;
 import combat.artes.strike.ImpactCross;
 import combat.artes.strike.SonicSlash;
@@ -19,6 +20,7 @@ import entities.units.enemy.Enemy;
 import entities.units.npc.NPC;
 import entities.units.Unit;
 import gamestates.Game;
+import graphics.ui.Button;
 import graphics.ui.menu.InventoryMenu;
 import graphics.ui.menu.Menu;
 import managers.AnimationManager;
@@ -42,6 +44,8 @@ public final class Player<T extends Player<?>> extends Unit<T> {
     }
     private PlayerState state;
 
+    private boolean lvl10reward;
+
     private boolean displayStats;
     private boolean displayInventory;
 
@@ -53,6 +57,8 @@ public final class Player<T extends Player<?>> extends Unit<T> {
     private Queue<Arte<? extends Unit>> clickArteQueue;
     private ArrayList<InventoryMenu> cardInventory;
     private Arte<? extends Unit> move;
+
+    private int inventoryIndex;
     private int queue;
     private final PlayableCharacter character;
     // Abbreviations: LVL, EXP, HP, ATK, DEF, CR, CD, EATK, EDEF, AFF
@@ -75,8 +81,11 @@ public final class Player<T extends Player<?>> extends Unit<T> {
         this.clickArteQueue = new ConcurrentLinkedQueue<>();
         for (int i = 0; i < 1; i++) {
             arteDeck.add(new ImpactCross(this));
-            arteDeck.add(new AmongUs(this));
-            //arteDeck.add(new DragonFang(this));
+            //arteDeck.add(new AmongUs(this));
+            arteDeck.add(new Expiation(this));
+            arteDeck.add(new Expiation(this));
+            arteDeck.add(new Expiation(this));
+            arteDeck.add(new Expiation(this));
             arteDeck.add(new Elixir(this));
             arteDeck.add(new DragonFang(this));
             arteDeck.add(new RendingGale(this));
@@ -87,12 +96,15 @@ public final class Player<T extends Player<?>> extends Unit<T> {
             arteDeck.add(new Mana(this));
             arteDeck.add(new SonicSlash(this));
         }
+        lvl10reward = false;
         cardInventory = new ArrayList<>();
         cardInventory.add(addInventory(arteDeck.subList(0,arteDeck.size()>15?15:arteDeck.size())));
         this.hitBox = new Rectangle((Main.getScreenWidth()/2) - this.getWidth()/2, (Main.getScreenHeight()/2) + this.height*0.85f, this.width, this.height/4);
         this.displayStats = false;
         this.displayInventory = false;
+        this.inventoryIndex = 0;
         stats = new Menu(Main.getScreenWidth()-175, Main.getScreenHeight()-225, 300, 400) {
+
             @Override
             protected void subrender(Graphics g) {
                 g.setColor(Color.white);
@@ -102,11 +114,11 @@ public final class Player<T extends Player<?>> extends Unit<T> {
                 g.drawString("Exp: " + Main.stats.exp + "/" + Main.stats.maxExp, stats.getX()- stats.getWidth()/2 + 50, stats.getY()- stats.getHeight()/2 + 150);
                 g.drawString("Gold: " + Main.stats.gold, stats.getX() - stats.getWidth()/2 + 50, stats.getY()- stats.getHeight()/2 + 200);
                 g.setColor(Color.green);
-                g.drawString("Health - " + health, stats.getX()- stats.getWidth()/2 + 50, stats.getY()- stats.getHeight()/2 + 250);
+                g.drawString("Health - " + character.getHealth(), stats.getX()- stats.getWidth()/2 + 50, stats.getY()- stats.getHeight()/2 + 250);
                 g.setColor(Color.gray);
-                g.drawString("Defense - " + defense, stats.getX()- stats.getWidth()/2 + 50, stats.getY()- stats.getHeight()/2 + 300);
+                g.drawString("Defense - " + character.getDefense(), stats.getX()- stats.getWidth()/2 + 50, stats.getY()- stats.getHeight()/2 + 300);
                 g.setColor(Color.red);
-                g.drawString("Atk - " + attack, stats.getX()- stats.getWidth()/2 + 50, stats.getY()- stats.getHeight()/2 + 350);
+                g.drawString("Atk - " + character.getAttack(), stats.getX()- stats.getWidth()/2 + 50, stats.getY()- stats.getHeight()/2 + 350);
             }
 
             @Override
@@ -175,6 +187,7 @@ public final class Player<T extends Player<?>> extends Unit<T> {
 
         return new InventoryMenu(1100, 1000, temp, 5);
     }
+
 
     public void update(StateBasedGame sbg, Unit u, Game g) throws SlickException {
         ewDir = (dx>0?Direction.EAST:dx<0?Direction.WEST:Direction.NONE);
@@ -312,19 +325,59 @@ public final class Player<T extends Player<?>> extends Unit<T> {
         if(isDisplayStats()) stats.render(gc.getGraphics(), gc.getInput().getMouseX(), gc.getInput().getMouseY());
     }
     public void renderInventory(GameContainer gc)   {
-        if(displayInventory) cardInventory.get(0).render(gc.getGraphics(), gc.getInput().getMouseX(), gc.getInput().getMouseY());
+        if(displayInventory) {
+
+            cardInventory.get(inventoryIndex).render(gc.getGraphics(), gc.getInput().getMouseX(), gc.getInput().getMouseY());
+            if(inventoryIndex > 0)  {
+                cardInventory.get(inventoryIndex).renderPrevious = true;
+                cardInventory.get(inventoryIndex).renderPrevious(gc);
+            }
+            else {
+                cardInventory.get(inventoryIndex).renderPrevious = false;
+            }
+            if(inventoryIndex < cardInventory.size()-1)   {
+                cardInventory.get(inventoryIndex).renderNext = true;
+                cardInventory.get(inventoryIndex).renderNext(gc);
+            }
+            else {
+                cardInventory.get(inventoryIndex).renderNext = false;
+            }
+
+            if(gc.getInput().isMousePressed(0)) {
+                if(cardInventory.get(inventoryIndex).renderPrevious)    {
+                    if(cardInventory.get(inventoryIndex).getPrevious().onButton(gc.getInput().getMouseX(), gc.getInput().getMouseY())) inventoryIndex--;
+                }
+                if(cardInventory.get(inventoryIndex).renderNext)    {
+                    if(cardInventory.get(inventoryIndex).getNext().onButton(gc.getInput().getMouseX(), gc.getInput().getMouseY())) inventoryIndex++;
+                }
+            }
+        }
     }
 
     public void addToDeck(Arte<Player> a)   {
         this.arteDeck.add(a);
-        if(this.cardInventory.get(cardInventory.size()-1).getInventory().size() >= 20) cardInventory.add(addInventory(new ArrayList<>()));
+        if(this.cardInventory.get(cardInventory.size()-1).getInventory().size() >= 15) cardInventory.add(addInventory(new ArrayList<>()));
         this.cardInventory.get(cardInventory.size()-1).addToInv(new Card(a.getClass()));
     }
 
-    public T gainExp(int amount) {
+    public T gainExp(int amount) throws SlickException {
         this.character.gainExp(amount);
+        if(Main.stats.level  == 10 & !lvl10reward)  {
+            lvl10reward = false;
+            this.addToDeck(new Expiation(this));
+        }
+        this.health = character.getHealth();
+        this.defense = character.getDefense();
+        this.eDefense = character.geteDefense();
+        this.attack = character.getAttack();
+        this.eAttack = character.geteAttack();
+        this.critDamage = character.getCritDamage();
+        this.critRate = character.getCritRate();
+
         return (T) this;
     }
+
+
 
     public int getExp() {
         return character.getExp();

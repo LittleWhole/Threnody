@@ -24,6 +24,7 @@ public class Elixir extends Arte<Player> {
     public void activation(Unit target) {
         if (timer == 105) {
             owner.regenerate(healingValue);
+            owner.addDefense(healingValue);
         }
     }
 

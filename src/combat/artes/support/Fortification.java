@@ -10,7 +10,7 @@ import playerdata.characters.PlayableCharacter;
 
 @SuppressWarnings({"rawtypes"})
 public class Fortification extends Arte<Unit> {
-    private final int healingValue = 10;
+    private final int healingValue = 30;
 
     public Fortification(Unit owner) throws SlickException {
         super(owner);
@@ -22,7 +22,7 @@ public class Fortification extends Arte<Unit> {
 
     @Override
     public void activation(Unit target) {
-        target.setHealth(target.getHealth() + this.healingValue);
+        if (timer == 40) owner.addDefense(healingValue);
     }
 
     @Override
