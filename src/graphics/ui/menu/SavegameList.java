@@ -36,9 +36,4 @@ public class SavegameList implements UserInterfaceable
     public void render(Graphics g, int mouseX, int mouseY) {
         buttons.forEach(button -> button.render(g, mouseX, mouseY));
     }
-
-    @Override
-    public void update(GameContainer gc) {
-        buttons.forEach(button -> button.update(gc));
-    }
 }

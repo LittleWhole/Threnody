@@ -25,11 +25,11 @@ public class LoadGameMenu extends Menu implements UserInterfaceable {
         currentPage = 0;
         files.sort(Comparator.reverseOrder());
         var num = files.size();
-        for (var i = 0; i < Math.ceil((double) num / 10); i++) {
+        for (var i = 0; i < Math.ceil((double) num / 9); i++) {
             try {
-                pages.add(new SavegameList(files.subList(i * 10, (i + 1) * 10)));
+                pages.add(new SavegameList(files.subList(i * 9, (i + 1) * 9)));
             } catch (IndexOutOfBoundsException ignored) {
-                pages.add(new SavegameList(files.subList(i * 10, num)));
+                pages.add(new SavegameList(files.subList(i * 9, num)));
             }
         }
         this.buttons = new ArrayList<>();
@@ -68,10 +68,10 @@ public class LoadGameMenu extends Menu implements UserInterfaceable {
     protected void subrender(Graphics g) {
         g.setColor(Color.white);
         DrawUtilities.drawStringCentered(g, title, fonts.get("title"), x, y - height / 2 + 40);
-        pages.get(currentPage).render(g, x, y);
-            buttons.get(0).setX(x - 350);
-            buttons.get(0).setY(y + height / 2 - 40);
-            buttons.get(0).render(g, Game.getGc().getInput().getMouseX(), Game.getGc().getInput().getMouseY());
+        pages.get(currentPage).render(g, Game.getGc().getInput().getMouseX(), Game.getGc().getInput().getMouseY());
+        buttons.get(0).setX(x - 350);
+        buttons.get(0).setY(y + height / 2 - 40);
+        buttons.get(0).render(g, Game.getGc().getInput().getMouseX(), Game.getGc().getInput().getMouseY());
         buttons.get(1).setX(x + 350);
         buttons.get(1).setY(y + height / 2 - 40);
         buttons.get(1).render(g, Game.getGc().getInput().getMouseX(), Game.getGc().getInput().getMouseY());
