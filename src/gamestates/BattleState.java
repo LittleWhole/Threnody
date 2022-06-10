@@ -188,12 +188,12 @@ public class BattleState extends ThrenodyGameState {
         }
         enemies.forEach(e ->    {
             if(e instanceof GoblinBoss)  {
-                expGain+=100*e.getLevel();
-                currencyGain+=75*e.getLevel();
+                expGain+=(100*Math.log(e.getLevel()));
+                currencyGain+=(75*Math.log(e.getLevel()));
             }
             if(e instanceof Goblin<?>)  {
-                expGain+=25*e.getLevel();
-                currencyGain+=20*e.getLevel();
+                expGain+=(15*Math.log(e.getLevel()));
+                currencyGain+=(10*Math.log(e.getLevel()));
             }
         });
 
