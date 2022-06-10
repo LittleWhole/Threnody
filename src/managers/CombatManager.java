@@ -39,6 +39,7 @@ public final class CombatManager {
         plrTurn = 0;
         enemyTurn = 0;
         players.forEach(p -> {
+            if (Main.cheat) p.setTurnMana(999999);
             p.setState(Player.PlayerState.SELECTING);
             p.setMana(p.getTurnMana() + p.getManaAdd());
             p.setManaAdd(0);

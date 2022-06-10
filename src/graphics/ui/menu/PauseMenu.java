@@ -25,7 +25,14 @@ public class PauseMenu extends Menu implements UserInterfaceable {
             buttons.add(new Button(x, y - 20, "Resume", () -> { this.remove(); Main.paused = false; }));
             buttons.add(new Button(x, y + 40,"Save", Main::save));
             buttons.add(new Button(x, y + 100,"Quit", () -> Main.game.getSbg().enterState(Main.TITLE_ID, new FadeOutTransition(), new FadeInTransition())));
-            buttons.add(new Button(x, y + 160,"Activate Cheat Mode", Main::cheat));
+            buttons.add(new Button(x, y + 160,"Activate Cheat Mode", () ->
+                Main.addMenu(new DialogBox(1000, 600, "Enable Cheat Mode?", """
+                                Are you sure you want to enable Cheat Mode?
+                                This mode gives you access to every card and makes
+                                you have unlimited mana, gold, and EXP (press F3 to add).
+                                Only use for testing/to experience all combat.""",
+                        new CloseButton("No"), new CloseButton("Yes", Main::cheatOn)))
+            ));
     }
 
     @Override

@@ -4,6 +4,7 @@ import core.Main;
 import entities.units.Unit;
 import entities.units.enemy.Enemy;
 import managers.ImageManager;
+import managers.SoundManager;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
 import entities.units.player.Player;
@@ -20,6 +21,7 @@ public abstract class MysticArte<T extends Unit> extends Arte<T> {
 
     public void use(Unit target, GameContainer gc) {
         if (!start) {
+            if (timer == 0) SoundManager.playSoundEffect(this.getClass().getSimpleName());
             var image = ImageManager.getImage("mysticActivate");
             if (timer < 10) {
                 image.setImageColor((float) 1 / timer, (float) 1 / timer, (float) 1 / timer);

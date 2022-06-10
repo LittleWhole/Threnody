@@ -166,6 +166,10 @@ public class BattleState extends ThrenodyGameState {
             plrs.get(i).setPosition( -580, -260);
             plrs.get(i).setDirection(Direction.NORTH, Direction.EAST);
             plrs.get(i).startBattle();
+            if (Main.cheat) {
+                Main.constructCheatDeck(plrs.get(i));
+                plrs.get(i).setArteDeck(Main.cheatDeck);
+            }
         }
         for (int i = 0; i < enemies.size(); i++)   {
             enemies.get(i).setPosition(switch (i) {

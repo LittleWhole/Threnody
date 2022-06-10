@@ -68,6 +68,7 @@ public final class Player<T extends Player<?>> extends Unit<T> {
         this.level = 1;
         this.mana = 3;
         this.turnMana = 3;
+        if (Main.cheat) this.turnMana = 99999999;
         this.width = 104;
         this.height = 216;
         this.position = pos;
