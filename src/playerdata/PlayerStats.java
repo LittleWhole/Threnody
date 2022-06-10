@@ -1,6 +1,7 @@
 package playerdata;
 
 import core.Constants;
+import entities.core.Coordinate;
 
 import java.io.Serializable;
 
@@ -10,12 +11,16 @@ public class PlayerStats extends PlayerData implements Serializable {
     public volatile int gold;
     public transient volatile int maxExp;
 
+    public volatile Coordinate worldPos;
+
     public PlayerStats() {
         super();
         exp = 0;
         level = 0;
         gold = 0;
         maxExp = Constants.LevelingConstants.MAX_EXP(level);
+
+        worldPos = new Coordinate(-3000,2500);
     }
 
     public void update() {

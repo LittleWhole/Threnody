@@ -5,6 +5,7 @@ import gamestates.Game;
 import gamestates.TitleScreen;
 import graphics.ui.menu.Menu;
 import org.newdawn.slick.Color;
+import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.TrueTypeFont;
 import util.Commandable;
@@ -78,6 +79,15 @@ public class Button implements UserInterfaceable {
             return y - height / 2 < mouseY && mouseY < y + height / 2;
         }
         return false;
+    }
+
+    @Override
+    public void update(GameContainer gc) {
+        if (onButton(gc.getInput().getMouseX(), gc.getInput().getMouseY())) {
+            if (gc.getInput().isMousePressed(0)) {
+                command.command();
+            }
+        }
     }
 
     public float getX() {

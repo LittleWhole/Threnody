@@ -27,7 +27,7 @@ public abstract sealed class PlayableCharacter extends PlayerData implements Ser
         return defense;
     }
 
-    public int getCritRate() {
+    public double getCritRate() {
         return critRate;
     }
 
@@ -45,7 +45,7 @@ public abstract sealed class PlayableCharacter extends PlayerData implements Ser
 
     protected int attack;
     protected int defense;
-    protected int critRate;
+    protected double critRate;
     protected int critDamage;
     protected int eAttack;
     protected int eDefense;
@@ -92,24 +92,21 @@ public abstract sealed class PlayableCharacter extends PlayerData implements Ser
 
     }
 
-    protected void levelUp(){
+    protected void levelUp() {
         Main.stats.level++;
         this.level++;
-        this.health+=50;
-        this.attack+=10;
-        this.defense+=10;
-        this.critDamage+=10;
-        this.critRate+=.05;
-        this.eDefense +=3;
-        this.eAttack+=5;
+        updateStats();
     }
 
-
-
-
-
-
-
+    protected void updateStats() {
+        this.health = 50 * level;
+        this.attack = 10 * level;
+        this.defense = 10 * level;
+        this.critDamage = 10 * level;
+        this.critRate = .05 * level;
+        this.eDefense = 3 * level;
+        this.eAttack = 5 * level;
+    }
 
     public Player getEntity() {
         return entity;

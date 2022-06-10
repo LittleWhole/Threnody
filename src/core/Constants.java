@@ -20,8 +20,8 @@ public final class Constants {
 
     public static final class ImageConstants {
         public static final int PIXELS_PER_UNIT = 15;
-        final public static float CENTER_X = Main.RESOLUTION_X / 2f;
-        final public static float CENTER_Y = Main.RESOLUTION_Y / 2f;
+        public static final float CENTER_X = Main.RESOLUTION_X / 2f;
+        public static final float CENTER_Y = Main.RESOLUTION_Y / 2f;
     }
 
     public static final class CombatConstants {

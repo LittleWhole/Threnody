@@ -51,7 +51,6 @@ public class Game extends ThrenodyGameState {
     // Managers
     private KeyManager keyDown; // Key Manager
     public DisplayManager displayManager; // Display Manager
-    public static Coordinate plrPosition;
     private Button gainGold;
     private Button gainExp;
     private Player plr;
@@ -91,7 +90,6 @@ public class Game extends ThrenodyGameState {
         gc.setShowFPS(true);
         Game.gc = gc;
         this.sbg = sbg;
-        plrPosition = new Coordinate(-3000,2500);
         enemyTeam = new ArrayList<>();
         plrTeam = new ArrayList<>();
         npcs.add(new Carder(200, 0));
@@ -103,7 +101,7 @@ public class Game extends ThrenodyGameState {
         // Initialize Both Entity Maps
 
         // Initialize the Player
-        plr = (Player) new Player(plrPosition).setAttack(20);
+        plr = (Player) new Player(Main.stats.worldPos).setAttack(20);
         plrTeam.add(plr);
         System.out.println("[VERBOSE] Player initialized");
         enemy = new Goblin(10, 0);
@@ -161,7 +159,7 @@ public class Game extends ThrenodyGameState {
         }
         npcs.forEach(u -> {
             if (Main.debug) u.drawHitBox(g);
-            u.render(gc, plrPosition.getX(), plrPosition.getY(), plr);
+            u.render(gc, Main.stats.worldPos.getX(), Main.stats.worldPos.getY(), plr);
             if (plr.getHitBox().intersects(u.getHitBox()) && !u.isInteracting()) {
                 var shape = new RoundedRectangle(u.getRenderX(plr.getPosition().getX()) + 50, u.getRenderY(plr.getPosition().getY()), 200, 50, RoundedRectangle.TOP_LEFT | RoundedRectangle.BOTTOM_LEFT);
                 var keyShape = new RoundedRectangle(u.getRenderX(plr.getPosition().getX()) + 55, u.getRenderY(plr.getPosition().getY()) + 5, 40, 40, RoundedRectangle.ALL);
@@ -252,10 +250,10 @@ public class Game extends ThrenodyGameState {
         //plrTeam.add(plr);
 
         // Initialize the Player
-        plr.setPosition(plrPosition);
+        plr.setPosition(Main.stats.worldPos);
         plr.resetHitbox();
         overworld.generateHitboxes();
-        overworld.updateHitboxes(-plrPosition.getX(), -plrPosition.getY()/2);
+        overworld.updateHitboxes(-Main.stats.worldPos.getX(), -Main.stats.worldPos.getY()/2);
         //plrTeam.add(plr);
         System.out.println("[VERBOSE] Player initialized");
         //enemy = new Goblin(10, 0);

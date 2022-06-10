@@ -73,7 +73,7 @@ public final class Player<T extends Player<?>> extends Unit<T> {
         this.ySpeed = 10;
         this.sheet = new SpriteSheet(new Image("res/animations/character/player.png"), (int)width, (int)height, 8, 8);
         this.sprite = sheet.getSprite(0,0);
-        this.character = new Sigur();
+        this.character = Main.characters.get(0);
         this.arteDeck = new ArrayList<>();
         this.arteQueue = new ConcurrentLinkedQueue<>();
         this.clickArteQueue = new ConcurrentLinkedQueue<>();
