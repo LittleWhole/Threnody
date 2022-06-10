@@ -6,15 +6,16 @@ import entities.units.enemy.Enemy;
 import managers.ImageManager;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
+import entities.units.player.Player;
+import org.newdawn.slick.Graphics;
 import org.newdawn.slick.SlickException;
-import playerdata.characters.PlayableCharacter;
 import util.DrawUtilities;
 
 public abstract class MysticArte<T extends Unit> extends Arte<T> {
-    private boolean start;
+    private boolean start = false;
+
     protected MysticArte(T owner) throws SlickException {
         super(owner);
-        start = false;
     }
 
     public void use(Unit target, GameContainer gc) {
@@ -67,53 +68,56 @@ public abstract class MysticArte<T extends Unit> extends Arte<T> {
                 gc.getGraphics().setFont(Main.font);
             }
             timer++;
+        } else {
+            super.use(target, gc);
         }
-        else {
-            if (timer == 0) {
-                owner.generateMana(-cost);
-                owner.setQueuedManaRemoval(owner.getQueuedManaRemoval() - cost);
-            }
-            if (!finished()) {
-                activation(target);
-                if (timer < 60) {
-                    if (timer < 20) gc.getGraphics().setColor(new Color(221, 201, 85, (255 / 20) * timer));
-                    else if (timer < 40) gc.getGraphics().setColor(new Color(221, 201, 85));
-                    else gc.getGraphics().setColor(new Color(221, 201, 85, (255 / 20) * (60 - timer)));
+    }
 
-                    gc.getGraphics().fill(DrawUtilities.createRectangleCentered(Main.RESOLUTION_X / 2, 100, 400, 80));
+    /*public void render(Unit target, Graphics g) {
 
+        if (!finished()) {
+            animation(target, g);
+            DrawUtilities.drawStringCentered(g, String.valueOf(timer), 100, 0);
+        }
+        if(timer == castDuration){
+            BattleState.damageNumbers.add(new DamageNumber(owner.getAttack(), (int)target.getPosition().getX(), (int)(target.getPosition().getY()+target.getHeight()/2)));
+        }
+        timer++;
+        if (BattleState.time - castTimestamp < castDuration) {
+            g.drawArc(owner.getEntity().getX(), owner.getEntity().getY(), 50f, 50f, 0f, (float) Math.toRadians((float) castTimestamp / castDuration * 360));
+        }
+    }*/
+    public boolean finished() {
+        return (timer >= castDuration);
+    }
 
-                    if (target instanceof Enemy) {
-                        if (timer < 20) gc.getGraphics().setColor(new Color(12, 46, 100, (255 / 20) * timer));
-                        else if (timer < 40) gc.getGraphics().setColor(new Color(12, 46, 100));
-                        else gc.getGraphics().setColor(new Color(12, 46, 100, (255 / 20) * (60 - timer)));
-                    } else {
-                        if (timer < 20) gc.getGraphics().setColor(new Color(142, 27, 35, (255 / 20) * timer));
-                        else if (timer < 40) gc.getGraphics().setColor(new Color(142, 27, 35));
-                        else gc.getGraphics().setColor(new Color(142, 27, 35, (255 / 20) * (60 - timer)));
-                    }
+    public void animation(Unit target, Graphics g) {
+        switch (aniType) {
+            case OWNER -> animationOwner(g);
+            case TARGET -> animationTarget(target, g);
+            case REVERSE_TARGET -> animationReverseTarget(target, g);
+            default -> animationOwner(g);
+        }
+    }
+    public void animationOwner(Graphics g) {
+        if (!finished()) {
+            this.aniFrame = aniSheet.getSprite(spritesheetX, spritesheetY);
+            g.drawImage(aniFrame, -owner.getPosition().getX() + (owner.getWidth()/2) + 5, owner.getPosition().getY()/2 + owner.getHeight()*2.75f);
+        }
+    }
 
-                    var rect = DrawUtilities.createRectangleCentered(Main.RESOLUTION_X / 2, 100, 400, 60);
-                    gc.getGraphics().fill(rect);
+    public void animationTarget(Unit target, Graphics g) {
+        if(!finished()) {
+            this.aniFrame = aniSheet.getSprite(spritesheetX, spritesheetY);
+            if (this.owner instanceof Player) g.drawImage(aniFrame, -target.getPosition().getX(), -target.getY() + target.getHeight());
+            else g.drawImage(aniFrame.getFlippedCopy(true, false), -target.getPosition().getX(), -target.getY() + target.getHeight());
+        }
+    }
 
-                    if (timer < 30) gc.getGraphics().setColor(new Color(255, 255, 255, (255 / 20) * timer));
-                    else if (timer < 40) gc.getGraphics().setColor(new Color(255, 255, 255));
-                    else gc.getGraphics().setColor(new Color(255, 255, 255, (255 / 20) * (60 - timer)));
-
-
-                    gc.getGraphics().setFont(Main.fonts.VariableWidth.P40);
-                    DrawUtilities.drawStringCentered(gc.getGraphics(), this.name, Main.fonts.VariableWidth.P40, rect);
-                    gc.getGraphics().setFont(Main.font);
-                }
-                animation(target, gc.getGraphics());
-                DrawUtilities.drawStringCentered(gc.getGraphics(), String.valueOf(timer), 100, 0);
-            }
-            timer++;
-            spritesheetX++;
-            if (aniSheet != null && spritesheetX >= aniSheet.getHorizontalCount()) {
-                spritesheetX = 0;
-                spritesheetY++;
-            }
+    public void animationReverseTarget(Unit target, Graphics g) {
+        if(!finished()) {
+            this.aniFrame = aniSheet.getSprite(spritesheetX, spritesheetY);
+            g.drawImage(aniFrame.getFlippedCopy(true, false), -target.getPosition().getX(), -target.getY() + target.getHeight());
         }
     }
 
