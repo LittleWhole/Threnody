@@ -121,9 +121,9 @@ public final class Player<T extends Player<?>> extends Unit<T> {
                 g.setColor(Color.blue);
                 g.drawString("Elemental Defense - " + character.geteDefense(), stats.getX() -stats.getWidth()/2 + 50, stats.getY() - stats.getHeight()/2 + 200);
                 g.setColor(Color.red);
-                g.drawString("Attack - " + character.getAttack(), stats.getX()- stats.getWidth()/2 + 50, stats.getY()- stats.getHeight()/2 + 200);
+                g.drawString("Attack - " + character.getAttack(), stats.getX()- stats.getWidth()/2 + 50, stats.getY()- stats.getHeight()/2 + 250);
                 g.setColor(Color.yellow);
-                g.drawString("Elemental Attack - " + character.geteAttack(), stats.getX()- stats.getWidth()/2 + 50, stats.getY()- stats.getHeight()/2 + 250);
+                g.drawString("Elemental Attack - " + character.geteAttack(), stats.getX()- stats.getWidth()/2 + 50, stats.getY()- stats.getHeight()/2 + 300);
             }
 
             @Override
@@ -138,6 +138,7 @@ public final class Player<T extends Player<?>> extends Unit<T> {
     }
 
     public void startBattle()   {
+        this.attack = character.getAttack();
         AnimationManager.animationSelect(this);
         AnimationManager.animationCycle(this);
         queue = 5;
