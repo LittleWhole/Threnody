@@ -114,16 +114,16 @@ public final class Player<T extends Player<?>> extends Unit<T> {
             protected void subrender(Graphics g) {
                 g.setColor(Color.white);
                 g.drawString("STATS", stats.getX() - stats.getWidth()/2 + 50, stats.getY()- stats.getHeight()/2 + 50);
-                g.setColor(Color.yellow);
-                g.drawString("Level: " + Main.stats.level, stats.getX() - stats.getWidth()/2 + 50, stats.getY()- stats.getHeight()/2 + 100);
-                g.drawString("Exp: " + Main.stats.exp + "/" + Main.stats.maxExp, stats.getX()- stats.getWidth()/2 + 50, stats.getY()- stats.getHeight()/2 + 150);
-                g.drawString("Gold: " + Main.stats.gold, stats.getX() - stats.getWidth()/2 + 50, stats.getY()- stats.getHeight()/2 + 200);
                 g.setColor(Color.green);
-                g.drawString("Health - " + character.getHealth(), stats.getX()- stats.getWidth()/2 + 50, stats.getY()- stats.getHeight()/2 + 250);
+                g.drawString("Health - " + character.getHealth(), stats.getX()- stats.getWidth()/2 + 50, stats.getY()- stats.getHeight()/2 + 100);
                 g.setColor(Color.gray);
-                g.drawString("Defense - " + character.getDefense(), stats.getX()- stats.getWidth()/2 + 50, stats.getY()- stats.getHeight()/2 + 300);
+                g.drawString("Defense - " + character.getDefense(), stats.getX()- stats.getWidth()/2 + 50, stats.getY()- stats.getHeight()/2 + 150);
+                g.setColor(Color.blue);
+                g.drawString("Elemental Defense - " + character.geteDefense(), stats.getX() -stats.getWidth()/2 + 50, stats.getY() - stats.getHeight()/2 + 200);
                 g.setColor(Color.red);
-                g.drawString("Atk - " + character.getAttack(), stats.getX()- stats.getWidth()/2 + 50, stats.getY()- stats.getHeight()/2 + 350);
+                g.drawString("Attack - " + character.getAttack(), stats.getX()- stats.getWidth()/2 + 50, stats.getY()- stats.getHeight()/2 + 200);
+                g.setColor(Color.yellow);
+                g.drawString("Elemental Attack - " + character.geteAttack(), stats.getX()- stats.getWidth()/2 + 50, stats.getY()- stats.getHeight()/2 + 250);
             }
 
             @Override
