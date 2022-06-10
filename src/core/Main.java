@@ -1,5 +1,20 @@
 package core;
 
+import combat.artes.Arte;
+import combat.artes.elemental.AquaLimit;
+import combat.artes.elemental.DualTheSol;
+import combat.artes.elemental.Flamberge;
+import combat.artes.elemental.RendingGale;
+import combat.artes.mystic.*;
+import combat.artes.strike.DragonFang;
+import combat.artes.strike.ImpactCross;
+import combat.artes.strike.SonicSlash;
+import combat.artes.strike.TwinWhip;
+import combat.artes.support.Elixir;
+import combat.artes.support.Heal;
+import combat.artes.support.Mana;
+import entities.units.Unit;
+import entities.units.player.Player;
 import gamestates.*;
 import graphics.ui.Button;
 import graphics.ui.Displayable;
@@ -52,6 +67,8 @@ public class Main extends StateBasedGame {
     public static TitleScreen title;
     public static Filler filler;
     public static boolean debug;
+    public static boolean cheat = false;
+    public static List<Arte<? extends Unit>> cheatDeck = new ArrayList<>();
 
     public static StateBasedGame sbg;
 
@@ -207,9 +224,36 @@ public class Main extends StateBasedGame {
         System.exit(0);
     }
 
-    public static synchronized void cheat() {
-        addMenu(new DialogBox(1000, 600, "Enable Cheat Mode?", "Are you sure you want to enable Cheat Mode?\nThis mode gives you access to every card and makes\nall cards cost 0 Mana to cast.\nOnly use for testing/to experience all combat.", new CloseButton("Got it")));
+    public static synchronized void cheatOn() {
+        cheat = true;
+        //addMenu(new DialogBox(700, 400, "Cheat Mode On", "Turned on cheat mode.", new CloseButton("Got it")));
     }
+
+    public static synchronized void constructCheatDeck(Player p) {
+        var arteDeck = cheatDeck;
+        try {
+            for (int i = 0; i < 2; i++) {
+                arteDeck.add(new ImpactCross(p));
+                arteDeck.add(new AmongUs(p));
+                arteDeck.add(new Expiation(p));
+                arteDeck.add(new Elixir(p));
+                arteDeck.add(new DragonFang(p));
+                arteDeck.add(new RendingGale(p));
+                arteDeck.add(new AquaLimit(p));
+                arteDeck.add(new DivineConqueror(p));
+                arteDeck.add(new DualTheSol(p));
+                arteDeck.add(new Heal(p));
+                arteDeck.add(new Mana(p));
+                arteDeck.add(new SonicSlash(p));
+                arteDeck.add(new TwinWhip(p));
+                arteDeck.add(new Flamberge(p));
+                arteDeck.add(new TrillionDrive(p));
+                arteDeck.add(new InnumerableWounds(p));
+                arteDeck.add(new GardenOfInnocence(p));
+            }
+        } catch (SlickException e) { e.printStackTrace(); }
+    }
+
 
     public static synchronized void addDisplayable(Displayable displayable) {
         displayables.add(displayable);

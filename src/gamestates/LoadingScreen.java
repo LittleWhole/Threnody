@@ -24,7 +24,7 @@ public class LoadingScreen extends ThrenodyGameState {
 
     private LoadingList loadingList;
     private String lastResource;
-    private Sound music;
+    public static Sound music;
     private Image logo;
 
     private final int id;
@@ -64,7 +64,7 @@ public class LoadingScreen extends ThrenodyGameState {
 
         this.loadingList = LoadingList.get();
         background = new Background();
-        music = new Sound("res/audio/music/01.ogg");
+        music = new Sound("res/audio/music/title.wav");
         logo = new Image("res/ui/start/logo.png");
     }
 

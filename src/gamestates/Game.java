@@ -60,6 +60,7 @@ public class Game extends ThrenodyGameState {
     public GameMap overworld;
     public Background background;
     public DialogBox dialog;
+    private Sound bg = new Sound("res/audio/music/overworld.wav");
     public static GameContainer getGc() { return gc; }
     public StateBasedGame getSbg() { return sbg; }
 
@@ -92,10 +93,69 @@ public class Game extends ThrenodyGameState {
         this.sbg = sbg;
         enemyTeam = new ArrayList<>();
         plrTeam = new ArrayList<>();
-        npcs.add(new Carder(200, 0));
+        npcs.add(new Carder(1700, 0));
         enemies.add(new Goblin(-200,0));
+        enemies.get(enemies.size()-1).setEnemyTeamLevels(5,7);
+        enemies.add(new Goblin(-500,-50));
+        enemies.get(enemies.size()-1).setEnemyTeamLevels(5,7);
+        enemies.add(new Goblin(-900,100));
+        enemies.get(enemies.size()-1).setEnemyTeamLevels(5,7);
+        enemies.add(new Goblin(-872, -250));
+        enemies.get(enemies.size()-1).setEnemyTeamLevels(5,7);
+
+        enemies.add(new Goblin(320, -64));
+        enemies.get(enemies.size()-1).setEnemyTeamLevels(3,4);
+        enemies.add(new Goblin(721, 320));
+        enemies.get(enemies.size()-1).setEnemyTeamLevels(3,4);
+        enemies.add(new Goblin(493, -200));
+        enemies.get(enemies.size()-1).setEnemyTeamLevels(3,4);
+
+        enemies.add(new Goblin(600, -768));
+        enemies.get(enemies.size()-1).setEnemyTeamLevels(1,2);
+        enemies.add(new Goblin(324, -567));
+        enemies.get(enemies.size()-1).setEnemyTeamLevels(1,2);
+        enemies.add(new Goblin(435, -432));
+        enemies.get(enemies.size()-1).setEnemyTeamLevels(1,2);
+
         enemies.add(new Goblin(1000, -1000, new ArrayList<>(Arrays.asList(new Goblin(0, 0, new ArrayList<>())))));
+        enemies.get(enemies.size()-1).setEnemyTeamLevels(1,1);//first goblin
+
+        enemies.add(new Goblin(120,1200));
+        enemies.get(enemies.size()-1).setEnemyTeamLevels(9,10);
+        enemies.add(new Goblin(-700,1400));
+        enemies.get(enemies.size()-1).setEnemyTeamLevels(9,10);
+        enemies.add(new Goblin(-500,1005));
+        enemies.get(enemies.size()-1).setEnemyTeamLevels(9,10);
+        enemies.add(new Goblin(-850, 1600));
+        enemies.get(enemies.size()-1).setEnemyTeamLevels(9,10);
+
+        enemies.add(new Goblin(-2000,0));
+        enemies.get(enemies.size()-1).setEnemyTeamLevels(15,18);
+        enemies.add(new Goblin(-2304,430));
+        enemies.get(enemies.size()-1).setEnemyTeamLevels(15,18);
+        enemies.add(new Goblin(-1930,-203));
+        enemies.get(enemies.size()-1).setEnemyTeamLevels(15,18);
+
+        enemies.add(new Goblin(-2987,176));
+        enemies.get(enemies.size()-1).setEnemyTeamLevels(20,25);
+        enemies.add(new Goblin(-3200,-232));
+        enemies.get(enemies.size()-1).setEnemyTeamLevels(20,25);
+        enemies.add(new Goblin(-3100,432));
+        enemies.get(enemies.size()-1).setEnemyTeamLevels(20,25);
+        enemies.add(new Goblin(-3000, -500));
+        enemies.get(enemies.size()-1).setEnemyTeamLevels(20,25);
+
+        enemies.add(new Goblin(-4800,0));
+        enemies.get(enemies.size()-1).setEnemyTeamLevels(50,100);
+        enemies.add(new Goblin(-5000,-104));
+        enemies.get(enemies.size()-1).setEnemyTeamLevels(50,100);
+        enemies.add(new Goblin(-5100,-343));
+        enemies.get(enemies.size()-1).setEnemyTeamLevels(50,100);
+        enemies.add(new Goblin(-4798, -534));
+        enemies.get(enemies.size()-1).setEnemyTeamLevels(50,100);
+
         enemies.add(new GoblinBoss(-600,1320));
+        enemies.get(enemies.size()-1).setEnemyTeamLevels(15,15);
         battleCooldown = 200;
         dialog = new DialogBox(700, 400, "Notice", "This is a test dialog box!!!!!", new Button("Got it", () -> dialog.close()));
         // Initialize Both Entity Maps
@@ -110,10 +170,17 @@ public class Game extends ThrenodyGameState {
         System.out.println("[VERBOSE] KeyManager initialized");
         displayManager = new DisplayManager(this, plr.getPosition(), gc.getGraphics());
         System.out.println("[VERBOSE] DisplayManager initialized");
-        gainExp = new Button(Main.getScreenWidth()-300, 200, "Exp add", () -> plr.gainExp(1000));
+        gainExp = new Button(Main.getScreenWidth()-300, 200, "Exp add", () -> {
+            try {
+                plr.gainExp(1000);
+            } catch (SlickException e) {
+                throw new RuntimeException(e);
+            }
+        });
         gainGold = new Button(Main.getScreenWidth()-600, 200, "Gold add", () -> Main.stats.gainGold(1000));
         // Play BGM
-        SoundManager.playBackgroundMusic("02");
+
+        SoundManager.overrideBackgroundMusic(bg);
 
         overworld.generateHitboxes();
         overworld.updateHitboxes(-plr.getPosition().getX(), -plr.getPosition().getY()/2);
@@ -264,7 +331,7 @@ public class Game extends ThrenodyGameState {
         System.out.println("[VERBOSE] DisplayManager initialized");
 
         // Play BGM
-        SoundManager.playBackgroundMusic("02");
+        SoundManager.overrideBackgroundMusic(bg);
     }
 
     public synchronized void leave(GameContainer gc, StateBasedGame sbg) {

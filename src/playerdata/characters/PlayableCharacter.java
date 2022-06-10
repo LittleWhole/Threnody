@@ -65,8 +65,8 @@ public abstract sealed class PlayableCharacter extends PlayerData implements Ser
 
     protected PlayableCharacter() {
         // Default character constructor
-        health = 1;
-        attack = 1;
+        health = 50;
+        attack = 20;
         this.level = 1;
         this.exp = 0;
         this.maxExp = Constants.LevelingConstants.MAX_EXP(1);

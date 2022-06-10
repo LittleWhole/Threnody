@@ -1,5 +1,8 @@
-Threnody
-You live in an RPG world but your moves are cards.
+Welcome to Threnody!
+Enter an RPG world where your moves are cards.
 Fight bosses and interact with villagers in this epic game.
 WASD to move
+E to open inventory
+F and Enter to start and stop interactions with npcs
+Hit escape to open the game menu
 When in combat, use 123456 to select a card.

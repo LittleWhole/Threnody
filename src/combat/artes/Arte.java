@@ -5,6 +5,7 @@ import entities.units.Unit;
 import entities.units.enemy.Enemy;
 import entities.units.player.Player;
 import managers.ImageManager;
+import managers.SoundManager;
 import org.newdawn.slick.*;
 import playerdata.characters.PlayableCharacter;
 import util.DrawUtilities;
@@ -40,6 +41,7 @@ public abstract class Arte<T extends Unit> {
     }
 
     protected Image card;
+    protected Sound sound;
 
     protected ElementType element;
 
@@ -93,6 +95,9 @@ public abstract class Arte<T extends Unit> {
         if (timer == 0) {
             owner.generateMana(-cost);
             owner.setQueuedManaRemoval(owner.getQueuedManaRemoval() - cost);
+            try {
+                SoundManager.playSoundEffect(this.getClass().getSimpleName());
+            } catch (RuntimeException ignored) {}
         }
         if (!finished()) {
             activation(target);

@@ -44,6 +44,8 @@ public final class Player<T extends Player<?>> extends Unit<T> {
     }
     private PlayerState state;
 
+    private boolean lvl10reward;
+
     private boolean displayStats;
     private boolean displayInventory;
 
@@ -63,9 +65,10 @@ public final class Player<T extends Player<?>> extends Unit<T> {
 
     public Player(Coordinate pos) throws SlickException {
         super();
-        this.health = 100;
+        this.level = 1;
         this.mana = 3;
         this.turnMana = 3;
+        if (Main.cheat) this.turnMana = 99999999;
         this.width = 104;
         this.height = 216;
         this.position = pos;
@@ -73,27 +76,37 @@ public final class Player<T extends Player<?>> extends Unit<T> {
         this.ySpeed = 10;
         this.sheet = new SpriteSheet(new Image("res/animations/character/player.png"), (int)width, (int)height, 8, 8);
         this.sprite = sheet.getSprite(0,0);
+<<<<<<< HEAD
         this.character = Main.characters.get(0);
+=======
+        this.character = new Sigur();
+        this.health = character.getHealth();
+        this.attack = character.getAttack();
+>>>>>>> fb24ede5667b8190f5dda16edbcca7a61fd75eca
         this.arteDeck = new ArrayList<>();
         this.arteQueue = new ConcurrentLinkedQueue<>();
         this.clickArteQueue = new ConcurrentLinkedQueue<>();
-        for (int i = 0; i < 1; i++) {
-            arteDeck.add(new ImpactCross(this));
+        for (int i = 0; i < 2; i++) {
+            //arteDeck.add(new ImpactCross(this));
             //arteDeck.add(new AmongUs(this));
-            arteDeck.add(new Expiation(this));
-            arteDeck.add(new Expiation(this));
-            arteDeck.add(new Expiation(this));
-            arteDeck.add(new Expiation(this));
+            //arteDeck.add(new Expiation(this));
+            //arteDeck.add(new Expiation(this));
+            //arteDeck.add(new Expiation(this));
+            //arteDeck.add(new Expiation(this));
             arteDeck.add(new Elixir(this));
             arteDeck.add(new DragonFang(this));
-            arteDeck.add(new RendingGale(this));
+            //arteDeck.add(new RendingGale(this));
             arteDeck.add(new AquaLimit(this));
             //arteDeck.add(new DivineConqueror(this));
-            arteDeck.add(new DualTheSol(this));
+            //arteDeck.add(new DualTheSol(this));
             arteDeck.add(new Heal(this));
             arteDeck.add(new Mana(this));
+            arteDeck.add(new Mana(this));
+            arteDeck.add(new SonicSlash(this));
+            arteDeck.add(new SonicSlash(this));
             arteDeck.add(new SonicSlash(this));
         }
+        lvl10reward = false;
         cardInventory = new ArrayList<>();
         cardInventory.add(addInventory(arteDeck.subList(0,arteDeck.size()>15?15:arteDeck.size())));
         this.hitBox = new Rectangle((Main.getScreenWidth()/2) - this.getWidth()/2, (Main.getScreenHeight()/2) + this.height*0.85f, this.width, this.height/4);
@@ -106,16 +119,16 @@ public final class Player<T extends Player<?>> extends Unit<T> {
             protected void subrender(Graphics g) {
                 g.setColor(Color.white);
                 g.drawString("STATS", stats.getX() - stats.getWidth()/2 + 50, stats.getY()- stats.getHeight()/2 + 50);
-                g.setColor(Color.yellow);
-                g.drawString("Level: " + Main.stats.level, stats.getX() - stats.getWidth()/2 + 50, stats.getY()- stats.getHeight()/2 + 100);
-                g.drawString("Exp: " + Main.stats.exp + "/" + Main.stats.maxExp, stats.getX()- stats.getWidth()/2 + 50, stats.getY()- stats.getHeight()/2 + 150);
-                g.drawString("Gold: " + Main.stats.gold, stats.getX() - stats.getWidth()/2 + 50, stats.getY()- stats.getHeight()/2 + 200);
                 g.setColor(Color.green);
-                g.drawString("Health - " + character.getHealth(), stats.getX()- stats.getWidth()/2 + 50, stats.getY()- stats.getHeight()/2 + 250);
+                g.drawString("Health - " + character.getHealth(), stats.getX()- stats.getWidth()/2 + 50, stats.getY()- stats.getHeight()/2 + 100);
                 g.setColor(Color.gray);
-                g.drawString("Defense - " + character.getDefense(), stats.getX()- stats.getWidth()/2 + 50, stats.getY()- stats.getHeight()/2 + 300);
+                g.drawString("Defense - " + character.getDefense(), stats.getX()- stats.getWidth()/2 + 50, stats.getY()- stats.getHeight()/2 + 150);
+                g.setColor(Color.blue);
+                g.drawString("Elemental Defense - " + character.geteDefense(), stats.getX() -stats.getWidth()/2 + 50, stats.getY() - stats.getHeight()/2 + 200);
                 g.setColor(Color.red);
-                g.drawString("Atk - " + character.getAttack(), stats.getX()- stats.getWidth()/2 + 50, stats.getY()- stats.getHeight()/2 + 350);
+                g.drawString("Attack - " + character.getAttack(), stats.getX()- stats.getWidth()/2 + 50, stats.getY()- stats.getHeight()/2 + 250);
+                g.setColor(Color.yellow);
+                g.drawString("Elemental Attack - " + character.geteAttack(), stats.getX()- stats.getWidth()/2 + 50, stats.getY()- stats.getHeight()/2 + 300);
             }
 
             @Override
@@ -130,11 +143,12 @@ public final class Player<T extends Player<?>> extends Unit<T> {
     }
 
     public void startBattle()   {
+        this.attack = character.getAttack();
         AnimationManager.animationSelect(this);
         AnimationManager.animationCycle(this);
         queue = 5;
         Collections.shuffle(arteDeck);
-        this.arteHand = new ArrayList<>(arteDeck.subList(0,6));
+        this.arteHand = new ArrayList<>(arteDeck.subList(0,arteDeck.size() >=6?6:arteDeck.size()));
         this.arteQueue = new ConcurrentLinkedQueue<>();
         this.clickArteQueue = new ConcurrentLinkedQueue<>();
         move = null;
@@ -357,8 +371,14 @@ public final class Player<T extends Player<?>> extends Unit<T> {
         this.cardInventory.get(cardInventory.size()-1).addToInv(new Card(a.getClass()));
     }
 
-    public T gainExp(int amount) {
+    public T gainExp(int amount) throws SlickException {
         this.character.gainExp(amount);
+        if(Main.stats.level  == 10 & !lvl10reward)  {
+            lvl10reward = false;
+            this.addToDeck(new Expiation(this));
+            this.mana = 5;
+            this.turnMana = 5;
+        }
         this.health = character.getHealth();
         this.defense = character.getDefense();
         this.eDefense = character.geteDefense();

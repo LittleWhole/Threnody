@@ -16,7 +16,7 @@ public class PlayerStats extends PlayerData implements Serializable {
     public PlayerStats() {
         super();
         exp = 0;
-        level = 0;
+        level = 1;
         gold = 0;
         maxExp = Constants.LevelingConstants.MAX_EXP(level);
 

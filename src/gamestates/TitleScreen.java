@@ -53,6 +53,7 @@ public class TitleScreen extends ThrenodyGameState {
         bNEW_GAME = new Button(Main.getScreenWidth() / 2, Main.getScreenHeight() / 2 + 100, gc.getGraphics().getFont().getWidth("New Game"), gc.getGraphics().getFont().getHeight("New Game"), "New Game");
         bCONTINUE = new Button(Main.getScreenWidth() / 2, Main.getScreenHeight() / 2 + 200, gc.getGraphics().getFont().getWidth("Continue"), gc.getGraphics().getFont().getHeight("Continue"), "Continue");
         bLOAD_GAME = new Button(Main.getScreenWidth() / 2, Main.getScreenHeight() / 2 + 300, gc.getGraphics().getFont().getWidth("Load Game"), gc.getGraphics().getFont().getHeight("Load Game"), "Load Game");
+
     }
 
     @Override
