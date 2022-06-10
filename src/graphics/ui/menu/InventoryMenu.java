@@ -57,14 +57,14 @@ public class InventoryMenu extends Menu implements UserInterfaceable {
         super(w, h);
         inventory = a;
         this.cols = cols;
-        next = new Button(getX()+getWidth()/2-50, getY()+getHeight()/2 - 50,"+", () ->{});
-        previous = new Button(getX() - getWidth()/2, getY()+getHeight()/2 -50,"-", () ->{});
+        next = new Button(getX()+getWidth()/2-50, getY()+getHeight()/2 - 25,"+", () ->{});
+        previous = new Button(getX() - getWidth()/2 + 50, getY()+getHeight()/2 - 25,"-", () ->{});
     }
 
     @Override
     protected void subrender(Graphics g) {
         for(int i = 0; i < inventory.size(); i++)   {
-            inventory.get(i).getSprite().draw(x-(width/2) + (i%cols)*(210) + 50, y-height/2 + (i/cols)*(310) + 50);
+            inventory.get(i).getSprite().draw(x-(width/2) + (i%cols)*(210) + 25, y-height/2 + (i/cols)*(310) + 25);
         }
     }
 

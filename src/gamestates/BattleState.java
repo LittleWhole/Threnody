@@ -42,6 +42,7 @@ public class BattleState extends ThrenodyGameState {
     private KeyManager km;
     private int resultDuration;
     public static int time;
+    private int resultbuffer;
     public static int expGain;
     public static int currencyGain;
 
@@ -62,9 +63,10 @@ public class BattleState extends ThrenodyGameState {
         expGain = 0;
         currencyGain = 0;
         this.gc = gc;
-        resultDuration = 255;
+        resultDuration = 100;
         km = new KeyManager(gc.getInput(), Main.game);
         bg = new Sound("res/audio/music/battle.wav");
+        resultbuffer = 0;
     }
 
     @Override
@@ -89,12 +91,18 @@ public class BattleState extends ThrenodyGameState {
                 g.setColor(new Color(0,0,0,170));
 
                 DrawUtilities.fillShapeCentered(g, new RoundedRectangle(Main.getScreenWidth()/2f, Main.getScreenHeight()/2f, 1000, 500, 50), Main.getScreenWidth()/2, Main.getScreenHeight()/2);
-                if (time / 2 > Math.max(expGain, currencyGain)) g.setColor(Color.red);
-                else g.setColor(Color.white);
+                if (time / 2 > Math.max(expGain, currencyGain)) {
+                    g.setColor(Color.red);
+                    resultbuffer++;
+                }
+                else {
+                    g.setColor(Color.white);
+
+                }
                 DrawUtilities.drawStringCentered(g, "EXP GAINED:" + (Math.min(time / 2, expGain)), Main.getScreenWidth() / 2, Main.getScreenHeight() / 2 - 100);
                 DrawUtilities.drawStringCentered(g, "MONEY GAINED:" + (Math.min(time / 2, currencyGain)), Main.getScreenWidth() / 2, Main.getScreenHeight() / 2 + 100);
                 //plrs.forEach(p -> p.getArteQueue().clear());
-                if (time > resultDuration) {
+                if (resultbuffer > resultDuration) {
 
                     sbg.enterState(Main.GAME_ID);
                 }
@@ -111,7 +119,7 @@ public class BattleState extends ThrenodyGameState {
                 DrawUtilities.drawStringCentered(g, "YOU DIED", Main.RESOLUTION_X / 2, Main.RESOLUTION_Y / 2);
                 Main.stats = new PlayerStats();
                 SoundManager.overrideBackgroundMusic(LoadingScreen.music);
-                if (time > resultDuration) {
+                if (time > 300) {
                     sbg.enterState(Main.TITLE_ID);
                 }
             }
@@ -161,6 +169,7 @@ public class BattleState extends ThrenodyGameState {
     @Override
     public void enter(GameContainer gc, StateBasedGame sbg) throws SlickException {
         time = 0;
+        resultbuffer = 0;
         for (int i = 0; i < plrs.size(); i++)   {
             //plrs.get(i).setPosition( -200 + i*200, i*1000);
             plrs.get(i).setPosition( -580, -260);
@@ -183,12 +192,12 @@ public class BattleState extends ThrenodyGameState {
         }
         enemies.forEach(e ->    {
             if(e instanceof GoblinBoss)  {
-                expGain+=100*e.getLevel();
-                currencyGain+=75*e.getLevel();
+                expGain+=(100*Math.log(e.getLevel()));
+                currencyGain+=(75*Math.log(e.getLevel()));
             }
             if(e instanceof Goblin<?>)  {
-                expGain+=25*e.getLevel();
-                currencyGain+=20*e.getLevel();
+                expGain+=(15*Math.log(e.getLevel()));
+                currencyGain+=(10*Math.log(e.getLevel()));
             }
         });
 

@@ -36,12 +36,12 @@ public class Enemy<T extends Enemy<?>> extends Unit<T> {
 
     public void setEnemyTeamLevels(int min, int max)    {
         enemyTeam.forEach(e ->{
-            e.setLevel((int)(Math.random()*(max+1))+min);
-            e.health = 25*(level);
-            e.attack = 10*(level);
-            e.defense = 5*(level);
-            e.critRate = 0.05*(level);
-            e.critDamage = 10*(level);
+            e.setLevel((int)(Math.random()*(max+1 - min))+min);
+            e.health = 25*(e.getLevel());
+            e.attack = 10*(e.getLevel());
+            e.defense = 5*(e.getLevel());
+            e.critRate = 0.05*(e.getLevel());
+            e.critDamage = 10*(e.getLevel());
         });
         teamLvlMin = min;
         teamLvlMax = max;
@@ -102,11 +102,12 @@ public class Enemy<T extends Enemy<?>> extends Unit<T> {
     }
     public Enemy(float x, float y, int level) throws SlickException {//later change parameters to also change size, level, speed, and sprite
         super();
-        this.health = 25*(level);
-        this.attack = 10*(level);
-        this.defense = 5*(level);
+        this.level = level;
+        this.health = 25*(getLevel());
+        this.attack = 10*(getLevel());
+        this.defense = 5*(getLevel());
         this.critRate = 0.05*(level);
-        this.critDamage = 10*(level);
+        this.critDamage = 10*(getLevel());
         teamLvlMin = level;
         teamLvlMax = level;
         moveDuration = 100;
@@ -118,7 +119,7 @@ public class Enemy<T extends Enemy<?>> extends Unit<T> {
         this.ySpeed = 10;
         this.sheet = new SpriteSheet(new Image("res/animations/character/goblin.png"), (int)width, (int)height, 0 ,8);
         this.sprite = sheet.getSprite(0, 0);
-        this.level = level;
+
         this.timer = 0;
         turn = EnemyState.IDLE;
         this.team = Team.ENEMY;
@@ -130,11 +131,12 @@ public class Enemy<T extends Enemy<?>> extends Unit<T> {
     }
     public Enemy(float x, float y, ArrayList<Enemy> enemies, int level) throws SlickException {//later change parameters to also change size, level, speed, and sprite
         super();
-        this.health = 25*(level);
-        this.attack = 10*(level);
-        this.defense = 5*(level);
-        this.critRate = 0.05*(level);
-        this.critDamage = 10*(level);
+        this.level = level;
+        this.health = 25*(getLevel());
+        this.attack = 10*(getLevel());
+        this.defense = 5*(getLevel());
+        this.critRate = 0.05*(getLevel());
+        this.critDamage = 10*(getLevel());
         moveDuration = 100;
         this.width = 118;
         this.height = 205;
@@ -144,12 +146,13 @@ public class Enemy<T extends Enemy<?>> extends Unit<T> {
         this.ySpeed = 10;
         this.sheet = new SpriteSheet(new Image("res/animations/character/goblin.png"), (int)width, (int)height, 0 ,8);
         this.sprite = sheet.getSprite(0, 0);
-        this.level = level;
         this.timer = 0;
         this.enemyTeam = enemies;
         turn = EnemyState.IDLE;
         this.team = Team.ENEMY;
         this.arteQueue = new ConcurrentLinkedQueue<>();
+        teamLvlMin = level;
+        teamLvlMax = level;
     }
     public Enemy(float x, float y, ArrayList<Enemy> enemies) throws SlickException {//later change parameters to also change size, level, speed, and sprite
         super();
@@ -168,6 +171,8 @@ public class Enemy<T extends Enemy<?>> extends Unit<T> {
         this.sheet = new SpriteSheet(new Image("res/animations/character/goblin.png"), (int)width, (int)height, 0 ,8);
         this.sprite = sheet.getSprite(0, 0);
         this.level = 1;
+        teamLvlMin = level;
+        teamLvlMax = level;
         this.timer = 0;
         this.enemyTeam = enemies;
         turn = EnemyState.IDLE;
@@ -176,7 +181,10 @@ public class Enemy<T extends Enemy<?>> extends Unit<T> {
     }
 
     public void render(Graphics g, float plrX, float plrY)  {
-        if(!isDead()) entityRender(g, plrX,plrY);
+        if(!isDead()) {
+            entityRender(g, plrX,plrY);
+            g.drawString("Lvl " + this.teamLvlMin + "-" + this.teamLvlMax, this.getRenderX(plrX) - 50, this.getRenderY(plrY));
+        }
 
         hitBox.setX( getRenderX(plrX));
         hitBox.setY((-plrY/2) -position.getY() + this.getHeight()*1.6f);
@@ -184,7 +192,10 @@ public class Enemy<T extends Enemy<?>> extends Unit<T> {
 
     }
     public void battleRender(Graphics g, float plrX, float plrY) {
-        if (!isDead()) entityRender(g, plrX, plrY);
+        if (!isDead()) {
+            entityRender(g, plrX, plrY);
+            g.drawString("Lvl " + this.level, this.getRenderX(plrX) - 50, this.getRenderY(plrY));
+        }
 
         hitBox.setX(getRenderX(plrX));
         hitBox.setY((-plrY / 2) - position.getY() + this.getHeight() * 1.6f);

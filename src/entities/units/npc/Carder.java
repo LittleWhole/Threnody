@@ -88,7 +88,7 @@ public class Carder extends NPC {
                 if(product.getArte() != null) {
                     if ((gc.getInput().getMouseX() > cardX - product.getSprite().getWidth()/ 2 && gc.getInput().getMouseX() < cardX + product.getSprite().getWidth() / 2) &&
                             (gc.getInput().getMouseY() > cardY - product.getSprite().getHeight() / 2 && gc.getInput().getMouseY() < cardY + product.getSprite().getHeight() / 2)) {
-                        product.getSprite().getScaledCopy(1.3f).drawCentered(cardX + product.getSprite().getWidth()/2, cardY + product.getSprite().getHeight()/2);
+                        product.getSprite().getScaledCopy(1.3f).drawCentered(cardX + product.getSprite().getWidth()/2f, cardY + product.getSprite().getHeight()/2f);
                         if (gc.getInput().isMousePressed(0)) {
                             try {
                                 buy(p, product);
