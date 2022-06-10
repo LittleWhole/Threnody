@@ -25,6 +25,7 @@ public class TitleScreen extends ThrenodyGameState {
     private Button bNEW_GAME;
     private Button bCONTINUE;
     private Button bLOAD_GAME;
+    private Button bQUIT_GAME;
     private StateBasedGame sbg;
     public static Font font;
 
@@ -53,7 +54,7 @@ public class TitleScreen extends ThrenodyGameState {
         bNEW_GAME = new Button(Main.getScreenWidth() / 2, Main.getScreenHeight() / 2 + 100, gc.getGraphics().getFont().getWidth("New Game"), gc.getGraphics().getFont().getHeight("New Game"), "New Game");
         bCONTINUE = new Button(Main.getScreenWidth() / 2, Main.getScreenHeight() / 2 + 200, gc.getGraphics().getFont().getWidth("Continue"), gc.getGraphics().getFont().getHeight("Continue"), "Continue");
         bLOAD_GAME = new Button(Main.getScreenWidth() / 2, Main.getScreenHeight() / 2 + 300, gc.getGraphics().getFont().getWidth("Load Game"), gc.getGraphics().getFont().getHeight("Load Game"), "Load Game");
-
+        bQUIT_GAME = new Button(Main.getScreenWidth() / 2, Main.getScreenHeight() / 2 + 400, gc.getGraphics().getFont().getWidth("Quit Game"), gc.getGraphics().getFont().getHeight("Quit Game"), "Quit Game");
     }
 
     @Override
@@ -76,6 +77,7 @@ public class TitleScreen extends ThrenodyGameState {
         bNEW_GAME.render(g, gc.getInput().getMouseX(), gc.getInput().getMouseY());
         bCONTINUE.render(g, gc.getInput().getMouseX(), gc.getInput().getMouseY());
         bLOAD_GAME.render(g, gc.getInput().getMouseX(), gc.getInput().getMouseY());
+        bQUIT_GAME.render(g, gc.getInput().getMouseX(), gc.getInput().getMouseY());
         super.render(gc, sbg, g);
     }
 
@@ -83,14 +85,21 @@ public class TitleScreen extends ThrenodyGameState {
         if (!Main.menus.isEmpty()) return;
         if (bNEW_GAME.onButton(x, y)) {
             SoundManager.stopBackgroundMusic();
+            SoundManager.playSoundEffect("click");
             Game.firstTime = true;
             sbg.enterState(Main.GAME_ID, new FadeOutTransition(), new FadeInTransition());
         }
         if (bCONTINUE.onButton(x, y)) {
+            SoundManager.playSoundEffect("click");
             Main.continueGame();
         }
         if (bLOAD_GAME.onButton(x, y)) {
+            SoundManager.playSoundEffect("click");
             Main.openLoadSaveMenu();
+        }
+        if (bQUIT_GAME.onButton(x, y)) {
+            SoundManager.playSoundEffect("click");
+            Main.quitGame();
         }
     }
 }

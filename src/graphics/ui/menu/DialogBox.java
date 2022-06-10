@@ -3,6 +3,7 @@ package graphics.ui.menu;
 import gamestates.Game;
 import graphics.ui.Button;
 import graphics.ui.UserInterfaceable;
+import managers.SoundManager;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
@@ -90,10 +91,19 @@ public class DialogBox extends Menu implements UserInterfaceable {
             ((ThrenodyFont) fonts.get("body")).drawString(x,
                     y - fonts.get("body").getHeight(bodyLines.get(i)), bodyLines.get(i), Color.white, ThrenodyFont.ALIGN_CENTER);
         }
-        for (var i = 0; i < buttons.size(); i++) {
-            buttons.get(i).setX(x / buttons.size() * (i + 1));
-            buttons.get(i).setY(y + height / 2 - 40);
-            buttons.get(i).render(g, Game.getGc().getInput().getMouseX(), Game.getGc().getInput().getMouseY());
+        if (buttons.size() == 1) {
+            for (var i = 0; i < buttons.size(); i++) {
+                buttons.get(i).setX(x / buttons.size() * (i + 1));
+                buttons.get(i).setY(y + height / 2 - 40);
+                buttons.get(i).render(g, Game.getGc().getInput().getMouseX(), Game.getGc().getInput().getMouseY());
+            }
+        } else {
+            buttons.get(0).setX(x - 100);
+            buttons.get(0).setY(y + height / 2 - 40);
+            buttons.get(0).render(g, Game.getGc().getInput().getMouseX(), Game.getGc().getInput().getMouseY());
+            buttons.get(1).setX(x + 100);
+            buttons.get(1).setY(y + height / 2 - 40);
+            buttons.get(1).render(g, Game.getGc().getInput().getMouseX(), Game.getGc().getInput().getMouseY());
         }
     }
 
@@ -102,7 +112,10 @@ public class DialogBox extends Menu implements UserInterfaceable {
         super.update(gc);
         if (gc.getInput().isMouseButtonDown(0)) {
             buttons.forEach(b -> {
-                if (b.onButton(gc.getInput().getMouseX(), gc.getInput().getMouseY())) b.getCommand().command();
+                if (b.onButton(gc.getInput().getMouseX(), gc.getInput().getMouseY())) {
+                    SoundManager.playSoundEffect("click");
+                    b.getCommand().command();
+                }
             });
         }
     }

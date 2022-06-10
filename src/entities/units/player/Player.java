@@ -76,13 +76,9 @@ public final class Player<T extends Player<?>> extends Unit<T> {
         this.ySpeed = 10;
         this.sheet = new SpriteSheet(new Image("res/animations/character/player.png"), (int)width, (int)height, 8, 8);
         this.sprite = sheet.getSprite(0,0);
-<<<<<<< HEAD
         this.character = Main.characters.get(0);
-=======
-        this.character = new Sigur();
         this.health = character.getHealth();
         this.attack = character.getAttack();
->>>>>>> fb24ede5667b8190f5dda16edbcca7a61fd75eca
         this.arteDeck = new ArrayList<>();
         this.arteQueue = new ConcurrentLinkedQueue<>();
         this.clickArteQueue = new ConcurrentLinkedQueue<>();
@@ -417,6 +413,10 @@ public final class Player<T extends Player<?>> extends Unit<T> {
     public T setMove(Arte<? extends Unit> move) {
         this.move = move;
         return (T) this;
+    }
+
+    public List<Arte<? extends Unit>> getArteDeck() {
+        return arteDeck;
     }
 
     public List<Arte<? extends Unit>> getArteHand() {

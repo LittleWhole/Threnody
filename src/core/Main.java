@@ -18,9 +18,7 @@ import entities.units.player.Player;
 import gamestates.*;
 import graphics.ui.Button;
 import graphics.ui.Displayable;
-import graphics.ui.menu.CloseButton;
-import graphics.ui.menu.DialogBox;
-import graphics.ui.menu.LoadGameMenu;
+import graphics.ui.menu.*;
 import graphics.ui.menu.Menu;
 import org.newdawn.slick.AppGameContainer;
 import org.newdawn.slick.GameContainer;
@@ -134,6 +132,7 @@ public class Main extends StateBasedGame {
     }
 
     public synchronized static void save() {
+        menus.clear();
         System.out.println("Saving...");
         String dir = "saves/" + new SimpleDateFormat("yyyy-MM-dd_HH.mm.ss").format(new Date());
         new File(dir).mkdir();
@@ -157,7 +156,10 @@ public class Main extends StateBasedGame {
             out.writeObject(characters);
             System.out.println("Saved characters");
         } catch (IOException e) { e.printStackTrace(); }
-        addMenu(new DialogBox(700, 400, "Success", "Game saved.\nYou can now quit safely.", new CloseButton("Got it")));
+        addMenu(new DialogBox(700, 400, "Success", "Game saved.\nYou can now quit safely.", new CloseButton("Got it", () -> {
+            Main.menus.add(new PauseMenu());
+            Main.paused = true;
+        })));
     }
 
     public synchronized static void load(String save) {
@@ -248,8 +250,17 @@ public class Main extends StateBasedGame {
                 Game.plrTeam.get(0).addToDeck(new InnumerableWounds(p));
                 Game.plrTeam.get(0).addToDeck(new GardenOfInnocence(p));
             } catch (SlickException e) { e.printStackTrace(); }
-        } else { try { Game.plrTeam = new ArrayList<>(){{ add(new Player()) }} } catch (SlickException e) { e.printStackTrace(); }
-        //addMenu(new DialogBox(700, 400, "Cheat Mode On", "Turned on cheat mode.", new CloseButton("Got it")));
+        } else {
+            try {
+                Game.plrTeam = new ArrayList<>() {{
+                    add(new Player(stats.worldPos));
+                }};
+                cheatOn();
+            } catch (SlickException e) {
+                e.printStackTrace();
+            }
+            //addMenu(new DialogBox(700, 400, "Cheat Mode On", "Turned on cheat mode.", new CloseButton("Got it")));
+        }
     }
 
     public static synchronized void constructCheatDeck(Player p) {

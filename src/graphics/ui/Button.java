@@ -4,6 +4,7 @@ import core.Main;
 import gamestates.Game;
 import gamestates.TitleScreen;
 import graphics.ui.menu.Menu;
+import managers.SoundManager;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
@@ -85,6 +86,7 @@ public class Button implements UserInterfaceable {
     public void update(GameContainer gc) {
         if (onButton(gc.getInput().getMouseX(), gc.getInput().getMouseY())) {
             if (gc.getInput().isMousePressed(0)) {
+                SoundManager.playSoundEffect("click");
                 command.command();
             }
         }

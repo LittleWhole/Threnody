@@ -19,7 +19,7 @@ public abstract class Arte<T extends Unit> {
     protected ArteType arteType;
     protected boolean using; // If the arte is activated or not
     protected long castTimestamp; // The exact timestamp when the Arte started casting
-    protected int castDuration; // The amount of time casting takes
+    protected int castDuration = 74; // The amount of time casting takes
     protected int timer;
     protected int spritesheetX;
     protected int spritesheetY;

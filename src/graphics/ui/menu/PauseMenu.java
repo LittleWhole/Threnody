@@ -4,6 +4,7 @@ import core.Main;
 import gamestates.Game;
 import graphics.ui.Button;
 import graphics.ui.UserInterfaceable;
+import managers.SoundManager;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
@@ -25,14 +26,21 @@ public class PauseMenu extends Menu implements UserInterfaceable {
             buttons.add(new Button(x, y - 20, "Resume", () -> { this.remove(); Main.paused = false; }));
             buttons.add(new Button(x, y + 40,"Save", Main::save));
             buttons.add(new Button(x, y + 100,"Quit", () -> Main.game.getSbg().enterState(Main.TITLE_ID, new FadeOutTransition(), new FadeInTransition())));
-            buttons.add(new Button(x, y + 160,"Activate Cheat Mode", () ->
-                Main.addMenu(new DialogBox(1000, 600, "Enable Cheat Mode?", """
-                                Are you sure you want to enable Cheat Mode?
-                                This mode gives you access to every card and makes
-                                you have unlimited mana, gold, and EXP (press F3 to add).
-                                Only use for testing/to experience all combat.""",
-                        new CloseButton("No"), new CloseButton("Yes", Main::cheatOn)))
-            ));
+            buttons.add(new Button(x, y + 160,"Activate Cheat Mode", () -> {
+                Main.menus.clear();
+                Main.addMenu(new DialogBox(900, 400, "Enable Cheat Mode?", """
+                        Are you sure you want to enable Cheat Mode?
+                        This mode gives you access to every card and makes
+                        you have unlimited mana, gold, and EXP (press F3 to add).
+                        Only use for testing/to experience all combat.""",
+                        new CloseButton("No", () -> {
+                            Main.menus.add(new PauseMenu());
+                            Main.paused = true;
+                        }), new CloseButton("Yes", () -> {
+                            Main.cheatOn();
+                            Main.menus.add(new PauseMenu());
+                        })));
+            }));
     }
 
     @Override
@@ -57,7 +65,10 @@ public class PauseMenu extends Menu implements UserInterfaceable {
         super.update(gc);
         if (gc.getInput().isMouseButtonDown(0)) {
             buttons.forEach(b -> {
-                if (b.onButton(gc.getInput().getMouseX(), gc.getInput().getMouseY())) b.getCommand().command();
+                if (b.onButton(gc.getInput().getMouseX(), gc.getInput().getMouseY())) {
+                    SoundManager.playSoundEffect("click");
+                    b.getCommand().command();
+                }
             });
         }
     }

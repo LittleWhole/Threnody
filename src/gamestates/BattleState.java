@@ -91,6 +91,7 @@ public class BattleState extends ThrenodyGameState {
                 g.setColor(new Color(0,0,0,170));
 
                 DrawUtilities.fillShapeCentered(g, new RoundedRectangle(Main.getScreenWidth()/2f, Main.getScreenHeight()/2f, 1000, 500, 50), Main.getScreenWidth()/2, Main.getScreenHeight()/2);
+                DrawUtilities.drawStringCentered(g, "Victory", Main.fonts.VariableWidth.B50, Main.getScreenWidth() / 2, Main.getScreenHeight() / 2 - 400);
                 if (time / 2 > Math.max(expGain, currencyGain)) {
                     g.setColor(Color.red);
                     resultbuffer++;
@@ -99,8 +100,8 @@ public class BattleState extends ThrenodyGameState {
                     g.setColor(Color.white);
 
                 }
-                DrawUtilities.drawStringCentered(g, "EXP GAINED:" + (Math.min(time / 2, expGain)), Main.getScreenWidth() / 2, Main.getScreenHeight() / 2 - 100);
-                DrawUtilities.drawStringCentered(g, "MONEY GAINED:" + (Math.min(time / 2, currencyGain)), Main.getScreenWidth() / 2, Main.getScreenHeight() / 2 + 100);
+                DrawUtilities.drawStringCentered(g, "EXP GAINED:" + (Math.min(time / 2, expGain)), Main.getScreenWidth() / 2, Main.getScreenHeight() / 2 - 50);
+                DrawUtilities.drawStringCentered(g, "MONEY GAINED:" + (Math.min(time / 2, currencyGain)), Main.getScreenWidth() / 2, Main.getScreenHeight() / 2 + 50);
                 //plrs.forEach(p -> p.getArteQueue().clear());
                 if (resultbuffer > resultDuration) {
 
@@ -175,10 +176,10 @@ public class BattleState extends ThrenodyGameState {
             plrs.get(i).setPosition( -580, -260);
             plrs.get(i).setDirection(Direction.NORTH, Direction.EAST);
             plrs.get(i).startBattle();
-            if (Main.cheat) {
-                Main.constructCheatDeck(plrs.get(i));
-                plrs.get(i).setArteDeck(Main.cheatDeck);
-            }
+//            if (Main.cheat) {
+//                Main.constructCheatDeck(plrs.get(i));
+//                plrs.get(i).setArteDeck(Main.cheatDeck);
+//            }
         }
         for (int i = 0; i < enemies.size(); i++)   {
             enemies.get(i).setPosition(switch (i) {
