@@ -17,13 +17,14 @@ public class LoadGameMenu extends Menu implements UserInterfaceable {
     List<Button> buttons;
     List<SavegameList> pages;
     int currentPage;
+    boolean newlyAdded;
 
     public LoadGameMenu(List<String> files) {
         super(1200, 800);
         this.title = "Load From Save";
         pages = new ArrayList<>();
         currentPage = 0;
-        files.sort(Comparator.reverseOrder());
+        newlyAdded = true;
         var num = files.size();
         for (var i = 0; i < Math.ceil((double) num / 9); i++) {
             try {
@@ -80,6 +81,8 @@ public class LoadGameMenu extends Menu implements UserInterfaceable {
     @Override
     public void update(GameContainer gc) {
         super.update(gc);
+        if (!newlyAdded) pages.get(currentPage).update(gc);
+        else newlyAdded = false;
         if (gc.getInput().isMouseButtonDown(0)) {
             buttons.forEach(b -> {
                 if (b.onButton(gc.getInput().getMouseX(), gc.getInput().getMouseY())) b.getCommand().command();

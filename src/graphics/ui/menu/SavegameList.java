@@ -28,12 +28,21 @@ public class SavegameList implements UserInterfaceable
             } catch (ParseException e) {
                 e.printStackTrace();
             }
-            buttons.add(new Button(Main.RESOLUTION_X / 2, (Main.RESOLUTION_Y - 800) + (70 * i), date, () -> Main.load(saves.get(finalI))));
+            buttons.add(new Button(Main.RESOLUTION_X / 2, (Main.RESOLUTION_Y - 800) + (70 * i), date, () -> {
+                Main.menus.clear();
+                Main.load(saves.get(finalI));
+            }));
+
         }
     }
 
     @Override
     public void render(Graphics g, int mouseX, int mouseY) {
         buttons.forEach(button -> button.render(g, mouseX, mouseY));
+    }
+
+    @Override
+    public void update(GameContainer gc) {
+        buttons.forEach(button -> button.update(gc));
     }
 }

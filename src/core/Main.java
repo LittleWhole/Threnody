@@ -31,7 +31,9 @@ import org.newdawn.slick.state.transition.FadeInTransition;
 import org.newdawn.slick.state.transition.FadeOutTransition;
 import playerdata.PlayerInventory;
 import playerdata.PlayerStats;
+import playerdata.characters.Phaedra;
 import playerdata.characters.PlayableCharacter;
+import playerdata.characters.Sigur;
 
 import java.awt.*;
 import java.io.*;
@@ -72,7 +74,7 @@ public class Main extends StateBasedGame {
 
     public static PlayerStats stats = new PlayerStats();
     public static PlayerInventory inventory = new PlayerInventory();
-    public static ArrayList<PlayableCharacter> characters;
+    public static List<PlayableCharacter> characters;
 
     public static AbstractQueue<Displayable> displayables = new ConcurrentLinkedQueue<>();
     public static AbstractQueue<Menu> menus = new ConcurrentLinkedQueue<>();
@@ -110,6 +112,10 @@ public class Main extends StateBasedGame {
 
     public static void main(String[] args) {
         try {
+            characters = new ArrayList<>(){{
+                add(new Sigur());
+                add(new Phaedra());
+            }};
             debug = false;
             appgc = new AppGameContainer(new Main("Threnody"));
             System.setProperty("org.lwjgl.opengl.Window.undecorated", "true");
