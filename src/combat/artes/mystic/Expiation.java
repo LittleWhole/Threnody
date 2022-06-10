@@ -19,7 +19,7 @@ public class Expiation extends MysticArte<Player> {
         name = "Expiation";
         arteType = ArteType.MYSTIC;
         aniType = AnimationType.TARGET;
-        cost = 1;
+        cost = 7;
     }
 
     @Override

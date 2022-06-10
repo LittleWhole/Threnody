@@ -10,9 +10,7 @@ import combat.artes.strike.DragonFang;
 import combat.artes.strike.ImpactCross;
 import combat.artes.strike.SonicSlash;
 import combat.artes.strike.TwinWhip;
-import combat.artes.support.Elixir;
-import combat.artes.support.Heal;
-import combat.artes.support.Mana;
+import combat.artes.support.*;
 import entities.units.Unit;
 import entities.units.player.Player;
 import gamestates.*;
@@ -249,6 +247,8 @@ public class Main extends StateBasedGame {
                 Game.plrTeam.get(0).addToDeck(new TrillionDrive(p));
                 Game.plrTeam.get(0).addToDeck(new InnumerableWounds(p));
                 Game.plrTeam.get(0).addToDeck(new GardenOfInnocence(p));
+                Game.plrTeam.get(0).addToDeck(new Fortification(p));
+                Game.plrTeam.get(0).addToDeck(new Catalysis(p));
             } catch (SlickException e) { e.printStackTrace(); }
         } else {
             try {
