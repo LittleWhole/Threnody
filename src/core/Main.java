@@ -220,6 +220,29 @@ public class Main extends StateBasedGame {
 
     public static synchronized void cheatOn() {
         cheat = true;
+        if (Game.plrTeam != null && !Game.plrTeam.isEmpty()) {
+            var p =  Game.plrTeam.get(0);
+            Game.plrTeam.get(0).getArteDeck().clear();
+            try {
+                Game.plrTeam.get(0).addToDeck(new ImpactCross(p));
+                Game.plrTeam.get(0).addToDeck(new AmongUs(p));
+                Game.plrTeam.get(0).addToDeck(new Expiation(p));
+                Game.plrTeam.get(0).addToDeck(new Elixir(p));
+                Game.plrTeam.get(0).addToDeck(new DragonFang(p));
+                Game.plrTeam.get(0).addToDeck(new RendingGale(p));
+                Game.plrTeam.get(0).addToDeck(new AquaLimit(p));
+                Game.plrTeam.get(0).addToDeck(new DivineConqueror(p));
+                Game.plrTeam.get(0).addToDeck(new DualTheSol(p));
+                Game.plrTeam.get(0).addToDeck(new Heal(p));
+                Game.plrTeam.get(0).addToDeck(new Mana(p));
+                Game.plrTeam.get(0).addToDeck(new SonicSlash(p));
+                Game.plrTeam.get(0).addToDeck(new TwinWhip(p));
+                Game.plrTeam.get(0).addToDeck(new Flamberge(p));
+                Game.plrTeam.get(0).addToDeck(new TrillionDrive(p));
+                Game.plrTeam.get(0).addToDeck(new InnumerableWounds(p));
+                Game.plrTeam.get(0).addToDeck(new GardenOfInnocence(p));
+            } catch (SlickException e) { e.printStackTrace(); }
+        } else { try { Game.plrTeam = new ArrayList<>(){{ add(new Player()) }} } catch (SlickException e) { e.printStackTrace(); }
         //addMenu(new DialogBox(700, 400, "Cheat Mode On", "Turned on cheat mode.", new CloseButton("Got it")));
     }
 
@@ -227,23 +250,23 @@ public class Main extends StateBasedGame {
         var arteDeck = cheatDeck;
         try {
             for (int i = 0; i < 2; i++) {
-                arteDeck.add(new ImpactCross(p));
-                arteDeck.add(new AmongUs(p));
-                arteDeck.add(new Expiation(p));
-                arteDeck.add(new Elixir(p));
-                arteDeck.add(new DragonFang(p));
-                arteDeck.add(new RendingGale(p));
-                arteDeck.add(new AquaLimit(p));
-                arteDeck.add(new DivineConqueror(p));
-                arteDeck.add(new DualTheSol(p));
-                arteDeck.add(new Heal(p));
-                arteDeck.add(new Mana(p));
-                arteDeck.add(new SonicSlash(p));
-                arteDeck.add(new TwinWhip(p));
-                arteDeck.add(new Flamberge(p));
-                arteDeck.add(new TrillionDrive(p));
-                arteDeck.add(new InnumerableWounds(p));
-                arteDeck.add(new GardenOfInnocence(p));
+                p.addToDeck(new ImpactCross(p));
+                p.addToDeck(new AmongUs(p));
+                p.addToDeck(new Expiation(p));
+                p.addToDeck(new Elixir(p));
+                p.addToDeck(new DragonFang(p));
+                p.addToDeck(new RendingGale(p));
+                p.addToDeck(new AquaLimit(p));
+                p.addToDeck(new DivineConqueror(p));
+                p.addToDeck(new DualTheSol(p));
+                p.addToDeck(new Heal(p));
+                p.addToDeck(new Mana(p));
+                p.addToDeck(new SonicSlash(p));
+                p.addToDeck(new TwinWhip(p));
+                p.addToDeck(new Flamberge(p));
+                p.addToDeck(new TrillionDrive(p));
+                p.addToDeck(new InnumerableWounds(p));
+                p.addToDeck(new GardenOfInnocence(p));
             }
         } catch (SlickException e) { e.printStackTrace(); }
     }
