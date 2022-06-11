@@ -65,9 +65,14 @@ public abstract sealed class PlayableCharacter extends PlayerData implements Ser
 
     protected PlayableCharacter() {
         // Default character constructor
-        health = 50;
-        attack = 20;
         this.level = 1;
+        this.health = 50 + 25 * (int)(Math.log(level*2));
+        this.attack = 10 + 5 *  (int)(Math.log(level*2));
+        this.defense = 5 + 3 *  (int)(Math.log(level*2));
+        this.critDamage = 5 + 2 * (int)(Math.log(level*2));
+        this.critRate = .05 + 0.5 * (int)(Math.log(level*2));
+        this.eDefense = 3 + 2 * (int)(Math.log(level*2));
+        this.eAttack = 5 + 2 * (int)(Math.log(level*2));
         this.exp = 0;
         this.maxExp = Constants.LevelingConstants.MAX_EXP(1);
     }
@@ -99,13 +104,13 @@ public abstract sealed class PlayableCharacter extends PlayerData implements Ser
     }
 
     protected void updateStats() {
-        this.health = 50 * level;
-        this.attack = 10 * level;
-        this.defense = 10 * level;
-        this.critDamage = 10 * level;
-        this.critRate = .05 * level;
-        this.eDefense = 3 * level;
-        this.eAttack = 5 * level;
+        this.health = 50 + 25 * (int)(Math.log(level*2));
+        this.attack = 10 + 5 *  (int)(Math.log(level*2));
+        this.defense = 5 + 3 *  (int)(Math.log(level*2));
+        this.critDamage = 5 + 2 * (int)(Math.log(level*2));
+        this.critRate = .05 + 0.5 * (int)(Math.log(level*2));
+        this.eDefense = 3 + 2 * (int)(Math.log(level*2));
+        this.eAttack = 5 + 2 * (int)(Math.log(level*2));
     }
 
     public Player getEntity() {

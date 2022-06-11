@@ -20,10 +20,8 @@ import entities.units.player.Player;
 import graphics.ui.menu.CloseButton;
 import graphics.ui.menu.DialogBox;
 import graphics.ui.menu.Menu;
-import org.newdawn.slick.GameContainer;
-import org.newdawn.slick.Graphics;
-import org.newdawn.slick.Input;
-import org.newdawn.slick.SlickException;
+import org.newdawn.slick.*;
+import util.DrawUtilities;
 
 import java.lang.reflect.InvocationTargetException;
 import java.util.HashMap;
@@ -88,7 +86,9 @@ public class Carder extends NPC {
                 if(product.getArte() != null) {
                     if ((gc.getInput().getMouseX() > cardX - product.getSprite().getWidth()/ 2 && gc.getInput().getMouseX() < cardX + product.getSprite().getWidth() / 2) &&
                             (gc.getInput().getMouseY() > cardY - product.getSprite().getHeight() / 2 && gc.getInput().getMouseY() < cardY + product.getSprite().getHeight() / 2)) {
-                        product.getSprite().getScaledCopy(1.3f).drawCentered(cardX + product.getSprite().getWidth()/2f, cardY + product.getSprite().getHeight()/2f);
+                        product.getSprite().getScaledCopy(1.3f).drawCentered(cardX, cardY);
+                        gc.getGraphics().setColor(Color.lightGray);
+                        DrawUtilities.drawStringCentered(gc.getGraphics(), String.valueOf(price) + " gold", cardX , cardY - product.getSprite().getHeight()/2 - 30);
                         if (gc.getInput().isMousePressed(0)) {
                             try {
                                 buy(p, product);

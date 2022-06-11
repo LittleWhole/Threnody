@@ -28,6 +28,11 @@ public class Enemy<T extends Enemy<?>> extends Unit<T> {
         CHOOSING, MOVING, DONE
     }
 
+    protected int healthScale = 5;
+    protected int atkScale = 5;
+    protected int defScale = 5;
+    protected float critRateScale = 0.05f;
+    protected int critScale = 5;
     protected EnemyState turn;
 
     public ArrayList<Enemy> getEnemyTeam() {
@@ -37,14 +42,18 @@ public class Enemy<T extends Enemy<?>> extends Unit<T> {
     public void setEnemyTeamLevels(int min, int max)    {
         enemyTeam.forEach(e ->{
             e.setLevel((int)(Math.random()*(max+1 - min))+min);
-            e.health = 25*(e.getLevel());
-            e.attack = 10*(e.getLevel());
-            e.defense = 5*(e.getLevel());
-            e.critRate = 0.05*(e.getLevel());
-            e.critDamage = 10*(e.getLevel());
+            e.setStats();
         });
         teamLvlMin = min;
         teamLvlMax = max;
+    }
+
+    private void setStats() {
+        health = 25 + (healthScale * (level-1));
+        attack = 10 + (atkScale * (level-1));
+        defense = 5+ (defScale * (level-1));
+        critRate = 0.05 + (critRateScale * (level-1));
+        critDamage = 10 + (critScale * (level-1));
     }
 
     public void setEnemyTeam(ArrayList<Enemy> enemyTeam) {
@@ -103,11 +112,7 @@ public class Enemy<T extends Enemy<?>> extends Unit<T> {
     public Enemy(float x, float y, int level) throws SlickException {//later change parameters to also change size, level, speed, and sprite
         super();
         this.level = level;
-        this.health = 25*(getLevel());
-        this.attack = 10*(getLevel());
-        this.defense = 5*(getLevel());
-        this.critRate = 0.05*(level);
-        this.critDamage = 10*(getLevel());
+        setStats();
         teamLvlMin = level;
         teamLvlMax = level;
         moveDuration = 100;
@@ -132,11 +137,7 @@ public class Enemy<T extends Enemy<?>> extends Unit<T> {
     public Enemy(float x, float y, ArrayList<Enemy> enemies, int level) throws SlickException {//later change parameters to also change size, level, speed, and sprite
         super();
         this.level = level;
-        this.health = 25*(getLevel());
-        this.attack = 10*(getLevel());
-        this.defense = 5*(getLevel());
-        this.critRate = 0.05*(getLevel());
-        this.critDamage = 10*(getLevel());
+        setStats();
         moveDuration = 100;
         this.width = 118;
         this.height = 205;
@@ -156,11 +157,7 @@ public class Enemy<T extends Enemy<?>> extends Unit<T> {
     }
     public Enemy(float x, float y, ArrayList<Enemy> enemies) throws SlickException {//later change parameters to also change size, level, speed, and sprite
         super();
-        this.health = 25;
-        this.attack = 10;
-        this.defense = 5;
-        this.critRate = 0.05;
-        this.critDamage = 10;
+        setStats();
         moveDuration = 100;
         this.width = 118;
         this.height = 205;

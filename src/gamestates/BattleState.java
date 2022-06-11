@@ -92,7 +92,7 @@ public class BattleState extends ThrenodyGameState {
 
                 DrawUtilities.fillShapeCentered(g, new RoundedRectangle(Main.getScreenWidth()/2f, Main.getScreenHeight()/2f, 1000, 500, 50), Main.getScreenWidth()/2, Main.getScreenHeight()/2);
                 DrawUtilities.drawStringCentered(g, "Victory", Main.fonts.VariableWidth.B50, Main.getScreenWidth() / 2, Main.getScreenHeight() / 2 - 400);
-                if (time / 2 > Math.max(expGain, currencyGain)) {
+                if (time > Math.max(expGain, currencyGain)) {
                     g.setColor(Color.red);
                     resultbuffer++;
                 }
@@ -100,8 +100,8 @@ public class BattleState extends ThrenodyGameState {
                     g.setColor(Color.white);
 
                 }
-                DrawUtilities.drawStringCentered(g, "EXP GAINED:" + (Math.min(time / 2, expGain)), Main.getScreenWidth() / 2, Main.getScreenHeight() / 2 - 50);
-                DrawUtilities.drawStringCentered(g, "MONEY GAINED:" + (Math.min(time / 2, currencyGain)), Main.getScreenWidth() / 2, Main.getScreenHeight() / 2 + 50);
+                DrawUtilities.drawStringCentered(g, "EXP GAINED:" + (Math.min(time, expGain)), Main.getScreenWidth() / 2, Main.getScreenHeight() / 2 - 50);
+                DrawUtilities.drawStringCentered(g, "MONEY GAINED:" + (Math.min(time, currencyGain)), Main.getScreenWidth() / 2, Main.getScreenHeight() / 2 + 50);
                 //plrs.forEach(p -> p.getArteQueue().clear());
                 if (resultbuffer > resultDuration) {
 
@@ -197,8 +197,8 @@ public class BattleState extends ThrenodyGameState {
                 currencyGain+=(75*Math.log(e.getLevel()));
             }
             if(e instanceof Goblin<?>)  {
-                expGain+=(15*Math.log(e.getLevel()));
-                currencyGain+=(10*Math.log(e.getLevel()));
+                expGain+=(15*Math.log(e.getLevel() + 2));
+                currencyGain+=(10*Math.log(e.getLevel() + 2));
             }
         });
 
