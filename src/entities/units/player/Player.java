@@ -82,7 +82,7 @@ public final class Player<T extends Player<?>> extends Unit<T> {
         this.arteDeck = new ArrayList<>();
         this.arteQueue = new ConcurrentLinkedQueue<>();
         this.clickArteQueue = new ConcurrentLinkedQueue<>();
-        for (int i = 0; i < 2; i++) {
+        for (int i = 0; i < 3; i++) {
             //arteDeck.add(new ImpactCross(this));
             //arteDeck.add(new AmongUs(this));
             //arteDeck.add(new Expiation(this));
@@ -96,11 +96,13 @@ public final class Player<T extends Player<?>> extends Unit<T> {
             //arteDeck.add(new DivineConqueror(this));
             //arteDeck.add(new DualTheSol(this));
             arteDeck.add(new Heal(this));
+            arteDeck.add(new Heal(this));
             arteDeck.add(new Mana(this));
             arteDeck.add(new Mana(this));
             arteDeck.add(new SonicSlash(this));
             arteDeck.add(new SonicSlash(this));
             arteDeck.add(new SonicSlash(this));
+
         }
         lvl10reward = false;
         cardInventory = new ArrayList<>();
@@ -369,7 +371,7 @@ public final class Player<T extends Player<?>> extends Unit<T> {
 
     public T gainExp(int amount) throws SlickException {
         this.character.gainExp(amount);
-        if(Main.stats.level  == 10 & !lvl10reward)  {
+        if(Main.stats.level >= 10 & !lvl10reward)  {
             lvl10reward = false;
             this.addToDeck(new Expiation(this));
             this.mana = 5;

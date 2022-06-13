@@ -69,8 +69,10 @@ public abstract class MysticArte<T extends Unit> extends Arte<T> {
                 DrawUtilities.drawStringCentered(gc.getGraphics(), "Mystic Arte", Main.fonts.VariableWidth.P40, rect);
                 gc.getGraphics().setFont(Main.font);
             }
+            activation(target);
             timer++;
         } else {
+
             super.use(target, gc);
         }
     }

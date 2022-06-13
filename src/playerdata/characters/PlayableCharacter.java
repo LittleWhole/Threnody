@@ -107,10 +107,10 @@ public abstract sealed class PlayableCharacter extends PlayerData implements Ser
         this.health = 50 + 25 * (int)(Math.log(level*2));
         this.attack = 10 + 5 *  (int)(Math.log(level*2));
         this.defense = 5 + 3 *  (int)(Math.log(level*2));
-        this.critDamage = 5 + 2 * (int)(Math.log(level*2));
-        this.critRate = .05 + 0.5 * (int)(Math.log(level*2));
+        this.critDamage = 2 + (int) (Math.log(level * 2));
+        this.critRate = .05 + 0.001 * (int)(Math.log(level*2));
         this.eDefense = 3 + 2 * (int)(Math.log(level*2));
-        this.eAttack = 5 + 2 * (int)(Math.log(level*2));
+        this.eAttack = 5 + 3 * (int)(Math.log(level*2));
     }
 
     public Player getEntity() {

@@ -33,6 +33,7 @@ public class AmongUs extends MysticArte<Player> {
     @Override
     public void activation(Unit target) {
         target.takeDamage(new BigInteger("Among Us".getBytes(StandardCharsets.UTF_8)).intValue(), ElementType.LIGHT);
+
     }
 
     @Override

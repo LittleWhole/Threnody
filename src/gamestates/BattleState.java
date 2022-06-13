@@ -158,7 +158,7 @@ public class BattleState extends ThrenodyGameState {
             DrawUtilities.drawStringCentered(g, "Next turn: +" + plrs.get(turn()).getManaAdd(), Main.fonts.VariableWidth.P20, Main.RESOLUTION_X / 17, Main.RESOLUTION_Y / 20 * 17 + 100);
             g.setColor(Color.white);
         }
-        if (km.amogus(KeyManager.AMOGUS_LIST.stream().filter(km).toList())) {
+        if (gc.getInput().isKeyDown(KEY_F12)) {
             plrs.get(turn()).amogus();
         }
     }

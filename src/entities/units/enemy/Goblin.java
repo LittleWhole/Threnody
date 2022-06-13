@@ -20,7 +20,7 @@ public class Goblin<T extends Goblin<?>> extends Enemy<T> {
     public Goblin(float x, float y) throws SlickException {
         super(x, y, new ArrayList<Enemy>(Arrays.asList(new Goblin(0, 0, new ArrayList<>()), new Goblin(0, 0, new ArrayList<>()), new Goblin(0, 0, new ArrayList<>()))));
         healthScale = 15;
-        atkScale = 5;
+        atkScale = 3;
         defScale = 5;
         critRateScale = 0.02f;
         critScale = 3;
@@ -29,7 +29,7 @@ public class Goblin<T extends Goblin<?>> extends Enemy<T> {
     public Goblin(float x, float y, ArrayList<Enemy> enemies) throws SlickException {
         super(x, y, enemies);
         healthScale = 15;
-        atkScale = 5;
+        atkScale = 3;
         defScale = 5;
         critRateScale = 0.02f;
         critScale = 3;
@@ -38,7 +38,7 @@ public class Goblin<T extends Goblin<?>> extends Enemy<T> {
     public Goblin(float x, float y, ArrayList<Enemy> enemies, int level) throws SlickException {//later change parameters to also change size, level, speed, and sprite
         super(x,y,enemies,level);
         healthScale = 15;
-        atkScale = 5;
+        atkScale = 3;
         defScale = 5;
         critRateScale = 0.02f;
         critScale = 3;
