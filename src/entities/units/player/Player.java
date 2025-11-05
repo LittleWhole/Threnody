@@ -249,21 +249,41 @@ public final class Player<T extends Player<?>> extends Unit<T> {
             this.health = 0;
             return selected;
         }
-        return switch (input) {
-            case Input i && i.isKeyPressed(Input.KEY_1) -> selection(0);
-            case Input i && i.isKeyPressed(Input.KEY_2) -> selection(1);
-            case Input i && i.isKeyPressed(Input.KEY_3) -> selection(2);
-            case Input i && i.isKeyPressed(Input.KEY_4) -> selection(3);
-            case Input i && i.isKeyPressed(Input.KEY_5) -> selection(4);
-            case Input i && i.isKeyPressed(Input.KEY_6) -> selection(5);
-//            case Input i && i.isMousePressed(0) && onCard(i, 0) -> selection(0);
-//            case Input i && i.isMousePressed(0) && onCard(i, 1) -> selection(1);
-//            case Input i && i.isMousePressed(0) && onCard(i, 2) -> selection(2);
-//            case Input i && i.isMousePressed(0) && onCard(i, 3) -> selection(3);
-//            case Input i && i.isMousePressed(0) && onCard(i, 4) -> selection(4);
-//            case Input i && i.isMousePressed(0) && onCard(i, 5) -> selection(5);
-            default -> selected;
-        };
+        int i = -1;
+        if(input.isKeyPressed(Input.KEY_1)) {
+            i = 0;
+        }
+        else if(input.isKeyPressed(Input.KEY_2)) {
+            i = 1;
+        }
+        else if(input.isKeyPressed(Input.KEY_3)) {
+            i = 2;
+        }
+        else if(input.isKeyPressed(Input.KEY_4)) {
+            i = 3;
+        }
+        else if(input.isKeyPressed(Input.KEY_5)) {
+            i = 4;
+        }
+        else if(input.isKeyPressed(Input.KEY_6)) {
+            i = 5;
+        }
+        return i >= 0 ? selection(i) : selected;
+//        return switch (input) {
+//            case input.isKeyPressed(Input.KEY_1) -> selection(0);
+//            case input.isKeyPressed(Input.KEY_2) -> selection(1);
+//            case input.isKeyPressed(Input.KEY_3) -> selection(2);
+//            case input.isKeyPressed(Input.KEY_4) -> selection(3);
+//            case input.isKeyPressed(Input.KEY_5) -> selection(4);
+//            case input.isKeyPressed(Input.KEY_6) -> selection(5);
+////            case Input i && i.isMousePressed(0) && onCard(i, 0) -> selection(0);
+////            case Input i && i.isMousePressed(0) && onCard(i, 1) -> selection(1);
+////            case Input i && i.isMousePressed(0) && onCard(i, 2) -> selection(2);
+////            case Input i && i.isMousePressed(0) && onCard(i, 3) -> selection(3);
+////            case Input i && i.isMousePressed(0) && onCard(i, 4) -> selection(4);
+////            case Input i && i.isMousePressed(0) && onCard(i, 5) -> selection(5);
+//            default -> selected;
+//        };
     }
 
     public boolean onCard(Input input, int i) {
